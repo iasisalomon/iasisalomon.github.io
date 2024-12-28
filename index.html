@@ -1,205 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iasi Edgardo Salomon - Multi-Brand Portfolio</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <!-- Header Section -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#brands">Brands</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="min-vh-100 d-flex align-items-center bg-dark text-white">
-        <div class="container text-center">
-            <h1 class="display-2 mb-3">Iasi Edgardo Salomon</h1>
-            <p class="lead mb-4">Brand Creator | Multi-Disciplinary Professional</p>
-            <div class="social-links">
-                <a href="#" class="text-white mx-2 h4"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-white mx-2 h4"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-white mx-2 h4"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Brands Section -->
-    <section id="brands" class="py-5">
-        <div class="container">
-            <h2 class="text-center display-4 mb-3">My Brands</h2>
-            <div class="section-divider bg-dark"></div>
-            
-            <!-- Main Brand -->
-            <div class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-dark text-white">
-                <div class="col-lg-6">
-                    <h3 class="display-3 mb-4">Iasi Edgardo Salomon</h3>
-                    <p class="lead fs-3 mb-4">The mastermind behind multiple successful brands and ventures.</p>
-                    <p class="fs-5 mb-4">A versatile professional with the ability to create and manage distinct personalities while maintaining authenticity across different domains.</p>
-                    <div class="mt-4">
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">Learn More</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <i class="fas fa-user-tie display-1 mb-4 opacity-75"></i>
-                </div>
-            </div>
-
-            <!-- Oxaciano Brand -->
-            <div class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-primary text-white">
-                <div class="col-lg-6 order-lg-2">
-                    <h3 class="display-3 mb-4">Oxaciano</h3>
-                    <p class="lead fs-3 mb-4">Gaming & Esports Professional</p>
-                    <ul class="list-unstyled fs-5">
-                        <li class="mb-3"><i class="fas fa-gamepad me-3"></i>Esports Event Management</li>
-                        <li class="mb-3"><i class="fas fa-video me-3"></i>Live Streaming Production</li>
-                        <li class="mb-3"><i class="fas fa-users me-3"></i>Gaming Community Management</li>
-                        <li class="mb-3"><i class="fas fa-tv me-3"></i>Entertainment Industry Expert</li>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Iasi Edgardo Salomon - Multi-Brand Portfolio</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <!-- Header Section -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#brands">Brands</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#projects">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
                     </ul>
-                    <div class="mt-4">
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">View Gaming Portfolio</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 order-lg-1 text-center">
-                    <i class="fas fa-gamepad display-1 mb-4 opacity-75"></i>
                 </div>
             </div>
+        </nav>
 
-            <!-- Glunis Brand -->
-            <div class="brand-section row align-items-center p-5 rounded-4 gradient-success text-white">
-                <div class="col-lg-6">
-                    <h3 class="display-3 mb-4">Glunis</h3>
-                    <p class="lead fs-3 mb-4">Tech & Science Professional</p>
-                    <ul class="list-unstyled fs-5">
-                        <li class="mb-3"><i class="fas fa-code me-3"></i>Software Development</li>
-                        <li class="mb-3"><i class="fas fa-tasks me-3"></i>IT Project Management</li>
-                        <li class="mb-3"><i class="fas fa-flask me-3"></i>Scientific Research</li>
-                        <li class="mb-3"><i class="fas fa-brain me-3"></i>Technical Leadership</li>
-                    </ul>
-                    <div class="mt-4">
-                        <a href="#" class="btn btn-outline-light btn-lg px-4">View Tech Portfolio</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <i class="fas fa-laptop-code display-1 mb-4 opacity-75"></i>
+        <!-- Hero Section -->
+        <section
+            id="home"
+            class="min-vh-100 d-flex align-items-center bg-dark text-white"
+        >
+            <div class="container text-center">
+                <h1 class="display-2 mb-3">Iasi Edgardo Salomon</h1>
+                <p class="lead mb-4">
+                    Brand Creator | Multi-Disciplinary Professional
+                </p>
+                <div class="social-links">
+                    <a
+                        href="https://github.com/iasisalomon"
+                        class="text-white mx-2 h4"
+                        target="_blank"
+                    >
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a
+                        href="https://linkedin.com/in/iasisalomon"
+                        class="text-white mx-2 h4"
+                        target="_blank"
+                    >
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a
+                        href="https://x.com/glunisok"
+                        class="text-white mx-2 h4"
+                        target="_blank"
+                    >
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a
+                        href="https://t.me/oxaciano"
+                        class="text-white mx-2 h4"
+                        target="_blank"
+                    >
+                        <i class="fab fa-telegram"></i>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center display-4 mb-3">Featured Projects</h2>
-            <div class="section-divider bg-dark"></div>
-            <div class="row g-4 py-5">
-                <!-- Oxaciano Project -->
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-lg rounded-4 overflow-hidden">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-4">
-                                <i class="fas fa-gamepad text-primary display-4 me-3"></i>
-                                <div>
-                                    <span class="badge bg-primary mb-2">Oxaciano</span>
-                                    <h5 class="card-title h4">Esports Tournament</h5>
+        <!-- Brands Section -->
+        <section id="brands" class="py-5">
+            <div class="container">
+                <h2 class="text-center display-4 mb-3">My Brands</h2>
+                <div class="section-divider bg-dark"></div>
+
+                <!-- Main Brand -->
+                <div
+                    class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-dark text-white"
+                >
+                    <div class="col-lg-6">
+                        <h3 class="display-3 mb-4">Iasi Edgardo Salomon</h3>
+                        <p class="lead fs-3 mb-4">
+                            The mastermind behind multiple successful brands and
+                            ventures.
+                        </p>
+                        <p class="fs-5 mb-4">
+                            A versatile professional with the ability to create
+                            and manage distinct personalities while maintaining
+                            authenticity across different domains.
+                        </p>
+                        <div class="mt-4 d-flex align-items-center">
+                            <a
+                                href="https://linkedin.com/in/iasisalomon"
+                                class="btn btn-outline-light btn-lg px-4 me-3"
+                                target="_blank"
+                            >
+                                <i class="fab fa-linkedin me-2"></i>LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <i
+                            class="fas fa-user-tie display-1 mb-4 opacity-75"
+                        ></i>
+                    </div>
+                </div>
+
+                <!-- Oxaciano Brand -->
+                <div
+                    class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-danger text-white"
+                >
+                    <div class="col-lg-6 order-lg-2">
+                        <h3 class="display-3 mb-4">Oxaciano</h3>
+                        <p class="lead fs-3 mb-4">
+                            Gaming & Esports Professional
+                        </p>
+                        <ul class="list-unstyled fs-5">
+                            <li class="mb-3">
+                                <i class="fas fa-gamepad me-3"></i>Esports Event
+                                Management
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-video me-3"></i>Live Streaming
+                                Production
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-users me-3"></i>Gaming
+                                Community Management
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-tv me-3"></i>Entertainment
+                                Industry Expert
+                            </li>
+                        </ul>
+                        <div class="mt-4 d-flex flex-wrap gap-3">
+                            <a
+                                href="https://x.com/oxaciano"
+                                class="btn btn-outline-light btn-lg px-4"
+                                target="_blank"
+                            >
+                                <i class="fab fa-x-twitter me-2"></i>Twitter
+                            </a>
+                            <a
+                                href="https://instagram.com/oxaciano"
+                                class="btn btn-outline-light btn-lg px-4"
+                                target="_blank"
+                            >
+                                <i class="fab fa-instagram me-2"></i>Instagram
+                            </a>
+                            <a
+                                href="https://tiktok.com/@oxaciano"
+                                class="btn btn-outline-light btn-lg px-4"
+                                target="_blank"
+                            >
+                                <i class="fab fa-tiktok me-2"></i>TikTok
+                            </a>
+                            <a
+                                href="https://lol.fandom.com/wiki/Oxaciano"
+                                class="btn btn-outline-light btn-lg px-4"
+                                target="_blank"
+                            >
+                                <i class="fas fa-trophy me-2"></i>Leaguepedia
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1 text-center">
+                        <i class="fas fa-gamepad display-1 mb-4 opacity-75"></i>
+                    </div>
+                </div>
+
+                <!-- Glunis Brand -->
+                <div
+                    class="brand-section row align-items-center p-5 rounded-4 gradient-success text-white"
+                >
+                    <div class="col-lg-6">
+                        <h3 class="display-3 mb-4">Glunis</h3>
+                        <p class="lead fs-3 mb-4">
+                            Tech & Science Professional
+                        </p>
+                        <ul class="list-unstyled fs-5">
+                            <li class="mb-3">
+                                <i class="fas fa-code me-3"></i>Software
+                                Development
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-tasks me-3"></i>IT Project
+                                Management
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-flask me-3"></i>Scientific
+                                Research
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-brain me-3"></i>Technical
+                                Leadership
+                            </li>
+                        </ul>
+                        <div class="mt-4 d-flex align-items-center">
+                            <a
+                                href="https://x.com/glunisok"
+                                class="btn btn-outline-light btn-lg px-4"
+                                target="_blank"
+                            >
+                                <i class="fab fa-x-twitter me-2"></i>Twitter
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <i
+                            class="fas fa-laptop-code display-1 mb-4 opacity-75"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center display-4 mb-3">Featured Projects</h2>
+                <div class="section-divider bg-dark"></div>
+                <div class="row g-4 py-5">
+                    <!-- Oxaciano Project -->
+                    <div class="col-md-4">
+                        <div
+                            class="card h-100 shadow-lg rounded-4 overflow-hidden"
+                        >
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-4">
+                                    <i
+                                        class="fas fa-users-line text-danger display-4 me-3"
+                                    ></i>
+                                    <div>
+                                        <span class="badge bg-danger mb-2"
+                                            >Oxaciano</span
+                                        >
+                                        <h5 class="card-title h4">
+                                            AxieCon Barcelona
+                                        </h5>
+                                    </div>
+                                </div>
+                                <p class="card-text fs-5">
+                                    Hosted and produced Sky Mavis' first global
+                                    conference, bringing together thousands of
+                                    Axie Infinity community members.
+                                </p>
+                                <div class="mt-3">
+                                    <a
+                                        href="https://blog.axieinfinity.com/p/axiecon"
+                                        class="btn btn-outline-danger me-2 mb-2"
+                                        target="_blank"
+                                    >
+                                        <i class="fas fa-link me-2"></i>Blog
+                                    </a>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=lu_N8kx-I2U"
+                                        class="btn btn-outline-danger me-2 mb-2"
+                                        target="_blank"
+                                    >
+                                        <i class="fab fa-youtube me-2"></i>Days 1&2
+                                    </a>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=K2Xo0ovZxJY"
+                                        class="btn btn-outline-danger mb-2"
+                                        target="_blank"
+                                    >
+                                        <i class="fab fa-youtube me-2"></i>Days 3&4
+                                    </a>
                                 </div>
                             </div>
-                            <p class="card-text fs-5">Managed and produced a major esports event with over 10,000 viewers.</p>
+                        </div>
+                    </div>
+
+                    <!-- Glunis Project -->
+                    <div class="col-md-4">
+                        <div
+                            class="card h-100 shadow-lg rounded-4 overflow-hidden"
+                        >
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-4">
+                                    <i
+                                        class="fas fa-flask text-success display-4 me-3"
+                                    ></i>
+                                    <div>
+                                        <span class="badge bg-success mb-2"
+                                            >Glunis</span
+                                        >
+                                        <h5 class="card-title h4">
+                                            Scientific Software
+                                        </h5>
+                                    </div>
+                                </div>
+                                <p class="card-text fs-5">
+                                    Developed data analysis tools for research
+                                    institutions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IES Project -->
+                    <div class="col-md-4">
+                        <div
+                            class="card h-100 shadow-lg rounded-4 overflow-hidden"
+                        >
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center mb-4">
+                                    <i
+                                        class="fas fa-user-tie text-dark display-4 me-3"
+                                    ></i>
+                                    <div>
+                                        <span class="badge bg-dark mb-2"
+                                            >IES</span
+                                        >
+                                        <h5 class="card-title h4">
+                                            Brand Development
+                                        </h5>
+                                    </div>
+                                </div>
+                                <p class="card-text fs-5">
+                                    Created and managed multiple successful
+                                    personal brands.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Glunis Project -->
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-lg rounded-4 overflow-hidden">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-4">
-                                <i class="fas fa-flask text-success display-4 me-3"></i>
-                                <div>
-                                    <span class="badge bg-success mb-2">Glunis</span>
-                                    <h5 class="card-title h4">Scientific Software</h5>
-                                </div>
-                            </div>
-                            <p class="card-text fs-5">Developed data analysis tools for research institutions.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-5 gradient-dark text-white">
+            <div class="container">
+                <h2 class="text-center display-4 mb-3">Get in Touch</h2>
+                <div class="section-divider bg-light"></div>
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-8 col-lg-6">
+                        <p class="lead fs-3 mb-4">
+                            Feel free to reach out through my social media
+                            channels:
+                        </p>
+                        <div class="d-flex justify-content-center gap-4 mb-4">
+                            <a
+                                href="https://x.com/glunisok"
+                                class="text-white h1"
+                                target="_blank"
+                            >
+                                <i class="fab fa-x-twitter"></i>
+                                <div class="fs-6 mt-2">glunisok</div>
+                            </a>
+                            <a
+                                href="https://t.me/oxaciano"
+                                class="text-white h1"
+                                target="_blank"
+                            >
+                                <i class="fab fa-telegram-plane"></i>
+                                <div class="fs-6 mt-2">oxaciano</div>
+                            </a>
+                            <a
+                                href="https://linkedin.com/in/iasisalomon"
+                                class="text-white h1"
+                                target="_blank"
+                            >
+                                <i class="fab fa-linkedin"></i>
+                                <div class="fs-6 mt-2">iasisalomon</div>
+                            </a>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- IES Project -->
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-lg rounded-4 overflow-hidden">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-4">
-                                <i class="fas fa-user-tie text-dark display-4 me-3"></i>
-                                <div>
-                                    <span class="badge bg-dark mb-2">IES</span>
-                                    <h5 class="card-title h4">Brand Development</h5>
-                                </div>
-                            </div>
-                            <p class="card-text fs-5">Created and managed multiple successful personal brands.</p>
-                        </div>
+                        <p class="text-muted fs-5">
+                            I'll get back to you as soon as possible!
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 gradient-dark text-white">
-        <div class="container">
-            <h2 class="text-center display-4 mb-3">Get in Touch</h2>
-            <div class="section-divider bg-light"></div>
-            <div class="row justify-content-center text-center">
-                <div class="col-md-8 col-lg-6">
-                    <p class="lead fs-3 mb-4">Feel free to reach out through my social media channels:</p>
-                    <div class="d-flex justify-content-center gap-4 mb-4">
-                        <a href="https://twitter.com/glunisok" class="text-white h1" target="_blank">
-                            <i class="fab fa-x-twitter"></i>
-                            <div class="small mt-2">@glunisok</div>
-                        </a>
-                        <a href="https://linkedin.com/in/iasisalomon" class="text-white h1" target="_blank">
-                            <i class="fab fa-linkedin"></i>
-                            <div class="small mt-2">iasisalomon</div>
-                        </a>
-                    </div>
-                    <p class="text-muted fs-5">I'll get back to you as soon as possible!</p>
-                </div>
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-4">
+            <div class="container text-center">
+                <p class="mb-0">
+                    &copy; 2024 Iasi Edgardo Salomon. All rights reserved.
+                </p>
             </div>
-        </div>
-    </section>
+        </footer>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2024 Iasi Edgardo Salomon. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html> 
+        <!-- Bootstrap JS and Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

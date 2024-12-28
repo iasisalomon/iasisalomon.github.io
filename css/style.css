@@ -18,6 +18,10 @@
     background: linear-gradient(145deg, #1b5e20 0%, #388e3c 100%);
 }
 
+.gradient-danger {
+    background: linear-gradient(145deg, #dc3545 0%, #ff4d5e 100%);
+}
+
 .card {
     transition: all 0.3s ease;
     border: none;
