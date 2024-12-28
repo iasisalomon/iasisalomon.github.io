@@ -33,7 +33,10 @@ The technology and science professional, specialized in:
 ### Project Icons
 
 -   fa-users-line for events
--
+-   fas fa-code for fullstack development
+-   fas fa-tasks for project management
+-   
+- 
 
 ## Contact
 

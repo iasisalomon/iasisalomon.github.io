@@ -38,3 +38,11 @@
     margin: 20px auto;
     border-radius: 5px;
 }
+
+.project-card {
+    transition: opacity 0.3s ease;
+}
+
+.btn-group .btn.active {
+    box-shadow: none;
+}
