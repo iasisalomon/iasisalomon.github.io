@@ -1,0 +1,36 @@
+.brand-section {
+    transition: transform 0.3s ease;
+}
+
+.brand-section:hover {
+    transform: translateY(-5px);
+}
+
+.gradient-dark {
+    background: linear-gradient(145deg, #1a1a1a 0%, #363636 100%);
+}
+
+.gradient-primary {
+    background: linear-gradient(145deg, #0d47a1 0%, #1976d2 100%);
+}
+
+.gradient-success {
+    background: linear-gradient(145deg, #1b5e20 0%, #388e3c 100%);
+}
+
+.card {
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-divider {
+    height: 5px;
+    width: 50px;
+    margin: 20px auto;
+    border-radius: 5px;
+}
