@@ -1,3 +1,4 @@
+/* Base styles */
 .brand-section {
     transition: transform 0.3s ease;
 }
@@ -6,43 +7,95 @@
     transform: translateY(-5px);
 }
 
-.gradient-dark {
-    background: linear-gradient(145deg, #1a1a1a 0%, #363636 100%);
+/* Home section dark theme */
+.bg-dark {
+    background: linear-gradient(145deg, #111111 0%, #222222 100%) !important;
 }
 
-.gradient-primary {
-    background: linear-gradient(145deg, #0d47a1 0%, #1976d2 100%);
-}
-
-.gradient-success {
-    background: linear-gradient(145deg, #1b5e20 0%, #388e3c 100%);
+/* Brand colors */
+.gradient-black {
+    background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
 }
 
 .gradient-danger {
-    background: linear-gradient(145deg, #dc3545 0%, #ff4d5e 100%);
+    background: linear-gradient(145deg, #8B0000 0%, #dc3545 100%);
 }
 
+.gradient-success {
+    background: linear-gradient(145deg, #004d40 0%, #00897b 100%);
+}
+
+/* Card styles */
 .card {
-    transition: all 0.3s ease;
+    background: white;
     border: none;
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Section divider */
 .section-divider {
     height: 5px;
     width: 50px;
     margin: 20px auto;
     border-radius: 5px;
+    background: rgba(0, 0, 0, 0.1);
 }
 
+/* Project cards */
 .project-card {
     transition: opacity 0.3s ease;
 }
 
 .btn-group .btn.active {
     box-shadow: none;
+}
+
+/* Typography */
+body {
+    color: #212529;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* White text for dark sections */
+.bg-dark, 
+.gradient-black,
+.gradient-danger, 
+.gradient-success,
+footer.bg-dark {
+    color: white;
+}
+
+.bg-dark a:not(.btn), 
+.gradient-black a:not(.btn),
+.gradient-danger a:not(.btn), 
+.gradient-success a:not(.btn),
+footer.bg-dark a:not(.btn) {
+    color: white;
+}
+
+.bg-dark .text-muted,
+.gradient-danger .text-muted,
+.gradient-success .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Ensure light sections have dark text */
+.bg-light {
+    color: #212529;
+}
+
+.bg-light a:not(.btn) {
+    color: #212529;
+}
+
+.bg-light .text-muted {
+    color: #6c757d !important;
 }
