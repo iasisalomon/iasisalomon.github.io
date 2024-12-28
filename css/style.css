@@ -1,4 +1,40 @@
+/* Root variables */
+:root {
+    --dark-gradient: linear-gradient(145deg, #111111 0%, #222222 100%);
+}
+
 /* Base styles */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: #212529;
+}
+
+/* Navigation */
+#mainNav {
+    background: var(--dark-gradient) !important;
+    padding: 1rem 0;
+    z-index: 1030;
+    position: fixed;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler {
+    margin-right: 1rem;
+}
+
+.nav-link {
+    transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+/* Brand sections */
 .brand-section {
     transition: all 0.3s ease;
     height: 100%;
@@ -9,17 +45,11 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* First, let's define the gradient once */
-:root {
-    --dark-gradient: linear-gradient(145deg, #111111 0%, #222222 100%);
-}
-
-/* Home section dark theme */
+/* Brand colors */
 .bg-dark {
     background: var(--dark-gradient) !important;
 }
 
-/* Brand colors */
 .gradient-black {
     background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
 }
@@ -32,7 +62,7 @@
     background: linear-gradient(145deg, #004d40 0%, #00897b 100%);
 }
 
-/* Card styles */
+/* Project cards */
 .card {
     background: white;
     border: none;
@@ -44,6 +74,10 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+.project-card {
+    transition: opacity 0.3s ease;
+}
+
 /* Section divider */
 .section-divider {
     height: 5px;
@@ -53,25 +87,12 @@
     background: rgba(0, 0, 0, 0.1);
 }
 
-/* Project cards */
-.project-card {
-    transition: opacity 0.3s ease;
-}
-
-.btn-group .btn.active {
-    box-shadow: none;
-}
-
-/* Typography */
-body {
-    color: #212529;
-}
-
+/* Typography and colors */
 .text-muted {
     color: #6c757d !important;
 }
 
-/* White text for dark sections */
+/* Dark sections text */
 .bg-dark,
 .gradient-black,
 .gradient-danger,
@@ -94,7 +115,7 @@ footer.bg-dark a:not(.btn) {
     color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* Ensure light sections have dark text */
+/* Light sections text */
 .bg-light {
     color: #212529;
 }
@@ -107,26 +128,20 @@ footer.bg-dark a:not(.btn) {
     color: #6c757d !important;
 }
 
-/* Add smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Add padding to account for fixed navbar */
+/* Brands navigation */
 #brands-nav {
     padding-top: 50px;
     margin-top: -50px;
-    display: none; /* Hide by default */
+    display: none;
 }
 
-/* Show brands navigation only on mobile */
 @media (max-width: 991px) {
     #brands-nav {
         display: block;
     }
 }
 
-/* Add scroll margin to section targets */
+/* Section margins */
 #brands,
 #brands-nav,
 #ies-brand,
@@ -135,7 +150,7 @@ html {
     scroll-margin-top: 100px;
 }
 
-/* Style for back to brands button */
+/* Back to brands button */
 .btn-link.text-white {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -146,71 +161,10 @@ html {
     opacity: 1;
 }
 
-/* Change icon from arrow-up to chevron-up */
 .btn-link.text-white .fas {
     font-size: 0.8rem;
 }
 
-/* Add these styles */
-.navbar {
-    transition: all 0.3s ease;
-}
-
-.navbar:not(.fixed-top) {
-    background: transparent !important;
-}
-
-.navbar.fixed-top {
-    background: linear-gradient(145deg, #111111 0%, #222222 100%) !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-#mainNav {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: auto;
-    padding: 1rem 0;
-    z-index: 1030; /* Ensure it stays on top */
-}
-
-#mainNav.fixed-top {
-    position: fixed;
-    width: 100%;
-    background: linear-gradient(145deg, #111111 0%, #222222 100%) !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-toggler {
-    margin-right: 1rem;
-}
-
-#home {
-    position: relative;
-}
-
-.nav-link {
-    transition: opacity 0.3s ease;
-}
-
-.nav-link:hover {
-    opacity: 0.8;
-}
-
-/* Update navigation styles */
-#mainNav {
-    background: var(--dark-gradient) !important;
-    padding: 1rem 0;
-    z-index: 1030;
-}
-
-.navbar-toggler {
-    margin-right: 1rem;
-}
-
-/* Remove all the old navigation styles */
-.navbar:not(.fixed-top),
-.navbar.fixed-top,
-#mainNav.fixed-top {
-    /* Remove these rules */
+.btn-group .btn.active {
+    box-shadow: none;
 }
