@@ -4,27 +4,30 @@ A personal portfolio website showcasing three distinct professional brands: Iasi
 
 ## Brands
 
-### Iasi Edgardo Salomon
+### Iasi Salomon
 
-The main brand that represents my core identity as a professional. This brand encompasses my ability to create and manage multiple professional personas while maintaining authenticity.
+The main brand focused on strategy and technology consultancy. Specializes in:
+
+-   Strategic Planning
+-   Brand Development
+-   Operations Management
 
 ### Oxaciano
 
 The gaming and esports personality, focused on:
 
--   Esports Event Management
--   Live Streaming Production
--   Gaming Community Management
--   Entertainment Industry Expertise
+-   Production
+-   Events
+-   Streaming
 
 ### Glunis
 
-The technology and science professional, specialized in:
+Technology and science focused, specialized in:
 
--   Software Development
--   IT Project Management
--   Scientific Research
--   Technical Leadership
+-   Scrum Master
+-   Full Stack Development
+-   QA Automation
+-   DevOps
 
 ## Features
 
