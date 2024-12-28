@@ -19,74 +19,64 @@
     </head>
     <body>
         <!-- Header Section -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#brands">Brands</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#projects">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul>
+        <section id="home" class="min-vh-100 d-flex flex-column bg-dark text-white">
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+                <div class="container">
+                    <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#brands">Brands</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#projects">Projects</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <section
-            id="home"
-            class="min-vh-100 d-flex align-items-center bg-dark text-white"
-        >
-            <div class="container text-center">
-                <h1 class="display-2 mb-3">Iasi Salomon</h1>
-                <p class="lead mb-4">
-                    Brand Creator | Multi-Disciplinary Professional
-                </p>
-                <div class="social-links">
-                    <a
-                        href="https://github.com/iasisalomon"
-                        class="text-white mx-2 h4"
-                        target="_blank"
-                    >
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a
-                        href="https://linkedin.com/in/iasisalomon"
-                        class="text-white mx-2 h4"
-                        target="_blank"
-                    >
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a
-                        href="https://x.com/glunisok"
-                        class="text-white mx-2 h4"
-                        target="_blank"
-                    >
-                        <i class="fab fa-x-twitter"></i>
-                    </a>
-                    <a
-                        href="https://t.me/oxaciano"
-                        class="text-white mx-2 h4"
-                        target="_blank"
-                    >
-                        <i class="fab fa-telegram"></i>
-                    </a>
+            </nav>
+            <div class="flex-grow-1 d-flex align-items-center">
+                <div class="container text-center">
+                    <h1 class="display-2 mb-3">Iasi Salomon</h1>
+                    <p class="lead mb-4">Project Manager | Full Stack Developer | Entrepreneur</p>
+                    <div class="social-links">
+                        <a
+                            href="https://github.com/iasisalomon"
+                            class="text-white mx-2 h4"
+                            target="_blank"
+                        >
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a
+                            href="https://linkedin.com/in/iasisalomon"
+                            class="text-white mx-2 h4"
+                            target="_blank"
+                        >
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a
+                            href="https://x.com/glunisok"
+                            class="text-white mx-2 h4"
+                            target="_blank"
+                        >
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
+                        <a
+                            href="https://t.me/oxaciano"
+                            class="text-white mx-2 h4"
+                            target="_blank"
+                        >
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -96,8 +86,8 @@
             <div class="container">
                 <h2 class="text-center display-4 mb-3">My Brands</h2>
                 <div class="section-divider bg-light"></div>
-
-                <!-- Add this right after the Brands title -->
+                
+                <!-- Brands Navigation -->
                 <div id="brands-nav" class="text-center mb-5">
                     <div class="d-flex justify-content-center gap-3">
                         <a href="#iasi-brand" class="btn btn-outline-dark">Iasi</a>
@@ -106,151 +96,66 @@
                     </div>
                 </div>
 
-                <!-- Main Brand -->
-                <div id="iasi-brand" class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-black text-white">
-                    <div class="col-lg-6">
-                        <h3 class="display-3 mb-4">Iasi Salomon</h3>
-                        <p class="lead fs-3 mb-4">
-                            The mastermind behind multiple successful brands and
-                            ventures.
-                        </p>
-                        <p class="fs-5 mb-4">
-                            A versatile professional with the ability to create
-                            and manage distinct personalities while maintaining
-                            authenticity across different domains.
-                        </p>
-                        <div class="mt-4 d-flex align-items-center">
-                            <a
-                                href="https://linkedin.com/in/iasisalomon"
-                                class="btn btn-outline-light btn-lg px-4 me-3"
-                                target="_blank"
-                            >
-                                <i class="fab fa-linkedin me-2"></i>LinkedIn
-                            </a>
+                <!-- Brands Grid -->
+                <div class="row g-4">
+                    <!-- Iasi Brand -->
+                    <div id="iasi-brand" class="col-lg-4">
+                        <div class="brand-section h-100 p-4 rounded-4 gradient-black text-white">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-user-tie display-3 mb-3 opacity-75"></i>
+                                <h3 class="h2 mb-3">Iasi Salomon</h3>
+                                <p class="lead mb-4">Brand Creator & Multi-Disciplinary Professional</p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="https://linkedin.com/in/iasisalomon" class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-linkedin me-2"></i>LinkedIn
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 text-center">
-                        <i
-                            class="fas fa-user-tie display-1 mb-4 opacity-75"
-                        ></i>
-                    </div>
-                    <div class="col-12 text-center mt-5">
-                        <a href="#brands-nav" class="btn btn-link text-white text-decoration-none">
-                            <i class="fas fa-chevron-up me-2"></i>Back to Brands
-                        </a>
-                    </div>
-                </div>
 
-                <!-- Oxaciano Brand -->
-                <div id="oxaciano-brand" class="brand-section row mb-5 align-items-center p-5 rounded-4 gradient-danger text-white">
-                    <div class="col-lg-6">
-                        <h3 class="display-3 mb-4">Oxaciano</h3>
-                        <p class="lead fs-3 mb-4">
-                            Gaming & Esports Professional
-                        </p>
-                        <ul class="list-unstyled fs-5">
-                            <li class="mb-3">
-                                <i class="fas fa-gamepad me-3"></i>Esports Event
-                                Management
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-video me-3"></i>Live Streaming
-                                Production
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-users me-3"></i>Gaming
-                                Community Management
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-tv me-3"></i>Entertainment
-                                Industry Expert
-                            </li>
-                        </ul>
-                        <div class="mt-4 d-flex flex-wrap gap-3">
-                            <a
-                                href="https://x.com/oxaciano"
-                                class="btn btn-outline-light btn-lg px-4"
-                                target="_blank"
-                            >
-                                <i class="fab fa-x-twitter me-2"></i>Twitter
-                            </a>
-                            <a
-                                href="https://instagram.com/oxaciano"
-                                class="btn btn-outline-light btn-lg px-4"
-                                target="_blank"
-                            >
-                                <i class="fab fa-instagram me-2"></i>Instagram
-                            </a>
-                            <a
-                                href="https://tiktok.com/@oxaciano"
-                                class="btn btn-outline-light btn-lg px-4"
-                                target="_blank"
-                            >
-                                <i class="fab fa-tiktok me-2"></i>TikTok
-                            </a>
-                            <a
-                                href="https://lol.fandom.com/wiki/Oxaciano"
-                                class="btn btn-outline-light btn-lg px-4"
-                                target="_blank"
-                            >
-                                <i class="fas fa-trophy me-2"></i>Leaguepedia
-                            </a>
+                    <!-- Oxaciano Brand -->
+                    <div id="oxaciano-brand" class="col-lg-4">
+                        <div class="brand-section h-100 p-4 rounded-4 gradient-danger text-white">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-gamepad display-3 mb-3 opacity-75"></i>
+                                <h3 class="h2 mb-3">Oxaciano</h3>
+                                <p class="lead mb-4">Gaming & Esports Professional</p>
+                            </div>
+                            <div class="d-flex flex-wrap justify-content-center gap-2">
+                                <a href="https://x.com/oxaciano" class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-x-twitter me-2"></i>Twitter
+                                </a>
+                                <a href="https://instagram.com/oxaciano" class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-instagram me-2"></i>Instagram
+                                </a>
+                                <a href="https://tiktok.com/@oxaciano" class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-tiktok me-2"></i>TikTok
+                                </a>
+                                <a href="https://lol.fandom.com/wiki/Oxaciano" class="btn btn-outline-light" target="_blank">
+                                    <i class="fas fa-trophy me-2"></i>Leaguepedia
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 text-center">
-                        <i class="fas fa-gamepad display-1 mb-4 opacity-75"></i>
-                    </div>
-                    <div class="col-12 text-center mt-5">
-                        <a href="#brands-nav" class="btn btn-link text-white text-decoration-none">
-                            <i class="fas fa-chevron-up me-2"></i>Back to Brands
-                        </a>
-                    </div>
-                </div>
 
-                <!-- Glunis Brand -->
-                <div id="glunis-brand" class="brand-section row align-items-center p-5 rounded-4 gradient-success text-white">
-                    <div class="col-lg-6">
-                        <h3 class="display-3 mb-4">Glunis</h3>
-                        <p class="lead fs-3 mb-4">
-                            Tech & Science Professional
-                        </p>
-                        <ul class="list-unstyled fs-5">
-                            <li class="mb-3">
-                                <i class="fas fa-code me-3"></i>Software
-                                Development
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-tasks me-3"></i>IT Project
-                                Management
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-flask me-3"></i>Scientific
-                                Research
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-brain me-3"></i>Technical
-                                Leadership
-                            </li>
-                        </ul>
-                        <div class="mt-4 d-flex align-items-center">
-                            <a
-                                href="https://x.com/glunisok"
-                                class="btn btn-outline-light btn-lg px-4"
-                                target="_blank"
-                            >
-                                <i class="fab fa-x-twitter me-2"></i>Twitter
-                            </a>
+                    <!-- Glunis Brand -->
+                    <div id="glunis-brand" class="col-lg-4">
+                        <div class="brand-section h-100 p-4 rounded-4 gradient-success text-white">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-laptop-code display-3 mb-3 opacity-75"></i>
+                                <h3 class="h2 mb-3">Glunis</h3>
+                                <p class="lead mb-4">Tech & Science Professional</p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="https://x.com/glunisok" class="btn btn-outline-light me-2" target="_blank">
+                                    <i class="fab fa-x-twitter me-2"></i>Twitter
+                                </a>
+                                <a href="https://github.com/iasisalomon" class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-github me-2"></i>GitHub
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 text-center">
-                        <i
-                            class="fas fa-laptop-code display-1 mb-4 opacity-75"
-                        ></i>
-                    </div>
-                    <div class="col-12 text-center mt-5">
-                        <a href="#brands-nav" class="btn btn-link text-white text-decoration-none">
-                            <i class="fas fa-chevron-up me-2"></i>Back to Brands
-                        </a>
                     </div>
                 </div>
             </div>
@@ -454,6 +359,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/filterCards.js"></script>
         <script src="js/sortByDate.js"></script>
+        <script src="js/stickyNav.js"></script>
     </body>
 </html>
 
