@@ -99,3 +99,39 @@ footer.bg-dark a:not(.btn) {
 .bg-light .text-muted {
     color: #6c757d !important;
 }
+
+/* Add smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Add padding to account for fixed navbar */
+#brands-nav {
+    padding-top: 100px;
+    margin-top: -100px;
+}
+
+/* Add scroll margin to section targets */
+#brands,
+#brands-nav,
+#ies-brand,
+#oxaciano-brand,
+#glunis-brand {
+    scroll-margin-top: 100px;
+}
+
+/* Style for back to brands button */
+.btn-link.text-white {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.btn-link.text-white:hover {
+    opacity: 1;
+}
+
+/* Change icon from arrow-up to chevron-up */
+.btn-link.text-white .fas {
+    font-size: 0.8rem;
+}
