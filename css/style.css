@@ -3,41 +3,36 @@
     --dark-gradient: linear-gradient(145deg, #111111 0%, #222222 100%);
 }
 
-/* Base styles */
-html {
-    scroll-behavior: smooth;
-}
-
+/* HTML Elements (alphabetically) */
 body {
     color: #212529;
 }
 
-/* Navigation */
-#mainNav {
-    background: var(--dark-gradient) !important;
-    padding: 1rem 0;
-    z-index: 1030;
-    position: fixed;
-    width: 100%;
-    transition: all 0.3s ease;
+html {
+    scroll-behavior: smooth;
 }
 
-.navbar-toggler {
-    margin-right: 1rem;
+section {
+    padding-top: 52px;
+    position: relative;
 }
 
-.nav-link {
-    transition: opacity 0.3s ease;
+/* Classes (alphabetically) */
+.bg-light {
+    color: #212529;
 }
 
-.nav-link:hover {
-    opacity: 0.8;
+.bg-light a:not(.btn) {
+    color: #212529;
 }
 
-/* Brand sections */
+.bg-light .text-muted {
+    color: #6c757d !important;
+}
+
 .brand-section {
-    transition: all 0.3s ease;
     height: 100%;
+    transition: all 0.3s ease;
 }
 
 .brand-section:hover {
@@ -45,9 +40,19 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Brand colors */
-.bg-dark {
-    background: var(--dark-gradient) !important;
+.btn-group .btn.active {
+    box-shadow: none;
+}
+
+.card {
+    background: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .gradient-black {
@@ -62,29 +67,256 @@ body {
     background: linear-gradient(145deg, #004d40 0%, #00897b 100%);
 }
 
-/* Project cards */
-.card {
-    background: white;
-    border: none;
-    transition: all 0.3s ease;
+.navbar-offset {
+    height: 52px;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.profile-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.1);
 }
 
 .project-card {
     transition: opacity 0.3s ease;
 }
 
-/* Section divider */
 .section-divider {
     height: 5px;
     width: 50px;
     margin: 20px auto;
     border-radius: 5px;
     background: rgba(0, 0, 0, 0.1);
+}
+
+/* IDs (alphabetically) */
+#about {
+    background: white;
+    color: #212529;
+    position: relative;
+    z-index: 1;
+    margin-top: -1px;
+    padding-top: 46px;
+    margin-bottom: -1px;
+}
+
+#about .btn-dark {
+    background: var(--dark-gradient);
+    border: none;
+}
+
+#about .btn-dark:hover {
+    background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+#about .section-divider {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#about .text-muted {
+    color: #6c757d !important;
+}
+
+#brands {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 45px;
+}
+
+#home {
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    background: var(--dark-gradient);
+}
+
+#home .container {
+    padding-top: 52px;
+    padding-bottom: 20px;
+}
+
+#home .flex-grow-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#mainNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 52px;
+    background: var(--dark-gradient);
+    z-index: 1050;
+    padding: 4px 0;
+}
+
+#mainNav .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#mainNav .navbar-collapse {
+    height: 100%;
+}
+
+#mainNav .navbar-nav {
+    height: 52px;
+    display: flex;
+    align-items: center;
+}
+
+#mainNav .nav-link {
+    padding: 0.25rem 1rem !important;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: color 0.2s ease;
+    line-height: 1.2;
+}
+
+#mainNav .nav-link:hover {
+    color: #ffffff !important;
+}
+
+#mainNav .navbar-toggler {
+    padding: 0.15rem 0.5rem 0.35rem;
+    font-size: 0.9rem;
+    margin: 6px 0;
+}
+
+/* Media Queries (at the end) */
+@media (max-width: 991.98px) {
+    #mainNav {
+        height: auto;
+    }
+    
+    #mainNav .navbar-collapse {
+        background: var(--dark-gradient);
+        padding: 0.5rem 0;
+    }
+    
+    #mainNav .navbar-nav {
+        height: auto;
+    }
+}
+
+/* Update scroll margins */
+#home,
+#about,
+#brands,
+#projects,
+#contact {
+    scroll-margin-top: 52px;
+}
+
+/* Ensure proper header spacing */
+#home .container {
+    padding-top: 52px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+    #mainNav {
+        height: auto;
+    }
+    
+    #mainNav .navbar-collapse {
+        background: var(--dark-gradient);
+        padding: 0.5rem 0;
+    }
+    
+    #mainNav .navbar-nav {
+        height: auto;
+    }
+}
+
+/* Adjust vertical centering of header content */
+#home .flex-grow-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* Reset container padding in header */
+#home .container {
+    padding-top: 45px;
+    padding-bottom: 20px;
+}
+
+/* Adjust brands section to remove gap */
+#brands {
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 45px;
+}
+
+/* Brands navigation */
+#brands-nav {
+    padding-top: 50px;
+    margin-top: -50px;
+    display: none;
+}
+
+@media (max-width: 991px) {
+    #brands-nav {
+        display: block;
+    }
+}
+
+/* Back to brands button */
+.btn-link.text-white {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.btn-link.text-white:hover {
+    opacity: 1;
+}
+
+.btn-link.text-white .fas {
+    font-size: 0.8rem;
+}
+
+/* Add padding to sections to account for fixed navbar */
+section {
+    padding-top: 45px;
+    margin-top: -45px;
+}
+
+/* Update section margins for smooth scrolling */
+#home,
+#about,
+#brands,
+#projects,
+#contact {
+    scroll-margin-top: 45px;
 }
 
 /* Typography and colors */
@@ -113,58 +345,4 @@ footer.bg-dark a:not(.btn) {
 .gradient-danger .text-muted,
 .gradient-success .text-muted {
     color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Light sections text */
-.bg-light {
-    color: #212529;
-}
-
-.bg-light a:not(.btn) {
-    color: #212529;
-}
-
-.bg-light .text-muted {
-    color: #6c757d !important;
-}
-
-/* Brands navigation */
-#brands-nav {
-    padding-top: 50px;
-    margin-top: -50px;
-    display: none;
-}
-
-@media (max-width: 991px) {
-    #brands-nav {
-        display: block;
-    }
-}
-
-/* Section margins */
-#brands,
-#brands-nav,
-#ies-brand,
-#oxaciano-brand,
-#glunis-brand {
-    scroll-margin-top: 100px;
-}
-
-/* Back to brands button */
-.btn-link.text-white {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.btn-link.text-white:hover {
-    opacity: 1;
-}
-
-.btn-link.text-white .fas {
-    font-size: 0.8rem;
-}
-
-.btn-group .btn.active {
-    box-shadow: none;
 }
