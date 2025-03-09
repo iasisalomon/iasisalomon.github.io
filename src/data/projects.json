@@ -1,0 +1,161 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AxieCon Barcelona",
+      "description": "Hosted and produced Sky Mavis' first global conference, bringing together thousands of Axie Infinity community members.",
+      "image": "/blog-placeholder-1.jpg",
+      "brand": "oxaciano",
+      "date": "2022-09-01",
+      "category": "event",
+      "skills": ["Event Production", "Live Streaming", "Community", "Esports"],
+      "tags": ["Event", "Project Management"],
+      "links": [
+        { "text": "Blog", "url": "https://blog.axieinfinity.com/p/axiecon", "icon": "fas fa-link" },
+        { "text": "Days 1&2", "url": "https://www.youtube.com/watch?v=lu_N8kx-I2U", "icon": "fab fa-youtube" },
+        { "text": "Days 3&4", "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY", "icon": "fab fa-youtube" }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Challenge: Toolbox",
+      "description": "Full-stack application that processes CSV files from an external API. Built with Node.js, React, and Docker.",
+      "image": "/blog-placeholder-2.jpg",
+      "brand": "glunis",
+      "date": "2022-09-01",
+      "category": "code",
+      "skills": ["Node.js", "React", "Docker", "Redux"],
+      "tags": ["Full Stack", "API", "Development", "DevOps"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_toolbox", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Calliv",
+      "description": "Data science project focused on analyzing and processing scientific data.",
+      "image": "/blog-placeholder-3.jpg",
+      "brand": "glunis",
+      "date": "2021-10-01",
+      "category": "data-science",
+      "skills": ["Vue", "Nuxt.js", "TensorFlow", "SSR", "CSV"],
+      "tags": ["Data Cleanup", "Data Visualization"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/calliv", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Associate Professor",
+      "description": "Cryptoeconomy at Universidad Nacional de Cuyo. Digital economies in the blockchain market. Digital collectibles values. Economies of attention.",
+      "image": "/blog-placeholder-4.jpg",
+      "brand": "iasi",
+      "date": "2024-01-01",
+      "category": "education",
+      "skills": ["Blockchain", "Digital Economy"],
+      "tags": ["Education"],
+      "links": [
+        { "text": "Course", "url": "https://fce.uncuyo.edu.ar/cursos/curso/diplomado-en-criptoeconomia", "icon": "fas fa-link" },
+        { "text": "University", "url": "https://www.uncuyo.edu.ar/", "icon": "fas fa-university" }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Challenge: Code Care",
+      "description": "Vue.js application that reads input line by line and identifies characters appearing exactly twice. Built with Vuex for state management.",
+      "image": "/blog-placeholder-5.jpg",
+      "brand": "glunis",
+      "date": "2021-10-01",
+      "category": "code",
+      "skills": ["Vue.js", "JavaScript", "Vuex"],
+      "tags": ["Full Stack", "Development"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_CodeCare", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Challenge: Bravo Care",
+      "description": "Full-stack application with PostgreSQL database, Express API for data querying and transformation, and React frontend for displaying results.",
+      "image": "/blog-placeholder-1.jpg",
+      "brand": "glunis",
+      "date": "2022-10-01",
+      "category": "code",
+      "skills": ["React", "Node.js", "PostgreSQL", "Docker"],
+      "tags": ["Full Stack", "Development"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_Bravocare", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "MTG Top8 Scraper",
+      "description": "Automated web scraper built with Puppeteer to collect and analyze Magic: The Gathering tournament data from MTGTop8.",
+      "image": "/blog-placeholder-2.jpg",
+      "brand": "glunis",
+      "date": "2022-11-01",
+      "category": "code",
+      "skills": ["Node.js", "Puppeteer", "JSON"],
+      "tags": ["Automation", "Web Scraping"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/mtgtop8_scrapper", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Practice: JWT Authentication",
+      "description": "Authentication system implementation using JSON Web Tokens (JWT) with Express.js and EJS templating.",
+      "image": "/blog-placeholder-3.jpg",
+      "brand": "glunis",
+      "date": "2024-08-01",
+      "category": "code",
+      "skills": ["Node.js", "Express", "JWT", "EJS"],
+      "tags": ["Backend"],
+      "links": [
+        { "text": "Repository", "url": "https://github.com/iasisalomon/jwt_practice", "icon": "fab fa-github" }
+      ]
+    }
+  ],
+  "brands": [
+    {
+      "id": "iasi",
+      "name": "Iasi Salomon",
+      "description": "Business Consultant",
+      "color": "dark",
+      "gradientClass": "gradient-black",
+      "icon": "fas fa-user-tie",
+      "tags": ["Strategy", "Brand", "Operations", "Organizational Analysis"],
+      "links": [
+        { "text": "LinkedIn", "url": "https://linkedin.com/in/iasisalomon", "icon": "fab fa-linkedin" }
+      ]
+    },
+    {
+      "id": "glunis",
+      "name": "Glunis",
+      "description": "Coding, Blockchain, AI & Biotech",
+      "color": "success",
+      "gradientClass": "gradient-success",
+      "icon": "fas fa-laptop-code",
+      "tags": ["Scrum Master", "Full Stack Development", "QA Automation", "DevOps"],
+      "links": [
+        { "text": "Twitter", "url": "https://x.com/glunisok", "icon": "fab fa-x-twitter" },
+        { "text": "GitHub", "url": "https://github.com/iasisalomon", "icon": "fab fa-github" }
+      ]
+    },
+    {
+      "id": "oxaciano",
+      "name": "Oxaciano",
+      "description": "Gaming & Esports",
+      "color": "danger",
+      "gradientClass": "gradient-danger",
+      "icon": "fas fa-gamepad",
+      "tags": ["Production", "Events", "Streaming", "Caster", "Stage Host", "Social Media"],
+      "links": [
+        { "text": "Twitter", "url": "https://x.com/oxaciano", "icon": "fab fa-x-twitter" },
+        { "text": "Instagram", "url": "https://instagram.com/oxaciano", "icon": "fab fa-instagram" },
+        { "text": "TikTok", "url": "https://tiktok.com/@oxaciano", "icon": "fab fa-tiktok" },
+        { "text": "Leaguepedia", "url": "https://lol.fandom.com/wiki/Oxaciano", "icon": "fas fa-trophy" }
+      ]
+    }
+  ]
+} 

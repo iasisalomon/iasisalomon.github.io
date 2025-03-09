@@ -1,0 +1,76 @@
+---
+import projectsData from '../data/projects.json';
+const { brands } = projectsData;
+---
+
+<section id="brands" class="py-6 bg-light">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-4">Brands</h2>
+    <div class="section-divider mb-5"></div>
+
+    <!-- Brands Grid -->
+    <div class="row g-4">
+      {brands.map(brand => (
+        <div id={`${brand.id}-brand`} class="col-lg-4">
+          <div class={`brand-section h-100 p-4 p-lg-5 rounded-4 ${brand.gradientClass} text-white`}>
+            <div class="text-center mb-4">
+              <i class={`${brand.icon} display-3 mb-4 opacity-75`}></i>
+              <h3 class="h2 mb-3">{brand.name}</h3>
+              <p class="lead mb-4">{brand.description}</p>
+              <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                {brand.tags.map(tag => (
+                  <span class="badge bg-light text-dark border">{tag}</span>
+                ))}
+              </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              {brand.links.map(link => (
+                <a href={link.url} class={`btn btn-outline-light mb-2`} target="_blank" rel="noopener noreferrer">
+                  <i class={`${link.icon} me-2`}></i>{link.text}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .py-6 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .section-divider {
+    height: 1px;
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+  }
+  
+  .brand-section {
+    transition: transform 0.3s ease;
+  }
+  
+  .brand-section:hover {
+    transform: translateY(-5px);
+  }
+  
+  .badge {
+    font-weight: 500;
+    padding: 0.5em 0.75em;
+  }
+  
+  @media (max-width: 768px) {
+    .py-6 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    
+    h2.display-4 {
+      font-size: 2.5rem;
+    }
+  }
+</style> 

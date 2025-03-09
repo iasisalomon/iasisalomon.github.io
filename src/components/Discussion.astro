@@ -1,0 +1,174 @@
+---
+// No props needed for this component
+---
+
+<section id="discussion" class="py-6 bg-dark text-white">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Left Column - Information -->
+      <div class="col-lg-7">
+        <h2 class="text-center mt-1 fw-bold mb-4">Let's Discuss Your Project</h2>
+        
+        <p class="lead mb-5 text-light opacity-75">I provide expert consultation on various aspects of business and technology development. Schedule a no-obligation call to explore how we can work together.</p>
+        
+        <!-- Experience Points -->
+        <div class="experience-points">
+          <div class="point-item d-flex align-items-start mb-4">
+            <div class="point-icon me-3">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+              <h3 class="h5 mb-2">Strategic Guidance</h3>
+              <p class="text-light opacity-75 mb-0">Get expert advice on solving complex business and technology challenges</p>
+            </div>
+          </div>
+          
+          <div class="point-item d-flex align-items-start mb-4">
+            <div class="point-icon me-3">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div>
+              <h3 class="h5 mb-2">Professional Mentorship</h3>
+              <p class="text-light opacity-75 mb-0">Guidance for your academic or early professional journey</p>
+            </div>
+          </div>
+          
+          <div class="point-item d-flex align-items-start">
+            <div class="point-icon me-3">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <div>
+              <h3 class="h5 mb-2">Collaboration Opportunities</h3>
+              <p class="text-light opacity-75 mb-0">Explore potential partnerships and joint venture possibilities</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Call to Action -->
+      <div class="col-lg-5">
+        <div class="cta-card text-center p-4 p-lg-5">
+          <h3 class="h4 mb-3">Ready to get started?</h3>
+          <p class="mb-4 text-light opacity-75">Schedule a 30-minute consultation to discuss your project needs.</p>
+          
+          <a href="https://calendly.com/iasisalomon" class="btn btn-light btn-lg w-100 mb-4" target="_blank" rel="noopener noreferrer">
+            <i class="far fa-calendar-alt me-2"></i>Schedule a Meeting
+          </a>
+          
+          <div class="mt-4 pt-4 border-top border-secondary">
+            <p class="small text-light opacity-75 mb-3">Prefer email?</p>
+            <a href="mailto:contact@iasisalomon.com" class="btn btn-outline-light">
+              <i class="far fa-envelope me-2"></i>Send an Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Enhanced minimalistic styling */
+  .py-6 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  #discussion {
+    background-color: #212529;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #discussion::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .experience-points {
+    margin-left: 0.5rem;
+  }
+  
+  .point-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .cta-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .btn-light {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    color: #212529;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-light:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    transform: translateY(-2px);
+  }
+  
+  .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 992px) {
+    .experience-points {
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    h2.display-4 {
+      font-size: 2.5rem;
+    }
+    
+    .py-6 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    
+    .point-item {
+      margin-bottom: 2rem !important;
+    }
+    
+    .point-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+  }
+</style> 

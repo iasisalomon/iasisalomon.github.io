@@ -1,0 +1,78 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Iasi Salomon - Multi-Brand Portfolio",
+  description = "Portfolio showcasing multiple brands and projects by Iasi Salomon"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <style is:global>
+      /* Global spacing utility classes */
+      .py-6 {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+      
+      .section-divider {
+        height: 1px;
+        width: 60px;
+        background-color: rgba(0, 0, 0, 0.2);
+        margin: 0 auto 2rem;
+      }
+      
+      .section-divider.bg-light {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      section {
+        overflow: hidden;
+      }
+      
+      @media (max-width: 768px) {
+        .py-6 {
+          padding-top: 4rem;
+          padding-bottom: 4rem;
+        }
+        
+        h2.display-4 {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar-offset"></div>
+    <slot />
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" is:inline></script>
+    <!-- Custom JS -->
+    <script src="/js/filterCards.js" is:inline></script>
+    <script src="/js/emailProtection.js" is:inline></script>
+    <script src="/js/sortByDate.js" is:inline></script>
+  </body>
+</html> 

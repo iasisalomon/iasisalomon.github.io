@@ -1,0 +1,92 @@
+---
+import MainLayout from './MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CustomFooter from '../components/CustomFooter.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	publishDate: Date;
+}
+
+const { title, description, publishDate } = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+	<Navbar />
+	
+	<article class="py-5 mt-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<h1 class="mb-3">{title}</h1>
+					<p class="text-muted mb-4">
+						Published on <FormattedDate date={publishDate} />
+					</p>
+					
+					<div class="content">
+						<slot />
+					</div>
+					
+					<div class="mt-5 pt-3 border-top">
+						<a href="/blog" class="btn btn-outline-primary">
+							<i class="fas fa-arrow-left me-2"></i> Back to Blog
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+	
+	<CustomFooter />
+</MainLayout>
+
+<style is:global>
+	.content h2 {
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+	
+	.content p {
+		margin-bottom: 1.5rem;
+		line-height: 1.7;
+	}
+	
+	.content ul, .content ol {
+		margin-bottom: 1.5rem;
+		padding-left: 1.5rem;
+	}
+	
+	.content li {
+		margin-bottom: 0.5rem;
+	}
+	
+	.content img {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+		margin: 2rem 0;
+	}
+	
+	.content blockquote {
+		border-left: 4px solid #dee2e6;
+		padding-left: 1rem;
+		margin-left: 0;
+		margin-right: 0;
+		font-style: italic;
+	}
+	
+	.content hr {
+		margin: 2rem 0;
+	}
+	
+	.content a {
+		color: #0d6efd;
+		text-decoration: none;
+	}
+	
+	.content a:hover {
+		text-decoration: underline;
+	}
+</style>

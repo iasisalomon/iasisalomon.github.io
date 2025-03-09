@@ -1,0 +1,98 @@
+---
+// Define any props or imports here if needed
+---
+
+<section id="home" class="min-vh-100 d-flex flex-column bg-dark text-white">
+  <div class="flex-grow-1 d-flex align-items-center">
+    <div class="container text-center">
+      <div class="profile-image mb-5">
+        <img
+          src="/images/cara.jpg"
+          alt="Iasi Salomon"
+          class="rounded-circle img-fluid shadow-lg"
+          width="180"
+          height="180"
+        />
+      </div>
+      <h1 class="display-2 mb-4">Iasi Salomon</h1>
+      <p class="lead mb-5">Project Manager | Consultant</p>
+      <div class="social-links">
+        <a
+          href="https://github.com/iasisalomon"
+          class="text-white mx-3 h4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        <a
+          href="https://linkedin.com/in/iasisalomon"
+          class="text-white mx-3 h4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a
+          href="https://x.com/glunisok"
+          class="text-white mx-3 h4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-x-twitter"></i>
+        </a>
+        <a
+          href="https://t.me/oxaciano"
+          class="text-white mx-3 h4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-telegram-plane"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #home {
+    padding-top: 76px; /* Account for fixed navbar */
+  }
+  
+  .profile-image img {
+    border: 4px solid rgba(255,255,255,0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .profile-image img:hover {
+    transform: scale(1.05);
+  }
+  
+  .social-links {
+    margin-top: 2rem;
+  }
+  
+  .social-links a {
+    transition: opacity 0.2s;
+  }
+  
+  .social-links a:hover {
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-image img {
+      width: 150px;
+      height: 150px;
+    }
+    
+    #home {
+      padding-top: 60px;
+    }
+    
+    .social-links a {
+      margin-left: 0.75rem !important;
+      margin-right: 0.75rem !important;
+    }
+  }
+</style> 

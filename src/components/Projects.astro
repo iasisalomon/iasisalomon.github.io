@@ -1,0 +1,156 @@
+---
+import projectsData from '../data/projects.json';
+const { projects, brands } = projectsData;
+---
+
+<section id="projects" class="py-6">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-4">Projects</h2>
+    <div class="section-divider mb-5"></div>
+    
+    <!-- Filter Buttons -->
+    <div class="mb-5">
+      <div class="d-flex justify-content-center">
+        <div class="btn-group filters-group" role="group" aria-label="Brand filters">
+          <button type="button" class="btn btn-outline-secondary active" data-filter="all">
+            All Brands
+          </button>
+          {brands.map(brand => (
+            <button type="button" class={`btn btn-outline-${brand.color}`} data-filter={brand.id}>
+              {brand.name}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Projects Grid -->
+    <div class="row g-4">
+      {projects.map(project => {
+        const brand = brands.find(b => b.id === project.brand);
+        return (
+          <div class="col-md-4 project-card mb-4" data-brand={project.brand} data-category={project.category}>
+            <div class="card h-100 shadow-lg rounded-4 overflow-hidden">
+              <div class="card-body p-4 p-lg-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <span class={`badge bg-${brand?.color || 'primary'}`}>{brand?.name || project.brand}</span>
+                  <i class={`${brand?.icon || 'fas fa-briefcase'} text-${brand?.color || 'primary'} h2 mb-0`}></i>
+                </div>
+
+                <h5 class="card-title h4 fw-bold mb-2">{project.title}</h5>
+                <div class="text-muted small mb-3">
+                  {new Date(project.date).toLocaleDateString('en-us', { month: 'long', year: 'numeric' })}
+                </div>
+
+                <div class="d-flex gap-2 mb-4 flex-wrap">
+                  {project.tags?.map(tag => (
+                    <span class="badge bg-light text-dark border">{tag}</span>
+                  ))}
+                </div>
+
+                <p class="card-text mb-4">{project.description}</p>
+
+                <div class="skills-container mb-4">
+                  {project.skills?.map(skill => (
+                    <span class="badge bg-secondary me-2 mb-2">{skill}</span>
+                  ))}
+                </div>
+
+                <div class="link-button-container">
+                  {project.links?.map(link => (
+                    <a href={link.url} class={`btn btn-outline-${brand?.color || 'primary'} me-2 mb-2`} target="_blank" rel="noopener noreferrer">
+                      <i class={`${link.icon} me-2`}></i>{link.text}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .py-6 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  .section-divider {
+    height: 1px;
+    width: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+  }
+  
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+  }
+  
+  .filters-group {
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    justify-content: center;
+  }
+  
+  .badge {
+    font-weight: 500;
+    padding: 0.5em 0.75em;
+  }
+  
+  @media (max-width: 768px) {
+    .py-6 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    
+    h2.display-4 {
+      font-size: 2.5rem;
+    }
+    
+    .card-body {
+      padding: 1.5rem !important;
+    }
+  }
+</style>
+
+<script>
+  // Filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from siblings
+        const group = this.parentElement;
+        group.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        const selectedBrand = this.dataset.filter;
+        
+        // Filter cards
+        projectCards.forEach(card => {
+          const matchesBrand = selectedBrand === 'all' || card.dataset.brand === selectedBrand;
+          
+          if (matchesBrand) {
+            card.style.display = '';
+            card.style.opacity = '1';
+          } else {
+            card.style.display = 'none';
+            card.style.opacity = '0';
+          }
+        });
+      });
+    });
+  });
+</script> 

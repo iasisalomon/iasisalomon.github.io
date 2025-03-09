@@ -1,0 +1,239 @@
+---
+// Define any props or imports here if needed
+---
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <button
+      class="navbar-toggler ms-auto"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about" data-section="about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#brands" data-section="brands">Brands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#projects" data-section="projects">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#discussion" data-section="discussion">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/blog">Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<style>
+  #mainNav {
+    background-color: rgba(33, 37, 41, 0.95);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-nav .nav-item {
+    margin: 0 0.25rem;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+  }
+  
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  
+  .navbar-nav .nav-link:hover::after,
+  .navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+  }
+  
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+  
+  @media (max-width: 992px) {
+    #mainNav {
+      padding: 0.75rem 0;
+    }
+    
+    .navbar-nav {
+      padding: 1rem 0;
+    }
+    
+    .navbar-nav .nav-item {
+      margin: 0;
+    }
+    
+    .navbar-nav .nav-link {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-nav .nav-link::after {
+      display: none;
+    }
+    
+    .navbar-nav .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all navigation links that have hash IDs (excluding the Home link)
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    
+    // Track active section without using URL hash
+    let activeSection = 'about'; // Default to about since home is now a page
+    
+    // Add active class based on current active section
+    function setActiveNavItem(sectionId) {
+      activeSection = sectionId.replace('#', '');
+      
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === sectionId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      
+      // Special handling for home link
+      const homeLink = document.querySelector('.nav-link[href="/"]');
+      const aboutLink = document.querySelector('.nav-link[href="#about"]');
+      
+      // If we're at the top of the page, activate home link
+      if (window.scrollY < 100) {
+        homeLink.classList.add('active');
+        aboutLink.classList.remove('active');
+      } else {
+        homeLink.classList.remove('active');
+      }
+    }
+    
+    // Handle smooth scrolling without URL updates
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Get the section ID from the href attribute
+        const sectionId = this.getAttribute('href');
+        const section = document.querySelector(sectionId);
+        
+        if (section) {
+          // Add active class to clicked nav item
+          setActiveNavItem(sectionId);
+          
+          // Smoothly scroll to the section
+          const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+          const sectionTop = section.offsetTop;
+          
+          window.scrollTo({
+            top: sectionTop - navbarHeight,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu when a link is clicked
+          const navbarCollapse = document.getElementById('navbarNav');
+          if (navbarCollapse.classList.contains('show')) {
+            document.querySelector('.navbar-toggler').click();
+          }
+        }
+      });
+    });
+    
+    // Update active nav item when user scrolls manually
+    window.addEventListener('scroll', function() {
+      // Add a small delay to avoid excessive calculation during scroll
+      if (!window.scrollTimeout) {
+        window.scrollTimeout = setTimeout(function() {
+          const scrollPosition = window.scrollY;
+          const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+          
+          // Special handling for home link
+          const homeLink = document.querySelector('.nav-link[href="/"]');
+          
+          // If we're at the top of the page, activate home link
+          if (scrollPosition < 100) {
+            homeLink.classList.add('active');
+            navLinks.forEach(link => link.classList.remove('active'));
+            return;
+          } else {
+            homeLink.classList.remove('active');
+          }
+          
+          // Find the current visible section
+          let currentSection = null;
+          
+          document.querySelectorAll('section[id]').forEach(section => {
+            const sectionTop = section.offsetTop - navbarHeight - 10; // 10px tolerance
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+              currentSection = '#' + section.id;
+            }
+          });
+          
+          // If found a visible section, update active nav without changing URL
+          if (currentSection && '#' + activeSection !== currentSection) {
+            setActiveNavItem(currentSection);
+          }
+          
+          window.scrollTimeout = null;
+        }, 100);
+      }
+    });
+    
+    // Initial scroll to correct section if page is reloaded
+    if (window.location.hash) {
+      const targetSection = document.querySelector(window.location.hash);
+      if (targetSection) {
+        // Remove the hash from URL to avoid navigation issues
+        history.replaceState('', document.title, window.location.pathname);
+        
+        setTimeout(() => {
+          const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+          const sectionTop = targetSection.offsetTop;
+          
+          window.scrollTo({
+            top: sectionTop - navbarHeight,
+            behavior: 'smooth'
+          });
+          
+          setActiveNavItem('#' + targetSection.id);
+        }, 300); // Small delay to ensure DOM is fully loaded
+      }
+    }
+  });
+</script> 
