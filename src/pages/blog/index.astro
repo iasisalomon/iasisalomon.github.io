@@ -12,33 +12,41 @@ const posts = (await getCollection('blog')).sort(
 <MainLayout title="Blog | Iasi Salomon">
 	<Navbar />
 	
-	<section class="py-5 mt-5">
+	<section class="blog-section py-5 mt-5">
 		<div class="container">
-			<h1 class="text-center mb-5">Blog</h1>
+			<header class="blog-header">
+				<h1 class="blog-title">Articles</h1>
+				<p class="blog-description">Thoughts, ideas, and explorations</p>
+			</header>
 			
-			<div class="row g-4">
+			<div class="blog-grid">
 				{
-					posts.map((post) => (
-						<div class="col-md-4 mb-4">
-							<div class="card h-100">
-								<div class="card-body">
-									<h2 class="card-title h5">
-										<a href={`/blog/${post.slug}/`} class="text-decoration-none text-dark">
-											{post.data.title}
-										</a>
-									</h2>
-									<p class="text-muted small">
-										{post.data.pubDate ? post.data.pubDate.toLocaleDateString('en-us', {
-											year: 'numeric',
-											month: 'long',
-											day: 'numeric',
-										}) : 'No date available'}
-									</p>
-									<p class="card-text">{post.data.description}</p>
-									<a href={`/blog/${post.slug}/`} class="btn btn-primary">Read More</a>
+					posts.map((post, index) => (
+						<article class="blog-card" data-index={index}>
+							<a href={`/blog/${post.slug}/`} class="card-link">
+								<div class="card-image">
+									<img src={post.data.heroImage || '/images/blog/blog-placeholder-about.jpg'} alt={post.data.title} loading="lazy" />
 								</div>
-							</div>
-						</div>
+								<div class="card-content">
+									<header class="card-header">
+										{post.data.pubDate && (
+											<time datetime={post.data.pubDate.toISOString()} class="card-date">
+												{post.data.pubDate.toLocaleDateString('en-us', {
+													year: 'numeric',
+													month: 'short',
+													day: 'numeric',
+												})}
+											</time>
+										)}
+										<h2 class="card-title">{post.data.title}</h2>
+									</header>
+									<p class="card-excerpt">{post.data.description}</p>
+									<footer class="card-footer">
+										<span class="read-more">Read article →</span>
+									</footer>
+								</div>
+							</a>
+						</article>
 					))
 				}
 			</div>
@@ -47,3 +55,206 @@ const posts = (await getCollection('blog')).sort(
 	
 	<CustomFooter />
 </MainLayout>
+
+<style>
+	.blog-section {
+		margin: 2rem auto 6rem;
+	}
+	
+	.blog-header {
+		margin-bottom: 3rem;
+		text-align: center;
+	}
+	
+	.blog-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		letter-spacing: -0.02em;
+	}
+	
+	.blog-description {
+		font-size: 1.2rem;
+		color: #666;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+	
+	/* Blog Grid */
+	.blog-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+		gap: 2.5rem;
+	}
+	
+	.blog-card {
+		border-radius: 10px;
+		overflow: hidden;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+		background-color: white;
+		height: 100%;
+		animation: fadeIn 0.5s ease forwards;
+		opacity: 0;
+	}
+	
+	.card-image {
+		height: 200px;
+		overflow: hidden;
+	}
+	
+	.card-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+	
+	.blog-card:hover .card-image img {
+		transform: scale(1.05);
+	}
+	
+	.card-content {
+		padding: 1.8rem;
+		display: flex;
+		flex-direction: column;
+		height: calc(100% - 200px);
+	}
+	
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	
+	.blog-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+	}
+	
+	.card-link {
+		display: block;
+		height: 100%;
+		text-decoration: none;
+		color: inherit;
+	}
+	
+	.card-header {
+		margin-bottom: 1rem;
+	}
+	
+	.card-date {
+		display: block;
+		font-size: 0.85rem;
+		color: #777;
+		margin-bottom: 0.7rem;
+	}
+	
+	.card-title {
+		font-size: 1.4rem;
+		font-weight: 600;
+		line-height: 1.3;
+		margin: 0 0 0.5rem;
+		color: #333;
+		transition: color 0.2s ease;
+	}
+	
+	.blog-card:hover .card-title {
+		color: #0055ff;
+	}
+	
+	.card-excerpt {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #555;
+		margin-bottom: 1.5rem;
+		flex-grow: 1;
+	}
+	
+	.card-footer {
+		margin-top: auto;
+	}
+	
+	.read-more {
+		display: inline-block;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: #0055ff;
+		transition: transform 0.2s ease;
+	}
+	
+	.blog-card:hover .read-more {
+		transform: translateX(5px);
+	}
+	
+	@media (max-width: 768px) {
+		.blog-grid {
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+		
+		.blog-title {
+			font-size: 2rem;
+		}
+		
+		.blog-description {
+			font-size: 1.1rem;
+		}
+		
+		.card-content {
+			padding: 1.5rem;
+		}
+		
+		.card-title {
+			font-size: 1.3rem;
+		}
+	}
+	
+	/* Animation delay for staggered effect */
+	.blog-card:nth-child(1) { animation-delay: 0.1s; }
+	.blog-card:nth-child(2) { animation-delay: 0.2s; }
+	.blog-card:nth-child(3) { animation-delay: 0.3s; }
+	.blog-card:nth-child(4) { animation-delay: 0.4s; }
+	.blog-card:nth-child(5) { animation-delay: 0.5s; }
+	.blog-card:nth-child(6) { animation-delay: 0.6s; }
+	
+	@media (prefers-color-scheme: dark) {
+		.blog-card {
+			background-color: #f0f0f0;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+		}
+		
+		.blog-card:hover {
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+		}
+		
+		.blog-description {
+			color: #aaa;
+		}
+		
+		.card-date {
+			color: #666;
+		}
+		
+		.card-title {
+			color: #222;
+		}
+		
+		.card-excerpt {
+			color: #444;
+		}
+		
+		.read-more {
+			color: #0055ff;
+		}
+		
+		.blog-card:hover .card-title {
+			color: #0055ff;
+		}
+	}
+</style>
