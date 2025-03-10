@@ -4,18 +4,17 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
   <div class="container">
-    <a class="navbar-brand" href="/">Iasi Salomon</a>
     <button
-      class="navbar-toggler ms-auto"
+      class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <!-- Primary navigation - main site pages -->
-      <ul class="navbar-nav ms-auto primary-nav">
+      <ul class="navbar-nav primary-nav">
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
@@ -24,10 +23,10 @@
         </li>
       </ul>
       
-      <!-- Section navigation divider - only visible on homepage -->
+      <!-- Section navigation divider - only visible on homepage or blog -->
       <div class="nav-divider d-none d-lg-block" id="navDivider"></div>
       
-      <!-- Section navigation - page sections (only visible on homepage) -->
+      <!-- Section navigation - homepage sections (only visible on homepage) -->
       <ul class="navbar-nav section-nav" id="sectionNav">
         <li class="nav-item">
           <a class="nav-link" href="#about">About</a>
@@ -40,6 +39,19 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#discussion">Contact</a>
+        </li>
+      </ul>
+      
+      <!-- Blog categories navigation - only visible on blog page -->
+      <ul class="navbar-nav section-nav" id="blogNav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tech</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Business</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Other</a>
         </li>
       </ul>
     </div>
@@ -55,26 +67,9 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
   
-  .navbar-brand {
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    font-size: 1.2rem;
-    margin-right: 2rem;
-    background: linear-gradient(90deg, #fff, #a0cfff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-brand:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-  
   /* Primary navigation styling */
   .primary-nav {
-    margin-right: 1.5rem;
+    margin-right: 1rem;
   }
   
   .primary-nav .nav-item {
@@ -107,7 +102,7 @@
     width: 1px;
     height: 24px;
     background-color: rgba(255, 255, 255, 0.2);
-    margin: 0 0.75rem;
+    margin: 0 1rem;
   }
   
   /* Section navigation styling */
@@ -158,6 +153,7 @@
     padding: 0.4rem 0.6rem;
     font-size: 0.9rem;
     transition: all 0.2s ease;
+    margin: 0 auto;
   }
   
   .navbar-toggler:hover {
@@ -175,6 +171,7 @@
     
     .navbar-nav {
       padding: 0.5rem 0;
+      text-align: center;
     }
     
     .navbar-nav .nav-item {
@@ -211,23 +208,46 @@
     .section-nav .nav-link::after {
       display: none;
     }
+    
+    .navbar-toggler {
+      margin: 0;
+    }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Hide section links on non-homepage
     const currentPath = window.location.pathname;
     const sectionNav = document.getElementById('sectionNav');
+    const blogNav = document.getElementById('blogNav');
     const navDivider = document.getElementById('navDivider');
     
-    if (currentPath !== '/' && currentPath !== '') {
-      if (sectionNav) {
-        sectionNav.style.display = 'none';
-      }
-      if (navDivider) {
-        navDivider.style.display = 'none';
-      }
+    // Show appropriate navigation based on current page
+    if (currentPath === '/' || currentPath === '') {
+      // On homepage, show section nav and hide blog nav
+      if (blogNav) blogNav.style.display = 'none';
+      if (sectionNav) sectionNav.style.display = 'flex';
+      if (navDivider) navDivider.style.display = 'block';
+    } 
+    else if (currentPath.startsWith('/blog')) {
+      // On blog page, show blog nav and hide section nav
+      if (sectionNav) sectionNav.style.display = 'none';
+      if (blogNav) blogNav.style.display = 'flex';
+      if (navDivider) navDivider.style.display = 'block';
+      
+      // Set active state for blog category links
+      const blogLinks = document.querySelectorAll('#blogNav .nav-link');
+      blogLinks.forEach(link => {
+        if (currentPath.includes(link.getAttribute('href'))) {
+          link.classList.add('active');
+        }
+      });
+    } 
+    else {
+      // On other pages, hide both navs
+      if (sectionNav) sectionNav.style.display = 'none';
+      if (blogNav) blogNav.style.display = 'none';
+      if (navDivider) navDivider.style.display = 'none';
     }
     
     // Active state for main links
@@ -249,7 +269,7 @@
     // Only run section navigation logic on homepage
     if (currentPath === '/' || currentPath === '') {
       // Get all section navigation links
-      const sectionLinks = document.querySelectorAll('.section-nav .nav-link');
+      const sectionLinks = document.querySelectorAll('#sectionNav .nav-link');
       
       // Track active section
       let activeSection = 'about'; // Default to about

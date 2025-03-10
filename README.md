@@ -1,68 +1,158 @@
-# Astro Starter Kit: Blog
+# Iasi Salomon Portfolio Website
 
-```sh
-npm create astro@latest -- --template blog
-```
+![Portfolio Website](https://via.placeholder.com/800x400?text=Iasi+Salomon+Portfolio)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+A modern, responsive portfolio website built with Astro.js featuring an innovative context-aware navigation system. This site serves as a platform for showcasing professional work, brand partnerships, projects, and blog content with a clean, minimalist design.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## ✨ Features
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+-   **Dynamic Context-Aware Navigation** - Navigation adjusts based on current page context
+-   **Smooth Section Scrolling** - Elegant scrolling with proper offset calculation
+-   **Active State Tracking** - Intelligent tracking of current page/section/category
+-   **Responsive Design** - Fully optimized for all screen sizes
+-   **Blog Category System** - Organized blog with filterable categories
+-   **SEO-Friendly** - Built with SEO best practices
+-   **Performance Optimized** - Fast loading and rendering
+-   **Modern Aesthetic** - Clean, professional design with subtle animations
 
-Features:
+## 🚀 Quick Start
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+### Prerequisites
 
-## 🚀 Project Structure
+-   Node.js 16+
+-   npm or yarn
 
-Inside of your Astro project, you'll see the following folders and files:
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/username/iasi-portfolio.git
+    cd iasi-portfolio
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+3. Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+## 🧰 Tech Stack
+
+-   **[Astro.js](https://astro.build/)** - Core framework
+-   **[Bootstrap 5](https://getbootstrap.com/)** - Responsive layout and components
+-   **JavaScript** - Dynamic navigation and interactions
+-   **CSS/SCSS** - Custom styling
+-   **Markdown/MDX** - Content management
+
+## 📁 Project Structure
 
 ```text
-├── public/
+├── public/               # Static assets
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── components/       # Reusable UI components
+│   │   ├── Navbar.astro  # The context-aware navigation component
+│   │   └── ...
+│   ├── content/          # Blog posts and content collections
+│   ├── layouts/          # Page layouts
+│   └── pages/            # Page routes
+├── astro.config.mjs      # Astro configuration
+├── README.md             # Project documentation
+├── package.json          # Dependencies and scripts
+└── tsconfig.json         # TypeScript configuration
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🧩 Navigation System
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The site features a sophisticated navigation system with:
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+### Primary Navigation
 
-Any static assets, like images, can be placed in the `public/` directory.
+Always visible across all pages, featuring core site links (Home, Blog)
+
+### Secondary Navigation
+
+Context-sensitive navigation that changes based on the current page:
+
+-   **Home Page**: Shows section links (About, Brands, Projects, Contact)
+-   **Blog Page**: Shows category tags (Tech, Business, Other)
+-   **Other Pages**: Hides secondary navigation entirely
+
+## 🛠️ Customization
+
+### Adding New Primary Navigation Links
+
+```html
+<ul class="navbar-nav primary-nav">
+    <!-- Existing links -->
+    <li class="nav-item">
+        <a class="nav-link" href="/new-page">New Page</a>
+    </li>
+</ul>
+```
+
+### Adding New Blog Categories
+
+```html
+<ul class="navbar-nav section-nav" id="blogNav">
+    <!-- Existing categories -->
+    <li class="nav-item">
+        <a class="nav-link" href="/blog/category/new-category">New Category</a>
+    </li>
+</ul>
+```
+
+### Adding New Homepage Sections
+
+1. Add to the navigation:
+
+```html
+<ul class="navbar-nav section-nav" id="sectionNav">
+    <!-- Existing sections -->
+    <li class="nav-item">
+        <a class="nav-link" href="#newSection">New Section</a>
+    </li>
+</ul>
+```
+
+2. Create the corresponding section:
+
+```html
+<section id="newSection">
+    <!-- Content here -->
+</section>
+```
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+| Command             | Action                                           |
+| :------------------ | :----------------------------------------------- |
+| `npm install`       | Installs dependencies                            |
+| `npm run dev`       | Starts local dev server at `localhost:4321`      |
+| `npm run build`     | Build your production site to `./dist/`          |
+| `npm run preview`   | Preview your build locally, before deploying     |
+| `npm run astro ...` | Run CLI commands like `astro add`, `astro check` |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 🔍 Browser Compatibility
 
-## 👀 Want to learn more?
+-   Chrome/Edge (latest)
+-   Firefox (latest)
+-   Safari (latest)
+-   Mobile browsers (iOS Safari, Android Chrome)
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🚧 Future Enhancements
 
-## Credit
+-   [ ] Add dropdown support for nested navigation categories
+-   [ ] Implement color theme switching (dark/light mode)
+-   [ ] Add animation effects for page transitions
+-   [ ] Enhance blog search functionality
+-   [ ] Improve accessibility features
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+---
+
+Built with ❤️ using [Astro](https://astro.build)
