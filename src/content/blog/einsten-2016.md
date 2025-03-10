@@ -1,5 +1,5 @@
 ---
-title: "EINSTEIN: LA INFLUENCIA DE SUS IDEAS PARA MEJORAR EL MUNDO"
+title: "Einstein: La  influencia de sus ideas para mejorar el mundo"
 description: "Concurso Einstein: primer premio categoría universitarios"
 pubDate: 2016-06-01
 heroImage: "/blog-placeholder-3.jpg"
@@ -96,10 +96,10 @@ Este siglo recibe sus reflexiones en base al resultado de las decisiones tomadas
 
 Bibliografía
 
-- El mundo tal como yo lo veo. Albert Einstein. Editorial Brontes 2012.
-- Mi visión del mundo. Albert Einstein. Tusquets editores 2013.
-- Carta de Einstein a Roosevelt. 1939.
-- Carta de Einstein a Freud. 1932.
-- Mi credo humanista. Albert Einstein. Ebooks.
-- Mis creencias. Resumen artículos y conferencias. Albert Einstein. Ebooks. Frases y aforismos de Einstein. Artículos varios.
-- Usar el Cerebro. Facundo Manes — Mateo Niro. Planeta 2014.
+-   El mundo tal como yo lo veo. Albert Einstein. Editorial Brontes 2012.
+-   Mi visión del mundo. Albert Einstein. Tusquets editores 2013.
+-   Carta de Einstein a Roosevelt. 1939.
+-   Carta de Einstein a Freud. 1932.
+-   Mi credo humanista. Albert Einstein. Ebooks.
+-   Mis creencias. Resumen artículos y conferencias. Albert Einstein. Ebooks. Frases y aforismos de Einstein. Artículos varios.
+-   Usar el Cerebro. Facundo Manes — Mateo Niro. Planeta 2014.
