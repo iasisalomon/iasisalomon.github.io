@@ -2,7 +2,6 @@
 import MainLayout from './MainLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import CustomFooter from '../components/CustomFooter.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 
 interface Props {
 	title: string;
@@ -11,6 +10,12 @@ interface Props {
 }
 
 const { title, description, publishDate } = Astro.props;
+
+const formattedDate = publishDate ? publishDate.toLocaleDateString('en-us', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}) : 'No date available';
 ---
 
 <MainLayout title={title} description={description}>
@@ -22,7 +27,7 @@ const { title, description, publishDate } = Astro.props;
 				<div class="col-lg-8 mx-auto">
 					<h1 class="mb-3">{title}</h1>
 					<p class="text-muted mb-4">
-						Published on <FormattedDate date={publishDate} />
+						Published on {formattedDate}
 					</p>
 					
 					<div class="content">
