@@ -6,12 +6,12 @@ import CustomFooter from '../components/CustomFooter.astro';
 interface Props {
 	title: string;
 	description: string;
-	publishDate: Date;
+	pubDate: Date;
 }
 
-const { title, description, publishDate } = Astro.props;
+const { title, description, pubDate } = Astro.props;
 
-const formattedDate = publishDate ? publishDate.toLocaleDateString('en-us', {
+const formattedDate = pubDate ? pubDate.toLocaleDateString('en-us', {
 	year: 'numeric',
 	month: 'long',
 	day: 'numeric',
