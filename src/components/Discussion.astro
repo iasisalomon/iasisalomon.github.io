@@ -57,9 +57,18 @@
           
           <div class="mt-4 pt-4 border-top border-secondary">
             <p class="small text-light opacity-75 mb-3">Prefer email?</p>
-            <a href="mailto:contact@iasisalomon.com" class="btn btn-outline-light">
-              <i class="far fa-envelope me-2"></i>Send an Email
-            </a>
+            <div class="email-display-wrapper">
+              <div class="email-content">
+                <i class="far fa-envelope email-icon"></i>
+                <span class="email-text">iasisalomon@gmail.com</span>
+              </div>
+              <button id="copyEmailBtn" title="Copy email">
+                <i class="far fa-copy"></i>
+              </button>
+            </div>
+            <div id="copyConfirmation" class="copy-confirmation mt-2 text-success d-none">
+              <i class="fas fa-check me-1"></i>Email copied to clipboard
+            </div>
           </div>
         </div>
       </div>
@@ -145,6 +154,75 @@
     transform: translateY(-2px);
   }
   
+  /* Email container and copy button styling */
+  .email-display-wrapper {
+    display: flex;
+    align-items: stretch;
+    margin: 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  .email-display-wrapper:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .email-content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0.8rem 1rem;
+    background-color: transparent;
+    color: #f0f0f0;
+  }
+  
+  .email-icon {
+    color: #4d9aff;
+    margin-right: 0.8rem;
+    font-size: 1rem;
+  }
+  
+  .email-text {
+    font-family: 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+  }
+  
+  #copyEmailBtn {
+    padding: 0 1.2rem;
+    background-color: rgba(77, 154, 255, 0.15);
+    border: none;
+    color: #4d9aff;
+    font-weight: 500;
+    border-left: 1px solid rgba(77, 154, 255, 0.3);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  #copyEmailBtn:hover {
+    background-color: rgba(77, 154, 255, 0.25);
+  }
+  
+  #copyEmailBtn:active {
+    background-color: rgba(77, 154, 255, 0.35);
+  }
+  
+  .copy-confirmation {
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #4dff9f;
+  }
+  
+  .copy-confirmation.show {
+    opacity: 1;
+  }
+  
   @media (max-width: 992px) {
     .experience-points {
       margin-left: 0;
@@ -170,5 +248,60 @@
       height: 40px;
       font-size: 1rem;
     }
+    
+    .email-display-wrapper {
+      flex-direction: column;
+    }
+    
+    .email-content {
+      padding: 1rem;
+      justify-content: center;
+    }
+    
+    #copyEmailBtn {
+      padding: 0.8rem 0;
+      border-left: none;
+      border-top: 1px solid rgba(77, 154, 255, 0.3);
+    }
   }
-</style> 
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const copyConfirmation = document.getElementById('copyConfirmation');
+    
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', function() {
+        const email = 'iasisalomon@gmail.com';
+        
+        // Create a temporary textarea element to copy from
+        const textarea = document.createElement('textarea');
+        textarea.value = email;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        
+        // Select and copy the email address
+        textarea.select();
+        document.execCommand('copy');
+        
+        // Remove the temporary element
+        document.body.removeChild(textarea);
+        
+        // Show confirmation
+        copyConfirmation.classList.remove('d-none');
+        copyConfirmation.classList.add('show');
+        
+        // Hide confirmation after 2 seconds
+        setTimeout(function() {
+          copyConfirmation.classList.remove('show');
+          setTimeout(function() {
+            copyConfirmation.classList.add('d-none');
+          }, 300);
+        }, 2000);
+      });
+    }
+  });
+</script> 
