@@ -1,5 +1,13 @@
 ---
-// Define any props or imports here if needed
+// Determine current path and visibility flags
+const currentPath = Astro.url.pathname;
+const isHomepage = currentPath === '/' || currentPath === '';
+const isBlogPage = currentPath.startsWith('/blog');
+const showDivider = isHomepage || isBlogPage;
+
+// Determine active state for primary navigation
+const isHomeActive = isHomepage;
+const isBlogActive = isBlogPage;
 ---
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -16,44 +24,48 @@
       <!-- Primary navigation - main site pages -->
       <ul class="navbar-nav primary-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
+          <a class:list={["nav-link", { active: isHomeActive }]} href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/blog">Blog</a>
+          <a class:list={["nav-link", { active: isBlogActive }]} href="/blog">Blog</a>
         </li>
       </ul>
       
-      <!-- Section navigation divider - only visible on homepage or blog -->
-      <div class="nav-divider d-none d-lg-block" id="navDivider"></div>
+      {/* <!-- Section navigation divider - only visible on homepage or blog --> */}
+      {showDivider && <div class="nav-divider d-none d-lg-block" id="navDivider"></div>}
       
-      <!-- Section navigation - homepage sections (only visible on homepage) -->
-      <ul class="navbar-nav section-nav" id="sectionNav">
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#brands">Brands</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#projects">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#discussion">Contact</a>
-        </li>
-      </ul>
+      {/* <!-- Section navigation - homepage sections (only visible on homepage) --> */}
+      {isHomepage && (
+        <ul class="navbar-nav section-nav" id="sectionNav">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#brands">Brands</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#discussion">Contact</a>
+          </li>
+        </ul>
+      )}
       
-      <!-- Blog categories navigation - only visible on blog page -->
-      <ul class="navbar-nav section-nav" id="blogNav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Tech</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Business</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Other</a>
-        </li>
-      </ul>
+      {/* <!-- Blog categories navigation - only visible on blog page --> */}
+      {isBlogPage && (
+        <ul class="navbar-nav section-nav" id="blogNav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Tech</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Business</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Other</a>
+          </li>
+        </ul>
+      )}
     </div>
   </div>
 </nav>
@@ -80,21 +92,41 @@
     padding: 0.5rem 1rem;
     font-weight: 600;
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.95); /* Default color */
     position: relative;
     letter-spacing: 0.2px;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Specific transitions */
     border-radius: 4px;
+    background-color: transparent; /* Ensure default is transparent */
   }
   
+  /* Primary Nav Underline (hidden by default) */
+  .primary-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; 
+    left: 10%; /* Center the 80% underline */
+    width: 80%;
+    height: 2px;
+    background-color: #4d9aff; 
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Primary Nav Hover */
   .primary-nav .nav-link:hover {
     color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1); 
   }
   
+  /* Primary Nav Active (Desktop) */
   .primary-nav .nav-link.active {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff; 
+    background-color: transparent; /* No background for desktop active */
+  }
+  .primary-nav .nav-link.active::after {
+    transform: scaleX(1); /* Show underline for desktop active */
   }
   
   /* Divider between primary and section nav */
@@ -106,26 +138,34 @@
   }
   
   /* Section navigation styling */
+  .section-nav {
+    /* No display:none needed here */
+  }
+
   .section-nav .nav-item {
     margin: 0 0.1rem;
   }
+  
+  /* Removed default hiding styles and visible-lg media query */
   
   .section-nav .nav-link {
     padding: 0.45rem 0.75rem;
     font-weight: 400;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7); /* Default color */
     position: relative;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease; /* Specific transition */
     border-radius: 3px;
+    background-color: transparent; /* Ensure default is transparent */
   }
   
+  /* Section Nav Underline (hidden by default) */
   .section-nav .nav-link::after {
     content: '';
     position: absolute;
     bottom: 6px;
-    left: 0;
-    width: 100%;
+    left: 10%; /* Center the 80% underline */
+    width: 80%;
     height: 2px;
     background-color: #4d9aff;
     transform: scaleX(0);
@@ -133,18 +173,18 @@
     transition: transform 0.3s ease;
   }
   
+  /* Section Nav Hover */
   .section-nav .nav-link:hover {
-    color: rgba(255, 255, 255, 0.95);
+    color: #fff; /* Brighten text on hover */
   }
   
+  /* Section Nav Active (Desktop) */
   .section-nav .nav-link.active {
-    color: #4d9aff;
-    background-color: rgba(77, 154, 255, 0.08);
+    color: #fff; /* Keep white text */
+    background-color: transparent; /* No background */
   }
-  
-  .section-nav .nav-link:hover::after,
   .section-nav .nav-link.active::after {
-    transform: scaleX(0.8);
+    transform: scaleX(1); /* Show underline */
   }
   
   .navbar-toggler {
@@ -153,7 +193,7 @@
     padding: 0.4rem 0.6rem;
     font-size: 0.9rem;
     transition: all 0.2s ease;
-    margin: 0 auto;
+    margin: 0 auto; /* Center toggler when alone */
   }
   
   .navbar-toggler:hover {
@@ -169,13 +209,19 @@
       padding: 0.5rem 0;
     }
     
+    .navbar-collapse {
+       justify-content: center !important; /* Force center on mobile */
+    }
+
     .navbar-nav {
       padding: 0.5rem 0;
       text-align: center;
+      width: 100%; /* Ensure full width for centering items */
     }
     
     .navbar-nav .nav-item {
       margin: 0;
+      width: 100%; /* Make items take full width */
     }
     
     .primary-nav {
@@ -189,28 +235,40 @@
     .section-nav .nav-link {
       padding: 0.6rem 1rem;
       border-radius: 4px;
+      display: block; /* Make links block for full width */
     }
-    
+
+    /* Hide underlines on mobile */
+    .primary-nav .nav-link::after,
+    .section-nav .nav-link::after { 
+      display: none;
+    }
+
+    /* Mobile Active Styles (background instead of underline) */
     .primary-nav .nav-link.active {
-      background-color: rgba(255, 255, 255, 0.15);
-    }
-    
-    .section-nav .nav-link {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255, 0.15); /* Slightly stronger highlight */
+      color: #fff; /* Ensure color stays white */
     }
     
     .section-nav .nav-link.active {
-      color: #4d9aff;
-      background-color: rgba(77, 154, 255, 0.08);
+      background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight */
+      color: #fff; /* Ensure color stays white */
+    }
+
+    /* Reset hover effects if they conflict with active mobile style */
+    .primary-nav .nav-link:hover {
+       /* Keep default mobile hover */
+    }
+     .section-nav .nav-link:hover {
+       background-color: rgba(255, 255, 255, 0.05); /* Add slight bg hover for mobile section */
     }
     
-    .section-nav .nav-link::after {
-      display: none;
+    .nav-divider {
+        display: none; /* Hide divider on mobile */
     }
-    
+
     .navbar-toggler {
-      margin: 0;
+      margin: 0; /* Reset margin for mobile layout */
     }
   }
 </style>
@@ -218,159 +276,142 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const currentPath = window.location.pathname;
-    const sectionNav = document.getElementById('sectionNav');
-    const blogNav = document.getElementById('blogNav');
-    const navDivider = document.getElementById('navDivider');
     
-    // Show appropriate navigation based on current page
-    if (currentPath === '/' || currentPath === '') {
-      // On homepage, show section nav and hide blog nav
-      if (blogNav) blogNav.style.display = 'none';
-      if (sectionNav) sectionNav.style.display = 'flex';
-      if (navDivider) navDivider.style.display = 'block';
-    } 
-    else if (currentPath.startsWith('/blog')) {
-      // On blog page, show blog nav and hide section nav
-      if (sectionNav) sectionNav.style.display = 'none';
-      if (blogNav) blogNav.style.display = 'flex';
-      if (navDivider) navDivider.style.display = 'block';
-      
-      // Set active state for blog category links
-      const blogLinks = document.querySelectorAll('#blogNav .nav-link');
-      blogLinks.forEach(link => {
-        if (currentPath.includes(link.getAttribute('href'))) {
-          link.classList.add('active');
-        }
-      });
-    } 
-    else {
-      // On other pages, hide both navs
-      if (sectionNav) sectionNav.style.display = 'none';
-      if (blogNav) blogNav.style.display = 'none';
-      if (navDivider) navDivider.style.display = 'none';
-    }
+    // Removed client-side logic for setting active class on primary nav links
     
-    // Active state for main links
-    const mainLinks = document.querySelectorAll('.primary-nav .nav-link');
-    
-    mainLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      
-      // Check if it's the homepage
-      if (href === '/' && (currentPath === '/' || currentPath === '')) {
-        link.classList.add('active');
-      } 
-      // Check if it's the blog or other subpages
-      else if (href !== '/' && currentPath.startsWith(href)) {
-        link.classList.add('active');
+    // Active state for blog category links (existing logic, can be refined later)
+    if (currentPath.startsWith('/blog')) {
+      const blogNav = document.getElementById('blogNav'); // Get it if it exists
+      if (blogNav) { 
+        const blogLinks = blogNav.querySelectorAll('.nav-link');
+        blogLinks.forEach(link => {
+          // Simple check, adjust if blog URLs become more complex
+          // Note: This might still cause a brief flicker for categories if SSR state isn't set
+          if (currentPath.includes(link.textContent.toLowerCase())) { 
+             link.classList.add('active');
+          }
+        });
       }
-    });
+    }
     
     // Only run section navigation logic on homepage
     if (currentPath === '/' || currentPath === '') {
-      // Get all section navigation links
-      const sectionLinks = document.querySelectorAll('#sectionNav .nav-link');
-      
-      // Track active section
-      let activeSection = 'about'; // Default to about
-      
-      // Add active class based on current active section
-      function setActiveSectionItem(sectionId) {
-        activeSection = sectionId.replace('#', '');
-        
-        sectionLinks.forEach(link => {
-          if (link.getAttribute('href') === sectionId) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }
-      
-      // Handle smooth scrolling
-      sectionLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          // Get the section ID from the href attribute
-          const sectionId = this.getAttribute('href');
-          const section = document.querySelector(sectionId);
-          
-          if (section) {
-            // Add active class to clicked nav item
-            setActiveSectionItem(sectionId);
-            
-            // Get navbar height for proper offset
-            const navbarHeight = document.querySelector('#mainNav').offsetHeight;
-            
-            // Smoothly scroll to the section
-            const sectionTop = section.offsetTop;
-            
-            window.scrollTo({
-              top: sectionTop - navbarHeight - 10, // 10px extra padding
-              behavior: 'smooth'
-            });
-            
-            // Close mobile menu when a link is clicked
-            const navbarCollapse = document.getElementById('navbarNav');
-            if (navbarCollapse.classList.contains('show')) {
-              document.querySelector('.navbar-toggler').click();
+      const sectionNav = document.getElementById('sectionNav'); 
+      if (sectionNav) { 
+        const sectionLinks = sectionNav.querySelectorAll('.nav-link');
+        let activeSection = 'about'; // Default
+        let isScrollingViaClick = false; // Flag to track click-initiated scroll
+        let scrollClickTimeout = null; // Timeout ID for resetting the flag
+
+        function setActiveSectionItem(sectionId) {
+          activeSection = sectionId.replace('#', '');
+          sectionLinks.forEach(link => {
+            if (link.getAttribute('href') === sectionId) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
             }
-          }
-        });
-      });
-      
-      // Update active section when user scrolls
-      window.addEventListener('scroll', function() {
-        // Add a small delay to avoid excessive calculation during scroll
-        if (!window.scrollTimeout) {
-          window.scrollTimeout = setTimeout(function() {
-            const scrollPosition = window.scrollY;
-            
-            // Get navbar height for offset calculations
-            const navbarHeight = document.querySelector('#mainNav').offsetHeight;
-            const totalOffset = navbarHeight + 20; // 20px tolerance
-            
-            // Find the current visible section
-            let currentSection = null;
-            
-            document.querySelectorAll('section[id]').forEach(section => {
-              const sectionTop = section.offsetTop - totalOffset;
-              const sectionBottom = sectionTop + section.offsetHeight;
-              
-              if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                currentSection = '#' + section.id;
-              }
-            });
-            
-            // If found a visible section, update active section nav
-            if (currentSection && '#' + activeSection !== currentSection) {
-              setActiveSectionItem(currentSection);
-            }
-            
-            window.scrollTimeout = null;
-          }, 100);
+          });
         }
-      });
-      
-      // Initial scroll to correct section if page is reloaded with hash
-      if (window.location.hash) {
-        const targetSection = document.querySelector(window.location.hash);
-        if (targetSection) {
-          // Remove the hash from URL to avoid navigation issues
-          history.replaceState('', document.title, window.location.pathname);
-          
-          setTimeout(() => {
-            const navbarHeight = document.querySelector('#mainNav').offsetHeight;
-            const sectionTop = targetSection.offsetTop;
+        
+        // Handle smooth scrolling on click
+        sectionLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute('href');
+            const section = document.querySelector(sectionId);
             
-            window.scrollTo({
-              top: sectionTop - navbarHeight - 10,
-              behavior: 'smooth'
-            });
+            if (section) {
+              // Set flag, clear any existing reset timeout
+              isScrollingViaClick = true;
+              if (scrollClickTimeout) clearTimeout(scrollClickTimeout);
+
+              // Set active class immediately
+              setActiveSectionItem(sectionId);
+              
+              const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+              const sectionTop = section.offsetTop;
+              
+              window.scrollTo({
+                top: sectionTop - navbarHeight - 10, 
+                behavior: 'smooth'
+              });
+
+              // Set timeout to reset the flag after scroll likely finishes
+              scrollClickTimeout = setTimeout(() => {
+                isScrollingViaClick = false;
+              }, 800); // Reset flag after 800ms
+              
+              // Close mobile menu 
+              const navbarCollapse = document.getElementById('navbarNav');
+              if (navbarCollapse.classList.contains('show')) {
+                document.querySelector('.navbar-toggler').click();
+              }
+            }
+          });
+        });
+        
+        // Update active section when user scrolls (debounced)
+        window.addEventListener('scroll', function() {
+          if (!window.scrollTimeout) {
+            window.scrollTimeout = setTimeout(function() {
+              // *** If scrolling is due to a click, do nothing here ***
+              if (isScrollingViaClick) {
+                  window.scrollTimeout = null; // Reset debounce timer
+                  return; 
+              }
+
+              const scrollPosition = window.scrollY;
+              const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+              const totalOffset = navbarHeight + 20; 
+              let currentSection = null;
+              
+              document.querySelectorAll('section[id]').forEach(section => {
+                const sectionTop = section.offsetTop - totalOffset;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                  currentSection = '#' + section.id;
+                }
+              });
+
+              // *** Add check for bottom of page ***
+              if (currentSection === null && (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 5)) { // 5px tolerance
+                // If at bottom and no section matched offsets, assume it's the last one
+                const lastSectionLink = sectionLinks[sectionLinks.length - 1];
+                if (lastSectionLink) {
+                   currentSection = lastSectionLink.getAttribute('href');
+                }
+              }
+              
+              // Update active item if needed
+              if (currentSection && '#' + activeSection !== currentSection) {
+                setActiveSectionItem(currentSection);
+              }
+              
+              window.scrollTimeout = null;
+            }, 150); // Keep the adjusted 150ms debounce timeout
+          }
+        });
+        
+        // Initial scroll to correct section if page is reloaded with hash
+        if (window.location.hash) {
+          const targetSection = document.querySelector(window.location.hash);
+          if (targetSection) {
+            // Remove the hash from URL to avoid navigation issues
+            history.replaceState('', document.title, window.location.pathname);
             
-            setActiveSectionItem('#' + targetSection.id);
-          }, 300); // Small delay to ensure DOM is fully loaded
+            setTimeout(() => {
+              const navbarHeight = document.querySelector('#mainNav').offsetHeight;
+              const sectionTop = targetSection.offsetTop;
+              
+              window.scrollTo({
+                top: sectionTop - navbarHeight - 10,
+                behavior: 'smooth'
+              });
+              
+              setActiveSectionItem('#' + targetSection.id);
+            }, 300); // Small delay to ensure DOM is fully loaded
+          }
         }
       }
     }
