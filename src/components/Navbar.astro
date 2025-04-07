@@ -2,6 +2,19 @@
 // Define any props or imports here if needed
 ---
 
+// Get the current path on the server side
+const currentPath = Astro.url.pathname;
+
+// Determine initial visibility states
+const showSectionNav = currentPath === '/' || currentPath === '';
+const showBlogNav = currentPath.startsWith('/blog');
+const showDivider = showSectionNav || showBlogNav;
+
+// Add these classes to control initial visibility
+const sectionNavClass = `navbar-nav section-nav ${!showSectionNav ? 'hidden' : ''}`;
+const blogNavClass = `navbar-nav section-nav ${!showBlogNav ? 'hidden' : ''}`;
+const dividerClass = `nav-divider d-none d-lg-block ${!showDivider ? 'hidden' : ''}`;
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
   <div class="container">
     <button
@@ -23,11 +36,11 @@
         </li>
       </ul>
       
-      <!-- Section navigation divider - only visible on homepage or blog -->
-      <div class="nav-divider d-none d-lg-block" id="navDivider"></div>
+      <!-- Section navigation divider -->
+      <div class={dividerClass} id="navDivider"></div>
       
-      <!-- Section navigation - homepage sections (only visible on homepage) -->
-      <ul class="navbar-nav section-nav" id="sectionNav">
+      <!-- Section navigation - homepage sections -->
+      <ul class={sectionNavClass} id="sectionNav">
         <li class="nav-item">
           <a class="nav-link" href="#about">About</a>
         </li>
@@ -42,8 +55,8 @@
         </li>
       </ul>
       
-      <!-- Blog categories navigation - only visible on blog page -->
-      <ul class="navbar-nav section-nav" id="blogNav">
+      <!-- Blog categories navigation -->
+      <ul class={blogNavClass} id="blogNav">
         <li class="nav-item">
           <a class="nav-link" href="#">Tech</a>
         </li>
@@ -213,11 +226,15 @@
       margin: 0;
     }
   }
+  
+  /* Add this new style for hidden elements */
+  .hidden {
+    display: none !important;
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const currentPath = window.location.pathname;
     const sectionNav = document.getElementById('sectionNav');
     const blogNav = document.getElementById('blogNav');
     const navDivider = document.getElementById('navDivider');
