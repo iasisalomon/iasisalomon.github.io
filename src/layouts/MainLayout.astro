@@ -74,5 +74,13 @@ const {
     <script src="/js/filterCards.js" is:inline></script>
     <script src="/js/emailProtection.js" is:inline></script>
     <script src="/js/sortByDate.js" is:inline></script>
+    
+    <!-- Tooltip Initialization -->
+    <script is:inline>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle=\"tooltip\"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    </script>
   </body>
 </html> 
