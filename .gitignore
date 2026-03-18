@@ -1,5 +1,14 @@
+# skills/agents
+.agents/
+.*/
+skills-lock.json
+
+#vscode
+.vscode/
+
 # build output
 dist/
+
 # generated types
 .astro/
 
