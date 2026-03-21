@@ -1,19 +1,17 @@
 ---
-import projectsData from '../data/projects.json';
+import projectsData from '../data/projects.json' assert { type: 'json' };
 const { projects, brands } = projectsData;
 ---
 
 <section id="projects" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Projects</h2>
-    <div class="section-divider mb-5"></div>
-    
-    <!-- Filter Buttons -->
-    <div class="mb-5">
-      <div class="d-flex justify-content-center">
+    <!-- Section header with inline filters -->
+    <div class="projects-header mb-4">
+      <h2 class="mb-0">Projects</h2>
+      <div class="d-flex gap-2 flex-wrap align-items-center">
         <div class="btn-group filters-group" role="group" aria-label="Brand filters">
           <button type="button" class="btn btn-outline-secondary active" data-filter="all">
-            All Brands
+            All
           </button>
           {brands.map(brand => (
             <button type="button" class={`btn btn-outline-${brand.color}`} data-filter={brand.id}>
@@ -21,9 +19,13 @@ const { projects, brands } = projectsData;
             </button>
           ))}
         </div>
+        <button type="button" class="btn btn-sm btn-outline-dark" id="sortByDate">
+          Newest First
+        </button>
       </div>
     </div>
-    
+    <div class="section-divider mb-4"></div>
+
     <!-- Projects Grid -->
     <div class="row g-4">
       {projects.map(project => {
@@ -73,18 +75,6 @@ const { projects, brands } = projectsData;
 </section>
 
 <style>
-  .py-6 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-  
-  .section-divider {
-    height: 1px;
-    width: 60px;
-    background-color: rgba(0, 0, 0, 0.2);
-    margin: 0 auto;
-  }
-  
   .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
@@ -95,11 +85,18 @@ const { projects, brands } = projectsData;
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
   }
   
+  .projects-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
   .filters-group {
-    margin-bottom: 1rem;
     flex-wrap: wrap;
     gap: 0.25rem;
-    justify-content: center;
+    justify-content: flex-end;
   }
   
   .badge {
@@ -108,49 +105,18 @@ const { projects, brands } = projectsData;
   }
   
   @media (max-width: 768px) {
-    .py-6 {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
+    .projects-header {
+      flex-direction: column;
+      align-items: flex-start;
     }
-    
-    h2.display-4 {
-      font-size: 2.5rem;
+
+    .filters-group {
+      justify-content: flex-start;
     }
-    
+
     .card-body {
       padding: 1.5rem !important;
     }
   }
 </style>
 
-<script>
-  // Filter functionality
-  document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('[data-filter]');
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    filterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        // Remove active class from siblings
-        const group = this.parentElement;
-        group.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        
-        const selectedBrand = this.dataset.filter;
-        
-        // Filter cards
-        projectCards.forEach(card => {
-          const matchesBrand = selectedBrand === 'all' || card.dataset.brand === selectedBrand;
-          
-          if (matchesBrand) {
-            card.style.display = '';
-            card.style.opacity = '1';
-          } else {
-            card.style.display = 'none';
-            card.style.opacity = '0';
-          }
-        });
-      });
-    });
-  });
-</script> 

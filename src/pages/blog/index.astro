@@ -7,28 +7,41 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
+
+const categoryLabels: Record<string, string> = {
+	tech: 'Tech',
+	business: 'Business',
+	other: 'Other',
+};
 ---
 
 <MainLayout title="Blog | Iasi Salomon">
 	<Navbar />
-	
+
 	<section class="blog-section py-5 mt-5">
 		<div class="container">
 			<header class="blog-header">
 				<h1 class="blog-title">Articles</h1>
 				<p class="blog-description">Thoughts, ideas, and explorations</p>
+
+				<div class="category-tabs mt-4">
+					<button class="category-tab active" data-category="all">All</button>
+					<button class="category-tab" data-category="tech">Tech</button>
+					<button class="category-tab" data-category="business">Business</button>
+					<button class="category-tab" data-category="other">Other</button>
+				</div>
 			</header>
-			
-			<div class="blog-grid">
-				{
-					posts.map((post, index) => (
-						<article class="blog-card" data-index={index}>
-							<a href={`/blog/${post.slug}/`} class="card-link">
-								<div class="card-image">
-									<img src={post.data.heroImage || '/images/blog/blog-placeholder-about.jpg'} alt={post.data.title} loading="lazy" />
-								</div>
-								<div class="card-content">
-									<header class="card-header">
+
+			<div class="blog-grid" id="blogGrid">
+				{posts.map((post) => (
+					<article class="blog-card" data-category={post.data.category ?? 'other'}>
+						<a href={`/blog/${post.slug}/`} class="card-link">
+							<div class="card-image">
+								<img src={post.data.heroImage || '/images/blog/blog-placeholder-about.jpg'} alt={post.data.title} loading="lazy" />
+							</div>
+							<div class="card-content">
+								<header class="card-header">
+									<div class="card-meta">
 										{post.data.pubDate && (
 											<time datetime={post.data.pubDate.toISOString()} class="card-date">
 												{post.data.pubDate.toLocaleDateString('en-us', {
@@ -38,123 +51,198 @@ const posts = (await getCollection('blog')).sort(
 												})}
 											</time>
 										)}
-										<h2 class="card-title">{post.data.title}</h2>
-									</header>
-									<p class="card-excerpt">{post.data.description}</p>
-									<footer class="card-footer">
-										<span class="read-more">Read article →</span>
-									</footer>
-								</div>
-							</a>
-						</article>
-					))
-				}
+										{post.data.category && (
+											<span class={`category-badge category-${post.data.category}`}>
+												{categoryLabels[post.data.category]}
+											</span>
+										)}
+									</div>
+									<h2 class="card-title">{post.data.title}</h2>
+								</header>
+								<p class="card-excerpt">{post.data.description}</p>
+								<footer class="card-footer">
+									<span class="read-more">Read article →</span>
+								</footer>
+							</div>
+						</a>
+					</article>
+				))}
 			</div>
+
+			<p id="noPostsMsg" class="text-center text-muted py-5" style="display:none">No posts in this category yet.</p>
 		</div>
 	</section>
-	
+
 	<CustomFooter />
 </MainLayout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.category-tab');
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const noPostsMsg = document.getElementById('noPostsMsg')!;
+
+  function applyFilter(category: string) {
+    let visible = 0;
+    cards.forEach(card => {
+      const match = category === 'all' || card.dataset.category === category;
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    noPostsMsg.style.display = visible === 0 ? '' : 'none';
+
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.category === category));
+
+    const url = new URL(window.location.href);
+    if (category === 'all') {
+      url.searchParams.delete('category');
+    } else {
+      url.searchParams.set('category', category);
+    }
+    history.replaceState(null, '', url.toString());
+  }
+
+  // Init from URL on load
+  const initialCategory = new URLSearchParams(window.location.search).get('category') ?? 'all';
+  applyFilter(initialCategory);
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => applyFilter(tab.dataset.category!));
+  });
+</script>
 
 <style>
 	.blog-section {
 		margin: 2rem auto 6rem;
 	}
-	
+
 	.blog-header {
 		margin-bottom: 3rem;
 		text-align: center;
 	}
-	
+
 	.blog-title {
 		font-size: 2.5rem;
 		font-weight: 700;
 		margin-bottom: 0.5rem;
 		letter-spacing: -0.02em;
 	}
-	
+
 	.blog-description {
 		font-size: 1.2rem;
 		color: #666;
 		max-width: 600px;
 		margin: 0 auto;
 	}
-	
-	/* Blog Grid */
+
+	.category-tabs {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.category-tab {
+		padding: 0.4em 1.1em;
+		border-radius: 100px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: #555;
+		border: 1px solid #ddd;
+		background: none;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.category-tab:hover {
+		border-color: #aaa;
+		color: #222;
+	}
+
+	.category-tab.active {
+		background-color: #222;
+		border-color: #222;
+		color: #fff;
+	}
+
+	.card-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 0.7rem;
+	}
+
+	.category-badge {
+		font-size: 0.75rem;
+		font-weight: 600;
+		padding: 0.2em 0.7em;
+		border-radius: 100px;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+	}
+
+	.category-tech     { background: #e8f0fe; color: #1a56db; }
+	.category-business { background: #fef3c7; color: #92400e; }
+	.category-other    { background: #f3f4f6; color: #4b5563; }
+
 	.blog-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 		gap: 2.5rem;
 	}
-	
+
 	.blog-card {
 		border-radius: 10px;
 		overflow: hidden;
 		transition: all 0.3s ease;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 		background-color: white;
-		height: 100%;
 		animation: fadeIn 0.5s ease forwards;
 		opacity: 0;
 	}
-	
+
 	.card-image {
 		height: 200px;
 		overflow: hidden;
 	}
-	
+
 	.card-image img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		transition: transform 0.5s ease;
 	}
-	
-	.blog-card:hover .card-image img {
-		transform: scale(1.05);
-	}
-	
+
+	.blog-card:hover .card-image img { transform: scale(1.05); }
+
 	.card-content {
 		padding: 1.8rem;
 		display: flex;
 		flex-direction: column;
-		height: calc(100% - 200px);
 	}
-	
+
 	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+		from { opacity: 0; transform: translateY(20px); }
+		to   { opacity: 1; transform: translateY(0); }
 	}
-	
+
 	.blog-card:hover {
 		transform: translateY(-5px);
 		box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 	}
-	
+
 	.card-link {
 		display: block;
-		height: 100%;
 		text-decoration: none;
 		color: inherit;
 	}
-	
-	.card-header {
-		margin-bottom: 1rem;
-	}
-	
+
+	.card-header    { margin-bottom: 1rem; }
+
 	.card-date {
-		display: block;
 		font-size: 0.85rem;
 		color: #777;
-		margin-bottom: 0.7rem;
 	}
-	
+
 	.card-title {
 		font-size: 1.4rem;
 		font-weight: 600;
@@ -163,11 +251,9 @@ const posts = (await getCollection('blog')).sort(
 		color: #333;
 		transition: color 0.2s ease;
 	}
-	
-	.blog-card:hover .card-title {
-		color: #0055ff;
-	}
-	
+
+	.blog-card:hover .card-title { color: #0055ff; }
+
 	.card-excerpt {
 		font-size: 1rem;
 		line-height: 1.6;
@@ -175,11 +261,9 @@ const posts = (await getCollection('blog')).sort(
 		margin-bottom: 1.5rem;
 		flex-grow: 1;
 	}
-	
-	.card-footer {
-		margin-top: auto;
-	}
-	
+
+	.card-footer  { margin-top: auto; }
+
 	.read-more {
 		display: inline-block;
 		font-size: 0.9rem;
@@ -187,74 +271,18 @@ const posts = (await getCollection('blog')).sort(
 		color: #0055ff;
 		transition: transform 0.2s ease;
 	}
-	
-	.blog-card:hover .read-more {
-		transform: translateX(5px);
-	}
-	
-	@media (max-width: 768px) {
-		.blog-grid {
-			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-			gap: 1.5rem;
-		}
-		
-		.blog-title {
-			font-size: 2rem;
-		}
-		
-		.blog-description {
-			font-size: 1.1rem;
-		}
-		
-		.card-content {
-			padding: 1.5rem;
-		}
-		
-		.card-title {
-			font-size: 1.3rem;
-		}
-	}
-	
-	/* Animation delay for staggered effect */
+
+	.blog-card:hover .read-more { transform: translateX(5px); }
+
 	.blog-card:nth-child(1) { animation-delay: 0.1s; }
 	.blog-card:nth-child(2) { animation-delay: 0.2s; }
 	.blog-card:nth-child(3) { animation-delay: 0.3s; }
-	.blog-card:nth-child(4) { animation-delay: 0.4s; }
-	.blog-card:nth-child(5) { animation-delay: 0.5s; }
-	.blog-card:nth-child(6) { animation-delay: 0.6s; }
-	
-	@media (prefers-color-scheme: dark) {
-		.blog-card {
-			background-color: #f0f0f0;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-		}
-		
-		.blog-card:hover {
-			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-		}
-		
-		.blog-description {
-			color: #aaa;
-		}
-		
-		.card-date {
-			color: #666;
-		}
-		
-		.card-title {
-			color: #222;
-		}
-		
-		.card-excerpt {
-			color: #444;
-		}
-		
-		.read-more {
-			color: #0055ff;
-		}
-		
-		.blog-card:hover .card-title {
-			color: #0055ff;
-		}
+
+	@media (max-width: 768px) {
+		.blog-grid        { grid-template-columns: 1fr; gap: 1.5rem; }
+		.blog-title       { font-size: 2rem; }
+		.blog-description { font-size: 1.1rem; }
+		.card-content     { padding: 1.5rem; }
+		.card-title       { font-size: 1.3rem; }
 	}
 </style>

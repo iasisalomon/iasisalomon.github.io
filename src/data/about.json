@@ -1,0 +1,19 @@
+{
+  "experiences": [
+    {
+      "icon": "fas fa-project-diagram",
+      "title": "Operations Management",
+      "content": "During my time at <strong>Sky Mavis</strong>, I reported directly to the VP of Operations and collaborated closely with departments such as finance, HR, security, publishing, and executive management. I create, implement and oversee processes that are understandable, replicable, scalable and easy to automate. My role involved optimizing workflows, improving cross-functional collaboration, and supporting strategic initiatives within the rapidly growing <em>Axie Infinity</em> ecosystem."
+    },
+    {
+      "icon": "fas fa-code",
+      "title": "QA Automation Expertise",
+      "content": "As a <strong>QA Automation Manager</strong>, I focused on writing test cases based on <em>TDD</em> and <em>BDD</em> philosophies. I implemented these test cases with <em>Mocha.js</em>, aggregated them in <em>Allure</em> reports, and coordinated with the team manager to ensure comprehensive deployment coverage. My role was essential in enhancing quality assurance efficiency and ensuring robust, reliable software delivery."
+    },
+    {
+      "icon": "fas fa-gamepad",
+      "title": "Esports Leadership",
+      "content": "In the esports industry, I've led teams and managed operations for organizations such as <strong>Isurus Studio</strong>, <strong>Predators Esports</strong>, and <strong>LVP - Liga de Videojuegos Profesional</strong>. My focus was on creating high-performing teams, improving operational efficiency, and fostering collaboration across departments to ensure seamless execution and competitive success."
+    }
+  ]
+}

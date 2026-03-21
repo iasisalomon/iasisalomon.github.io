@@ -2,22 +2,104 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-dark text-white py-4">
-  <div class="container text-center">
-    <p class="mb-0">
-      &copy; {currentYear} Iasi Salomon. All rights reserved.
-    </p>
+<footer class="bg-dark text-white">
+  <div class="container">
+    <div class="row py-5 g-4">
+
+      <!-- Brand -->
+      <div class="col-lg-4 col-md-6">
+        <h5 class="fw-bold mb-3">Iasi Salomon</h5>
+        <p class="text-white-50 small mb-4">
+          Multi-brand portfolio spanning business consulting, tech development, and esports.
+        </p>
+        <div class="footer-socials d-flex gap-3">
+          <a href="https://github.com/iasisalomon" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/iasisalomon" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://x.com/glunisok" target="_blank" rel="noopener noreferrer" class="social-icon" title="Twitter / X">
+            <i class="fab fa-x-twitter"></i>
+          </a>
+          <a href="https://t.me/oxaciano" target="_blank" rel="noopener noreferrer" class="social-icon" title="Telegram">
+            <i class="fab fa-telegram-plane"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="col-lg-2 col-md-3 col-6">
+        <h6 class="fw-semibold mb-3 text-white-75">Site</h6>
+        <ul class="list-unstyled footer-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#discussion">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Brands -->
+      <div class="col-lg-2 col-md-3 col-6">
+        <h6 class="fw-semibold mb-3 text-white-75">Brands</h6>
+        <ul class="list-unstyled footer-nav">
+          <li><a href="#iasi-brand">Iasi Salomon</a></li>
+          <li><a href="#glunis-brand">Glunis</a></li>
+          <li><a href="#oxaciano-brand">Oxaciano</a></li>
+        </ul>
+      </div>
+
+      <!-- Blog categories -->
+      <div class="col-lg-2 col-md-3 col-6">
+        <h6 class="fw-semibold mb-3 text-white-75">Blog</h6>
+        <ul class="list-unstyled footer-nav">
+          <li><a href="/blog?category=tech">Tech</a></li>
+          <li><a href="/blog?category=business">Business</a></li>
+          <li><a href="/blog?category=other">Other</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="border-top border-secondary pt-4 pb-3 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+      <p class="mb-0 small text-white-50">&copy; {currentYear} Iasi Salomon. All rights reserved.</p>
+      <p class="mb-0 small text-white-50">Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-white-50">Astro</a></p>
+    </div>
   </div>
 </footer>
 
 <style>
   footer {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    background-color: #1a1d20 !important;
   }
-  
-  footer p {
-    opacity: 0.8;
-    font-size: 0.95rem;
+
+  .text-white-75 {
+    color: rgba(255,255,255,0.75);
   }
-</style> 
+
+  .footer-nav li {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-nav a {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+
+  .footer-nav a:hover {
+    color: #fff;
+  }
+
+  .social-icon {
+    color: rgba(255,255,255,0.5);
+    font-size: 1.2rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .social-icon:hover {
+    color: #fff;
+    transform: translateY(-3px);
+  }
+</style>

@@ -56,13 +56,13 @@ const isBlogActive = isBlogPage;
       {isBlogPage && (
         <ul class="navbar-nav section-nav" id="blogNav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Tech</a>
+            <a class="nav-link" href="/blog?category=tech">Tech</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Business</a>
+            <a class="nav-link" href="/blog?category=business">Business</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Other</a>
+            <a class="nav-link" href="/blog?category=other">Other</a>
           </li>
         </ul>
       )}
@@ -286,14 +286,14 @@ const isBlogActive = isBlogPage;
     
     // Active state for blog category links (existing logic, can be refined later)
     if (currentPath.startsWith('/blog')) {
-      const blogNav = document.getElementById('blogNav'); // Get it if it exists
-      if (blogNav) { 
+      const blogNav = document.getElementById('blogNav');
+      if (blogNav) {
+        const activeCategory = new URLSearchParams(window.location.search).get('category');
         const blogLinks = blogNav.querySelectorAll('.nav-link');
         blogLinks.forEach(link => {
-          // Simple check, adjust if blog URLs become more complex
-          // Note: This might still cause a brief flicker for categories if SSR state isn't set
-          if (currentPath.includes(link.textContent.toLowerCase())) { 
-             link.classList.add('active');
+          const linkCategory = new URL(link.href).searchParams.get('category');
+          if (linkCategory === activeCategory) {
+            link.classList.add('active');
           }
         });
       }

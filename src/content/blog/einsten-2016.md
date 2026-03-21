@@ -3,6 +3,7 @@ title: "Einstein: La influencia de sus ideas para mejorar el mundo"
 description: "Concurso Einstein: primer premio categoría universitarios"
 pubDate: 2016-06-01
 heroImage: "/images/blog/einstein-hero.jpg"
+category: "other"
 ---
 
 ## Abstract
