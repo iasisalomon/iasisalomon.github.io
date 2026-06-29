@@ -33,10 +33,10 @@ const {
     <style is:global>
       /* Global spacing utility classes */
       .py-6 {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
+        padding-top: var(--space-section);
+        padding-bottom: var(--space-section);
       }
-      
+
       .section-divider {
         height: 1px;
         width: 60px;
@@ -54,8 +54,8 @@ const {
       
       @media (max-width: 768px) {
         .py-6 {
-          padding-top: 4rem;
-          padding-bottom: 4rem;
+          padding-top: var(--space-section-sm);
+          padding-bottom: var(--space-section-sm);
         }
         
         h2.display-4 {

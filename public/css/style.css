@@ -1,3 +1,38 @@
+/* =============================================================
+   Design tokens (Plan 03 — Phase 0: token layer only).
+   Single source for color, spacing, radius and brand gradients.
+   The dark-theme override (`[data-theme="dark"]`) and the theme
+   toggle land in Phase 2; tokens are defined now so components can
+   migrate onto them incrementally.
+   ============================================================= */
+:root {
+    /* Accent */
+    --color-accent: #4d9aff;
+    --color-accent-rgb: 77, 154, 255;
+
+    /* Surfaces & text (light theme, default) */
+    --color-bg: #ffffff;
+    --color-surface: #f8f9fa;
+    --color-surface-dark: #212529;
+    --color-footer-bg: #1a1d20;
+    --color-text: #212529;
+    --color-text-muted: #6c757d;
+    --color-border: rgba(0, 0, 0, 0.08);
+
+    /* Spacing */
+    --space-section: 5rem;
+    --space-section-sm: 4rem;
+
+    /* Radius */
+    --radius-card: 1rem;
+    --radius-pill: 100px;
+
+    /* Brand gradients (keyed by brand identity) */
+    --gradient-iasi: linear-gradient(160deg, #0d0d0d 0%, #2c2c2c 100%);
+    --gradient-glunis: linear-gradient(120deg, #004d40 0%, #00897b 100%);
+    --gradient-oxaciano: linear-gradient(45deg, #8b0000 0%, #dc3545 100%);
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -98,17 +133,17 @@ section {
 }
 
 .gradient-black {
-    background: linear-gradient(160deg, #0d0d0d 0%, #2c2c2c 100%);
+    background: var(--gradient-iasi);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .gradient-danger {
-    background: linear-gradient(45deg, #8b0000 0%, #dc3545 100%);
+    background: var(--gradient-oxaciano);
     box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 .gradient-success {
-    background: linear-gradient(120deg, #004d40 0%, #00897b 100%);
+    background: var(--gradient-glunis);
     box-shadow: 0 4px 15px rgba(0, 137, 123, 0.3);
 }
 

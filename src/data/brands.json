@@ -1,0 +1,42 @@
+[
+  {
+    "id": "iasi",
+    "name": "Iasi Salomon",
+    "description": "Business Consultant",
+    "color": "dark",
+    "gradientClass": "gradient-black",
+    "icon": "fas fa-user-tie",
+    "tags": ["Strategy", "Brand", "Operations", "Organizational Analysis"],
+    "links": [
+      { "text": "LinkedIn", "url": "https://linkedin.com/in/iasisalomon", "icon": "fab fa-linkedin" }
+    ]
+  },
+  {
+    "id": "glunis",
+    "name": "Glunis",
+    "description": "Coding, Blockchain, AI & Biotech",
+    "color": "success",
+    "gradientClass": "gradient-success",
+    "icon": "fas fa-laptop-code",
+    "tags": ["Scrum Master", "Full Stack Development", "QA Automation", "DevOps"],
+    "links": [
+      { "text": "Twitter", "url": "https://x.com/glunisok", "icon": "fab fa-x-twitter" },
+      { "text": "GitHub", "url": "https://github.com/iasisalomon", "icon": "fab fa-github" }
+    ]
+  },
+  {
+    "id": "oxaciano",
+    "name": "Oxaciano",
+    "description": "Gaming & Esports",
+    "color": "danger",
+    "gradientClass": "gradient-danger",
+    "icon": "fas fa-gamepad",
+    "tags": ["Production", "Events", "Streaming", "Caster", "Stage Host", "Social Media"],
+    "links": [
+      { "text": "Twitter", "url": "https://x.com/oxaciano", "icon": "fab fa-x-twitter" },
+      { "text": "Instagram", "url": "https://instagram.com/oxaciano", "icon": "fab fa-instagram" },
+      { "text": "TikTok", "url": "https://tiktok.com/@oxaciano", "icon": "fab fa-tiktok" },
+      { "text": "Leaguepedia", "url": "https://lol.fandom.com/wiki/Oxaciano", "icon": "fas fa-trophy" }
+    ]
+  }
+]

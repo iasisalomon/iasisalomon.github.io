@@ -1,11 +1,5 @@
 ---
-import projectsData from '../data/projects.json';
-const { brands, projects } = projectsData;
-
-const projectCountByBrand = brands.reduce((acc, brand) => {
-  acc[brand.id] = projects.filter(p => p.brand === brand.id).length;
-  return acc;
-}, {} as Record<string, number>);
+import { brands, projectCountByBrand } from '../data/portfolio';
 ---
 
 <section id="brands" class="py-6 bg-light">

@@ -1,7 +1,6 @@
 ---
-import projectsData from '../data/projects.json';
-const { brands } = projectsData;
-const subtitles = brands.map(b => b.description);
+import { brands } from '../data/portfolio';
+const subtitles = brands.map((b) => b.description);
 ---
 
 <section id="home" class="min-vh-100 d-flex flex-column bg-dark text-white">
