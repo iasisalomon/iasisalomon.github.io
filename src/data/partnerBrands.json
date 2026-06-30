@@ -1,14 +1,14 @@
 [
-  { "name": "Sky Mavis", "logo": "/images/brands/sky-mavis.png" },
-  { "name": "Axie Infinity", "logo": "/images/brands/axie-infinity.png" },
-  { "name": "Isurus Gaming", "logo": "/images/brands/isurus.png" },
-  { "name": "LVP", "logo": "/images/brands/lvp.webp" },
-  { "name": "Pythas", "logo": "/images/brands/pythas.svg" },
-  { "name": "Interlaced", "logo": "/images/brands/interlaced.png" },
-  { "name": "WAIA", "logo": "/images/brands/waia.webp", "darkTile": true },
-  { "name": "Home Team Network", "logo": "/images/brands/htn.svg", "darkTile": true },
-  { "name": "XGamePro", "logo": "/images/brands/xgamepro.png", "darkTile": true },
-  { "name": "AGS", "logo": "/images/brands/ags.png" },
-  { "name": "Sura Gaming", "logo": "/images/brands/sura-gaming-logo.png", "blackTile": true },
-  { "name": "Coliseo Dragons", "logo": "/images/brands/coliseo-dragons.png" }
+  { "name": "Sky Mavis", "logo": "/images/brands/sky-mavis-logo.png", "url": "https://skymavis.com" },
+  { "name": "Axie Infinity", "logo": "/images/brands/axie-infinity.png", "url": "https://axieinfinity.com" },
+  { "name": "Isurus Gaming", "logo": "/images/brands/isurus.png", "url": "https://teamisurus.com/" },
+  { "name": "LVP", "logo": "/images/brands/lvp.webp", "url": "https://lvp.global/en/?noredirect=en_US" },
+  { "name": "Pythas", "logo": "/images/brands/pythas.svg", "url": "https://pythas.io/" },
+  { "name": "Interlaced", "logo": "/images/brands/interlaced.png", "url": "https://interlaced.io/" },
+  { "name": "WAIA", "logo": "/images/brands/waia.webp", "darkTile": true, "url": "https://somos.waia.ar/" },
+  { "name": "Home Team Network", "logo": "/images/brands/htn.svg", "darkTile": true, "url": "https://www.hometeamlive.com/" },
+  { "name": "XGamePro", "logo": "/images/brands/xgamepro.png", "darkTile": true, "url": "https://xgamepro.net/" },
+  { "name": "AGS", "logo": "/images/brands/ags.png", "url": "https://ags.show/" },
+  { "name": "Sura Gaming", "logo": "/images/brands/sura-gaming-logo.png", "blackTile": true, "url": "https://suragaming.com/" },
+  { "name": "Coliseo Dragons", "logo": "/images/brands/coliseo-dragons.png", "url": "https://lol.fandom.com/wiki/Coliseo_Dragons" }
 ]

@@ -12,6 +12,7 @@ type PartnerBrand = {
   logo: string;
   darkTile?: boolean;
   blackTile?: boolean;
+  url?: string;
 };
 
 const brands = partnerBrands as PartnerBrand[];
@@ -34,14 +35,34 @@ const carouselBrands = [...brands, ...brands];
             ]}
             aria-hidden={index >= brands.length ? 'true' : undefined}
           >
-            <img
-              src={brand.logo}
-              alt={index < brands.length ? `${brand.name} logo` : ''}
-              loading="lazy"
-              decoding="async"
-              width="160"
-              height="64"
-            />
+            {brand.url ? (
+              <a
+                class="brand-carousel__link"
+                href={brand.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${brand.name} (opens in a new tab)`}
+                tabindex={index >= brands.length ? -1 : undefined}
+              >
+                <img
+                  src={brand.logo}
+                  alt={index < brands.length ? `${brand.name} logo` : ''}
+                  loading="lazy"
+                  decoding="async"
+                  width="160"
+                  height="64"
+                />
+              </a>
+            ) : (
+              <img
+                src={brand.logo}
+                alt={index < brands.length ? `${brand.name} logo` : ''}
+                loading="lazy"
+                decoding="async"
+                width="160"
+                height="64"
+              />
+            )}
           </div>
         ))}
       </div>
@@ -124,6 +145,27 @@ const carouselBrands = [...brands, ...brands];
     max-height: 100%;
     object-fit: contain;
     object-position: center;
+  }
+
+  .brand-carousel__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .brand-carousel__link:hover,
+  .brand-carousel__link:focus-visible {
+    transform: scale(1.06);
+    opacity: 0.85;
+  }
+
+  .brand-carousel__link:focus-visible {
+    outline: 2px solid var(--color-accent, #4d9aff);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
   }
 
   .testimonial {

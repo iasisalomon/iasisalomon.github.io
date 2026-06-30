@@ -3,7 +3,7 @@ import { projects } from '../data/portfolio';
 import { getCollection } from 'astro:content';
 import { CATEGORY_IDS, CATEGORY_LABELS, AREA_META } from '../data/areas';
 
-const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.slug));
+const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.id));
 ---
 
 <section id="projects" class="py-6">

@@ -27,7 +27,7 @@ const categoryLabels: Record<string, string> = {
     <div class="row g-4">
       {posts.map((post) => (
         <div class="col-md-6 col-lg-4">
-          <a href={`/blog/${post.slug}/`} class="writing-card h-100 d-flex flex-column bg-white rounded-4 overflow-hidden text-reset">
+          <a href={`/blog/${post.id}/`} class="writing-card h-100 d-flex flex-column bg-white rounded-4 overflow-hidden text-reset">
             <div class="writing-img">
               <img src={post.data.heroImage || '/images/blog/axie-hero.jpg'} alt={post.data.title} loading="lazy" />
             </div>

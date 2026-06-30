@@ -35,7 +35,7 @@ const categoryLabels: Record<string, string> = {
 			<div class="blog-grid" id="blogGrid">
 				{posts.map((post) => (
 					<article class="blog-card" data-category={post.data.category ?? 'other'}>
-						<a href={`/blog/${post.slug}/`} class="card-link">
+						<a href={`/blog/${post.id}/`} class="card-link">
 							<div class="card-image">
 								<img src={post.data.heroImage || '/images/blog/blog-placeholder-about.jpg'} alt={post.data.title} loading="lazy" />
 							</div>

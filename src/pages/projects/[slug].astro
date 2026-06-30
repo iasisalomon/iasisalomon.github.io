@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import CustomFooter from '../../components/CustomFooter.astro';
@@ -8,19 +8,19 @@ import { AREA_META } from '../../data/areas';
 
 export async function getStaticPaths() {
 	const studies = await getCollection('caseStudies');
-	return studies.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+	return studies.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
-const project = getProjectBySlug(entry.slug);
+const project = getProjectBySlug(entry.id);
 if (!project) {
 	throw new Error(
-		`Case study "${entry.slug}" has no matching project in projects.json. ` +
+		`Case study "${entry.id}" has no matching project in projects.json. ` +
 			`Rename the file to a valid project slug or add the project.`,
 	);
 }
 const area = AREA_META[project.category];
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
 	month: 'long',

@@ -5,7 +5,7 @@ import { AREA_META } from '../data/areas';
 
 // Only feature projects that actually have a written case study.
 const studies = await getCollection('caseStudies');
-const studyBySlug = new Map(studies.map((e) => [e.slug, e]));
+const studyBySlug = new Map(studies.map((e) => [e.id, e]));
 
 const items = featuredProjects
   .filter((p) => studyBySlug.has(p.slug))

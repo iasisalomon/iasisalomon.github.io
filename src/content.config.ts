@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-	type: 'content',
+	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/blog' }),
 	// Type-check frontmatter using a schema
 	schema: z.object({
 		title: z.string(),
@@ -14,12 +15,12 @@ const blog = defineCollection({
 	}),
 });
 
-// Long-form case studies. Each file's slug must match a project slug in
-// src/data/projects.json (see getProjectBySlug); shared metadata (brand,
+// Long-form case studies. Each file's id (filename) must match a project slug
+// in src/data/projects.json (see getProjectBySlug); shared metadata (brand,
 // date, skills, links) comes from that catalog entry, while the Markdown
 // body and the fields below hold the case-study narrative.
 const caseStudies = defineCollection({
-	type: 'content',
+	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/caseStudies' }),
 	schema: z.object({
 		role: z.string().optional(),
 		timeframe: z.string().optional(),
