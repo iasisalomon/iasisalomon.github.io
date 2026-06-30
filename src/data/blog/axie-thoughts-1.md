@@ -2,7 +2,7 @@
 title: "Axie Infinity thoughts 1: Economy and value"
 description: "Why it seems SLP cannot find a bottom?"
 pubDate: 2022-01-09
-heroImage: "/images/blog/axie-hero.jpg"
+heroImage: "/images/blog/axie-infinity-land-v1.webp"
 category: "business"
 ---
 
