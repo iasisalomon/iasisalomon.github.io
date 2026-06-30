@@ -12,6 +12,9 @@ const blog = defineCollection({
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
 		category: z.enum(['tech', 'business', 'other']).optional(),
+		// BCP-47 language tag for the post body (defaults to 'en'). Used for the
+		// <html lang> attribute so search engines index the post in the right locale.
+		lang: z.string().optional().default('en'),
 	}),
 });
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iasisalomon.pages.dev/sitemap-index.xml

@@ -7,10 +7,12 @@ interface Props {
 	title: string;
 	description: string;
 	pubDate: Date;
+	updatedDate?: Date;
 	heroImage?: string;
+	lang?: string;
 }
 
-const { title, description, pubDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, lang = 'en' } = Astro.props;
 
 const formattedDate = pubDate ? pubDate.toLocaleDateString('en-us', {
 	year: 'numeric',
@@ -19,7 +21,15 @@ const formattedDate = pubDate ? pubDate.toLocaleDateString('en-us', {
 }) : 'No date available';
 ---
 
-<MainLayout title={title} description={description}>
+<MainLayout
+	title={`${title} — Iasi Salomon`}
+	description={description}
+	image={heroImage}
+	type="article"
+	publishedTime={pubDate?.toISOString()}
+	modifiedTime={updatedDate?.toISOString()}
+	lang={lang}
+>
 	<Navbar />
 	
 	<article class="blog-post py-5 mt-5">

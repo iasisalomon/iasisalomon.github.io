@@ -29,7 +29,7 @@ const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
 const heroImage = entry.data.heroImage ?? project.image;
 ---
 
-<MainLayout title={`${project.title} — Iasi Salomon`} description={entry.data.outcome ?? project.description}>
+<MainLayout title={`${project.title} — Iasi Salomon`} description={entry.data.outcome ?? project.description} image={heroImage} type="article" publishedTime={new Date(project.date).toISOString()}>
 	<Navbar />
 
 	<article class="case-study">

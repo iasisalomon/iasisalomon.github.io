@@ -1,0 +1,132 @@
+---
+// Centralized SEO head: canonical URL, robots, Open Graph, Twitter cards,
+// and JSON-LD structured data. Rendered once inside <head> by MainLayout.
+import { SITE_TITLE } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Page-relative or absolute image used for social previews. */
+  image?: string;
+  /** 'website' for normal pages, 'article' for blog posts / case studies. */
+  type?: 'website' | 'article';
+  /** ISO date — only used when type === 'article'. */
+  publishedTime?: string;
+  /** ISO date — only used when type === 'article'. */
+  modifiedTime?: string;
+  /** Set true to keep a page out of the index (e.g. thin/utility pages). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/images/cara.jpg',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://iasisalomon.pages.dev');
+const canonicalURL = new URL(Astro.url.pathname, site);
+const imageURL = new URL(image, site);
+const isHomepage = Astro.url.pathname === '/';
+
+// Social profiles that establish the "Iasi Salomon" entity across the web.
+const sameAs = [
+  'https://github.com/iasisalomon',
+  'https://linkedin.com/in/iasisalomon',
+  'https://x.com/glunisok',
+  'https://instagram.com/oxaciano',
+  'https://tiktok.com/@oxaciano',
+  'https://t.me/oxaciano',
+];
+
+const person = {
+  '@type': 'Person',
+  '@id': `${site.origin}/#person`,
+  name: 'Iasi Salomon',
+  url: site.origin,
+  image: new URL('/images/cara.jpg', site).href,
+  jobTitle: 'Operations & Strategy Lead, Software Engineer',
+  description:
+    'Iasi Salomon — operations & strategy lead, software engineer, and live-event producer. Former Sky Mavis (Axie Infinity) operations and esports leadership.',
+  knowsAbout: [
+    'Operations Management',
+    'Software Engineering',
+    'QA Automation',
+    'Esports',
+    'Live Event Production',
+    'Fintech',
+    'Web3',
+  ],
+  sameAs,
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${site.origin}/#website`,
+  url: site.origin,
+  name: SITE_TITLE,
+  description,
+  publisher: { '@id': `${site.origin}/#person` },
+  inLanguage: 'en',
+};
+
+// Build the @graph: Person + WebSite are sitewide; BlogPosting only on articles.
+const graph: Record<string, unknown>[] = [person, website];
+
+if (type === 'article') {
+  graph.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonicalURL.href}#article`,
+    headline: title,
+    description,
+    image: imageURL.href,
+    url: canonicalURL.href,
+    ...(publishedTime && { datePublished: publishedTime }),
+    ...(modifiedTime && { dateModified: modifiedTime }),
+    author: { '@id': `${site.origin}/#person` },
+    publisher: { '@id': `${site.origin}/#person` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.href },
+    inLanguage: 'en',
+  });
+}
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
+---
+
+<!-- Canonical & robots -->
+<link rel="canonical" href={canonicalURL} />
+<meta
+  name="robots"
+  content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
+/>
+<meta name="author" content="Iasi Salomon" />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Iasi Salomon" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:locale" content="en_US" />
+{type === 'article' && publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+{type === 'article' && modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime} />
+)}
+{type === 'article' && <meta property="article:author" content="Iasi Salomon" />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+<meta name="twitter:creator" content="@glunisok" />
+
+<!-- Structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
