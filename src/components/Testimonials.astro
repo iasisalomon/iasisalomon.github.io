@@ -11,6 +11,7 @@ type PartnerBrand = {
   name: string;
   logo: string;
   darkTile?: boolean;
+  blackTile?: boolean;
 };
 
 const brands = partnerBrands as PartnerBrand[];
@@ -26,7 +27,11 @@ const carouselBrands = [...brands, ...brands];
       <div class="brand-carousel__track">
         {carouselBrands.map((brand, index) => (
           <div
-            class:list={['brand-carousel__item', { 'brand-carousel__item--dark': brand.darkTile }]}
+            class:list={[
+              'brand-carousel__item',
+              { 'brand-carousel__item--dark': brand.darkTile },
+              { 'brand-carousel__item--black': brand.blackTile },
+            ]}
             aria-hidden={index >= brands.length ? 'true' : undefined}
           >
             <img
@@ -103,6 +108,11 @@ const carouselBrands = [...brands, ...brands];
 
   .brand-carousel__item--dark {
     background: var(--color-surface-dark, #212529);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .brand-carousel__item--black {
+    background: #000;
     border-color: rgba(255, 255, 255, 0.12);
   }
 

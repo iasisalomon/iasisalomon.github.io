@@ -10,8 +10,8 @@ const links = [
   { label: 'Expertise', href: '/#expertise' },
   { label: 'Work', href: '/#work' },
   { label: 'Projects', href: '/#projects' },
-  { label: 'Blog', href: '/#blog' },
   { label: 'Contact', href: '/#discussion' },
+  { label: 'Blog', href: '/#blog' },
 ];
 ---
 
@@ -182,8 +182,11 @@ const links = [
         e.preventDefault();
         setActive(hash);
         scrollToSection(hash);
-        if (collapse.classList.contains('show')) {
-          document.querySelector('.navbar-toggler').click();
+        // Close the mobile menu via Bootstrap's API rather than simulating a
+        // toggler click — a synthetic click fired mid-transition desyncs
+        // Bootstrap's internal state and breaks the next tap on touch devices.
+        if (collapse.classList.contains('show') && window.bootstrap) {
+          window.bootstrap.Collapse.getOrCreateInstance(collapse).hide();
         }
       });
     });
