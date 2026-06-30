@@ -14,4 +14,19 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { blog }; 
+// Long-form case studies. Each file's slug must match a project slug in
+// src/data/projects.json (see getProjectBySlug); shared metadata (brand,
+// date, skills, links) comes from that catalog entry, while the Markdown
+// body and the fields below hold the case-study narrative.
+const caseStudies = defineCollection({
+	type: 'content',
+	schema: z.object({
+		role: z.string().optional(),
+		timeframe: z.string().optional(),
+		outcome: z.string().optional(),
+		heroImage: z.string().optional(),
+		gallery: z.array(z.string()).optional(),
+	}),
+});
+
+export const collections = { blog, caseStudies };

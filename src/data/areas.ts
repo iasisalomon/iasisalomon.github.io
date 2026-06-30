@@ -1,21 +1,48 @@
 // Single source of truth for the portfolio's shared identifiers.
-// Brands, project categories (areas of expertise) and their human-facing
-// labels live here so every component references the same canonical values.
+// Projects are organized by AREA OF EXPERTISE — the visitor-facing way to
+// browse the work. (Brand is kept only as quiet provenance metadata on a
+// project; it is no longer a headline concept.)
 
 export const BRAND_IDS = ['iasi', 'glunis', 'oxaciano'] as const;
 export type BrandId = (typeof BRAND_IDS)[number];
 
-// Project categories double as "areas of expertise" (see Plan 01).
-export const CATEGORY_IDS = ['code', 'event', 'data-science', 'education'] as const;
+// The three areas of expertise. These double as project categories so the
+// Expertise section and the Projects filter stay perfectly in sync.
+export const CATEGORY_IDS = ['operations', 'software-engineering', 'events-production'] as const;
 export type CategoryId = (typeof CATEGORY_IDS)[number];
 
-// Human-facing labels for each category/area.
-export const CATEGORY_LABELS: Record<CategoryId, string> = {
-  code: 'Software Engineering',
-  event: 'Events & Production',
-  'data-science': 'Data Science',
-  education: 'Education',
+// Per-area presentation: label, Bootstrap context color, icon and gradient.
+// Everything visual (expertise cards, project cards, case-study heroes) themes
+// off this one map, so the colour of a thing always means its area.
+export interface AreaMeta {
+  label: string;
+  color: string;
+  icon: string;
+  gradientClass: string;
+}
+
+export const AREA_META: Record<CategoryId, AreaMeta> = {
+  operations: {
+    label: 'Operations & Strategy',
+    color: 'dark',
+    icon: 'fas fa-project-diagram',
+    gradientClass: 'gradient-black',
+  },
+  'software-engineering': {
+    label: 'Software Engineering',
+    color: 'success',
+    icon: 'fas fa-laptop-code',
+    gradientClass: 'gradient-success',
+  },
+  'events-production': {
+    label: 'Events & Production',
+    color: 'danger',
+    icon: 'fas fa-microphone',
+    gradientClass: 'gradient-danger',
+  },
 };
 
-// Canonical order brands are displayed in across the site.
-export const BRAND_ORDER: readonly BrandId[] = ['iasi', 'glunis', 'oxaciano'];
+// Convenience label map (derived) for components that only need the text.
+export const CATEGORY_LABELS = Object.fromEntries(
+  Object.entries(AREA_META).map(([id, meta]) => [id, meta.label]),
+) as Record<CategoryId, string>;

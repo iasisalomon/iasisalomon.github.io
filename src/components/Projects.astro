@@ -1,41 +1,48 @@
 ---
-import { projects, brands } from '../data/portfolio';
+import { projects } from '../data/portfolio';
+import { getCollection } from 'astro:content';
+import { CATEGORY_IDS, CATEGORY_LABELS, AREA_META } from '../data/areas';
+
+const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.slug));
 ---
 
 <section id="projects" class="py-6">
   <div class="container">
     <!-- Section header with inline filters -->
-    <div class="projects-header mb-4">
+    <div class="projects-header mb-3">
       <h2 class="mb-0">Projects</h2>
-      <div class="d-flex gap-2 flex-wrap align-items-center">
-        <div class="btn-group filters-group" role="group" aria-label="Brand filters">
-          <button type="button" class="btn btn-outline-secondary active" data-filter="all">
-            All
-          </button>
-          {brands.map(brand => (
-            <button type="button" class={`btn btn-outline-${brand.color}`} data-filter={brand.id}>
-              {brand.name}
+      <button type="button" class="btn btn-sm btn-outline-dark" id="sortByDate">
+        Newest First
+      </button>
+    </div>
+
+    <!-- Filter by area of expertise -->
+    <div class="filters mb-4">
+      <div class="filter-row">
+        <span class="filter-label">Area</span>
+        <div class="btn-group filters-group" role="group" aria-label="Filter by area">
+          <button type="button" class="btn btn-outline-secondary active" data-facet="area" data-value="all">All</button>
+          {CATEGORY_IDS.map(cat => (
+            <button type="button" class={`btn btn-outline-${AREA_META[cat].color}`} data-facet="area" data-value={cat}>
+              {CATEGORY_LABELS[cat]}
             </button>
           ))}
         </div>
-        <button type="button" class="btn btn-sm btn-outline-dark" id="sortByDate">
-          Newest First
-        </button>
       </div>
     </div>
-    <div class="section-divider mb-4"></div>
+    <div class="section-divider mb-4" style="margin-left:0"></div>
 
     <!-- Projects Grid -->
     <div class="row g-4">
       {projects.map(project => {
-        const brand = brands.find(b => b.id === project.brand);
+        const area = AREA_META[project.category];
         return (
-          <div class="col-md-4 project-card mb-4" data-brand={project.brand} data-category={project.category}>
+          <div class="col-md-4 project-card mb-4" data-category={project.category} data-date={project.date}>
             <div class="card h-100 shadow-lg rounded-4 overflow-hidden">
               <div class="card-body p-4 p-lg-5">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                  <span class={`badge bg-${brand?.color || 'primary'}`}>{brand?.name || project.brand}</span>
-                  <i class={`${brand?.icon || 'fas fa-briefcase'} text-${brand?.color || 'primary'} h2 mb-0`}></i>
+                  <span class={`badge bg-${area.color}`}>{area.label}</span>
+                  <i class={`${area.icon} text-${area.color} h2 mb-0`}></i>
                 </div>
 
                 <h5 class="card-title h4 fw-bold mb-2">{project.title}</h5>
@@ -58,8 +65,13 @@ import { projects, brands } from '../data/portfolio';
                 </div>
 
                 <div class="link-button-container">
+                  {caseStudySlugs.has(project.slug) && (
+                    <a href={`/projects/${project.slug}`} class={`btn btn-${area.color} me-2 mb-2`}>
+                      <i class="fas fa-book-open me-2"></i>Read case study
+                    </a>
+                  )}
                   {project.links?.map(link => (
-                    <a href={link.url} class={`btn btn-outline-${brand?.color || 'primary'} me-2 mb-2`} target="_blank" rel="noopener noreferrer">
+                    <a href={link.url} class={`btn btn-outline-${area.color} me-2 mb-2`} target="_blank" rel="noopener noreferrer">
                       <i class={`${link.icon} me-2`}></i>{link.text}
                     </a>
                   ))}
@@ -92,10 +104,30 @@ import { projects, brands } from '../data/portfolio';
     gap: 1rem;
   }
 
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted, #6c757d);
+    min-width: 3.5rem;
+  }
+
   .filters-group {
     flex-wrap: wrap;
     gap: 0.25rem;
-    justify-content: flex-end;
   }
   
   .badge {

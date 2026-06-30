@@ -1,0 +1,189 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import CustomFooter from '../../components/CustomFooter.astro';
+import { getProjectBySlug } from '../../data/portfolio';
+import { AREA_META } from '../../data/areas';
+
+export async function getStaticPaths() {
+	const studies = await getCollection('caseStudies');
+	return studies.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const project = getProjectBySlug(entry.slug);
+if (!project) {
+	throw new Error(
+		`Case study "${entry.slug}" has no matching project in projects.json. ` +
+			`Rename the file to a valid project slug or add the project.`,
+	);
+}
+const area = AREA_META[project.category];
+const { Content } = await entry.render();
+
+const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
+	month: 'long',
+	year: 'numeric',
+});
+const heroImage = entry.data.heroImage ?? project.image;
+---
+
+<MainLayout title={`${project.title} — Iasi Salomon`} description={entry.data.outcome ?? project.description}>
+	<Navbar />
+
+	<article class="case-study">
+		<!-- Hero / summary panel -->
+		<header class={`cs-hero ${area.gradientClass} text-white`}>
+			<div class="container">
+				<a href="/#projects" class="cs-back text-white-50">← All projects</a>
+				<div class="d-flex flex-wrap gap-2 mb-3 mt-3">
+					<span class="badge bg-light text-dark">{area.label}</span>
+					<span class="badge border border-light text-white">{dateLabel}</span>
+				</div>
+				<h1 class="display-5 fw-bold mb-3">{project.title}</h1>
+				{entry.data.outcome && <p class="lead mb-4 opacity-90" style="max-width: 65ch">{entry.data.outcome}</p>}
+
+				<div class="cs-facts">
+					{entry.data.role && (
+						<div><span class="cs-fact-label">Role</span><span>{entry.data.role}</span></div>
+					)}
+					{entry.data.timeframe && (
+						<div><span class="cs-fact-label">When</span><span>{entry.data.timeframe}</span></div>
+					)}
+					{project.skills.length > 0 && (
+						<div><span class="cs-fact-label">Stack</span><span>{project.skills.join(' · ')}</span></div>
+					)}
+				</div>
+			</div>
+		</header>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<div class="cs-content">
+						<Content />
+					</div>
+
+					{entry.data.gallery && entry.data.gallery.length > 0 && (
+						<div class="cs-gallery">
+							{entry.data.gallery.map((src) => (
+								<img src={src} alt={`${project.title} screenshot`} loading="lazy" />
+							))}
+						</div>
+					)}
+
+					{project.links.length > 0 && (
+						<div class="cs-links">
+							{project.links.map((link) => (
+								<a href={link.url} class={`btn btn-outline-${area.color} me-2 mb-2`} target="_blank" rel="noopener noreferrer">
+									<i class={`${link.icon} me-2`}></i>{link.text}
+								</a>
+							))}
+						</div>
+					)}
+
+					<div class="cs-footer">
+						<a href="/#projects" class="back-button">← Back to all projects</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<CustomFooter />
+</MainLayout>
+
+<style>
+	.cs-hero {
+		padding: 7rem 0 3.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.cs-back {
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+	.cs-back:hover { color: #fff !important; }
+
+	.opacity-90 { opacity: 0.9; }
+
+	.cs-facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem 2.5rem;
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.cs-facts > div { display: flex; flex-direction: column; gap: 0.2rem; }
+	.cs-fact-label {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		opacity: 0.65;
+	}
+
+	.cs-gallery {
+		display: grid;
+		gap: 1.5rem;
+		margin: 2.5rem 0;
+	}
+	.cs-gallery img {
+		width: 100%;
+		border-radius: var(--radius-card, 1rem);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.cs-links { margin-top: 2.5rem; }
+
+	.cs-footer {
+		margin-top: 3.5rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	.back-button {
+		display: inline-flex;
+		align-items: center;
+		color: #333;
+		font-weight: 500;
+		padding: 0.6rem 1.2rem;
+		border-radius: 4px;
+		background-color: rgba(0, 0, 0, 0.05);
+		transition: all 0.2s ease;
+	}
+	.back-button:hover { background-color: rgba(0, 0, 0, 0.1); transform: translateX(-4px); }
+
+	@media (max-width: 768px) {
+		.cs-hero { padding: 6rem 0 2.5rem; }
+	}
+</style>
+
+<style is:global>
+	.cs-content { font-size: 1.1rem; line-height: 1.8; color: #333; }
+	.cs-content h2 {
+		font-size: 1.6rem;
+		font-weight: 600;
+		margin: 2.75rem 0 1.25rem;
+		letter-spacing: -0.01em;
+	}
+	.cs-content h3 { font-size: 1.3rem; font-weight: 600; margin: 2.25rem 0 1rem; }
+	.cs-content p { margin-bottom: 1.6rem; }
+	.cs-content ul, .cs-content ol { margin-bottom: 1.6rem; padding-left: 1.6rem; }
+	.cs-content li { margin-bottom: 0.6rem; }
+	.cs-content a { color: var(--color-accent, #0055ff); border-bottom: 1px solid transparent; }
+	.cs-content a:hover { border-bottom-color: currentColor; }
+	.cs-content strong { color: #1a1a1a; }
+	.cs-content blockquote {
+		border-left: 4px solid var(--color-accent, #4d9aff);
+		padding: 0.5rem 0 0.5rem 1.5rem;
+		margin: 2rem 0;
+		font-style: italic;
+		background-color: rgba(0, 0, 0, 0.02);
+	}
+
+	@media (max-width: 768px) {
+		.cs-content { font-size: 1rem; }
+		.cs-content h2 { font-size: 1.4rem; }
+	}
+</style>

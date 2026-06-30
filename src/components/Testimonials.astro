@@ -1,0 +1,71 @@
+---
+import proof from '../data/proof.json';
+
+// Truthful credibility strip: organizations Iasi has worked with / for.
+const { organizations, testimonials } = proof as {
+  organizations: string[];
+  testimonials: { quote: string; name: string; role: string; org?: string }[];
+};
+---
+
+<section id="proof" class="py-6">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-4">Worked With</h2>
+    <div class="section-divider mb-5"></div>
+
+    <div class="org-strip d-flex flex-wrap justify-content-center gap-3 mb-2">
+      {organizations.map((org) => (
+        <span class="org-pill">{org}</span>
+      ))}
+    </div>
+
+    {testimonials.length > 0 && (
+      <div class="row g-4 justify-content-center mt-4">
+        {testimonials.map((t) => (
+          <div class="col-md-6 col-lg-4">
+            <figure class="testimonial h-100 p-4 rounded-4 bg-light">
+              <blockquote class="mb-3">“{t.quote}”</blockquote>
+              <figcaption class="small text-muted">
+                <strong class="d-block text-dark">{t.name}</strong>
+                {t.role}{t.org ? `, ${t.org}` : ''}
+              </figcaption>
+            </figure>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .org-pill {
+    display: inline-block;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-pill, 100px);
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    color: var(--color-text, #212529);
+    font-weight: 600;
+    font-size: 0.9rem;
+    background-color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .org-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.08);
+  }
+
+  .testimonial {
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  }
+
+  .testimonial blockquote {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .org-pill:hover { transform: none; }
+  }
+</style>

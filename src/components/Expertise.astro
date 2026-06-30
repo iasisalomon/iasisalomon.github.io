@@ -1,0 +1,87 @@
+---
+import { expertise, projectsForArea, skillsForArea } from '../data/portfolio';
+import { AREA_META } from '../data/areas';
+
+// Pre-compute per-area derived data so the template stays declarative.
+const areas = expertise.map((area) => {
+  const meta = AREA_META[area.id];
+  return {
+    ...area,
+    ...meta,
+    count: projectsForArea(area).length,
+    // Prefer the curated `tools`, fall back to skills aggregated from projects.
+    chips: (area.tools.length ? area.tools : skillsForArea(area)).slice(0, 5),
+  };
+});
+---
+
+<section id="expertise" class="py-6 bg-light">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-4">Areas of Expertise</h2>
+    <div class="section-divider mb-3"></div>
+    <p class="text-center text-muted mb-5 mx-auto" style="max-width: 60ch">
+      I take complex, ambiguous things — fast-growing orgs, raw data, live global events,
+      new technical domains — and make them work. Here's where, with the projects that prove it.
+    </p>
+
+    <div class="row g-4">
+      {areas.map((area) => (
+        <div class="col-md-6 col-lg-4">
+          <div class="expertise-card h-100 p-4 rounded-4 bg-white">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <i class={`${area.icon} h3 mb-0 text-${area.color}`}></i>
+              {area.yearsActive && <span class="years small text-muted">{area.yearsActive}</span>}
+            </div>
+            <h3 class="h5 fw-bold mb-2">{area.name}</h3>
+            <p class="text-muted small mb-3">{area.summary}</p>
+
+            <div class="d-flex flex-wrap gap-1 mb-3">
+              {area.chips.map((chip) => (
+                <span class="badge bg-light text-dark border">{chip}</span>
+              ))}
+            </div>
+
+            {area.count > 0 && (
+              <button
+                type="button"
+                class={`btn btn-sm btn-outline-${area.color} expertise-cta`}
+                data-jump-category={area.match.category}
+              >
+                See {area.count} project{area.count !== 1 ? 's' : ''}
+                <i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .expertise-card {
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .expertise-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.08);
+  }
+
+  .years {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .expertise-cta {
+    font-weight: 500;
+  }
+
+  .expertise-cta i {
+    transition: transform 0.2s ease;
+  }
+
+  .expertise-cta:hover i {
+    transform: translateX(3px);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
-import { brands } from '../data/portfolio';
-const subtitles = brands.map((b) => b.description);
+import { AREA_META } from '../data/areas';
+const subtitles = Object.values(AREA_META).map((a) => a.label);
 ---
 
 <section id="home" class="min-vh-100 d-flex flex-column bg-dark text-white">
@@ -15,26 +15,36 @@ const subtitles = brands.map((b) => b.description);
           height="180"
         />
       </div>
-      <h1 class="display-2 mb-3">Iasi Salomon</h1>
-      <p class="lead subtitle mb-5">
+      <h1 class="display-2 mb-2">Iasi Salomon</h1>
+      <p class="roles mb-4">
         <span id="heroSubtitle" class="subtitle-text">{subtitles[0]}</span>
       </p>
-      <div class="mb-5">
-        <a href="#projects" class="btn btn-outline-light btn-lg cta-btn">
-          View Projects <i class="fas fa-arrow-down ms-2"></i>
+
+      <p class="thesis lead mx-auto mb-5">
+        I take complex, ambiguous things — fast-growing orgs, raw data, live global events,
+        new technical domains — and make them work: <strong>structured, scalable, shipped.</strong>
+      </p>
+
+      <div class="hero-ctas mb-5">
+        <a href="#work" class="btn btn-light btn-lg me-2 mb-2 cta-primary">
+          See my work <i class="fas fa-arrow-down ms-2"></i>
+        </a>
+        <a href="#discussion" class="btn btn-outline-light btn-lg mb-2 cta-btn">
+          Let's talk <i class="fas fa-arrow-right ms-2"></i>
         </a>
       </div>
+
       <div class="social-links">
-        <a href="https://github.com/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <i class="fab fa-github"></i>
         </a>
-        <a href="https://linkedin.com/in/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer">
+        <a href="https://linkedin.com/in/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
-        <a href="https://x.com/glunisok" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer">
+        <a href="https://x.com/glunisok" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
           <i class="fab fa-x-twitter"></i>
         </a>
-        <a href="https://t.me/oxaciano" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer">
+        <a href="https://t.me/oxaciano" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
           <i class="fab fa-telegram-plane"></i>
         </a>
       </div>
@@ -55,7 +65,10 @@ const subtitles = brands.map((b) => b.description);
     }, 400);
   }
 
-  setInterval(rotateSubtitle, 3000);
+  // Respect users who prefer reduced motion — show the first role and stop.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(rotateSubtitle, 3000);
+  }
 </script>
 
 <style>
@@ -72,9 +85,37 @@ const subtitles = brands.map((b) => b.description);
     transform: scale(1.05);
   }
 
+  .roles {
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent, #4d9aff);
+    font-weight: 600;
+  }
+
   .subtitle-text {
     transition: opacity 0.4s ease;
     display: inline-block;
+  }
+
+  .thesis {
+    max-width: 60ch;
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .thesis strong {
+    color: #fff;
+  }
+
+  .cta-primary {
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-2px);
   }
 
   .cta-btn {
@@ -111,9 +152,22 @@ const subtitles = brands.map((b) => b.description);
       padding-top: 60px;
     }
 
+    .thesis {
+      font-size: 1.15rem;
+    }
+
     .social-links a {
       margin-left: 0.75rem !important;
       margin-right: 0.75rem !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .profile-image img:hover,
+    .cta-primary:hover,
+    .cta-btn:hover,
+    .social-links a:hover {
+      transform: none;
     }
   }
 </style>
