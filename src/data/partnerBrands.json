@@ -1,0 +1,14 @@
+[
+  { "name": "Sky Mavis", "logo": "/images/brands/sky-mavis.png" },
+  { "name": "Axie Infinity", "logo": "/images/brands/axie-infinity.png" },
+  { "name": "Isurus Gaming", "logo": "/images/brands/isurus.png" },
+  { "name": "LVP", "logo": "/images/brands/lvp.png" },
+  { "name": "Pythas", "logo": "/images/brands/pythas.svg" },
+  { "name": "Interlaced", "logo": "/images/brands/interlaced.png" },
+  { "name": "WAIA", "logo": "/images/brands/waia.webp" },
+  { "name": "Home Team Network", "logo": "/images/brands/htn.svg", "darkTile": true },
+  { "name": "XGamePro", "logo": "/images/brands/xgamepro.png" },
+  { "name": "AGS", "logo": "/images/brands/ags.png" },
+  { "name": "Sura Gaming", "logo": "/images/brands/sura-gaming.png" },
+  { "name": "Coliseo Dragons", "logo": "/images/brands/coliseo-dragons.png" }
+]

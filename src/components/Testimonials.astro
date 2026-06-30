@@ -1,11 +1,20 @@
 ---
 import proof from '../data/proof.json';
+import partnerBrands from '../data/partnerBrands.json';
 
-// Truthful credibility strip: organizations Iasi has worked with / for.
-const { organizations, testimonials } = proof as {
+const { testimonials } = proof as {
   organizations: string[];
   testimonials: { quote: string; name: string; role: string; org?: string }[];
 };
+
+type PartnerBrand = {
+  name: string;
+  logo: string;
+  darkTile?: boolean;
+};
+
+const brands = partnerBrands as PartnerBrand[];
+const carouselBrands = [...brands, ...brands];
 ---
 
 <section id="proof" class="py-6">
@@ -13,10 +22,24 @@ const { organizations, testimonials } = proof as {
     <h2 class="text-center mt-1 mb-4">Worked With</h2>
     <div class="section-divider mb-5"></div>
 
-    <div class="org-strip d-flex flex-wrap justify-content-center gap-3 mb-2">
-      {organizations.map((org) => (
-        <span class="org-pill">{org}</span>
-      ))}
+    <div class="brand-carousel" aria-label="Organizations Iasi has worked with">
+      <div class="brand-carousel__track">
+        {carouselBrands.map((brand, index) => (
+          <div
+            class:list={['brand-carousel__item', { 'brand-carousel__item--dark': brand.darkTile }]}
+            aria-hidden={index >= brands.length ? 'true' : undefined}
+          >
+            <img
+              src={brand.logo}
+              alt={index < brands.length ? `${brand.name} logo` : ''}
+              loading="lazy"
+              decoding="async"
+              width="160"
+              height="64"
+            />
+          </div>
+        ))}
+      </div>
     </div>
 
     {testimonials.length > 0 && (
@@ -24,7 +47,7 @@ const { organizations, testimonials } = proof as {
         {testimonials.map((t) => (
           <div class="col-md-6 col-lg-4">
             <figure class="testimonial h-100 p-4 rounded-4 bg-light">
-              <blockquote class="mb-3">“{t.quote}”</blockquote>
+              <blockquote class="mb-3">"{t.quote}"</blockquote>
               <figcaption class="small text-muted">
                 <strong class="d-block text-dark">{t.name}</strong>
                 {t.role}{t.org ? `, ${t.org}` : ''}
@@ -38,21 +61,59 @@ const { organizations, testimonials } = proof as {
 </section>
 
 <style>
-  .org-pill {
-    display: inline-block;
-    padding: 0.5rem 1.1rem;
-    border-radius: var(--radius-pill, 100px);
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
-    color: var(--color-text, #212529);
-    font-weight: 600;
-    font-size: 0.9rem;
-    background-color: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  .brand-carousel {
+    --carousel-gap: 1.25rem;
+    --carousel-speed: 42s;
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
   }
 
-  .org-pill:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.08);
+  .brand-carousel__track {
+    display: flex;
+    align-items: center;
+    gap: var(--carousel-gap);
+    width: max-content;
+    animation: brand-scroll var(--carousel-speed) linear infinite;
+  }
+
+  .brand-carousel:hover .brand-carousel__track {
+    animation-play-state: paused;
+  }
+
+  .brand-carousel__item {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 11rem;
+    height: 5rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--radius-card, 1rem);
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    background: #fff;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.04);
+  }
+
+  .brand-carousel__item--dark {
+    background: var(--color-surface-dark, #212529);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .brand-carousel__item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
   }
 
   .testimonial {
@@ -65,7 +126,32 @@ const { organizations, testimonials } = proof as {
     font-style: italic;
   }
 
+  @keyframes brand-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-50% - var(--carousel-gap) / 2));
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .org-pill:hover { transform: none; }
+    .brand-carousel {
+      mask-image: none;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .brand-carousel__track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .brand-carousel__item[aria-hidden='true'] {
+      display: none;
+    }
   }
 </style>
