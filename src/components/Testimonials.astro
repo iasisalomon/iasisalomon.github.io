@@ -11,7 +11,6 @@ type PartnerBrand = {
   name: string;
   logo: string;
   darkTile?: boolean;
-  blackTile?: boolean;
   url?: string;
 };
 
@@ -31,7 +30,6 @@ const carouselBrands = [...brands, ...brands];
             class:list={[
               'brand-carousel__item',
               { 'brand-carousel__item--dark': brand.darkTile },
-              { 'brand-carousel__item--black': brand.blackTile },
             ]}
             aria-hidden={index >= brands.length ? 'true' : undefined}
           >
@@ -129,11 +127,6 @@ const carouselBrands = [...brands, ...brands];
 
   .brand-carousel__item--dark {
     background: var(--color-surface-dark, #212529);
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .brand-carousel__item--black {
-    background: #000;
     border-color: rgba(255, 255, 255, 0.12);
   }
 

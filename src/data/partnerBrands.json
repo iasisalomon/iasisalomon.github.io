@@ -10,5 +10,5 @@
   { "name": "WAIA", "logo": "/images/brands/waia.webp", "darkTile": true, "url": "https://somos.waia.ar/" },
   { "name": "Home Team Network", "logo": "/images/brands/htn.svg", "darkTile": true, "url": "https://www.hometeamlive.com/" },
   { "name": "XGamePro", "logo": "/images/brands/xgamepro.png", "darkTile": true, "url": "https://xgamepro.net/" },
-  { "name": "Sura Gaming", "logo": "/images/brands/sura-gaming-logo.png", "blackTile": true, "url": "https://suragaming.com/" }
+  { "name": "Sura Gaming", "logo": "/images/brands/sura-gaming-logo.png", "darkTile": true, "url": "https://suragaming.com/" }
 ]
