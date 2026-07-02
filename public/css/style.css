@@ -398,8 +398,6 @@ section {
 }
 
 #home {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('../images/header-bg.jpg') center/cover fixed;
     min-height: calc(100vh - 76px);
     padding: 0;
     position: relative;

@@ -45,7 +45,7 @@ const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e
                   <i class={`${area.icon} text-${area.color} h2 mb-0`}></i>
                 </div>
 
-                <h5 class="card-title h4 fw-bold mb-2">{project.title}</h5>
+                <h3 class="card-title h4 fw-bold mb-2">{project.title}</h3>
                 <div class="text-muted small mb-3">
                   {new Date(project.date).toLocaleDateString('en-us', { month: 'long', year: 'numeric' })}
                 </div>
