@@ -1,17 +1,38 @@
 ---
-// The navbar is identical on every page and every item is an in-page section
-// link (`/#id`). On the homepage they smooth-scroll; from any other page they
-// navigate home and the on-load handler scrolls into place. "Blog" points at
-// the homepage's From-the-Blog teaser; the full archive (/blog) is reached from
-// there and from the footer — keeping the primary nav uniform (never a hard URL
-// jump to a different page).
-const links = [
+// Context-aware navbar with two render-time variants:
+//  - 'main' (default): in-page section links (`/#id`). On the homepage they
+//    smooth-scroll; from any other page they navigate home and the on-load
+//    handler scrolls into place. "Blog" points at the homepage's
+//    From-the-Blog teaser.
+//  - 'blog': the blog is its own space — category links driving the archive
+//    filter plus a single "Main site" link back. No homepage section links.
+import { BLOG_CATEGORIES } from '../consts';
+
+interface Props {
+  variant?: 'main' | 'blog';
+  /** Blog variant only: category to mark active at render time (used by
+   *  post pages). The archive page manages active state client-side from
+   *  the ?category URL param instead. */
+  activeCategory?: string;
+}
+const { variant = 'main', activeCategory } = Astro.props;
+
+const mainLinks = [
   { label: 'About', href: '/#about' },
   { label: 'Expertise', href: '/#expertise' },
   { label: 'Work', href: '/#work' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Contact', href: '/#discussion' },
   { label: 'Blog', href: '/#blog' },
+];
+
+const blogLinks = [
+  { label: 'All', href: '/blog', category: 'all' },
+  ...BLOG_CATEGORIES.map((c) => ({
+    label: c.label,
+    href: `/blog?category=${c.id}`,
+    category: c.id as string,
+  })),
 ];
 ---
 
@@ -43,11 +64,32 @@ const links = [
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav main-nav">
-        {links.map((link) => (
-          <li class="nav-item">
-            <a class="nav-link" href={link.href}>{link.label}</a>
-          </li>
-        ))}
+        {variant === 'main' &&
+          mainLinks.map((link) => (
+            <li class="nav-item">
+              <a class="nav-link" href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        {variant === 'blog' && (
+          <>
+            {blogLinks.map((link) => (
+              <li class="nav-item">
+                <a
+                  class:list={['nav-link', { active: link.category === activeCategory }]}
+                  href={link.href}
+                  data-category={link.category}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li class="nav-item nav-item--return">
+              <a class="nav-link" href="/">
+                <i class="fas fa-arrow-left me-1" aria-hidden="true"></i>Main site
+              </a>
+            </li>
+          </>
+        )}
       </ul>
     </div>
   </div>
@@ -113,6 +155,18 @@ const links = [
 
   .nav-controls {
     margin-left: 0.6rem;
+  }
+
+  /* Blog variant: separate the "Main site" return link from the
+     category links. */
+  .nav-item--return {
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .nav-item--return .nav-link {
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .theme-toggle {
@@ -200,6 +254,14 @@ const links = [
 
     .main-nav .nav-link.active {
       background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Collapsed menu: the return link's side divider becomes a top rule. */
+    .nav-item--return {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      margin: 0.4rem 0 0;
+      padding: 0.4rem 0 0;
     }
   }
 </style>

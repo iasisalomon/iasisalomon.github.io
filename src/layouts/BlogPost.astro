@@ -9,10 +9,11 @@ interface Props {
 	pubDate: Date;
 	updatedDate?: Date;
 	heroImage?: string;
+	category?: string;
 	lang?: string;
 }
 
-const { title, description, pubDate, updatedDate, heroImage, lang = 'en' } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, lang = 'en' } = Astro.props;
 
 const formattedDate = pubDate ? pubDate.toLocaleDateString('en-us', {
 	year: 'numeric',
@@ -30,7 +31,7 @@ const formattedDate = pubDate ? pubDate.toLocaleDateString('en-us', {
 	modifiedTime={updatedDate?.toISOString()}
 	lang={lang}
 >
-	<Navbar />
+	<Navbar variant="blog" activeCategory={category} />
 	
 	<article class="blog-post py-5 mt-5">
 		<div class="container">
