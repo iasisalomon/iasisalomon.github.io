@@ -31,6 +31,21 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <script is:inline>
+      // Runs before first paint so the page never flashes the wrong theme.
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme =
+            stored === 'dark' || stored === 'light'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {}
+      })();
+    </script>
     <SEO
       title={title}
       description={description}
@@ -63,7 +78,7 @@ const {
       .section-divider {
         height: 1px;
         width: 60px;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: var(--color-border-strong);
         margin: 0 auto 2rem;
       }
       

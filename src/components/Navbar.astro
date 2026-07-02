@@ -18,15 +18,29 @@ const links = [
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
   <div class="container">
     <a class="navbar-brand" href="/">Iasi Salomon</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Toggle lives outside the collapse so it stays visible (and usable)
+         without opening the menu; order-lg-last places it after the nav
+         links on desktop. -->
+    <div class="nav-controls d-flex align-items-center gap-2 order-lg-last">
+      <button
+        type="button"
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Switch between dark and light theme"
+      >
+        <i class="fas fa-moon toggle-icon-dark" aria-hidden="true"></i>
+        <i class="fas fa-sun toggle-icon-light" aria-hidden="true"></i>
+      </button>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav main-nav">
         {links.map((link) => (
@@ -78,7 +92,7 @@ const links = [
     left: 10%;
     width: 80%;
     height: 2px;
-    background-color: var(--color-accent, #4d9aff);
+    background-color: var(--color-accent-on-dark, #4d9aff);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.3s ease;
@@ -97,6 +111,40 @@ const links = [
     transform: scaleX(1);
   }
 
+  .nav-controls {
+    margin-left: 0.6rem;
+  }
+
+  .theme-toggle {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+
+  /* Moon shown in light mode (action: go dark), sun in dark mode. */
+  .toggle-icon-light {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .toggle-icon-light {
+    display: inline-block;
+  }
+
+  :global([data-theme='dark']) .toggle-icon-dark {
+    display: none;
+  }
+
   .navbar-toggler {
     border: none;
     background-color: rgba(255, 255, 255, 0.08);
@@ -113,9 +161,20 @@ const links = [
     box-shadow: none;
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 991.98px) {
     #mainNav {
       padding: 0.5rem 0;
+    }
+
+    /* The navbar has a fixed height, so the expanded menu overflows past
+       the navbar's painted background — give the collapse its own solid
+       panel or the links float transparently over page content. */
+    .navbar-collapse {
+      background-color: rgba(28, 31, 35, 0.98);
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem 0.75rem;
     }
 
     .navbar-nav {
@@ -146,6 +205,21 @@ const links = [
 </style>
 
 <script>
+  // Theme toggle: flips data-theme on <html> and persists the choice.
+  // The pre-paint script in MainLayout reads the same localStorage key.
+  document.getElementById('themeToggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    if (next === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
     const nav = document.getElementById('mainNav');
     const collapse = document.getElementById('navbarNav');
@@ -161,9 +235,25 @@ const links = [
       return i >= 0 ? href.slice(i) : null; // e.g. '#about'
     }
 
+    // While a click-initiated smooth scroll is in flight the scroll-spy is
+    // suppressed, otherwise it re-marks every section passing by and the
+    // marker ping-pongs. 200ms without a scroll event = settled (also
+    // covers the user interrupting the animation with the wheel).
+    let autoScrolling = false;
+    let settleTimer = null;
+
+    function suppressSpy() {
+      autoScrolling = true;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function () {
+        autoScrolling = false;
+      }, 200);
+    }
+
     function scrollToSection(hash) {
       const section = document.querySelector(hash);
       if (!section) return false;
+      suppressSpy();
       window.scrollTo({ top: section.offsetTop - nav.offsetHeight - 10, behavior: 'smooth' });
       return true;
     }
@@ -194,9 +284,20 @@ const links = [
     // Scroll-spy: highlight the section currently in view.
     let ticking = false;
     window.addEventListener('scroll', function () {
+      if (autoScrolling) {
+        // Still in flight — keep extending the settle window and leave
+        // the marker on the clicked target.
+        suppressSpy();
+        return;
+      }
       if (ticking) return;
       ticking = true;
       setTimeout(function () {
+        if (autoScrolling) {
+          // A click landed while this callback was queued.
+          ticking = false;
+          return;
+        }
         const scrollPos = window.scrollY + nav.offsetHeight + 20;
         let current = null;
         document.querySelectorAll('section[id]').forEach(function (sec) {

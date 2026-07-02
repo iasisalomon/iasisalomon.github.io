@@ -1,23 +1,53 @@
 /* =============================================================
-   Design tokens (Plan 03 — Phase 0: token layer only).
+   Design tokens (Plan 03 — Phase 2: light + dark palettes).
    Single source for color, spacing, radius and brand gradients.
-   The dark-theme override (`[data-theme="dark"]`) and the theme
-   toggle land in Phase 2; tokens are defined now so components can
-   migrate onto them incrementally.
+   Pages opt into theming (MainLayout `themeAware`); the head script
+   sets `data-theme="dark"` on <html> from localStorage / OS
+   preference, and every token below flips. Pages that never set the
+   attribute always render the light palette.
    ============================================================= */
 :root {
+    color-scheme: light;
+
     /* Accent */
-    --color-accent: #4d9aff;
-    --color-accent-rgb: 77, 154, 255;
+    --color-accent: #0055ff;
+    --color-accent-rgb: 0, 85, 255;
+    /* For permanently dark surfaces (navbar, hero, footer) that don't
+       follow the page theme — bright enough to read on near-black in
+       both light and dark mode. */
+    --color-accent-on-dark: #4d9aff;
 
     /* Surfaces & text (light theme, default) */
     --color-bg: #ffffff;
     --color-surface: #f8f9fa;
     --color-surface-dark: #212529;
+    --color-card: #ffffff;
     --color-footer-bg: #1a1d20;
     --color-text: #212529;
+    --color-text-secondary: #555555;
     --color-text-muted: #6c757d;
+    --color-heading: #212529;
     --color-border: rgba(0, 0, 0, 0.08);
+    --color-border-strong: rgba(0, 0, 0, 0.15);
+
+    /* Interaction surfaces (buttons, hovers, quotes, code) */
+    --color-hover-bg: rgba(0, 0, 0, 0.05);
+    --color-hover-bg-strong: rgba(0, 0, 0, 0.1);
+    --color-quote-bg: rgba(0, 0, 0, 0.03);
+    --color-code-bg: #f3f4f6;
+
+    /* Elevation — light theme reads depth from soft shadows */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 15px 30px rgba(0, 0, 0, 0.1);
+    --shadow-image: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    /* Category badges */
+    --badge-tech-bg: #e8f0fe;
+    --badge-tech-text: #1a56db;
+    --badge-business-bg: #fef3c7;
+    --badge-business-text: #92400e;
+    --badge-other-bg: #f3f4f6;
+    --badge-other-text: #4b5563;
 
     /* Spacing */
     --space-section: 5rem;
@@ -33,6 +63,89 @@
     --gradient-oxaciano: linear-gradient(45deg, #8b0000 0%, #dc3545 100%);
 }
 
+/* Dark palette — a distinct design, not an inversion: near-black blue
+   surfaces, depth expressed with borders instead of shadows, brighter
+   desaturated accent, translucent tinted badges. */
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-accent: #4d9aff;
+    --color-accent-rgb: 77, 154, 255;
+
+    --color-bg: #0e1116;
+    --color-surface: #151a21;
+    --color-card: #171d25;
+    --color-text: #e6e8eb;
+    --color-text-secondary: #b6bcc4;
+    --color-text-muted: #8b939e;
+    --color-heading: #f2f4f6;
+    --color-border: rgba(255, 255, 255, 0.09);
+    --color-border-strong: rgba(255, 255, 255, 0.18);
+
+    --color-hover-bg: rgba(255, 255, 255, 0.07);
+    --color-hover-bg-strong: rgba(255, 255, 255, 0.12);
+    --color-quote-bg: rgba(255, 255, 255, 0.04);
+    --color-code-bg: #1e242e;
+
+    /* Shadows barely read on dark bg — keep them tight and rely on
+       the card border for definition. */
+    --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.4);
+    --shadow-card-hover: 0 10px 24px rgba(0, 0, 0, 0.55);
+    --shadow-image: 0 4px 14px rgba(0, 0, 0, 0.5);
+
+    --badge-tech-bg: rgba(77, 154, 255, 0.16);
+    --badge-tech-text: #82b6ff;
+    --badge-business-bg: rgba(251, 191, 36, 0.14);
+    --badge-business-text: #f5c451;
+    --badge-other-bg: rgba(255, 255, 255, 0.08);
+    --badge-other-text: #aeb6bf;
+}
+
+/* Bootstrap utility shims — Bootstrap hardcodes these colors, so they
+   need re-pointing at the token layer when the dark palette is active.
+   (Sections that are dark by design — hero, discussion, footer — use
+   .bg-dark/.text-white and are untouched in both themes.) */
+[data-theme="dark"] .text-muted {
+    color: var(--color-text-muted) !important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--color-surface) !important;
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: var(--color-card) !important;
+}
+
+[data-theme="dark"] .text-dark {
+    color: var(--color-text) !important;
+}
+
+[data-theme="dark"] .card {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .badge.bg-light {
+    background-color: var(--color-hover-bg) !important;
+    color: var(--color-text-secondary) !important;
+}
+
+[data-theme="dark"] .btn-outline-dark {
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+}
+
+[data-theme="dark"] .btn-outline-dark:hover {
+    background-color: var(--color-hover-bg-strong);
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+    color: var(--color-text-secondary);
+    border-color: var(--color-border-strong);
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -44,6 +157,8 @@ a {
 }
 
 body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-size: 15px;
     line-height: 1.5;
@@ -52,6 +167,7 @@ body {
     padding: 0;
     scroll-behavior: smooth;
     scroll-padding-top: 120px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -88,7 +204,7 @@ section {
 }
 
 .badge.border {
-    border-color: rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--color-border) !important;
 }
 
 .brand-section {
@@ -121,7 +237,7 @@ section {
 }
 
 .card {
-    background: white;
+    background: var(--color-card);
     border: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -213,7 +329,7 @@ section {
 }
 
 .section-divider {
-    background-color: #dee2e6;
+    background-color: var(--color-border-strong);
     border-radius: 2px;
     height: 4px;
     margin: 1rem auto 2rem;
@@ -302,15 +418,15 @@ section {
 }
 
 #about, #projects {
-    background-color: #fff;
+    background-color: var(--color-bg);
 }
 
 #brands {
-    background-color: #f8f9fa;
+    background-color: var(--color-surface);
 }
 
 #about p {
-    color: #4a4a4a;
+    color: var(--color-text-secondary);
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1rem;
@@ -321,35 +437,35 @@ section {
 
 #about p strong,
 #about p b {
-    color: #2c3e50;
+    color: var(--color-heading);
     font-weight: 600;
 }
 
 #about p em,
 #about p i {
-    color: #2c3e50;
+    color: var(--color-heading);
     font-style: normal;
     font-weight: 500;
-    border-bottom: 1px dotted #6c757d;
+    border-bottom: 1px dotted var(--color-text-muted);
 }
 
 #about .role {
-    color: #2c3e50;
+    color: var(--color-heading);
     font-weight: 600;
     letter-spacing: 0.01em;
 }
 
 #about .skill {
-    color: #2c3e50;
+    color: var(--color-heading);
     font-weight: 500;
-    background: rgba(44, 62, 80, 0.05);
+    background: var(--color-hover-bg);
     padding: 0.1em 0.3em;
     border-radius: 3px;
 }
 
 #about p:first-of-type {
     font-size: 1.05rem;
-    color: #2c3e50;
+    color: var(--color-heading);
     font-weight: 500;
 }
 
@@ -453,13 +569,6 @@ section {
 }
 
 @media (max-width: 768px) {
-    .navbar-nav {
-        background-color: rgba(33, 37, 41, 0.98);
-        border-radius: 0 0 10px 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-    }
-    
     .profile-image {
         max-width: 150px;
     }

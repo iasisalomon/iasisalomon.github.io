@@ -132,7 +132,7 @@ const heroImage = entry.data.heroImage ?? project.image;
 	.cs-gallery img {
 		width: 100%;
 		border-radius: var(--radius-card, 1rem);
-		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		box-shadow: var(--shadow-image);
 	}
 
 	.cs-links { margin-top: 2.5rem; }
@@ -140,19 +140,19 @@ const heroImage = entry.data.heroImage ?? project.image;
 	.cs-footer {
 		margin-top: 3.5rem;
 		padding-top: 2rem;
-		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		border-top: 1px solid var(--color-border);
 	}
 	.back-button {
 		display: inline-flex;
 		align-items: center;
-		color: #333;
+		color: var(--color-text);
 		font-weight: 500;
 		padding: 0.6rem 1.2rem;
 		border-radius: 4px;
-		background-color: rgba(0, 0, 0, 0.05);
+		background-color: var(--color-hover-bg);
 		transition: all 0.2s ease;
 	}
-	.back-button:hover { background-color: rgba(0, 0, 0, 0.1); transform: translateX(-4px); }
+	.back-button:hover { background-color: var(--color-hover-bg-strong); color: var(--color-text); transform: translateX(-4px); }
 
 	@media (max-width: 768px) {
 		.cs-hero { padding: 6rem 0 2.5rem; }
@@ -160,7 +160,7 @@ const heroImage = entry.data.heroImage ?? project.image;
 </style>
 
 <style is:global>
-	.cs-content { font-size: 1.1rem; line-height: 1.8; color: #333; }
+	.cs-content { font-size: 1.1rem; line-height: 1.8; color: var(--color-text); }
 	.cs-content h2 {
 		font-size: 1.6rem;
 		font-weight: 600;
@@ -173,13 +173,13 @@ const heroImage = entry.data.heroImage ?? project.image;
 	.cs-content li { margin-bottom: 0.6rem; }
 	.cs-content a { color: var(--color-accent, #0055ff); border-bottom: 1px solid transparent; }
 	.cs-content a:hover { border-bottom-color: currentColor; }
-	.cs-content strong { color: #1a1a1a; }
+	.cs-content strong { color: var(--color-heading); }
 	.cs-content blockquote {
 		border-left: 4px solid var(--color-accent, #4d9aff);
 		padding: 0.5rem 0 0.5rem 1.5rem;
 		margin: 2rem 0;
 		font-style: italic;
-		background-color: rgba(0, 0, 0, 0.02);
+		background-color: var(--color-quote-bg);
 	}
 
 	@media (max-width: 768px) {
