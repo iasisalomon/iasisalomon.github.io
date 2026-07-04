@@ -182,8 +182,47 @@ const heroImage = entry.data.heroImage ?? project.image;
 		background-color: var(--color-quote-bg);
 	}
 
+	.cs-content table {
+		display: block;
+		overflow-x: auto;
+		width: 100%;
+		margin: 2rem 0;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-card, 1rem);
+		border-collapse: collapse;
+		font-size: 0.95rem;
+	}
+	.cs-content thead th {
+		background-color: var(--color-surface);
+		color: var(--color-heading);
+		font-weight: 600;
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		text-align: left;
+		padding: 0.85rem 1.1rem;
+		border-bottom: 1px solid var(--color-border-strong);
+		white-space: nowrap;
+	}
+	.cs-content tbody td {
+		padding: 0.85rem 1.1rem;
+		border-bottom: 1px solid var(--color-border);
+		vertical-align: top;
+		line-height: 1.5;
+	}
+	.cs-content tbody tr:last-child td { border-bottom: none; }
+	.cs-content tbody tr:hover { background-color: var(--color-hover-bg); }
+	.cs-content tbody td:first-child {
+		font-weight: 600;
+		color: var(--color-heading);
+		white-space: nowrap;
+	}
+
 	@media (max-width: 768px) {
 		.cs-content { font-size: 1rem; }
 		.cs-content h2 { font-size: 1.4rem; }
+		.cs-content table { font-size: 0.85rem; }
+		.cs-content thead th,
+		.cs-content tbody td { padding: 0.65rem 0.85rem; }
 	}
 </style>

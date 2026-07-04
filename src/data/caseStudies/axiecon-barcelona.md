@@ -1,7 +1,15 @@
 ---
 role: "Host & Production Lead"
 timeframe: "2022"
-outcome: "Delivered Sky Mavis' first in-person global conference — a multi-day, multi-stage event broadcast live to the worldwide Axie Infinity community."
+outcome: "Delivered Sky Mavis' first in-person global conference — a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia through an official watch party in Manila."
+gallery:
+  - "/images/gallery/axiecon/main-stage-wide.jpg"
+  - "/images/gallery/axiecon/esports-match.jpg"
+  - "/images/gallery/axiecon/classic-champion-sebastian-pozzo.webp"
+  - "/images/gallery/axiecon/byod-champion-theeban-siva.webp"
+  - "/images/gallery/axiecon/grant-announcement.jpg"
+  - "/images/gallery/axiecon/community-hall-1.jpg"
+  - "/images/gallery/axiecon/mascot-decor.png"
 ---
 
 ## The challenge
@@ -26,8 +34,24 @@ I worked as host and production lead, sitting at the intersection of **operation
 
 ## Outcome
 
-AxieCon brought **thousands of community members** together for Sky Mavis' first global conference, with the full program captured and broadcast for the wider community.
+AxieCon Barcelona sold out its in-person tickets despite the broader crypto downturn through 2022 — $150 tickets could be bought directly with crypto over the Ronin network, a payment experience native to the community it served. **Over 1,000 people attended in person**, bringing together the global player base, guild investors, and Sky Mavis leadership face to face for the first time.
 
-<!-- TODO (Iasi): add concrete figures you can verify — e.g. number of attendees, peak concurrent stream viewers, number of sessions/stages, countries represented. Specifics here make this case study significantly stronger. -->
+To extend the event's reach past the cost of travel to Europe, we partnered with regional players close to the game's biggest markets. The Philippines accounts for roughly **40% of the game's active user base**, so local mobile-finance platform Coins.ph ran an official watch party — the AxieCon Watch Party — at Draper Startup House in Manila, drawing **~100 attendees** (content creators, P2E guild reps, and local competitive players) with live narration through the finals. It's a hybrid model that shows how a geographically distributed, decentralized game can extend a physical activation into the emerging markets where its player base actually lives.
 
-**Watch the broadcast:** [Days 1 & 2](https://www.youtube.com/watch?v=lu_N8kx-I2U) · [Days 3 & 4](https://www.youtube.com/watch?v=K2Xo0ovZxJY) · [Read the recap](https://blog.axieinfinity.com/p/axiecon)
+### Esports: a $1M prize pool across three tournaments
+
+The competitive track ran on an aggregate **$1,000,000 prize pool, paid entirely in AXS**, produced in partnership with Community Gaming as the official tournament platform. The three-tournament structure was designed to do two things at once: give the "Classic" V2 game a proper send-off, and drive the competitive scene's migration to the new Origins (V3) card-battle engine.
+
+| Tournament | Prize pool | Scale | Champion | Format role |
+|---|---|---|---|---|
+| Axie: Classic World Championship | $500,000 | 64,000 registered in online qualifiers; 16 finalists flown in | Sebastián "Superchería" Pozzo (METAT8 Esports) | Official competitive send-off for V2 "Classic" after 21 seasons |
+| Axie: Origin BYOD Tournament | $400,000 | 2,000 in-person players, own devices | Theeban "1437" Siva (METAT8 Esports); 3rd: Yield Guild Games (YGG) Elite | Launched the V3 "Origins" competitive scene in an open in-person format |
+| Axie: Origin Stadium Series | $100,000 | Up to 1,024 in-person players/day | 2nd & 3rd: Yield Guild Games (YGG) Elite | Daily Swiss format where unbeaten players faced Sky Mavis leadership |
+
+**Classic World Championship** — the closing chapter for 21 seasons of the V2 game. Online qualifiers ran July 28–August 21, 2022 across East and West divisions, drawing 64,000 players; half the pool ($250,000) was paid out directly during qualifying, while the top 16 won a fully-sponsored trip to Barcelona for the in-person finals. The title went to Sebastián "Superchería" Pozzo of METAT8 Esports — a former competitive *Magic: The Gathering* player who came out of a brief competitive retirement to win it.
+
+**Origin BYOD Tournament** — crowned the first world champion of the V3 card-battle system, open only to in-person ticket holders competing on their own devices across multiple elimination rounds; 2,000 people competed in Barcelona. Theeban "1437" Siva, also of METAT8 Esports and a former pro Dota 2 player (Cloud9), ran a 12-set undefeated streak before winning a tight 3–2 final against @spamandrice.
+
+**Origin Stadium Series** — a daily-access Swiss-format mini-tournament meant to open competitive play to attendees of every level. Players who finished a day's rounds unbeaten earned the right to face Sky Mavis leadership (the "Axie Final Four": Nguyen Thanh Trung, Jiho, Psycheout, and Zyori). Yield Guild Games fielded its "YGG Elite" roster here despite several members missing due to visa issues, still taking 2nd and 3rd place — and 3rd in the BYOD tournament as well.
+
+**Watch the broadcast:** [Days 1 & 2](https://www.youtube.com/watch?v=lu_N8kx-I2U) · [Days 3 & 4](https://www.youtube.com/watch?v=K2Xo0ovZxJY)
