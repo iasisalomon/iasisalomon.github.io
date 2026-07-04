@@ -13,5 +13,53 @@
     "Sura Gaming",
     "Coliseo Dragons"
   ],
-  "testimonials": []
+  "testimonials": [
+    {
+      "quote": "He brings ownership to every project—once something is assigned to him, you know it will be delivered with care, quality, and reliability.",
+      "name": "Niharika Agarwal",
+      "role": "Division Director (General Manager)",
+      "org": "Interlaced"
+    },
+    {
+      "quote": "What stood out most was his ability to build trust and camaraderie across a distributed team. He brought a consistently positive attitude and genuine curiosity that made collaboration easy.",
+      "name": "Amelia Kao",
+      "role": "CEO",
+      "org": "Interlaced"
+    },
+    {
+      "quote": "Iasi consistently demonstrated exceptional organizational skills, effectively managing multiple projects while ensuring that deadlines were met and quality standards were upheld.",
+      "name": "Melissa Sagstad",
+      "role": "Executive Support to C-Suite",
+      "org": "Sky Mavis"
+    },
+    {
+      "quote": "He was always professional, forward-thinking, attentive to details, able to find solutions to core problems, and excelled at managing projects from start to finish.",
+      "name": "Brent Martin",
+      "role": "Director of Operations",
+      "org": "Sky Mavis"
+    },
+    {
+      "quote": "Their ability to manage a million moving parts while keeping a clear head is something you don't find often.",
+      "name": "Skylar Grizzle",
+      "role": "Chief of Staff to the CEO",
+      "org": "Community Gaming"
+    },
+    {
+      "quote": "Was independent and reliable in a remote scenario. Understands the nuts and bolts of South American esports, as well as how to navigate the region for international business.",
+      "name": "Andrew Campbell",
+      "role": "Director of Esports",
+      "org": "Sky Mavis"
+    },
+    {
+      "quote": "A brilliant mind for project management, knows how to keep a working structure well-oiled through thick and thin, and will never miss a chance to have a laugh.",
+      "name": "Ariel Cepeda Cécere",
+      "role": "Project Management, Streaming & Broadcast"
+    },
+    {
+      "quote": "Iasi was one of the first employees I had when we opened the company in Argentina. A key support for our international strategy.",
+      "name": "César Roses",
+      "role": "CEO, SIMEX",
+      "org": "LVP"
+    }
+  ]
 }
