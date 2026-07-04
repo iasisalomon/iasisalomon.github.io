@@ -1,9 +1,12 @@
 // Single source of truth for the portfolio's shared identifiers.
 // Projects are organized by AREA OF EXPERTISE — the visitor-facing way to
 // browse the work. (Brand is kept only as quiet provenance metadata on a
-// project; it is no longer a headline concept.)
+// project. Glunis and Oxaciano were retired as separate brand identities —
+// everything is under the single "iasi" identity now. Their social links
+// still live in brands.json under that one entry rather than being
+// deleted, since the links themselves still show real work and reputation.)
 
-export const BRAND_IDS = ['iasi', 'glunis', 'oxaciano'] as const;
+export const BRAND_IDS = ['iasi'] as const;
 export type BrandId = (typeof BRAND_IDS)[number];
 
 // The three areas of expertise. These double as project categories so the
