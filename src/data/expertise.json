@@ -3,7 +3,7 @@
     "id": "operations",
     "name": "Operations & Strategy",
     "summary": "I turn fast-growing, ambiguous organizations into ones that run — designing processes that are clear, replicable, scalable and easy to automate, and aligning teams across functions.",
-    "tools": ["Process Design", "Cross-functional Leadership", "OKRs", "Digital Economy"],
+    "tools": ["Process Design", "Cross-functional Leadership", "OKRs", "Digital Economy", "Rewst", "n8n", "Retool", "Make"],
     "match": { "category": "operations" },
     "yearsActive": "2018–present"
   },
@@ -11,7 +11,7 @@
     "id": "software-engineering",
     "name": "Software Engineering",
     "summary": "Full-stack web applications, APIs, data tooling and automation — from Vue and React front-ends to Node back-ends, databases and Docker.",
-    "tools": ["Node.js", "React", "Vue", "Docker", "PostgreSQL"],
+    "tools": ["Node.js", "React", "Vue", "Docker", "PostgreSQL", "TypeScript", "Python", "PHP", "SQL", "Nginx", "Rainbow Kit", "Moralis", "Infura"],
     "match": { "category": "software-engineering" },
     "yearsActive": "2020–present"
   },

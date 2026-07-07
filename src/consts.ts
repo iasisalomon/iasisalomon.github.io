@@ -3,7 +3,7 @@
 
 export const SITE_TITLE = 'Iasi Salomon';
 // Kept under ~155 chars so it doesn't get truncated in search-result snippets.
-export const SITE_DESCRIPTION = 'Iasi Salomon — operations & strategy lead and software engineer. Writing on esports, QA automation and Web3';
+export const SITE_DESCRIPTION = 'Iasi Salomon — project manager and automation engineer. Writing on automation, operations, software engineering and Web3';
 
 // Blog categories — must stay in sync with the `category` enum in
 // content.config.ts. Used by the blog navbar, the archive filter tabs
