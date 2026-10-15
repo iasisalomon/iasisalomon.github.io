@@ -1,30 +1,32 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import Navbar from '../components/Navbar.astro';
-import About from '../components/About.astro';
 import Hero from '../components/Hero.astro';
-import Expertise from '../components/Expertise.astro';
-import SelectedWork from '../components/SelectedWork.astro';
-import Projects from '../components/Projects.astro';
+import Summary from '../components/Summary.astro';
+import Experience from '../components/Experience.astro';
+import Muba from '../components/Muba.astro';
+import Skills from '../components/Skills.astro';
+import Engineering from '../components/Engineering.astro';
+import Community from '../components/Community.astro';
 import Writing from '../components/Writing.astro';
-import Testimonials from '../components/Testimonials.astro';
+import Teaching from '../components/Teaching.astro';
+import Contact from '../components/Contact.astro';
 import CustomFooter from '../components/CustomFooter.astro';
-import Discussion from '../components/Discussion.astro';
 ---
 
-<MainLayout
-	title="Iasi Salomon — Operations, Engineering & Live Production"
-	description={SITE_DESCRIPTION}
->
+<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<Navbar />
+	<!-- Delivery profile first (matches CV and LinkedIn), everything else below. -->
 	<Hero />
-	<About />
-	<Expertise />
-	<SelectedWork />
-	<Projects />
-	<Testimonials />
-	<Discussion />
+	<Summary />
+	<Experience />
+	<Muba />
+	<Skills />
+	<Engineering />
+	<Community />
 	<Writing />
+	<Teaching />
+	<Contact />
 	<CustomFooter />
 </MainLayout>

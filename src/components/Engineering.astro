@@ -1,0 +1,61 @@
+---
+import { projects } from '../data/portfolio';
+
+// Repos keep their real status so nothing reads as client work.
+const repos = projects.filter((p) => p.category === 'software-engineering' && p.status);
+---
+
+<section id="engineering" class="py-6">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-2">Engineering</h2>
+    <p class="text-center text-muted mb-4">Hands-on work kept up alongside delivery roles.</p>
+    <div class="section-divider mb-5"></div>
+    <div class="row g-4">
+      {repos.map((repo) => (
+        <div class="col-md-6 col-lg-4">
+          <div class="repo-card h-100 p-4 rounded-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">{repo.title.replace(/^(Challenge|Practice): /, '')}</h3>
+              <span class="badge status-badge">{repo.status}</span>
+            </div>
+            <p class="small text-muted flex-grow-1">{repo.description}</p>
+            <p class="small mb-3">{repo.skills.join(' · ')}</p>
+            <div>
+              {repo.links.map((link) => (
+                <a href={link.url} class="small me-3" target="_blank" rel="noopener noreferrer">
+                  <i class={`${link.icon} me-1`}></i>{link.text}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+      <div class="col-md-6 col-lg-4">
+        <div class="repo-card h-100 p-4 rounded-4">
+          <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+            <h3 class="h6 fw-bold mb-0">Self-hosted deployments</h3>
+            <span class="badge status-badge">private deployment</span>
+          </div>
+          <p class="small text-muted mb-0">
+            Ran multiple production web apps on a single VPS, routing subdomains through Nginx Proxy Manager with
+            automated SSL (Let's Encrypt) and DNS management.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .repo-card {
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  }
+
+  .status-badge {
+    background-color: var(--color-border-strong, #ccc);
+    color: var(--color-heading, #222);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+</style>

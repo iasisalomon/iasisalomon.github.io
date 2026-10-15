@@ -1,0 +1,45 @@
+---
+const groups = [
+  {
+    name: 'Delivery and leadership',
+    items:
+      'Agile and Scrum, SDLC, delivery planning, risk management, stakeholder management, hiring and onboarding, SOPs and documentation.',
+  },
+  {
+    name: 'Delivery tooling',
+    items: 'Jira (JQL, automation), Retool, n8n, Make, Rewst, Google Workspace, AI assistants.',
+  },
+  {
+    name: 'Technical',
+    items:
+      'JavaScript, TypeScript, Node.js, React, Python, SQL, REST APIs, Docker, Nginx, Git, AI-assisted development.',
+  },
+];
+---
+
+<section id="skills" class="py-6 bg-light">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-4">Skills</h2>
+    <div class="section-divider mb-5"></div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        {groups.map((g) => (
+          <p class="skill-line">
+            <strong>{g.name}:</strong> {g.items}
+          </p>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skill-line {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  .skill-line strong {
+    color: var(--color-heading);
+  }
+</style>

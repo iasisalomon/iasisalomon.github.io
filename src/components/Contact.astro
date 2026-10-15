@@ -1,0 +1,36 @@
+---
+import { LINKS } from '../consts';
+---
+
+<section id="contact" class="py-6 bg-dark text-white">
+  <div class="container text-center">
+    <h2 class="mt-1 mb-4">Contact</h2>
+    <div class="section-divider bg-light mb-5"></div>
+    <ul class="list-unstyled contact-list">
+      <li>
+        <i class="fas fa-envelope me-2"></i>Email:
+        <a href={LINKS.email}>{LINKS.emailAddress}</a>
+      </li>
+      <li>
+        <i class="fab fa-linkedin me-2"></i>LinkedIn:
+        <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">linkedin.com/in/iasisalomon</a>
+      </li>
+      <li>
+        <i class="fab fa-github me-2"></i>GitHub:
+        <a href={LINKS.github} target="_blank" rel="noopener noreferrer">github.com/iasisalomon</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contact-list li {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .contact-list a {
+    color: #fff;
+  }
+</style>

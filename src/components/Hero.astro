@@ -1,173 +1,69 @@
 ---
-import { AREA_META } from '../data/areas';
-const subtitles = Object.values(AREA_META).map((a) => a.label);
+import { LINKS } from '../consts';
 ---
 
-<section id="home" class="min-vh-100 d-flex flex-column bg-dark text-white">
-  <div class="flex-grow-1 d-flex align-items-center">
-    <div class="container text-center">
-      <div class="profile-image mb-4">
-        <img
-          src="/images/cara.jpg"
-          alt="Iasi Salomon"
-          class="rounded-circle img-fluid shadow-lg"
-          width="180"
-          height="180"
-        />
-      </div>
-      <h1 class="display-2 mb-2">Iasi Salomon</h1>
-      <p class="roles mb-4">
-        <span id="heroSubtitle" class="subtitle-text">{subtitles[0]}</span>
-      </p>
+<section id="home" class="d-flex flex-column bg-dark text-white">
+  <div class="container text-center py-5">
+    <div class="profile-image mb-4">
+      <img
+        src="/images/cara.jpg"
+        alt="Iasi Salomon"
+        class="rounded-circle img-fluid shadow-lg"
+        width="160"
+        height="160"
+      />
+    </div>
+    <h1 class="display-3 mb-2">Iasi Salomon</h1>
+    <p class="role mb-2">Technical Delivery Manager | Delivery Operations, Automation &amp; AI</p>
+    <p class="location mb-4">Rosario, Argentina · Remote, US time zones</p>
 
-      <p class="thesis lead mx-auto mb-5">
-        I take complex, ambiguous things — fast-growing orgs, live global events,
-        new technical domains — and make them work: <strong>structured, scalable, shipped.</strong>
-      </p>
-
-      <div class="hero-ctas mb-5">
-        <a href="#work" class="btn btn-light btn-lg me-2 mb-2 cta-primary">
-          See my work <i class="fas fa-arrow-down ms-2"></i>
-        </a>
-        <a href="#discussion" class="btn btn-outline-light btn-lg mb-2 cta-btn">
-          Let's talk <i class="fas fa-arrow-right ms-2"></i>
-        </a>
-      </div>
-
-      <div class="social-links">
-        <a href="https://github.com/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://linkedin.com/in/iasisalomon" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://x.com/glunisok" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X">
-          <i class="fab fa-x-twitter"></i>
-        </a>
-        <a href="https://t.me/oxaciano" class="text-white mx-3 h4" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-          <i class="fab fa-telegram-plane"></i>
-        </a>
-      </div>
+    <div class="hero-ctas">
+      <a href={LINKS.linkedin} class="btn btn-light btn-lg m-1" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-linkedin me-2"></i>LinkedIn
+      </a>
+      <a href={LINKS.email} class="btn btn-outline-light btn-lg m-1">
+        <i class="fas fa-envelope me-2"></i>Email
+      </a>
+      <a href={LINKS.github} class="btn btn-outline-light btn-lg m-1" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-github me-2"></i>GitHub
+      </a>
     </div>
   </div>
 </section>
 
-<script define:vars={{ subtitles }}>
-  const el = document.getElementById('heroSubtitle');
-  let index = 0;
-
-  function rotateSubtitle() {
-    el.style.opacity = '0';
-    setTimeout(() => {
-      index = (index + 1) % subtitles.length;
-      el.textContent = subtitles[index];
-      el.style.opacity = '1';
-    }, 400);
-  }
-
-  // Respect users who prefer reduced motion — show the first role and stop.
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setInterval(rotateSubtitle, 3000);
-  }
-</script>
-
 <style>
   #home {
     padding-top: 76px;
+    min-height: 70vh;
+    justify-content: center;
   }
 
   .profile-image img {
-    border: 4px solid rgba(255,255,255,0.2);
-    transition: transform 0.3s ease;
+    border: 4px solid rgba(255, 255, 255, 0.2);
   }
 
-  .profile-image img:hover {
-    transform: scale(1.05);
-  }
-
-  .roles {
-    font-size: 1.1rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+  .role {
+    font-size: 1.2rem;
+    font-weight: 600;
     color: var(--color-accent-on-dark, #4d9aff);
-    font-weight: 600;
   }
 
-  .subtitle-text {
-    transition: opacity 0.4s ease;
-    display: inline-block;
-  }
-
-  .thesis {
-    max-width: 60ch;
-    font-size: 1.35rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .thesis strong {
-    color: #fff;
-  }
-
-  .cta-primary {
-    font-weight: 600;
-    transition: all 0.25s ease;
-  }
-
-  .cta-primary:hover {
-    transform: translateY(-2px);
-  }
-
-  .cta-btn {
-    border-color: rgba(255,255,255,0.5);
-    transition: all 0.25s ease;
-  }
-
-  .cta-btn:hover {
-    background-color: rgba(255,255,255,0.1);
-    border-color: #fff;
-    transform: translateY(-2px);
-  }
-
-  .social-links {
-    margin-top: 1rem;
-  }
-
-  .social-links a {
-    transition: opacity 0.2s, transform 0.2s;
-  }
-
-  .social-links a:hover {
-    opacity: 0.8;
-    transform: translateY(-3px);
+  .location {
+    color: rgba(255, 255, 255, 0.75);
   }
 
   @media (max-width: 768px) {
-    .profile-image img {
-      width: 150px;
-      height: 150px;
-    }
-
     #home {
       padding-top: 60px;
     }
 
-    .thesis {
-      font-size: 1.15rem;
+    .profile-image img {
+      width: 130px;
+      height: 130px;
     }
 
-    .social-links a {
-      margin-left: 0.75rem !important;
-      margin-right: 0.75rem !important;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .profile-image img:hover,
-    .cta-primary:hover,
-    .cta-btn:hover,
-    .social-links a:hover {
-      transform: none;
+    .role {
+      font-size: 1.05rem;
     }
   }
 </style>

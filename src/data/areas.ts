@@ -26,7 +26,7 @@ export interface AreaMeta {
 
 export const AREA_META: Record<CategoryId, AreaMeta> = {
   operations: {
-    label: 'Operations & Strategy',
+    label: 'Operations',
     color: 'dark',
     icon: 'fas fa-project-diagram',
     gradientClass: 'gradient-black',

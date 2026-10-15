@@ -8,13 +8,33 @@
     "brand": "iasi",
     "date": "2022-09-01",
     "category": "events-production",
-    "skills": ["Event Production", "Live Streaming", "Community", "Esports"],
-    "tags": ["Event", "Project Management"],
+    "skills": [
+      "Event Production",
+      "Live Streaming",
+      "Community",
+      "Esports"
+    ],
+    "tags": [
+      "Event",
+      "Project Management"
+    ],
     "featured": true,
     "links": [
-      { "text": "Blog", "url": "https://blog.axieinfinity.com/p/axiecon", "icon": "fas fa-link" },
-      { "text": "Days 1&2", "url": "https://www.youtube.com/watch?v=lu_N8kx-I2U", "icon": "fab fa-youtube" },
-      { "text": "Days 3&4", "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY", "icon": "fab fa-youtube" }
+      {
+        "text": "Blog",
+        "url": "https://blog.axieinfinity.com/p/axiecon",
+        "icon": "fas fa-link"
+      },
+      {
+        "text": "Days 1&2",
+        "url": "https://www.youtube.com/watch?v=lu_N8kx-I2U",
+        "icon": "fab fa-youtube"
+      },
+      {
+        "text": "Days 3&4",
+        "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY",
+        "icon": "fab fa-youtube"
+      }
     ]
   },
   {
@@ -26,12 +46,27 @@
     "brand": "iasi",
     "date": "2022-09-01",
     "category": "software-engineering",
-    "skills": ["Node.js", "React", "Docker", "Redux"],
-    "tags": ["Full Stack", "API", "Development", "DevOps"],
+    "skills": [
+      "Node.js",
+      "React",
+      "Docker",
+      "Redux"
+    ],
+    "tags": [
+      "Full Stack",
+      "API",
+      "Development",
+      "DevOps"
+    ],
     "featured": true,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_toolbox", "icon": "fab fa-github" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/challenge_toolbox",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "challenge"
   },
   {
     "id": 3,
@@ -42,29 +77,26 @@
     "brand": "iasi",
     "date": "2021-10-01",
     "category": "software-engineering",
-    "skills": ["Vue", "Nuxt.js", "TensorFlow", "SSR", "CSV"],
-    "tags": ["Data Cleanup", "Data Visualization"],
+    "skills": [
+      "Vue",
+      "Nuxt.js",
+      "TensorFlow",
+      "SSR",
+      "CSV"
+    ],
+    "tags": [
+      "Data Cleanup",
+      "Data Visualization"
+    ],
     "featured": true,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/calliv", "icon": "fab fa-github" }
-    ]
-  },
-  {
-    "id": 4,
-    "slug": "associate-professor",
-    "title": "Associate Professor",
-    "description": "Cryptoeconomy at Universidad Nacional de Cuyo. Digital economies in the blockchain market. Digital collectibles values. Economies of attention.",
-    "image": "/blog-placeholder-4.jpg",
-    "brand": "iasi",
-    "date": "2024-01-01",
-    "category": "operations",
-    "skills": ["Blockchain", "Digital Economy"],
-    "tags": ["Education"],
-    "featured": false,
-    "links": [
-      { "text": "Course", "url": "https://fce.uncuyo.edu.ar/cursos/curso/diplomado-en-criptoeconomia", "icon": "fas fa-link" },
-      { "text": "University", "url": "https://www.uncuyo.edu.ar/", "icon": "fas fa-university" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/calliv",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "practice"
   },
   {
     "id": 5,
@@ -75,12 +107,24 @@
     "brand": "iasi",
     "date": "2021-10-01",
     "category": "software-engineering",
-    "skills": ["Vue.js", "JavaScript", "Vuex"],
-    "tags": ["Full Stack", "Development"],
+    "skills": [
+      "Vue.js",
+      "JavaScript",
+      "Vuex"
+    ],
+    "tags": [
+      "Full Stack",
+      "Development"
+    ],
     "featured": false,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_CodeCare", "icon": "fab fa-github" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/challenge_CodeCare",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "challenge"
   },
   {
     "id": 6,
@@ -91,12 +135,25 @@
     "brand": "iasi",
     "date": "2022-10-01",
     "category": "software-engineering",
-    "skills": ["React", "Node.js", "PostgreSQL", "Docker"],
-    "tags": ["Full Stack", "Development"],
+    "skills": [
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "tags": [
+      "Full Stack",
+      "Development"
+    ],
     "featured": false,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/challenge_Bravocare", "icon": "fab fa-github" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/challenge_Bravocare",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "challenge"
   },
   {
     "id": 7,
@@ -107,12 +164,24 @@
     "brand": "iasi",
     "date": "2022-11-01",
     "category": "software-engineering",
-    "skills": ["Node.js", "Puppeteer", "JSON"],
-    "tags": ["Automation", "Web Scraping"],
+    "skills": [
+      "Node.js",
+      "Puppeteer",
+      "JSON"
+    ],
+    "tags": [
+      "Automation",
+      "Web Scraping"
+    ],
     "featured": false,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/mtgtop8_scrapper", "icon": "fab fa-github" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/mtgtop8_scrapper",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "practice"
   },
   {
     "id": 8,
@@ -123,11 +192,23 @@
     "brand": "iasi",
     "date": "2024-08-01",
     "category": "software-engineering",
-    "skills": ["Node.js", "Express", "JWT", "EJS"],
-    "tags": ["Backend"],
+    "skills": [
+      "Node.js",
+      "Express",
+      "JWT",
+      "EJS"
+    ],
+    "tags": [
+      "Backend"
+    ],
     "featured": false,
     "links": [
-      { "text": "Repository", "url": "https://github.com/iasisalomon/jwt_practice", "icon": "fab fa-github" }
-    ]
+      {
+        "text": "Repository",
+        "url": "https://github.com/iasisalomon/jwt_practice",
+        "icon": "fab fa-github"
+      }
+    ],
+    "status": "practice"
   }
 ]
