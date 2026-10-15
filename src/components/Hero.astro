@@ -13,9 +13,9 @@ import { LINKS } from '../consts';
         height="160"
       />
     </div>
-    <h1 class="display-3 mb-2">Iasi Salomon</h1>
-    <p class="role mb-2">Technical Delivery Manager | Delivery Operations, Automation &amp; AI</p>
-    <p class="location mb-4">Rosario, Argentina · Remote, US time zones</p>
+    <p class="name mb-2">Iasi Salomon</p>
+    <h1 class="headline mx-auto mb-3">I unblock remote engineering teams, and automate what keeps them stuck.</h1>
+    <p class="role mb-4">Technical Delivery Manager · Delivery operations, automation &amp; AI · Remote, US time zones</p>
 
     <div class="hero-ctas">
       <a href={LINKS.linkedin} class="btn btn-light btn-lg m-1" target="_blank" rel="noopener noreferrer">
@@ -48,8 +48,19 @@ import { LINKS } from '../consts';
     color: var(--color-accent-on-dark, #4d9aff);
   }
 
-  .location {
-    color: rgba(255, 255, 255, 0.75);
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .headline {
+    max-width: 22ch;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.15;
   }
 
   @media (max-width: 768px) {
@@ -63,7 +74,7 @@ import { LINKS } from '../consts';
     }
 
     .role {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
     }
   }
 </style>

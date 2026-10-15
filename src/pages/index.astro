@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import Summary from '../components/Summary.astro';
+import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import Muba from '../components/Muba.astro';
 import Skills from '../components/Skills.astro';
@@ -19,14 +19,14 @@ import CustomFooter from '../components/CustomFooter.astro';
 	<Navbar />
 	<!-- Delivery profile first (matches CV and LinkedIn), everything else below. -->
 	<Hero />
-	<Summary />
+	<About />
 	<Experience />
 	<Muba />
-	<Skills />
-	<Testimonials />
 	<Engineering />
 	<Community />
 	<Writing />
+	<Skills />
+	<Testimonials />
 	<Contact />
 	<CustomFooter />
 </MainLayout>

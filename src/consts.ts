@@ -3,7 +3,7 @@
 
 export const SITE_TITLE = 'Iasi Salomon | Technical Delivery Manager';
 export const SITE_DESCRIPTION =
-	'Technical Delivery Manager with 4+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI. Based in Rosario, Argentina; working in US time zones.';
+	'Technical Delivery Manager with 4+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI. Rosario, Argentina; US time zones.';
 
 export const LINKS = {
 	email: 'mailto:iasisalomon@gmail.com',
