@@ -11,14 +11,10 @@ type PartnerBrand = {
   logo: string;
   darkTile?: boolean;
   url?: string;
-  group: 'work' | 'esports';
 };
 
 const brands = partnerBrands as PartnerBrand[];
-const groups = [
-  { label: 'Companies', items: brands.filter((b) => b.group === 'work') },
-  { label: 'Esports and events', items: brands.filter((b) => b.group === 'esports') },
-];
+const groups = [{ label: 'Companies', items: brands }];
 
 const initials = (name: string) =>
   name
