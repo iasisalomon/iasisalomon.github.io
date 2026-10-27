@@ -155,6 +155,30 @@ a {
     transition: all 0.3s ease-in-out;
 }
 
+:where(a, button, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+}
+
+.skip-link {
+    background: var(--color-bg);
+    border: 2px solid var(--color-heading);
+    border-radius: 0.4rem;
+    color: var(--color-heading);
+    font-weight: 700;
+    left: 1rem;
+    padding: 0.65rem 1rem;
+    position: fixed;
+    top: 1rem;
+    transform: translateY(-200%);
+    transition: transform 0.2s ease;
+    z-index: 2000;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
 body {
     background-color: var(--color-bg);
     color: var(--color-text);
@@ -456,5 +480,18 @@ section {
     
     .badge {
         margin: 0.2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html,
+    body,
+    * ,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

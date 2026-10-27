@@ -40,10 +40,10 @@ const isHomepage = Astro.url.pathname === '/';
 const sameAs = [
   LINKS.github,
   LINKS.linkedin,
-  'https://x.com/glunisok',
-  'https://instagram.com/oxaciano',
-  'https://tiktok.com/@oxaciano',
-  'https://t.me/oxaciano',
+  LINKS.x,
+  LINKS.instagram,
+  LINKS.tiktok,
+  LINKS.telegram,
 ];
 
 const person = {
@@ -54,7 +54,7 @@ const person = {
   image: new URL('/images/cara.jpg', site).href,
   jobTitle: 'Technical Delivery Manager',
   description:
-    'Technical Delivery Manager with 4+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI.',
+    'Technical Delivery Manager with 5+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI.',
   knowsAbout: [
     'Technical Delivery Management',
     'Delivery Operations',

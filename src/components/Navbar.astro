@@ -27,7 +27,12 @@ const blogLinks = [
 ];
 ---
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav
+  class="navbar navbar-expand-lg navbar-dark fixed-top"
+  id="mainNav"
+  aria-label={variant === 'blog' ? 'Blog navigation' : 'Main navigation'}
+>
   <div class="container position-relative">
     <!-- No brand: the links are centred on screen. The controls live outside
          the collapse so they stay usable without opening the menu; on phones
@@ -38,7 +43,8 @@ const blogLinks = [
         type="button"
         class="theme-toggle"
         id="themeToggle"
-        aria-label="Switch between dark and light theme"
+        aria-label="Switch to dark mode"
+        aria-pressed="false"
       >
         <i class="fas fa-moon toggle-icon-dark" aria-hidden="true"></i>
         <i class="fas fa-sun toggle-icon-light" aria-hidden="true"></i>
@@ -48,6 +54,8 @@ const blogLinks = [
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
@@ -69,6 +77,7 @@ const blogLinks = [
                   class:list={['nav-link', { active: link.category === activeCategory }]}
                   href={link.href}
                   data-category={link.category}
+                  aria-current={link.category === activeCategory ? 'page' : undefined}
                 >
                   {link.label}
                 </a>
@@ -262,7 +271,15 @@ const blogLinks = [
 <script>
   // Theme toggle: flips data-theme on <html> and persists the choice.
   // The pre-paint script in MainLayout reads the same localStorage key.
-  document.getElementById('themeToggle')?.addEventListener('click', () => {
+  const themeButton = document.getElementById('themeToggle');
+  const syncThemeButton = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    themeButton?.setAttribute('aria-pressed', String(isDark));
+    themeButton?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  };
+  syncThemeButton();
+
+  themeButton?.addEventListener('click', () => {
     const root = document.documentElement;
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     if (next === 'dark') {
@@ -273,6 +290,7 @@ const blogLinks = [
     try {
       localStorage.setItem('theme', next);
     } catch {}
+    syncThemeButton();
   });
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -311,15 +329,22 @@ const blogLinks = [
       suppressSpy();
       // Flush under the navbar: the same offset as the CSS scroll-margin-top
       // used by native hash jumps, so every section lands in the same spot.
-      window.scrollTo({ top: section.offsetTop - nav.offsetHeight, behavior: 'smooth' });
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      window.scrollTo({ top: section.offsetTop - nav.offsetHeight, behavior });
       return true;
     }
 
     function setActive(hash) {
-      anchorLinks.forEach((l) => l.classList.toggle('active', hashOf(l) === hash));
+      anchorLinks.forEach((l) => {
+        const active = hashOf(l) === hash;
+        l.classList.toggle('active', active);
+        if (active) l.setAttribute('aria-current', 'location');
+        else l.removeAttribute('aria-current');
+      });
     }
 
     if (!isHome) return; // On other pages the links are plain navigation.
+    setActive(window.location.hash || '#home');
 
     // Smooth-scroll for in-page section links.
     anchorLinks.forEach((link) => {
@@ -327,6 +352,9 @@ const blogLinks = [
         const hash = hashOf(link);
         if (!hash || !document.querySelector(hash)) return; // let it navigate
         e.preventDefault();
+        if (window.location.hash !== hash) {
+          history.pushState(null, '', `${window.location.pathname}${window.location.search}${hash}`);
+        }
         setActive(hash);
         scrollToSection(hash);
         // Close the mobile menu via Bootstrap's API rather than simulating a
@@ -372,6 +400,13 @@ const blogLinks = [
         if (current) setActive(current);
         ticking = false;
       }, 100);
+    });
+
+    window.addEventListener('popstate', function () {
+      const hash = window.location.hash || '#home';
+      setActive(hash);
+      if (hash === '#home' && !window.location.hash) window.scrollTo({ top: 0, behavior: 'auto' });
+      else scrollToSection(hash);
     });
 
     // Arriving with a hash (e.g. from another page): scroll into place.

@@ -18,6 +18,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 <MainLayout title="Blog | Iasi Salomon">
 	<Navbar variant="blog" />
 
+	<main id="main-content">
 	<section class="blog-section py-5 mt-5">
 		<div class="container">
 			<header class="blog-header">
@@ -75,6 +76,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 			<p id="noPostsMsg" class="text-center text-muted py-5" style="display:none">No posts in this category yet.</p>
 		</div>
 	</section>
+	</main>
 
 	<CustomFooter />
 </MainLayout>
@@ -93,7 +95,12 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
     });
     noPostsMsg.style.display = visible === 0 ? '' : 'none';
 
-    navLinks.forEach(l => l.classList.toggle('active', l.dataset.category === category));
+    navLinks.forEach(l => {
+      const active = l.dataset.category === category;
+      l.classList.toggle('active', active);
+      if (active) l.setAttribute('aria-current', 'page');
+      else l.removeAttribute('aria-current');
+    });
 
     const url = new URL(window.location.href);
     if (category === 'all') {

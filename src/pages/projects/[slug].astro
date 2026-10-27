@@ -35,7 +35,7 @@ const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
 });
 
 // Return to the homepage section that links to this case study.
-const fromWork = project.category === 'events-production';
+const fromWork = project.category !== 'software-engineering';
 const back = fromWork
 	? { href: '/#work', label: 'Back to Selected work' }
 	: { href: '/#engineering', label: 'Back to Engineering' };

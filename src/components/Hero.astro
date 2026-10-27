@@ -8,20 +8,26 @@ import { LINKS } from '../consts';
       <!-- Text first in the DOM (and on desktop); the photo leads on phones. -->
       <div class="col-lg-8 order-2 order-lg-1">
         <p class="name mb-2">Iasi Salomon</p>
-        <h1 class="headline mb-3">I unblock remote engineering teams, and automate what keeps them stuck.</h1>
-        <p class="role mb-4">Technical Delivery Manager · Delivery operations, automation &amp; AI · Remote, US time zones</p>
+        <h1 class="headline mb-3">I unblock remote engineering teams and automate what keeps them stuck.</h1>
+        <p class="role mb-4">Technical Delivery Manager / Technical Program Manager · Rosario, Argentina · Remote, US time zones</p>
 
         <div class="hero-ctas">
-          <a href={LINKS.linkedin} class="btn btn-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-linkedin me-2"></i>LinkedIn
+          <a href="#work" class="btn btn-primary btn-lg me-2 mb-2">
+            See delivery work <i class="fas fa-arrow-down ms-2" aria-hidden="true"></i>
           </a>
-          <a href={LINKS.email} class="btn btn-outline-light btn-lg me-2 mb-2">
-            <i class="fas fa-envelope me-2"></i>Email
+          <a href={LINKS.calendly} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
+            Book a 30-minute call <i class="far fa-calendar-alt ms-2" aria-hidden="true"></i>
           </a>
-          <a href={LINKS.github} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-github me-2"></i>GitHub
+          <a href={LINKS.linkedin} class="hero-link" target="_blank" rel="noopener noreferrer">
+            LinkedIn profile <i class="fas fa-arrow-up-right-from-square ms-1" aria-hidden="true"></i>
           </a>
         </div>
+
+        <ul class="hero-stats row g-2 list-unstyled mb-0" aria-label="Selected delivery results">
+          <li class="col-4"><strong class="d-block">60+</strong><span class="d-block">contractors built and led</span></li>
+          <li class="col-4"><strong class="d-block">470+</strong><span class="d-block">broadcasts scheduled in one month</span></li>
+          <li class="col-4"><strong class="d-block">~30 min</strong><span class="d-block">saved per onboarding</span></li>
+        </ul>
       </div>
 
       <div class="col-lg-4 order-1 order-lg-2">
@@ -82,6 +88,37 @@ import { LINKS } from '../consts';
     line-height: 1.15;
   }
 
+  .hero-link {
+    display: inline-block;
+    margin: 0.25rem 0.75rem 0.75rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .hero-stats {
+    max-width: 700px;
+    margin-top: 1.25rem;
+  }
+
+  .hero-stats li {
+    border-left: 2px solid var(--color-accent-on-dark, #4d9aff);
+    padding-left: 0.75rem;
+  }
+
+  .hero-stats strong {
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .hero-stats span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
   @media (max-width: 991.98px) {
     .profile-image img {
       width: 120px;
@@ -92,6 +129,18 @@ import { LINKS } from '../consts';
   @media (max-width: 768px) {
     .role {
       font-size: 0.95rem;
+    }
+
+    .hero-stats li {
+      padding-left: 0.5rem;
+    }
+
+    .hero-stats strong {
+      font-size: 1.05rem;
+    }
+
+    .hero-stats span {
+      font-size: 0.7rem;
     }
   }
 </style>

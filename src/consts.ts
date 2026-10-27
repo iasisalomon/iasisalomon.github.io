@@ -3,19 +3,31 @@
 
 export const SITE_TITLE = 'Iasi Salomon | Technical Delivery Manager';
 export const SITE_DESCRIPTION =
-	'Technical Delivery Manager with 4+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI. Rosario, Argentina; US time zones.';
+	'Technical Delivery Manager with 5+ years leading remote, cross-functional tech teams. Delivery operations, automation and AI. Rosario, Argentina; US time zones.';
 
 export const LINKS = {
 	email: 'mailto:iasisalomon@gmail.com',
 	emailAddress: 'iasisalomon@gmail.com',
 	linkedin: 'https://www.linkedin.com/in/iasisalomon/',
 	github: 'https://github.com/iasisalomon',
+	x: 'https://x.com/glunisok',
+	instagram: 'https://instagram.com/oxaciano',
+	tiktok: 'https://tiktok.com/@oxaciano',
+	telegram: 'https://t.me/oxaciano',
 	calendly: 'https://calendly.com/iasisalomon',
 };
 
-// One link per homepage section, in page order. Shared by the navbar and
-// the footer so both stay in sync with index.astro.
+// Keep the header focused on the sections most useful to hiring teams.
 export const NAV_LINKS = [
+	{ label: 'Home', href: '/#home' },
+	{ label: 'Experience', href: '/#experience' },
+	{ label: 'Work', href: '/#work' },
+	{ label: 'Testimonials', href: '/#proof' },
+	{ label: "Let's talk", href: '/#contact' },
+] as const;
+
+// The footer keeps links to every homepage section, including secondary content.
+export const FOOTER_LINKS = [
 	{ label: 'Home', href: '/#home' },
 	{ label: 'About', href: '/#about' },
 	{ label: 'Experience', href: '/#experience' },
@@ -23,7 +35,7 @@ export const NAV_LINKS = [
 	{ label: 'Engineering', href: '/#engineering' },
 	{ label: 'Blog', href: '/#blog' },
 	{ label: 'Skills', href: '/#skills' },
-	{ label: 'Worked with', href: '/#proof' },
+	{ label: 'Testimonials', href: '/#proof' },
 	{ label: "Let's talk", href: '/#contact' },
 ] as const;
 

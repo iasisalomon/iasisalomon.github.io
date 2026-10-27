@@ -190,5 +190,26 @@
       }
     ],
     "status": "practice"
+  },
+  {
+    "id": 9,
+    "slug": "interlaced-onboarding-automation",
+    "title": "Client onboarding automation",
+    "description": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
+    "date": "2025-04-01",
+    "category": "operations",
+    "skills": [
+      "Google Workspace",
+      "Rewst",
+      "n8n",
+      "Retool",
+      "Make"
+    ],
+    "tags": [
+      "Automation",
+      "Operations",
+      "Client Onboarding"
+    ],
+    "links": []
   }
 ]

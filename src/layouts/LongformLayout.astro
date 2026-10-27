@@ -78,7 +78,7 @@ const {
 >
   <Navbar variant={navVariant} activeCategory={activeCategory} />
 
-  <article class="longform">
+  <article class="longform" id="main-content">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
@@ -188,6 +188,11 @@ const {
      gradients' drop shadow. */
   .longform-badge {
     box-shadow: none;
+  }
+
+  /* The near-black Operations gradient disappears on the dark theme. */
+  .longform-badge.gradient-black {
+    border: 1px solid var(--color-border-strong);
   }
 
   a.longform-badge:hover {

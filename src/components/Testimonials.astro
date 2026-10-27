@@ -14,7 +14,11 @@ type PartnerBrand = {
 };
 
 const brands = partnerBrands as PartnerBrand[];
-const groups = [{ label: 'Companies', items: brands }];
+const featuredBrandNames = new Set(['Home Team Network', 'Interlaced', 'Sky Mavis']);
+const featuredBrands = brands.filter((brand) => featuredBrandNames.has(brand.name));
+const additionalBrands = brands.filter((brand) => !featuredBrandNames.has(brand.name));
+const featuredTestimonials = testimonials.slice(0, 4);
+const additionalTestimonials = testimonials.slice(4);
 
 const initials = (name: string) =>
   name
@@ -26,17 +30,35 @@ const initials = (name: string) =>
 
 <section id="proof" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Worked With</h2>
+    <h2 class="text-center mt-1 mb-4">Teams and organizations</h2>
     <div class="section-divider mb-5"></div>
 
-    {groups.map((group) => (
-      <div class="logo-group">
-        <p class="logo-group__label">{group.label}</p>
-        <ul class="logo-grid list-unstyled">
-          {group.items.map((brand) => (
+    <div class="logo-group">
+      <ul class="logo-grid logo-grid--featured list-unstyled">
+        {featuredBrands.map((brand) => (
+          <li>
+            <a
+              class:list={['logo-tile', 'logo-tile--featured', { 'logo-tile--dark': brand.darkTile }]}
+              href={brand.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={brand.name}
+              aria-label={`${brand.name} (opens in a new tab)`}
+            >
+              <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" decoding="async" width="180" height="72" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {additionalBrands.length > 0 && (
+      <div class="logo-group logo-group--additional">
+        <ul class="logo-grid logo-grid--additional list-unstyled">
+          {additionalBrands.map((brand) => (
             <li>
               <a
-                class:list={['logo-tile', { 'logo-tile--dark': brand.darkTile }]}
+                class:list={['logo-tile', 'logo-tile--additional', { 'logo-tile--dark': brand.darkTile }]}
                 href={brand.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -49,13 +71,13 @@ const initials = (name: string) =>
           ))}
         </ul>
       </div>
-    ))}
+    )}
 
     {testimonials.length > 0 && (
       <>
         <h3 class="text-center h4 mt-5 mb-4">What colleagues say</h3>
         <div class="quotes" role="list">
-          {testimonials.map((t) => (
+          {featuredTestimonials.map((t) => (
             <figure class="quote" role="listitem">
               <i class="fas fa-quote-left quote__mark" aria-hidden="true"></i>
               <blockquote>{t.quote}</blockquote>
@@ -69,6 +91,26 @@ const initials = (name: string) =>
             </figure>
           ))}
         </div>
+        {additionalTestimonials.length > 0 && (
+          <details class="quotes-more">
+            <summary>Read {additionalTestimonials.length} more colleague recommendations</summary>
+            <div class="quotes quotes--more" role="list">
+              {additionalTestimonials.map((t) => (
+                <figure class="quote" role="listitem">
+                  <i class="fas fa-quote-left quote__mark" aria-hidden="true"></i>
+                  <blockquote>{t.quote}</blockquote>
+                  <figcaption>
+                    <span class="quote__avatar" aria-hidden="true">{initials(t.name)}</span>
+                    <span>
+                      <strong>{t.name}</strong>
+                      <span class="quote__role">{t.role}{t.org ? `, ${t.org}` : ''}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </details>
+        )}
       </>
     )}
   </div>
@@ -81,22 +123,22 @@ const initials = (name: string) =>
     margin: 0 auto 1.75rem;
   }
 
-  .logo-group__label {
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin-bottom: 0.75rem;
+  .logo-grid--featured {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  .logo-grid {
+  .logo-grid--additional {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     margin: 0;
+  }
+
+  .logo-grid--additional > li {
+    flex: 0 0 7rem;
   }
 
   /* Every tile is the same size and shape; the dark variant exists only for
@@ -116,6 +158,18 @@ const initials = (name: string) =>
   .logo-tile--dark {
     background: #212529;
     border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .logo-tile--featured {
+    width: 100%;
+    height: 5.5rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .logo-tile--additional {
+    width: 100%;
+    height: 3.5rem;
+    padding: 0.45rem 0.75rem;
   }
 
   /* Muted by default so the row reads as one set; full colour on hover. */
@@ -141,13 +195,13 @@ const initials = (name: string) =>
 
   /* ---------- Testimonials ---------- */
   .quotes {
-    columns: 3 300px;
-    column-gap: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 
   .quote {
-    break-inside: avoid;
-    margin: 0 0 1.25rem;
+    margin: 0;
     padding: 1.5rem;
     border-radius: 1rem;
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
@@ -197,30 +251,45 @@ const initials = (name: string) =>
     background: var(--color-accent, #0d6efd);
   }
 
-  /* Phones: a swipeable row instead of eight stacked cards. */
+  .quotes-more {
+    margin-top: 1.25rem;
+  }
+
+  .quotes-more summary {
+    display: inline-block;
+    color: var(--color-accent, #0d6efd);
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.35rem 0;
+  }
+
+  .quotes-more[open] .quotes {
+    margin-top: 1rem;
+  }
+
+  /* Keep logo tiers readable and the quote order predictable on phones. */
   @media (max-width: 767.98px) {
-    .logo-tile {
-      width: 8rem;
-      height: 4rem;
+    .logo-grid--featured {
+      gap: 0.5rem;
+    }
+
+    .logo-tile--featured {
+      height: 4.25rem;
+      padding: 0.5rem;
+    }
+
+    .logo-tile--additional {
+      width: 100%;
+      height: 3rem;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .logo-grid--additional > li {
+      flex-basis: 5.75rem;
     }
 
     .quotes {
-      columns: auto;
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-      padding-bottom: 0.75rem;
-      margin: 0 -0.75rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-    }
-
-    .quote {
-      flex: 0 0 85%;
-      scroll-snap-align: center;
-      margin: 0;
+      grid-template-columns: 1fr;
     }
   }
 

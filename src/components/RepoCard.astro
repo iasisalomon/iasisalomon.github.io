@@ -1,0 +1,60 @@
+---
+import type { Project } from '../data/portfolio';
+
+interface Props {
+  repo: Project;
+  hasCaseStudy: boolean;
+}
+
+const { repo, hasCaseStudy } = Astro.props;
+---
+
+<div class="col-md-6 col-lg-4">
+  <article class="repo-card h-100 p-4 rounded-4 d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+      <h3 class="h6 fw-bold mb-0">
+        {hasCaseStudy ? (
+          <a href={`/projects/${repo.slug}/`} class="repo-card__link">
+            {repo.title.replace(/^(Challenge|Practice): /, '')}
+            <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
+          </a>
+        ) : (
+          repo.title.replace(/^(Challenge|Practice): /, '')
+        )}
+      </h3>
+      <span class="badge status-badge">{repo.status}</span>
+    </div>
+    <p class="small text-muted flex-grow-1">{repo.description}</p>
+    <p class="small mb-3">{repo.skills.join(' · ')}</p>
+    <div>
+      {repo.links.map((link) => (
+        <a href={link.url} class="small me-3" target="_blank" rel="noopener noreferrer">
+          <i class={`${link.icon} me-1`} aria-hidden="true"></i>{link.text}
+        </a>
+      ))}
+    </div>
+  </article>
+</div>
+
+<style>
+  .repo-card {
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  }
+
+  .repo-card__link {
+    color: var(--color-accent, #0d6efd);
+    text-decoration: none;
+  }
+
+  .repo-card__link:hover {
+    text-decoration: underline;
+  }
+
+  .status-badge {
+    background-color: var(--color-border-strong, #ccc);
+    color: var(--color-heading, #222);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+</style>

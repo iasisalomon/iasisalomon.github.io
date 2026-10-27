@@ -33,10 +33,19 @@ const items: WorkItem[] = [
     tag: 'Startup · Building with partners',
     title: 'MUBA',
     description:
-      'Multi-tenant SaaS for nursing-home management in Argentina, covering resident records, billing and settlements with health insurers, and an offline-capable nursing log. I wrote the functional spec, set the architecture and scope, and directed the AI-assisted development end to end.',
+      'Defined the scope and functional spec, then led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and offline nursing logs.',
     panel: { gradientClass: 'gradient-success', icon: 'fas fa-notes-medical' },
     facts: { label: 'Stack', items: ['React', 'Node.js', 'PostgreSQL (Prisma)', 'Redis'] },
     cta: { label: 'View live demo', href: 'https://demo.muba.lat', external: true },
+  },
+  {
+    tag: 'Automation · Interlaced',
+    title: 'Client onboarding automation',
+    description:
+      'Automated user provisioning from support-ticket intake through Google Workspace setup, client and support notifications, automatic retries, and human escalation.',
+    panel: { gradientClass: 'gradient-black', icon: 'fas fa-diagram-project' },
+    facts: { label: 'Impact', items: ['~30 min saved per onboarding', 'Automatic retries', 'Human escalation'] },
+    cta: { label: 'Read the case study', href: '/projects/interlaced-onboarding-automation/' },
   },
 ];
 ---
@@ -47,7 +56,7 @@ const items: WorkItem[] = [
     <div class="section-divider mb-5"></div>
     <div class="row g-4 justify-content-center">
       {items.map((item) => (
-        <div class="col-lg-6">
+        <div class="col-md-6 col-lg-4">
           <article class="work-card h-100 rounded-4 overflow-hidden d-flex flex-column">
             {item.image ? (
               <img src={item.image.src} alt={item.image.alt} loading="lazy" class="work-card__media" />

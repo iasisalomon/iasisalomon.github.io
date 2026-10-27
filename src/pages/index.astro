@@ -16,15 +16,17 @@ import CustomFooter from '../components/CustomFooter.astro';
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<Navbar />
-	<!-- Delivery profile first (matches CV and LinkedIn), everything else below. -->
-	<Hero />
-	<About />
-	<Experience />
-	<SelectedWork />
-	<Engineering />
-	<Writing />
-	<Skills />
-	<Testimonials />
-	<Contact />
+	<main id="main-content">
+		<!-- Delivery profile first; deeper work and supporting proof follow. -->
+		<Hero />
+		<About />
+		<Experience />
+		<SelectedWork />
+		<Engineering />
+		<Writing />
+		<Skills />
+		<Testimonials />
+		<Contact />
+	</main>
 	<CustomFooter />
 </MainLayout>
