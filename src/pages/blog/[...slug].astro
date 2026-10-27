@@ -1,18 +1,28 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { readingTime } from '../../utils/content';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
+	// Newest first; each post links to its newer and older neighbours.
+	const posts = (await getCollection('blog')).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+	);
+	return posts.map((post, i) => ({
 		params: { slug: post.id },
-		props: post,
+		props: { post, newer: posts[i - 1], older: posts[i + 1] },
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
+interface Props {
+	post: CollectionEntry<'blog'>;
+	newer?: CollectionEntry<'blog'>;
+	older?: CollectionEntry<'blog'>;
+}
+
+const { post, newer, older } = Astro.props;
 const { Content } = await render(post);
+const link = (p?: CollectionEntry<'blog'>) => p && { title: p.data.title, href: `/blog/${p.id}/` };
 ---
 
 <BlogPost
@@ -23,6 +33,10 @@ const { Content } = await render(post);
 	heroImage={post.data.heroImage}
 	category={post.data.category}
 	lang={post.data.lang}
+	award={post.data.award}
+	readingTime={readingTime(post.body)}
+	newer={link(newer)}
+	older={link(older)}
 >
 	<Content />
 </BlogPost>

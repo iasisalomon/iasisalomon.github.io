@@ -1,0 +1,78 @@
+---
+// Closing call to action for long-form pages (case studies, blog posts):
+// who wrote this, and how to reach them.
+import { LINKS } from '../consts';
+
+interface Props {
+  /** Lead-in shown above the buttons. */
+  message?: string;
+}
+
+const {
+  message = 'Hiring for a delivery role, or need a remote tech team to ship faster? Book a short call and let’s see if I can help.',
+} = Astro.props;
+---
+
+<aside class="author-card">
+  <img src="/images/cara.jpg" alt="" class="author-card__photo" width="72" height="72" loading="lazy" />
+  <div>
+    <p class="author-card__name">Iasi Salomon</p>
+    <p class="author-card__role">Technical Delivery Manager · Delivery operations, automation &amp; AI</p>
+    <p class="author-card__message">{message}</p>
+    <div class="d-flex flex-wrap gap-2">
+      <a href={LINKS.calendly} class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+        <i class="far fa-calendar-alt me-2" aria-hidden="true"></i>Book a 30-minute call
+      </a>
+      <a href={LINKS.email} class="btn btn-outline-dark btn-sm">
+        <i class="far fa-envelope me-2" aria-hidden="true"></i>Email
+      </a>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .author-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin: 3rem 0 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card, 1rem);
+    background-color: var(--color-surface);
+  }
+
+  .author-card__photo {
+    flex: 0 0 auto;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-card p {
+    margin: 0;
+  }
+
+  .author-card__name {
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .author-card__role {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .author-card__message {
+    margin: 0.75rem 0 1rem !important;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 575.98px) {
+    .author-card {
+      flex-direction: column;
+    }
+  }
+</style>

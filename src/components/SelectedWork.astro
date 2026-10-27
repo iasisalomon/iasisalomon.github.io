@@ -2,6 +2,43 @@
 import { getProjectBySlug } from '../data/portfolio';
 
 const axiecon = getProjectBySlug('axiecon-barcelona')!;
+
+// Every card has the same anatomy: a visual header (photo, or an area
+// gradient with an icon when there's no photo), tag, title, description,
+// one row of key facts and a call to action.
+interface WorkItem {
+  tag: string;
+  title: string;
+  description: string;
+  image?: { src: string; alt: string };
+  /** Shown instead of a photo: area gradient class + Font Awesome icon. */
+  panel?: { gradientClass: string; icon: string };
+  facts: { label: string; items: string[] };
+  cta: { label: string; href: string; external?: boolean };
+}
+
+const items: WorkItem[] = [
+  {
+    tag: 'Live event · Sky Mavis',
+    title: axiecon.title,
+    description: axiecon.description,
+    image: axiecon.image && {
+      src: axiecon.image,
+      alt: 'Sebastián Pozzo celebrating his win on the AxieCon main stage',
+    },
+    facts: { label: 'Scale', items: ['1,000+ attendees', '$1M prize pool', 'Barcelona + Manila'] },
+    cta: { label: 'Read the story', href: `/projects/${axiecon.slug}/` },
+  },
+  {
+    tag: 'Startup · Building with partners',
+    title: 'MUBA',
+    description:
+      'Multi-tenant SaaS for nursing-home management in Argentina, covering resident records, billing and settlements with health insurers, and an offline-capable nursing log. I wrote the functional spec, set the architecture and scope, and directed the AI-assisted development end to end.',
+    panel: { gradientClass: 'gradient-success', icon: 'fas fa-notes-medical' },
+    facts: { label: 'Stack', items: ['React', 'Node.js', 'PostgreSQL (Prisma)', 'Redis'] },
+    cta: { label: 'View live demo', href: 'https://demo.muba.lat', external: true },
+  },
+];
 ---
 
 <section id="work" class="py-6">
@@ -9,41 +46,42 @@ const axiecon = getProjectBySlug('axiecon-barcelona')!;
     <h2 class="text-center mt-1 mb-4">Selected work</h2>
     <div class="section-divider mb-5"></div>
     <div class="row g-4 justify-content-center">
-      <div class="col-lg-6">
-        <article class="work-card h-100 rounded-4 overflow-hidden d-flex flex-column">
-          <img src={axiecon.image} alt={axiecon.title} loading="lazy" class="work-card__img" />
-          <div class="p-4 p-lg-5 d-flex flex-column flex-grow-1">
-            <p class="work-card__tag mb-2">Live event · Sky Mavis</p>
-            <h3 class="h4 mb-3">{axiecon.title}</h3>
-            <p class="work-text flex-grow-1">{axiecon.description}</p>
-            <div>
-              <a href={`/projects/${axiecon.slug}/`} class="btn btn-primary mt-2">
-                Read the story <i class="fas fa-arrow-right ms-2"></i>
-              </a>
+      {items.map((item) => (
+        <div class="col-lg-6">
+          <article class="work-card h-100 rounded-4 overflow-hidden d-flex flex-column">
+            {item.image ? (
+              <img src={item.image.src} alt={item.image.alt} loading="lazy" class="work-card__media" />
+            ) : (
+              item.panel && (
+                <div class={`work-card__media work-card__panel ${item.panel.gradientClass}`} aria-hidden="true">
+                  <i class={item.panel.icon}></i>
+                </div>
+              )
+            )}
+            <div class="p-4 p-lg-5 d-flex flex-column flex-grow-1">
+              <p class="work-card__tag mb-2">{item.tag}</p>
+              <h3 class="h4 mb-3">{item.title}</h3>
+              <p class="work-text flex-grow-1">{item.description}</p>
+              <div class="work-card__facts mb-4">
+                <span class="work-card__facts-label">{item.facts.label}</span>
+                <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
+                  {item.facts.items.map((fact) => <li class="work-card__chip">{fact}</li>)}
+                </ul>
+              </div>
+              <div>
+                <a
+                  href={item.cta.href}
+                  class="btn btn-primary"
+                  {...(item.cta.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                >
+                  {item.cta.label}
+                  <i class={`fas ${item.cta.external ? 'fa-arrow-up-right-from-square' : 'fa-arrow-right'} ms-2`} aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="col-lg-6">
-        <article class="work-card h-100 rounded-4 overflow-hidden d-flex flex-column">
-          <div class="p-4 p-lg-5 d-flex flex-column flex-grow-1">
-            <p class="work-card__tag mb-2">Startup · Building with partners</p>
-            <h3 class="h4 mb-3">MUBA</h3>
-            <p class="work-text">
-              Multi-tenant SaaS for nursing-home management in Argentina, covering resident records, billing and
-              settlements with health insurers, and an offline-capable nursing log. I wrote the functional spec,
-              set the architecture and scope, and directed the AI-assisted development end to end.
-            </p>
-            <p class="work-text flex-grow-1"><strong>Stack:</strong> React, Node.js, PostgreSQL (Prisma), Redis.</p>
-            <div>
-              <a href="https://demo.muba.lat" class="btn btn-primary mt-2" target="_blank" rel="noopener noreferrer">
-                View live demo <i class="fas fa-arrow-up-right-from-square ms-2"></i>
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
+          </article>
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -53,10 +91,18 @@ const axiecon = getProjectBySlug('axiecon-barcelona')!;
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
   }
 
-  .work-card__img {
+  .work-card__media {
     width: 100%;
     height: 220px;
     object-fit: cover;
+  }
+
+  .work-card__panel {
+    display: grid;
+    place-items: center;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: none;
   }
 
   .work-card__tag {
@@ -70,5 +116,28 @@ const axiecon = getProjectBySlug('axiecon-barcelona')!;
   .work-text {
     color: var(--color-text-secondary);
     line-height: 1.8;
+  }
+
+  .work-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .work-card__facts-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-heading);
+  }
+
+  .work-card__chip {
+    font-size: 0.8rem;
+    padding: 0.2em 0.7em;
+    border-radius: var(--radius-pill, 100px);
+    background: var(--color-hover-bg);
+    color: var(--color-text);
   }
 </style>

@@ -5,6 +5,7 @@ pubDate: 2016-06-01
 heroImage: "/images/blog/albert-argentina.jpg"
 category: "other"
 lang: "es"
+award: "1st prize, Concurso Einstein (university category)"
 ---
 
 ## Abstract

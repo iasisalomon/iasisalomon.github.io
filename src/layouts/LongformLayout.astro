@@ -1,0 +1,500 @@
+---
+// Shared layout for long-form pages — case studies and blog posts — so both
+// read as one design: one reading column, the same header anatomy
+// (back link, badges, title, lead, facts), the same typography and the same
+// closing (contact card, previous/next, back). Pages only supply data.
+import MainLayout from './MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CustomFooter from '../components/CustomFooter.astro';
+import AuthorCard from '../components/AuthorCard.astro';
+
+export interface LongformBadge {
+  text: string;
+  /** Extra classes, e.g. a category or area gradient class. */
+  class?: string;
+  href?: string;
+  /** Font Awesome icon classes shown before the text. */
+  icon?: string;
+}
+
+export interface LongformFact {
+  label: string;
+  value: string;
+}
+
+export interface LongformPagerLink {
+  label: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  /** Summary under the title. */
+  lead?: string;
+  image?: string;
+  imageAlt?: string;
+  badges?: LongformBadge[];
+  facts?: LongformFact[];
+  back: { href: string; label: string };
+  prev?: LongformPagerLink;
+  next?: LongformPagerLink;
+  publishedTime?: string;
+  modifiedTime?: string;
+  /** Language of the page body; the site chrome stays English. */
+  lang?: string;
+  navVariant?: 'main' | 'blog';
+  activeCategory?: string;
+}
+
+const {
+  title,
+  description,
+  lead,
+  image,
+  imageAlt,
+  badges = [],
+  facts = [],
+  back,
+  prev,
+  next,
+  publishedTime,
+  modifiedTime,
+  lang = 'en',
+  navVariant = 'main',
+  activeCategory,
+} = Astro.props;
+---
+
+<MainLayout
+  title={`${title} — Iasi Salomon`}
+  description={description}
+  image={image}
+  type="article"
+  publishedTime={publishedTime}
+  modifiedTime={modifiedTime}
+  lang={lang}
+>
+  <Navbar variant={navVariant} activeCategory={activeCategory} />
+
+  <article class="longform">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <header class="longform-header">
+            <a href={back.href} class="longform-back" lang="en">← {back.label}</a>
+
+            {badges.length > 0 && (
+              <div class="longform-badges" lang="en">
+                {badges.map((badge) => {
+                  const Tag = badge.href ? 'a' : 'span';
+                  return (
+                    <Tag href={badge.href} class:list={['longform-badge', badge.class]}>
+                      {badge.icon && <i class={`${badge.icon} me-1`} aria-hidden="true"></i>}
+                      {badge.text}
+                    </Tag>
+                  );
+                })}
+              </div>
+            )}
+
+            <h1 class="longform-title">{title}</h1>
+            {lead && <p class="longform-lead">{lead}</p>}
+
+            {facts.length > 0 && (
+              <dl class="longform-facts" lang="en">
+                {facts.map((fact) => (
+                  <div>
+                    <dt>{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </header>
+
+          {image && <img src={image} alt={imageAlt ?? title} class="longform-image" />}
+
+          <div class="prose">
+            <slot />
+          </div>
+
+          <slot name="after" />
+
+          <div lang="en">
+            <AuthorCard />
+          </div>
+
+          <footer class="longform-footer" lang="en">
+            {(prev || next) && (
+              <nav class="longform-pager" aria-label="More to read">
+                {prev ? (
+                  <a href={prev.href} class="longform-pager__link">
+                    <span class="longform-pager__label">← {prev.label}</span>
+                    <span class="longform-pager__title">{prev.title}</span>
+                  </a>
+                ) : <span />}
+                {next && (
+                  <a href={next.href} class="longform-pager__link longform-pager__link--next">
+                    <span class="longform-pager__label">{next.label} →</span>
+                    <span class="longform-pager__title">{next.title}</span>
+                  </a>
+                )}
+              </nav>
+            )}
+            <a href={back.href} class="longform-back-button">← {back.label}</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CustomFooter />
+</MainLayout>
+
+<style>
+  /* Clears the fixed navbar (76px) and leaves room before the site footer. */
+  .longform {
+    padding: calc(76px + 3rem) 0 5rem;
+  }
+
+  .longform-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .longform-back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  .longform-back:hover {
+    color: var(--color-heading);
+  }
+
+  .longform-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Shape and colour come from the shared badge classes in /css/style.css
+     (post-badge, category-*, area gradients); this only drops the
+     gradients' drop shadow. */
+  .longform-badge {
+    box-shadow: none;
+  }
+
+  a.longform-badge:hover {
+    filter: brightness(1.1);
+  }
+
+  .longform-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+    margin-bottom: 1rem;
+  }
+
+  .longform-lead {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  .longform-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .longform-facts dt {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .longform-facts dd {
+    margin: 0;
+    color: var(--color-heading);
+    font-weight: 500;
+  }
+
+  .longform-image {
+    display: block;
+    width: 100%;
+    max-height: 460px;
+    object-fit: cover;
+    margin-bottom: 2.5rem;
+    border-radius: var(--radius-card, 1rem);
+    box-shadow: var(--shadow-image);
+  }
+
+  .longform-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .longform-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .longform-pager__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    color: var(--color-text);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .longform-pager__link:hover {
+    border-color: var(--color-border-strong);
+    background-color: var(--color-hover-bg);
+    color: var(--color-text);
+  }
+
+  .longform-pager__link--next {
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .longform-pager__label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-secondary);
+  }
+
+  .longform-pager__title {
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .longform-back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-hover-bg);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .longform-back-button:hover {
+    background-color: var(--color-hover-bg-strong);
+    color: var(--color-text);
+    transform: translateX(-4px);
+  }
+
+  @media (max-width: 768px) {
+    .longform {
+      padding: calc(76px + 2rem) 0 4rem;
+    }
+
+    .longform-title {
+      font-size: 2rem;
+    }
+
+    .longform-lead {
+      font-size: 1.05rem;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .longform-pager {
+      grid-template-columns: 1fr;
+    }
+
+    .longform-pager__link--next {
+      grid-column: auto;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Typography for the Markdown body of every long-form page. Global
+     because rendered Markdown doesn't carry the component's scope. */
+  .prose {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  .prose h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-heading);
+    margin: 2.75rem 0 1.25rem;
+  }
+
+  .prose h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    margin: 2.25rem 0 1rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.6rem;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.6rem;
+    padding-left: 1.6rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.6rem;
+  }
+
+  .prose strong {
+    color: var(--color-heading);
+  }
+
+  .prose a {
+    color: var(--color-accent);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .prose a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    margin: 2.5rem 0;
+    border-radius: var(--radius-card, 1rem);
+    box-shadow: var(--shadow-image);
+  }
+
+  .prose blockquote {
+    border-left: 4px solid var(--color-accent);
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    background-color: var(--color-quote-bg);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .prose code {
+    background-color: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.15em 0.4em;
+    font-size: 0.9em;
+  }
+
+  .prose pre {
+    background-color: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.2rem 1.4rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+
+  .prose pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.95em;
+  }
+
+  .prose hr {
+    margin: 3rem 0;
+    border-color: var(--color-border);
+  }
+
+  .prose [data-bs-toggle='tooltip'] {
+    border-bottom: 1px dotted var(--color-text-muted, #6c757d);
+    cursor: help;
+  }
+
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    margin: 2rem 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card, 1rem);
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .prose thead th {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: left;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--color-border-strong);
+    white-space: nowrap;
+  }
+
+  .prose tbody td {
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .prose tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .prose tbody tr:hover {
+    background-color: var(--color-hover-bg);
+  }
+
+  .prose tbody td:first-child {
+    font-weight: 600;
+    color: var(--color-heading);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .prose {
+      font-size: 1rem;
+    }
+
+    .prose h2 {
+      font-size: 1.4rem;
+    }
+
+    .prose table {
+      font-size: 0.85rem;
+    }
+
+    .prose thead th,
+    .prose tbody td {
+      padding: 0.65rem 0.85rem;
+    }
+  }
+</style>

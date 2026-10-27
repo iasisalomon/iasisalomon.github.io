@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar.astro';
 import CustomFooter from '../../components/CustomFooter.astro';
 import { getCollection } from 'astro:content';
 import { BLOG_CATEGORIES } from '../../consts';
+import { languageName, readingTime } from '../../utils/content';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
@@ -21,7 +22,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		<div class="container">
 			<header class="blog-header">
 				<h1 class="blog-title">Articles</h1>
-				<p class="blog-description">Thoughts, ideas, and explorations</p>
+				<p class="blog-description">Thoughts on tech, business and the spaces between.</p>
 			</header>
 
 			<div class="blog-grid" id="blogGrid">
@@ -29,7 +30,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 					<article class="blog-card" data-category={post.data.category ?? 'other'}>
 						<a href={`/blog/${post.id}/`} class="card-link">
 							<div class="card-image">
-								<img src={post.data.heroImage || '/images/blog/blog-placeholder-about.jpg'} alt={post.data.title} loading="lazy" />
+								<img src={post.data.heroImage || '/images/og-default.jpg'} alt={post.data.title} loading="lazy" />
 							</div>
 							<div class="card-content">
 								<header class="card-header">
@@ -40,6 +41,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 													year: 'numeric',
 													month: 'short',
 													day: 'numeric',
+													timeZone: 'UTC',
 												})}
 											</time>
 										)}
@@ -48,10 +50,19 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 												{categoryLabels[post.data.category]}
 											</span>
 										)}
+										{languageName(post.data.lang) && (
+											<span class="post-badge">{languageName(post.data.lang)}</span>
+										)}
+										<span class="card-reading-time">{readingTime(post.body)}</span>
 									</div>
-									<h2 class="card-title">{post.data.title}</h2>
+									<h2 class="card-title" lang={post.data.lang}>{post.data.title}</h2>
+									{post.data.award && (
+										<p class="post-badge post-badge--award mb-2">
+											<i class="fas fa-trophy me-1" aria-hidden="true"></i>{post.data.award}
+										</p>
+									)}
 								</header>
-								<p class="card-excerpt">{post.data.description}</p>
+								<p class="card-excerpt" lang={post.data.lang}>{post.data.description}</p>
 								<footer class="card-footer">
 									<span class="read-more">Read article →</span>
 								</footer>
@@ -139,22 +150,16 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 	.card-meta {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
+		flex-wrap: wrap;
+		gap: 0.4rem 0.6rem;
 		margin-bottom: 0.7rem;
 	}
 
-	.category-badge {
-		font-size: 0.75rem;
-		font-weight: 600;
-		padding: 0.2em 0.7em;
-		border-radius: var(--radius-pill);
-		text-transform: uppercase;
-		letter-spacing: 0.4px;
+	/* Category / language / award badges live in /css/style.css. */
+	.card-reading-time {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
 	}
-
-	.category-tech     { background: var(--badge-tech-bg); color: var(--badge-tech-text); }
-	.category-business { background: var(--badge-business-bg); color: var(--badge-business-text); }
-	.category-other    { background: var(--badge-other-bg); color: var(--badge-other-text); }
 
 	.blog-grid {
 		display: grid;

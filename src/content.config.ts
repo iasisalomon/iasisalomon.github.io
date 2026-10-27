@@ -15,8 +15,23 @@ const blog = defineCollection({
 		// BCP-47 language tag for the post body (defaults to 'en'). Used for the
 		// <html lang> attribute so search engines index the post in the right locale.
 		lang: z.string().optional().default('en'),
+		// Recognition the piece received (e.g. a contest prize), shown as a badge.
+		award: z.string().optional(),
 	}),
 });
+
+// A gallery photo: a bare path, or an object with its own alt text and an
+// optional caption. Bare paths are normalized so pages only see objects.
+const galleryImage = z
+	.union([
+		z.string(),
+		z.object({
+			src: z.string(),
+			alt: z.string(),
+			caption: z.string().optional(),
+		}),
+	])
+	.transform((img) => (typeof img === 'string' ? { src: img, alt: '', caption: undefined } : img));
 
 // Long-form case studies. Each file's id (filename) must match a project slug
 // in src/data/projects.json (see getProjectBySlug); shared metadata (date,
@@ -29,7 +44,7 @@ const caseStudies = defineCollection({
 		timeframe: z.string().optional(),
 		outcome: z.string().optional(),
 		heroImage: z.string().optional(),
-		gallery: z.array(z.string()).optional(),
+		gallery: z.array(galleryImage).optional(),
 	}),
 });
 

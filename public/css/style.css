@@ -48,6 +48,8 @@
     --badge-business-text: #92400e;
     --badge-other-bg: #f3f4f6;
     --badge-other-text: #4b5563;
+    --badge-award-bg: #fdf0d5;
+    --badge-award-text: #7a4b00;
 
     /* Spacing */
     --space-section: 5rem;
@@ -99,6 +101,8 @@
     --badge-business-text: #f5c451;
     --badge-other-bg: rgba(255, 255, 255, 0.08);
     --badge-other-text: #aeb6bf;
+    --badge-award-bg: rgba(255, 196, 64, 0.16);
+    --badge-award-text: #ffd27a;
 }
 
 /* Bootstrap utility shims — Bootstrap hardcodes these colors, so they
@@ -199,6 +203,35 @@ section {
 
 .badge.border {
     border-color: var(--color-border) !important;
+}
+
+/* Blog post badges — shared by the archive, the homepage teaser and posts. */
+.category-badge,
+.post-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2em 0.7em;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.5;
+}
+
+.category-tech     { background: var(--badge-tech-bg); color: var(--badge-tech-text); }
+.category-business { background: var(--badge-business-bg); color: var(--badge-business-text); }
+.category-other    { background: var(--badge-other-bg); color: var(--badge-other-text); }
+
+.post-badge {
+    background: var(--badge-other-bg);
+    color: var(--badge-other-text);
+}
+
+.post-badge--award {
+    background: var(--badge-award-bg);
+    color: var(--badge-award-text);
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .btn {
