@@ -26,6 +26,4 @@ Sole engineer, responsible for the whole stack — API integration, processing l
 - A bias toward **reproducibility**: containerizing from the start instead of bolting it on later.
 - Separating concerns (transport vs. transformation vs. presentation) so each part stays simple.
 
-<!-- TODO (Iasi): if you can share specifics — dataset size handled, processing time, or a screenshot/GIF of the UI — drop them in here and add images to the `gallery` frontmatter field. -->
-
 **Source:** [github.com/iasisalomon/challenge_toolbox](https://github.com/iasisalomon/challenge_toolbox)

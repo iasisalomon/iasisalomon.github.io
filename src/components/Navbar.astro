@@ -18,10 +18,10 @@ interface Props {
 const { variant = 'main', activeCategory } = Astro.props;
 
 const blogLinks = [
-  { label: 'All', href: '/blog', category: 'all' },
+  { label: 'All', href: '/blog/', category: 'all' },
   ...BLOG_CATEGORIES.map((c) => ({
     label: c.label,
-    href: `/blog?category=${c.id}`,
+    href: `/blog/?category=${c.id}`,
     category: c.id as string,
   })),
 ];
@@ -34,10 +34,10 @@ const blogLinks = [
   aria-label={variant === 'blog' ? 'Blog navigation' : 'Main navigation'}
 >
   <div class="container position-relative">
-    <!-- No brand: the links are centred on screen. The controls live outside
+    {/* No brand: the links are centred on screen. The controls live outside
          the collapse so they stay usable without opening the menu; on phones
          they sit on the right, on desktop they're pinned to the right edge
-         without pushing the centred links off-centre. -->
+         without pushing the centred links off-centre. */}
     <div class="nav-controls d-flex align-items-center gap-2 ms-auto">
       <button
         type="button"

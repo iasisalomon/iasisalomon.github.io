@@ -57,6 +57,7 @@ const gallery = entry.data.gallery ?? [];
 	description={entry.data.outcome ?? project.description}
 	lead={entry.data.outcome}
 	image={entry.data.heroImage ?? project.image}
+	imageAlt={entry.data.heroImageAlt}
 	badges={[{ text: area.label, class: `post-badge ${area.gradientClass}` }]}
 	facts={facts}
 	back={back}

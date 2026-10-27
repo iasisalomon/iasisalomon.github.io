@@ -16,6 +16,7 @@ interface Props {
 	pubDate: Date;
 	updatedDate?: Date;
 	heroImage?: string;
+	heroImageAlt?: string;
 	category?: string;
 	lang?: string;
 	award?: string;
@@ -30,6 +31,7 @@ const {
 	pubDate,
 	updatedDate,
 	heroImage,
+	heroImageAlt,
 	category,
 	lang = 'en',
 	award,
@@ -47,7 +49,7 @@ const language = languageName(lang);
 
 const badges: LongformBadge[] = [
 	...(categoryLabel
-		? [{ text: categoryLabel, class: `category-badge category-${category}`, href: `/blog?category=${category}` }]
+		? [{ text: categoryLabel, class: `category-badge category-${category}`, href: `/blog/?category=${category}` }]
 		: []),
 	...(language ? [{ text: language, class: 'post-badge' }] : []),
 	...(award ? [{ text: award, class: 'post-badge post-badge--award', icon: 'fas fa-trophy' }] : []),
@@ -64,9 +66,10 @@ const facts: LongformFact[] = [
 	title={title}
 	description={description}
 	image={heroImage}
+	imageAlt={heroImageAlt}
 	badges={badges}
 	facts={facts}
-	back={{ href: '/blog', label: 'Back to Articles' }}
+	back={{ href: '/blog/', label: 'Back to Articles' }}
 	prev={newer && { label: 'Newer article', ...newer }}
 	next={older && { label: 'Older article', ...older }}
 	publishedTime={pubDate.toISOString()}

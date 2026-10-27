@@ -10,9 +10,9 @@ const currentYear = new Date().getFullYear();
       <nav aria-label="Blog categories">
         <h3 class="h6 fw-semibold mb-3 text-white-75">Blog</h3>
         <ul class="list-unstyled footer-nav d-flex flex-wrap gap-3 mb-0">
-          <li><a href="/blog">All articles</a></li>
+          <li><a href="/blog/">All articles</a></li>
           {BLOG_CATEGORIES.map((c) => (
-            <li><a href={`/blog?category=${c.id}`}>{c.label}</a></li>
+            <li><a href={`/blog/?category=${c.id}`}>{c.label}</a></li>
           ))}
         </ul>
       </nav>

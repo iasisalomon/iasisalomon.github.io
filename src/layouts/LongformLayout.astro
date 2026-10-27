@@ -240,6 +240,9 @@ const {
   .longform-image {
     display: block;
     width: 100%;
+    /* Reserves the image's space before it loads, so the text doesn't jump. */
+    aspect-ratio: 16 / 9;
+    height: auto;
     max-height: 460px;
     object-fit: cover;
     margin-bottom: 2.5rem;

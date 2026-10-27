@@ -22,8 +22,6 @@ Built the project end to end: the data-processing pipeline and the server-render
 
 - The data-science fundamentals that matter most in practice: **cleaning and validation come before modeling**.
 - An ability to move between the data layer and a presentation layer that makes findings legible.
-- Choosing the right rendering strategy (<span data-bs-toggle="tooltip" data-bs-placement="top" title="Server-Side Rendering: the server generates the full HTML for a page before sending it to the browser, rather than building it client-side.">SSR</span>) for the job rather than reaching for a default.
-
-<!-- TODO (Iasi): add the scientific domain/context, the dataset(s) involved, and any visual output (charts/screenshots) to the `gallery` frontmatter — this case study gains the most from a concrete example of the data it handled. -->
+- Choosing the right rendering strategy (<span tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" title="Server-Side Rendering: the server generates the full HTML for a page before sending it to the browser, rather than building it client-side.">SSR</span>) for the job rather than reaching for a default.
 
 **Source:** [github.com/iasisalomon/calliv](https://github.com/iasisalomon/calliv)

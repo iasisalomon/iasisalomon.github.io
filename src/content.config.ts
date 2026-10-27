@@ -11,6 +11,8 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
+		// Describes the hero photo; without it the alt falls back to the title.
+		heroImageAlt: z.string().optional(),
 		category: z.enum(['tech', 'business', 'other']).optional(),
 		// BCP-47 language tag for the post body (defaults to 'en'). Used for the
 		// <html lang> attribute so search engines index the post in the right locale.
@@ -44,6 +46,8 @@ const caseStudies = defineCollection({
 		timeframe: z.string().optional(),
 		outcome: z.string().optional(),
 		heroImage: z.string().optional(),
+		// Describes the hero photo (heroImage, or the catalog image).
+		heroImageAlt: z.string().optional(),
 		gallery: z.array(galleryImage).optional(),
 	}),
 });

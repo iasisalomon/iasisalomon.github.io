@@ -14,7 +14,7 @@ type PartnerBrand = {
 };
 
 const brands = partnerBrands as PartnerBrand[];
-const featuredBrandNames = new Set(['Home Team Network', 'Interlaced', 'Sky Mavis']);
+const featuredBrandNames = new Set(['HomeTeam Network', 'Interlaced', 'Sky Mavis']);
 const featuredBrands = brands.filter((brand) => featuredBrandNames.has(brand.name));
 const additionalBrands = brands.filter((brand) => !featuredBrandNames.has(brand.name));
 const featuredTestimonials = testimonials.slice(0, 4);
