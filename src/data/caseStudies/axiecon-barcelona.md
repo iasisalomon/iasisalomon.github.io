@@ -3,13 +3,13 @@ role: "Host & Production Lead"
 timeframe: "2022"
 outcome: "Delivered Sky Mavis' first in-person global conference — a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia through an official watch party in Manila."
 gallery:
-  - "/images/gallery/axiecon/main-stage-wide.jpg"
-  - "/images/gallery/axiecon/esports-match.jpg"
+  - "/images/gallery/axiecon/main-stage-wide.webp"
+  - "/images/gallery/axiecon/esports-match.webp"
   - "/images/gallery/axiecon/classic-champion-sebastian-pozzo.webp"
   - "/images/gallery/axiecon/byod-champion-theeban-siva.webp"
-  - "/images/gallery/axiecon/grant-announcement.jpg"
-  - "/images/gallery/axiecon/community-hall-1.jpg"
-  - "/images/gallery/axiecon/mascot-decor.png"
+  - "/images/gallery/axiecon/grant-announcement.webp"
+  - "/images/gallery/axiecon/community-hall-1.webp"
+  - "/images/gallery/axiecon/mascot-decor.webp"
 ---
 
 ## The challenge

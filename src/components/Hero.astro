@@ -3,42 +3,60 @@ import { LINKS } from '../consts';
 ---
 
 <section id="home" class="d-flex flex-column bg-dark text-white">
-  <div class="container text-center py-5">
-    <div class="profile-image mb-4">
-      <img
-        src="/images/cara.jpg"
-        alt="Iasi Salomon"
-        class="rounded-circle img-fluid shadow-lg"
-        width="160"
-        height="160"
-      />
-    </div>
-    <p class="name mb-2">Iasi Salomon</p>
-    <h1 class="headline mx-auto mb-3">I unblock remote engineering teams, and automate what keeps them stuck.</h1>
-    <p class="role mb-4">Technical Delivery Manager · Delivery operations, automation &amp; AI · Remote, US time zones</p>
+  <div class="container py-5">
+    <div class="row align-items-center gy-4">
+      <!-- Text first in the DOM (and on desktop); the photo leads on phones. -->
+      <div class="col-lg-8 order-2 order-lg-1">
+        <p class="name mb-2">Iasi Salomon</p>
+        <h1 class="headline mb-3">I unblock remote engineering teams, and automate what keeps them stuck.</h1>
+        <p class="role mb-4">Technical Delivery Manager · Delivery operations, automation &amp; AI · Remote, US time zones</p>
 
-    <div class="hero-ctas">
-      <a href={LINKS.linkedin} class="btn btn-light btn-lg m-1" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-linkedin me-2"></i>LinkedIn
-      </a>
-      <a href={LINKS.email} class="btn btn-outline-light btn-lg m-1">
-        <i class="fas fa-envelope me-2"></i>Email
-      </a>
-      <a href={LINKS.github} class="btn btn-outline-light btn-lg m-1" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-github me-2"></i>GitHub
-      </a>
+        <div class="hero-ctas">
+          <a href={LINKS.linkedin} class="btn btn-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin me-2"></i>LinkedIn
+          </a>
+          <a href={LINKS.email} class="btn btn-outline-light btn-lg me-2 mb-2">
+            <i class="fas fa-envelope me-2"></i>Email
+          </a>
+          <a href={LINKS.github} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github me-2"></i>GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-4 order-1 order-lg-2">
+        <div class="profile-image d-flex justify-content-lg-center">
+          <img
+            src="/images/cara.jpg"
+            alt="Iasi Salomon"
+            class="rounded-circle img-fluid shadow-lg"
+            width="260"
+            height="260"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  /* Fills the screen below the fixed navbar; the global #home rule already
+     offsets it with margin-top. svh keeps mobile browser bars out of it. */
   #home {
-    padding-top: 76px;
-    min-height: 70vh;
+    min-height: calc(100vh - 76px);
+    min-height: calc(100svh - 76px);
     justify-content: center;
   }
 
+  /* Overrides the global centered, 200px-capped .profile-image. */
+  .profile-image {
+    max-width: none;
+    margin: 0;
+  }
+
   .profile-image img {
+    width: 260px;
+    height: 260px;
     border: 4px solid rgba(255, 255, 255, 0.2);
   }
 
@@ -46,6 +64,7 @@ import { LINKS } from '../consts';
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--color-accent-on-dark, #4d9aff);
+    max-width: 52ch;
   }
 
   .name {
@@ -63,16 +82,14 @@ import { LINKS } from '../consts';
     line-height: 1.15;
   }
 
-  @media (max-width: 768px) {
-    #home {
-      padding-top: 60px;
-    }
-
+  @media (max-width: 991.98px) {
     .profile-image img {
-      width: 130px;
-      height: 130px;
+      width: 120px;
+      height: 120px;
     }
+  }
 
+  @media (max-width: 768px) {
     .role {
       font-size: 0.95rem;
     }

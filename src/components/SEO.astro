@@ -1,7 +1,7 @@
 ---
 // Centralized SEO head: canonical URL, robots, Open Graph, Twitter cards,
 // and JSON-LD structured data. Rendered once inside <head> by MainLayout.
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, LINKS } from '../consts';
 
 interface Props {
   title: string;
@@ -18,10 +18,13 @@ interface Props {
   noindex?: boolean;
 }
 
+// 1200x630 card used when a page has no image of its own.
+const DEFAULT_IMAGE = '/images/og-default.jpg';
+
 const {
   title,
   description,
-  image = '/images/cara.jpg',
+  image = DEFAULT_IMAGE,
   type = 'website',
   publishedTime,
   modifiedTime,
@@ -35,8 +38,8 @@ const isHomepage = Astro.url.pathname === '/';
 
 // Social profiles that establish the "Iasi Salomon" entity across the web.
 const sameAs = [
-  'https://github.com/iasisalomon',
-  'https://linkedin.com/in/iasisalomon',
+  LINKS.github,
+  LINKS.linkedin,
   'https://x.com/glunisok',
   'https://instagram.com/oxaciano',
   'https://tiktok.com/@oxaciano',
@@ -114,6 +117,13 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:image" content={imageURL} />
+{image === DEFAULT_IMAGE && (
+  <>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Iasi Salomon, Technical Delivery Manager" />
+  </>
+)}
 <meta property="og:locale" content="en_US" />
 {type === 'article' && publishedTime && (
   <meta property="article:published_time" content={publishedTime} />

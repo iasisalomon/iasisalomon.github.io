@@ -1,6 +1,6 @@
 /* =============================================================
    Design tokens (Plan 03 — Phase 2: light + dark palettes).
-   Single source for color, spacing, radius and brand gradients.
+   Single source for color, spacing, radius and area gradients.
    Pages opt into theming (MainLayout `themeAware`); the head script
    sets `data-theme="dark"` on <html> from localStorage / OS
    preference, and every token below flips. Pages that never set the
@@ -57,10 +57,10 @@
     --radius-card: 1rem;
     --radius-pill: 100px;
 
-    /* Brand gradients (keyed by brand identity) */
-    --gradient-iasi: linear-gradient(160deg, #0d0d0d 0%, #2c2c2c 100%);
-    --gradient-glunis: linear-gradient(120deg, #004d40 0%, #00897b 100%);
-    --gradient-oxaciano: linear-gradient(45deg, #8b0000 0%, #dc3545 100%);
+    /* Area gradients (keyed by project category, see src/data/areas.ts) */
+    --gradient-operations: linear-gradient(160deg, #0d0d0d 0%, #2c2c2c 100%);
+    --gradient-engineering: linear-gradient(120deg, #004d40 0%, #00897b 100%);
+    --gradient-events: linear-gradient(45deg, #8b0000 0%, #dc3545 100%);
 }
 
 /* Dark palette — a distinct design, not an inversion: near-black blue
@@ -103,7 +103,7 @@
 
 /* Bootstrap utility shims — Bootstrap hardcodes these colors, so they
    need re-pointing at the token layer when the dark palette is active.
-   (Sections that are dark by design — hero, discussion, footer — use
+   (Sections that are dark by design — hero, contact, footer — use
    .bg-dark/.text-white and are untouched in both themes.) */
 [data-theme="dark"] .text-muted {
     color: var(--color-text-muted) !important;
@@ -139,11 +139,6 @@
     background-color: var(--color-hover-bg-strong);
     border-color: var(--color-border-strong);
     color: var(--color-text);
-}
-
-[data-theme="dark"] .btn-outline-secondary {
-    color: var(--color-text-secondary);
-    border-color: var(--color-border-strong);
 }
 
 @keyframes fadeIn {
@@ -207,20 +202,6 @@ section {
     border-color: var(--color-border) !important;
 }
 
-.brand-section {
-    border: none;
-    height: 100%;
-    padding: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-.brand-section:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
-    transform: translateY(-6px);
-}
-
 .btn {
     border-radius: 4px;
     font-size: 0.9rem;
@@ -249,17 +230,17 @@ section {
 }
 
 .gradient-black {
-    background: var(--gradient-iasi);
+    background: var(--gradient-operations);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .gradient-danger {
-    background: var(--gradient-oxaciano);
+    background: var(--gradient-events);
     box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 .gradient-success {
-    background: var(--gradient-glunis);
+    background: var(--gradient-engineering);
     box-shadow: 0 4px 15px rgba(0, 137, 123, 0.3);
 }
 
@@ -356,71 +337,10 @@ section {
     right: -35px;
 }
 
-.social-links {
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.social-links a {
-    opacity: 0.8;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-}
-
-.social-links a:hover {
-    opacity: 1;
-    transform: translateY(-3px);
-}
-
-.social-links a::before {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    content: '';
-    height: 100%;
-    left: 50%;
-    opacity: 0;
-    padding: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-    z-index: -1;
-}
-
-.social-links a:hover::before {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-#about, #brands, #projects {
-    position: relative;
-}
-
 #home {
-    min-height: calc(100vh - 76px);
     padding: 0;
     position: relative;
     margin-top: 76px;
-}
-
-#mainNav.scrolled {
-    background-color: rgba(33, 37, 41, 0.98);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.display-4 {
-    font-size: 2.5rem;
-    margin: 76px 0 1.5rem;
-    position: relative;
-}
-
-#about, #projects {
-    background-color: var(--color-bg);
-}
-
-#brands {
-    background-color: var(--color-surface);
 }
 
 #about p {
@@ -433,73 +353,15 @@ section {
     margin-right: auto;
 }
 
-#about p strong,
-#about p b {
+#about p strong {
     color: var(--color-heading);
     font-weight: 600;
-}
-
-#about p em,
-#about p i {
-    color: var(--color-heading);
-    font-style: normal;
-    font-weight: 500;
-    border-bottom: 1px dotted var(--color-text-muted);
-}
-
-#about .role {
-    color: var(--color-heading);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-}
-
-#about .skill {
-    color: var(--color-heading);
-    font-weight: 500;
-    background: var(--color-hover-bg);
-    padding: 0.1em 0.3em;
-    border-radius: 3px;
 }
 
 #about p:first-of-type {
     font-size: 1.05rem;
     color: var(--color-heading);
     font-weight: 500;
-}
-
-.project-card {
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-#brands {
-    padding-top: 45px;
-    z-index: 1;
-}
-
-.btn-group {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    gap: 0.25rem;
-    max-width: 100%;
-    overflow-x: auto;
-    padding: 0.25rem 0;
-    width: auto;
-}
-
-.btn-group .btn {
-    font-size: 0.8rem;
-    padding: 0.35rem 0.8rem;
-    flex-shrink: 0;
-    white-space: nowrap;
-}
-
-.btn-dark {
-    background: linear-gradient(145deg, #111111 0%, #222222 100%);
-    border: none;
-}
-
-.btn-dark:hover {
-    background: linear-gradient(145deg, #000000 0%, #1a1a1a 100%);
 }
 
 .btn-outline-light,
@@ -531,31 +393,6 @@ section {
     color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.skills-container,
-.link-button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    width: 100%;
-}
-
-#projects .section-divider {
-    margin: 0.25rem auto 0.5rem;
-}
-
-#projects .card-body {
-    padding: 1.25rem;
-}
-
-#projects .card-title {
-    margin-bottom: 0.25rem;
-}
-
-#projects .text-muted.small {
-    margin-bottom: 0.5rem;
-}
-
 .nav-link.active {
     color: #fff !important;
     font-weight: 600;
@@ -574,12 +411,7 @@ section {
     section {
         padding: 0 0 2rem;
     }
-    
-    .display-4 {
-        font-size: 2rem;
-        margin: 76px 0 1rem;
-    }
-    
+
     #about p {
         font-size: 0.9rem;
         margin-bottom: 0.75rem;

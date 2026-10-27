@@ -1,6 +1,6 @@
 # iasisalomon.pages.dev
 
-Personal portfolio and blog of **Iasi Salomon** — operations & strategy lead and software engineer. Live at [iasisalomon.pages.dev](https://iasisalomon.pages.dev).
+Personal portfolio and blog of **Iasi Salomon** — Technical Delivery Manager. Live at [iasisalomon.pages.dev](https://iasisalomon.pages.dev).
 
 Built with [Astro 5](https://astro.build), deployed on Cloudflare Pages.
 
@@ -17,8 +17,8 @@ Built with [Astro 5](https://astro.build), deployed on Cloudflare Pages.
 
 ```
 src/
-├── components/       # Homepage sections (Hero, About, Expertise, Projects,
-│                     # SelectedWork, Testimonials, Writing, Discussion, …)
+├── components/       # Homepage sections (Hero, About, Experience, SelectedWork,
+│                     # Engineering, Writing, Skills, Testimonials, Contact)
 │                     # plus shared Navbar, SEO, and CustomFooter
 ├── layouts/
 │   ├── MainLayout.astro   # Root HTML shell for every page
@@ -30,12 +30,14 @@ src/
 │   └── rss.xml.js         # RSS feed
 ├── data/
 │   ├── projects.json      # Project catalog (single source of truth)
-│   ├── brands.json        # Personal brands
+│   ├── portfolio.ts       # Zod-validated access to projects.json
+│   ├── areas.ts           # Project categories and their colors/gradients
+│   ├── proof.json         # Testimonials
+│   ├── partnerBrands.json # "Worked With" logos
 │   ├── blog/              # Blog posts (Markdown)
-│   ├── caseStudies/       # Long-form case studies (Markdown)
-│   └── *.json / *.ts      # About, expertise, proof, partner brands, …
+│   └── caseStudies/       # Long-form case studies (Markdown)
 ├── content.config.ts      # Content collection schemas (blog, caseStudies)
-└── consts.ts              # SITE_TITLE, SITE_DESCRIPTION, BLOG_CATEGORIES
+└── consts.ts              # Site title/description, LINKS, NAV_LINKS, BLOG_CATEGORIES
 ```
 
 ## Content
@@ -48,11 +50,19 @@ Blog categories are defined in `src/consts.ts` (`BLOG_CATEGORIES`) and must stay
 
 ### Case studies
 
-Markdown files in `src/data/caseStudies/`. Each file's name must match a project slug in `src/data/projects.json` — the catalog entry supplies shared metadata (brand, date, skills, links), while the Markdown body holds the narrative. Optional frontmatter: `role`, `timeframe`, `outcome`, `heroImage`, `gallery`.
+Markdown files in `src/data/caseStudies/`. Each file's name must match a project slug in `src/data/projects.json` — the catalog entry supplies shared metadata (date, skills, links), while the Markdown body holds the narrative. Optional frontmatter: `role`, `timeframe`, `outcome`, `heroImage`, `gallery`.
 
 ### Projects
 
-`src/data/projects.json` is the single source of truth for all portfolio projects. Components read it directly.
+`src/data/projects.json` is the single source of truth for all portfolio projects. Components read it through `src/data/portfolio.ts`, which validates it at build time.
+
+### Images
+
+`public/` holds the optimized images the site serves (WebP, max 1600px wide). Full-size source photos live in `originals/`, which mirrors the `public/` paths (e.g. `originals/images/gallery/axiecon/`) and is not deployed. Keep the originals there when adding or re-optimizing photos.
+
+### Links and navigation
+
+Contact links (email, LinkedIn, GitHub, Calendly) live in `LINKS`, and the homepage section links in `NAV_LINKS` (both in `src/consts.ts`). The navbar and footer render from `NAV_LINKS`, so its order must match the section order in `src/pages/index.astro`.
 
 ## Key patterns
 

@@ -1,16 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
+import { BLOG_CATEGORIES } from '../consts';
 
 // Latest posts as a teaser; the full archive lives at /blog.
 const posts = (await getCollection('blog'))
   .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
   .slice(0, 3);
 
-const categoryLabels: Record<string, string> = {
-  tech: 'Tech',
-  business: 'Business',
-  other: 'Other',
-};
+const categoryLabels: Record<string, string> = Object.fromEntries(
+  BLOG_CATEGORIES.map((c) => [c.id, c.label]),
+);
 ---
 
 <section id="blog" class="py-6">

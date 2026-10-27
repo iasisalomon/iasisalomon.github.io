@@ -6,7 +6,7 @@
 //    From-the-Blog teaser.
 //  - 'blog': the blog is its own space — category links driving the archive
 //    filter plus a single "Main site" link back. No homepage section links.
-import { BLOG_CATEGORIES } from '../consts';
+import { BLOG_CATEGORIES, NAV_LINKS } from '../consts';
 
 interface Props {
   variant?: 'main' | 'blog';
@@ -16,15 +16,6 @@ interface Props {
   activeCategory?: string;
 }
 const { variant = 'main', activeCategory } = Astro.props;
-
-const mainLinks = [
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Work', href: '/#work' },
-  { label: 'Engineering', href: '/#engineering' },
-  { label: 'Blog', href: '/#blog' },
-  { label: 'Skills', href: '/#skills' },
-  { label: "Let's talk", href: '/#contact' },
-];
 
 const blogLinks = [
   { label: 'All', href: '/blog', category: 'all' },
@@ -37,12 +28,12 @@ const blogLinks = [
 ---
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-  <div class="container">
-    <a class="navbar-brand" href="/">Iasi Salomon</a>
-    <!-- Toggle lives outside the collapse so it stays visible (and usable)
-         without opening the menu; order-lg-last places it after the nav
-         links on desktop. -->
-    <div class="nav-controls d-flex align-items-center gap-2 order-lg-last">
+  <div class="container position-relative">
+    <!-- No brand: the links are centred on screen. The controls live outside
+         the collapse so they stay usable without opening the menu; on phones
+         they sit on the right, on desktop they're pinned to the right edge
+         without pushing the centred links off-centre. -->
+    <div class="nav-controls d-flex align-items-center gap-2 ms-auto">
       <button
         type="button"
         class="theme-toggle"
@@ -62,10 +53,10 @@ const blogLinks = [
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
       <ul class="navbar-nav main-nav">
         {variant === 'main' &&
-          mainLinks.map((link) => (
+          NAV_LINKS.map((link) => (
             <li class="nav-item">
               <a class="nav-link" href={link.href}>{link.label}</a>
             </li>
@@ -104,20 +95,16 @@ const blogLinks = [
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
-  .navbar-brand {
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    color: #fff;
-  }
-
   .main-nav .nav-item {
-    margin: 0 0.15rem;
+    margin: 0 0.1rem;
   }
 
+  /* Compact enough for one link per section on a single row from 992px. */
   .main-nav .nav-link {
-    padding: 0.5rem 0.9rem;
+    margin: 0;
+    padding: 0.5rem 0.6rem;
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.85);
     position: relative;
     letter-spacing: 0.2px;
@@ -153,8 +140,13 @@ const blogLinks = [
     transform: scaleX(1);
   }
 
-  .nav-controls {
-    margin-left: 0.6rem;
+  @media (min-width: 992px) {
+    .nav-controls {
+      position: absolute;
+      top: 50%;
+      right: calc(var(--bs-gutter-x) * 0.5);
+      transform: translateY(-50%);
+    }
   }
 
   /* Blog variant: separate the "Main site" return link from the
@@ -244,6 +236,7 @@ const blogLinks = [
 
     .main-nav .nav-link {
       padding: 0.6rem 1rem;
+      font-size: 0.95rem;
       display: block;
     }
 

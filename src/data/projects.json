@@ -5,7 +5,6 @@
     "title": "AxieCon Barcelona",
     "description": "Hosted and produced Sky Mavis' first global conference: a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia via an official Manila watch party.",
     "image": "/images/gallery/axiecon/sebastian-pozzo-portrait.webp",
-    "brand": "iasi",
     "date": "2022-09-01",
     "category": "events-production",
     "skills": [
@@ -18,7 +17,6 @@
       "Event",
       "Project Management"
     ],
-    "featured": true,
     "links": [
       {
         "text": "Blog",
@@ -42,8 +40,6 @@
     "slug": "challenge-toolbox",
     "title": "Challenge: Toolbox",
     "description": "Full-stack application that processes CSV files from an external API. Built with Node.js, React, and Docker.",
-    "image": "/blog-placeholder-2.jpg",
-    "brand": "iasi",
     "date": "2022-09-01",
     "category": "software-engineering",
     "skills": [
@@ -58,7 +54,6 @@
       "Development",
       "DevOps"
     ],
-    "featured": true,
     "links": [
       {
         "text": "Repository",
@@ -73,8 +68,6 @@
     "slug": "calliv",
     "title": "Calliv",
     "description": "Data science project focused on analyzing and processing scientific data.",
-    "image": "/blog-placeholder-3.jpg",
-    "brand": "iasi",
     "date": "2021-10-01",
     "category": "software-engineering",
     "skills": [
@@ -88,7 +81,6 @@
       "Data Cleanup",
       "Data Visualization"
     ],
-    "featured": true,
     "links": [
       {
         "text": "Repository",
@@ -103,8 +95,6 @@
     "slug": "challenge-code-care",
     "title": "Challenge: Code Care",
     "description": "Vue.js application that reads input line by line and identifies characters appearing exactly twice. Built with Vuex for state management.",
-    "image": "/blog-placeholder-5.jpg",
-    "brand": "iasi",
     "date": "2021-10-01",
     "category": "software-engineering",
     "skills": [
@@ -116,7 +106,6 @@
       "Full Stack",
       "Development"
     ],
-    "featured": false,
     "links": [
       {
         "text": "Repository",
@@ -131,8 +120,6 @@
     "slug": "challenge-bravo-care",
     "title": "Challenge: Bravo Care",
     "description": "Full-stack application with PostgreSQL database, Express API for data querying and transformation, and React frontend for displaying results.",
-    "image": "/blog-placeholder-1.jpg",
-    "brand": "iasi",
     "date": "2022-10-01",
     "category": "software-engineering",
     "skills": [
@@ -145,7 +132,6 @@
       "Full Stack",
       "Development"
     ],
-    "featured": false,
     "links": [
       {
         "text": "Repository",
@@ -160,8 +146,6 @@
     "slug": "mtg-top8-scraper",
     "title": "MTG Top8 Scraper",
     "description": "Automated web scraper built with Puppeteer to collect and analyze Magic: The Gathering tournament data from MTGTop8.",
-    "image": "/blog-placeholder-2.jpg",
-    "brand": "iasi",
     "date": "2022-11-01",
     "category": "software-engineering",
     "skills": [
@@ -173,7 +157,6 @@
       "Automation",
       "Web Scraping"
     ],
-    "featured": false,
     "links": [
       {
         "text": "Repository",
@@ -188,8 +171,6 @@
     "slug": "jwt-authentication",
     "title": "Practice: JWT Authentication",
     "description": "Authentication system implementation using JSON Web Tokens (JWT) with Express.js and EJS templating.",
-    "image": "/blog-placeholder-3.jpg",
-    "brand": "iasi",
     "date": "2024-08-01",
     "category": "software-engineering",
     "skills": [
@@ -201,7 +182,6 @@
     "tags": [
       "Backend"
     ],
-    "featured": false,
     "links": [
       {
         "text": "Repository",

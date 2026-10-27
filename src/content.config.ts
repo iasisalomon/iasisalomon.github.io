@@ -19,8 +19,8 @@ const blog = defineCollection({
 });
 
 // Long-form case studies. Each file's id (filename) must match a project slug
-// in src/data/projects.json (see getProjectBySlug); shared metadata (brand,
-// date, skills, links) comes from that catalog entry, while the Markdown
+// in src/data/projects.json (see getProjectBySlug); shared metadata (date,
+// skills, links) comes from that catalog entry, while the Markdown
 // body and the fields below hold the case-study narrative.
 const caseStudies = defineCollection({
 	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/caseStudies' }),

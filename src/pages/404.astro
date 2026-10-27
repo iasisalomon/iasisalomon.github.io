@@ -1,5 +1,6 @@
 ---
 // Any old or unknown URL lands back on the home page.
+import { SITE_TITLE } from '../consts';
 ---
 
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
     <meta name="robots" content="noindex" />
     <meta http-equiv="refresh" content="0; url=/" />
     <link rel="canonical" href="/" />
-    <title>Iasi Salomon | Technical Delivery Manager</title>
+    <title>{SITE_TITLE}</title>
   </head>
   <body>
     <p>Redirecting to <a href="/">the home page</a>…</p>
