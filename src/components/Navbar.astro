@@ -309,7 +309,9 @@ const blogLinks = [
       const section = document.querySelector(hash);
       if (!section) return false;
       suppressSpy();
-      window.scrollTo({ top: section.offsetTop - nav.offsetHeight - 10, behavior: 'smooth' });
+      // Flush under the navbar: the same offset as the CSS scroll-margin-top
+      // used by native hash jumps, so every section lands in the same spot.
+      window.scrollTo({ top: section.offsetTop - nav.offsetHeight, behavior: 'smooth' });
       return true;
     }
 
