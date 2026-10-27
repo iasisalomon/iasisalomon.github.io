@@ -1,0 +1,17 @@
+# Line endings: LF everywhere, in the repository and in working copies,
+# regardless of each machine's core.autocrlf setting. See README "Line endings".
+* text=auto eol=lf
+
+# Binary files: never convert.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
+*.webm binary
+*.pdf binary

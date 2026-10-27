@@ -69,3 +69,16 @@ Contact links (email, LinkedIn, GitHub, Calendly) live in `LINKS`, and the homep
 - **Context-aware Navbar** — switches between homepage section links and blog category links at render time; scroll-based active state is tracked client-side.
 - **MainLayout** — root HTML shell for all pages; loads CDN assets and inlines client-side scripts.
 - **SEO** — dedicated `SEO.astro` component, sitemap via `@astrojs/sitemap`, RSS via `@astrojs/rss`, and `public/robots.txt`.
+
+## Line endings
+
+All text files use **LF** (`\n`), both in the repository and in working copies, on every OS.
+
+- `.gitattributes` (`* text=auto eol=lf`) enforces it in Git and overrides each machine's `core.autocrlf`, so Windows checkouts stay LF and Git no longer warns about LF/CRLF conversion. Images, fonts and other binaries are marked `binary` and never converted.
+- `.editorconfig` tells editors to save new files with LF, UTF-8 and a final newline.
+
+If a file ever shows up with CRLF, re-normalize it:
+
+```bash
+git add --renormalize .
+```
