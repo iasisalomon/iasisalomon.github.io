@@ -1,13 +1,10 @@
 ---
 import { Icon } from 'astro-icon/components';
-import proof from '../data/proof.json';
+import { getTestimonials } from '../data/queries';
 
-const { testimonials } = proof as {
-  testimonials: { quote: string; name: string; role: string; org?: string }[];
-};
-
-const featuredTestimonials = testimonials.slice(0, 4);
-const additionalTestimonials = testimonials.slice(4);
+const testimonials = await getTestimonials();
+const featuredTestimonials = testimonials.filter((t) => t.featured);
+const additionalTestimonials = testimonials.filter((t) => !t.featured);
 
 const initials = (name: string) =>
   name

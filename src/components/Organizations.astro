@@ -1,17 +1,9 @@
 ---
-import partnerBrands from '../data/partnerBrands.json';
+import { getOrganizations } from '../data/queries';
 
-type PartnerBrand = {
-  name: string;
-  logo: string;
-  darkTile?: boolean;
-  url?: string;
-};
-
-const brands = partnerBrands as PartnerBrand[];
-const featuredBrandNames = new Set(['HomeTeam Network', 'Interlaced', 'Sky Mavis']);
-const featuredBrands = brands.filter((brand) => featuredBrandNames.has(brand.name));
-const additionalBrands = brands.filter((brand) => !featuredBrandNames.has(brand.name));
+const brands = await getOrganizations();
+const featuredBrands = brands.filter((brand) => brand.featured);
+const additionalBrands = brands.filter((brand) => !brand.featured);
 ---
 
 <section id="organizations" class="py-6">

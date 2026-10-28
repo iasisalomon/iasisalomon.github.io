@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "hometeam-head-of-operations",
+    "title": "Head of Operations",
+    "organization": "HomeTeam Network",
+    "organizationNote": "Hybrid, Rosario, Argentina",
+    "start": "2026-01",
+    "bullets": [
+      "Run all operations except payments and finance, building and leading the team from zero to {teamSize} contractors and owning hiring, onboarding, scheduling and performance management end to end.",
+      "Launched the remote production operation in 6 weeks, setting up the equipment, network and operating procedures.",
+      "Owned broadcast scheduling and resource allocation for {broadcastsInOneMonth} live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over {crewHoursInOneMonth} crew hours, with peaks of 23 games in a day."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "interlaced-automation-engineer",
+    "title": "Automation Engineer",
+    "organization": "Interlaced LLC",
+    "organizationNote": "contract",
+    "start": "2025-04",
+    "end": "2025-12",
+    "bullets": [
+      "Owned the design, delivery and maintenance of operational workflows end to end, using Rewst, n8n, Retool and Make.",
+      "Automated client onboarding end to end, eliminating an estimated {onboardingMinutesSaved} minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "pythas-software-engineer",
+    "title": "Software Engineer",
+    "organization": "Pythas LLC",
+    "organizationNote": "contract",
+    "start": "2025-01",
+    "end": "2025-11",
+    "bullets": [
+      "Owned scope, timeline and technical delivery of a fintech proof of concept: virtual bank accounts with USD/USDC swaps, built on the Rail API.",
+      "Validated the product idea with a working proof of concept, which the founders used to decide how to build the full product."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "sky-mavis-operations-project-manager",
+    "title": "Operations Project Manager",
+    "organization": "Sky Mavis",
+    "organizationNote": "creator of Axie Infinity",
+    "start": "2023-05",
+    "end": "2024-11",
+    "bullets": [
+      "Coordinated a 4-person team within an 8-person operations group.",
+      "Automated Jira intake and handoffs across Legal, Growth, Operations and Finance, so cross-team requests were routed and tracked without manual follow-up.",
+      "Owned the rollout of the company-wide security training program, sustaining a 95% monthly completion rate across distributed teams.",
+      "Wrote SOPs and self-service guides for recurring requests."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "sky-mavis-project-manager-esports",
+    "title": "Project Manager, Esports",
+    "organization": "Sky Mavis",
+    "organizationNote": "creator of Axie Infinity",
+    "start": "2022-06",
+    "end": "2023-05",
+    "bullets": [
+      "Managed LATAM operations for the Esports department, coordinating event production and broadcast for Axie Infinity esports."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "sky-mavis-support-specialist",
+    "title": "Support Specialist",
+    "organization": "Sky Mavis",
+    "organizationNote": "creator of Axie Infinity",
+    "start": "2021-10",
+    "end": "2022-06",
+    "bullets": [
+      "Built Node.js REST endpoints to integrate CovalentHQ and internal data sources."
+    ],
+    "featured": true
+  },
+  {
+    "slug": "scale-quality-assurance-engineer",
+    "title": "Quality Assurance Engineer",
+    "organization": "Scale Services Corp",
+    "organizationNote": "contract",
+    "start": "2021-01",
+    "end": "2021-11",
+    "bullets": [
+      "API and unit testing in Node.js and Mocha, domain-driven test definitions and OpenAPI documentation."
+    ],
+    "featured": true
+  }
+]

@@ -28,7 +28,21 @@
         "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY",
         "icon": "fa6-brands:youtube"
       }
-    ]
+    ],
+    "featured": true,
+    "card": {
+      "tag": "Live event · Sky Mavis",
+      "imageAlt": "Sebastián Pozzo celebrating his win on the AxieCon main stage",
+      "facts": {
+        "label": "Scale",
+        "items": [
+          "1,000+ attendees",
+          "$1M prize pool",
+          "Barcelona + Manila"
+        ]
+      },
+      "ctaLabel": "Read the story"
+    }
   },
   {
     "slug": "self-hosted-deployments",
@@ -42,7 +56,8 @@
       "DNS"
     ],
     "links": [],
-    "status": "private deployment"
+    "status": "private deployment",
+    "featured": true
   },
   {
     "slug": "challenge-toolbox",
@@ -63,7 +78,8 @@
         "icon": "fa6-brands:github"
       }
     ],
-    "status": "challenge"
+    "status": "challenge",
+    "featured": true
   },
   {
     "slug": "calliv",
@@ -126,7 +142,8 @@
         "icon": "fa6-brands:github"
       }
     ],
-    "status": "challenge"
+    "status": "challenge",
+    "featured": true
   },
   {
     "slug": "mtg-top8-scraper",
@@ -170,21 +187,6 @@
     "status": "practice"
   },
   {
-    "slug": "interlaced-onboarding-automation",
-    "title": "Client onboarding automation",
-    "description": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
-    "date": "2025-04-01",
-    "category": "operations",
-    "skills": [
-      "Google Workspace",
-      "Rewst",
-      "n8n",
-      "Retool",
-      "Make"
-    ],
-    "links": []
-  },
-  {
     "slug": "muba",
     "title": "MUBA",
     "description": "Scoped and led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
@@ -209,6 +211,59 @@
         "url": "https://muba.app/",
         "icon": "fa6-solid:globe"
       }
-    ]
+    ],
+    "featured": true,
+    "card": {
+      "tag": "Startup · Building with partners",
+      "description": "Defined the scope and functional spec, then led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+      "panel": {
+        "gradientClass": "work-card__panel--muba",
+        "logo": "/images/brands/muba.webp"
+      },
+      "facts": {
+        "label": "Stack",
+        "items": [
+          "React",
+          "Node.js",
+          "PostgreSQL (Prisma)"
+        ]
+      },
+      "ctaLabel": "Read the case study",
+      "link": {
+        "label": "Live demo",
+        "href": "https://demo.muba.lat"
+      }
+    }
+  },
+  {
+    "slug": "interlaced-onboarding-automation",
+    "title": "Client onboarding automation",
+    "description": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
+    "date": "2025-04-01",
+    "category": "operations",
+    "skills": [
+      "Google Workspace",
+      "Rewst",
+      "n8n",
+      "Retool",
+      "Make"
+    ],
+    "links": [],
+    "featured": true,
+    "card": {
+      "tag": "Automation · Interlaced",
+      "description": "Automated user provisioning from support-ticket intake through Google Workspace setup, client and support notifications, automatic retries, and human escalation.",
+      "image": "/images/work/onboarding-automation.svg",
+      "imageAlt": "Rewst at the center of an automation loop between ConnectWise, Microsoft, Google and Addigy",
+      "facts": {
+        "label": "Impact",
+        "items": [
+          "~{onboardingMinutesSaved} min saved per onboarding",
+          "Automatic retries",
+          "Human escalation"
+        ]
+      },
+      "ctaLabel": "Read the case study"
+    }
   }
 ]

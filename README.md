@@ -42,14 +42,15 @@ src/
 │   ├── projects/          # Project case-study pages
 │   └── rss.xml.js         # RSS feed
 ├── data/
-│   ├── projects.json      # Project catalog (single source of truth)
-│   ├── portfolio.ts       # Zod-validated access to projects.json
+│   ├── projects.json      # Projects (Selected work, Engineering, case studies)
+│   ├── experience.json    # Roles shown in Experience
+│   ├── testimonials.json  # Testimonials
+│   ├── organizations.json # "Teams and organizations" logos
+│   ├── queries.ts         # Read access to the collections above
 │   ├── areas.ts           # Project categories and their colors/gradients
-│   ├── proof.json         # Testimonials
-│   ├── partnerBrands.json # "Worked With" logos
 │   ├── blog/              # Blog posts (Markdown)
 │   └── caseStudies/       # Long-form case studies (Markdown)
-├── content.config.ts      # Content collection schemas (blog, caseStudies)
+├── content.config.ts      # Collection schemas (Markdown and JSON data)
 └── consts.ts              # Site title/description, LINKS, NAV_LINKS, BLOG_CATEGORIES
 ```
 
@@ -65,9 +66,23 @@ Blog categories are defined in `src/consts.ts` (`BLOG_CATEGORIES`) and must stay
 
 Markdown files in `src/data/caseStudies/`. Each file's name must match a project slug in `src/data/projects.json` — the catalog entry supplies shared metadata (date, skills, links), while the Markdown body holds the narrative. Optional frontmatter: `role`, `timeframe`, `outcome`, `heroImage`, `gallery`.
 
-### Projects
+### Data files (JSON)
 
-`src/data/projects.json` is the single source of truth for all portfolio projects. Components read it through `src/data/portfolio.ts`, which validates it at build time.
+The JSON files in `src/data/` work as the site's database. Each one is a content collection (schemas in `src/content.config.ts`, validated at build time), and components read them only through `src/data/queries.ts`.
+
+| File | What it holds |
+| ---- | ------------- |
+| `projects.json` | Every project. Featured projects with a `status` lead Engineering; other featured projects are the Selected work cards and describe the card in `card`. |
+| `experience.json` | One entry per role. Titles, employers and dates must match the CV and LinkedIn. Consecutive roles at the same organization are grouped. |
+| `testimonials.json` | Testimonials. |
+| `organizations.json` | "Teams and organizations" logos. |
+
+Rules shared by every file:
+
+- Each entry has a unique kebab-case `slug`.
+- `featured: true` puts an entry on the homepage; the rest show only in full listings.
+- The order of entries in the file is the order on the site (except experience, which is sorted by date).
+- Text can use `{fact}` placeholders (e.g. `{teamSize}`) for the headline numbers in `FACTS` (`src/consts.ts`). An unknown name fails the build.
 
 ### Images
 

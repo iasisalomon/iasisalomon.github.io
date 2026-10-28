@@ -1,86 +1,35 @@
 ---
-import { FACTS } from '../consts';
+import { formatRange, getFeaturedExperience, type Role } from '../data/queries';
 
-// Titles, employers and dates must match the CV and LinkedIn exactly.
-interface Role {
-  title: string;
-  dates?: string;
-  bullets: string[];
-}
+// Roles live in src/data/experience.json. Consecutive roles at the same
+// organization are grouped under it, with each role's own dates.
 interface Job {
   title?: string;
   company: string;
   dates: string;
   bullets?: string[];
-  roles?: Role[];
+  roles?: { title: string; dates: string; bullets: string[] }[];
 }
 
-const jobs: Job[] = [
-  {
-    title: 'Head of Operations',
-    company: 'HomeTeam Network (Hybrid, Rosario, Argentina)',
-    dates: 'Jan 2026 – Present',
-    bullets: [
-      `Run all operations except payments and finance, building and leading the team from zero to ${FACTS.teamSize} contractors and owning hiring, onboarding, scheduling and performance management end to end.`,
-      'Launched the remote production operation in 6 weeks, setting up the equipment, network and operating procedures.',
-      `Owned broadcast scheduling and resource allocation for ${FACTS.broadcastsInOneMonth} live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over ${FACTS.crewHoursInOneMonth} crew hours, with peaks of 23 games in a day.`,
-    ],
-  },
-  {
-    title: 'Automation Engineer',
-    company: 'Interlaced LLC (contract)',
-    dates: 'Apr 2025 – Dec 2025',
-    bullets: [
-      'Owned the design, delivery and maintenance of operational workflows end to end, using Rewst, n8n, Retool and Make.',
-      `Automated client onboarding end to end, eliminating an estimated ${FACTS.onboardingMinutesSaved} minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person.`,
-    ],
-  },
-  {
-    title: 'Software Engineer',
-    company: 'Pythas LLC (contract)',
-    dates: 'Jan 2025 – Nov 2025',
-    bullets: [
-      'Owned scope, timeline and technical delivery of a fintech proof of concept: virtual bank accounts with USD/USDC swaps, built on the Rail API.',
-      'Validated the product idea with a working proof of concept, which the founders used to decide how to build the full product.',
-    ],
-  },
-  {
-    company: 'Sky Mavis (creator of Axie Infinity)',
-    dates: 'Oct 2021 – Nov 2024',
-    roles: [
-      {
-        title: 'Operations Project Manager',
-        dates: 'May 2023 – Nov 2024',
-        bullets: [
-          'Coordinated a 4-person team within an 8-person operations group.',
-          'Automated Jira intake and handoffs across Legal, Growth, Operations and Finance, so cross-team requests were routed and tracked without manual follow-up.',
-          'Owned the rollout of the company-wide security training program, sustaining a 95% monthly completion rate across distributed teams.',
-          'Wrote SOPs and self-service guides for recurring requests.',
-        ],
+const groups: Role[][] = [];
+for (const role of await getFeaturedExperience()) {
+  const last = groups.at(-1);
+  if (last && last[0].organization === role.organization) last.push(role);
+  else groups.push([role]);
+}
+
+const company = (r: Role) => (r.organizationNote ? `${r.organization} (${r.organizationNote})` : r.organization);
+
+// Roles are newest first, so a group spans from its last role's start to its first role's end.
+const jobs: Job[] = groups.map((roles) =>
+  roles.length === 1
+    ? { title: roles[0].title, company: company(roles[0]), dates: formatRange(roles[0].start, roles[0].end), bullets: roles[0].bullets }
+    : {
+        company: company(roles[0]),
+        dates: formatRange(roles.at(-1)!.start, roles[0].end),
+        roles: roles.map((r) => ({ title: r.title, dates: formatRange(r.start, r.end), bullets: r.bullets })),
       },
-      {
-        title: 'Project Manager, Esports',
-        dates: 'Jun 2022 – May 2023',
-        bullets: [
-          'Managed LATAM operations for the Esports department, coordinating event production and broadcast for Axie Infinity esports.',
-        ],
-      },
-      {
-        title: 'Support Specialist',
-        dates: 'Oct 2021 – Jun 2022',
-        bullets: ['Built Node.js REST endpoints to integrate CovalentHQ and internal data sources.'],
-      },
-    ],
-  },
-  {
-    title: 'Quality Assurance Engineer',
-    company: 'Scale Services Corp (contract)',
-    dates: 'Jan 2021 – Nov 2021',
-    bullets: [
-      'API and unit testing in Node.js and Mocha, domain-driven test definitions and OpenAPI documentation.',
-    ],
-  },
-];
+);
 ---
 
 <section id="experience" class="py-6 bg-light">

@@ -3,13 +3,14 @@ import { existsSync } from 'node:fs';
 import { Icon } from 'astro-icon/components';
 import { getCollection, render } from 'astro:content';
 import LongformLayout, { type LongformFact } from '../../layouts/LongformLayout.astro';
-import { getProjectBySlug } from '../../data/portfolio';
+import { getProject } from '../../data/queries';
 import { AREA_META } from '../../data/areas';
 
 export async function getStaticPaths() {
 	// Newest first by catalog date; the previous/next links walk this order.
-	const ordered = (await getCollection('caseStudies'))
-		.map((entry) => ({ entry, project: getProjectBySlug(entry.id) }))
+	const ordered = (
+		await Promise.all((await getCollection('caseStudies')).map(async (entry) => ({ entry, project: await getProject(entry.id) })))
+	)
 		.sort((a, b) => (b.project?.date ?? '').localeCompare(a.project?.date ?? ''));
 	return ordered.map(({ entry }, i) => ({
 		params: { slug: entry.id },
@@ -18,7 +19,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, prev, next } = Astro.props;
-const project = getProjectBySlug(entry.id);
+const project = await getProject(entry.id);
 if (!project) {
 	throw new Error(
 		`Case study "${entry.id}" has no matching project in projects.json. ` +

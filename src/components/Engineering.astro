@@ -1,14 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
-import { projects } from '../data/portfolio';
+import { getRepos } from '../data/queries';
 import RepoCard from './RepoCard.astro';
 
 // Repos keep their real status so nothing reads as client work.
-const repos = projects.filter((p) => p.category === 'software-engineering' && p.status);
-// Shown up front, in this order; the rest go in the collapsible archive.
-const featuredSlugs = ['self-hosted-deployments', 'challenge-toolbox', 'challenge-bravo-care'];
-const featuredRepos = featuredSlugs.flatMap((slug) => repos.filter((repo) => repo.slug === slug));
-const additionalRepos = repos.filter((repo) => !featuredSlugs.includes(repo.slug));
+const repos = await getRepos();
+// Featured repos are shown up front; the rest go in the collapsible archive.
+const featuredRepos = repos.filter((repo) => repo.featured);
+const additionalRepos = repos.filter((repo) => !repo.featured);
 
 // Repos with a written case study link their title to it.
 const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.id));

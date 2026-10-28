@@ -1,14 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getProjectBySlug } from '../data/portfolio';
-import { FACTS } from '../consts';
-
-const axiecon = getProjectBySlug('axiecon-barcelona')!;
-const muba = getProjectBySlug('muba')!;
+import { getFeaturedWork } from '../data/queries';
 
 // Every card has the same anatomy: a visual header (photo, or an area
 // gradient with an icon when there's no photo), tag, title, description,
-// one row of key facts and a call to action.
+// one row of key facts and a call to action. The cards are the featured
+// projects in src/data/projects.json, described by each one's `card`.
 interface WorkItem {
   tag: string;
   title: string;
@@ -22,41 +19,19 @@ interface WorkItem {
   link?: { label: string; href: string };
 }
 
-const items: WorkItem[] = [
-  {
-    tag: 'Live event · Sky Mavis',
-    title: axiecon.title,
-    description: axiecon.description,
-    image: axiecon.image && {
-      src: axiecon.image,
-      alt: 'Sebastián Pozzo celebrating his win on the AxieCon main stage',
-    },
-    facts: { label: 'Scale', items: ['1,000+ attendees', '$1M prize pool', 'Barcelona + Manila'] },
-    cta: { label: 'Read the story', href: `/projects/${axiecon.slug}/` },
-  },
-  {
-    tag: 'Startup · Building with partners',
-    title: muba.title,
-    description:
-      'Defined the scope and functional spec, then led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.',
-    panel: { gradientClass: 'work-card__panel--muba', logo: '/images/brands/muba.webp' },
-    facts: { label: 'Stack', items: ['React', 'Node.js', 'PostgreSQL (Prisma)'] },
-    cta: { label: 'Read the case study', href: `/projects/${muba.slug}/` },
-    link: { label: 'Live demo', href: 'https://demo.muba.lat' },
-  },
-  {
-    tag: 'Automation · Interlaced',
-    title: 'Client onboarding automation',
-    description:
-      'Automated user provisioning from support-ticket intake through Google Workspace setup, client and support notifications, automatic retries, and human escalation.',
-    image: {
-      src: '/images/work/onboarding-automation.svg',
-      alt: 'Rewst at the center of an automation loop between ConnectWise, Microsoft, Google and Addigy',
-    },
-    facts: { label: 'Impact', items: [`~${FACTS.onboardingMinutesSaved} min saved per onboarding`, 'Automatic retries', 'Human escalation'] },
-    cta: { label: 'Read the case study', href: '/projects/interlaced-onboarding-automation/' },
-  },
-];
+const items: WorkItem[] = (await getFeaturedWork()).map(({ slug, title, description, image, card }) => {
+  const src = card.image ?? image;
+  return {
+    tag: card.tag,
+    title,
+    description: card.description ?? description,
+    image: src && !card.panel ? { src, alt: card.imageAlt ?? '' } : undefined,
+    panel: card.panel,
+    facts: card.facts,
+    cta: { label: card.ctaLabel, href: `/projects/${slug}/` },
+    link: card.link,
+  };
+});
 ---
 
 <section id="work" class="py-6">
