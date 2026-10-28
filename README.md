@@ -71,7 +71,7 @@ Markdown files in `src/data/caseStudies/`. Each file's name must match a project
 
 ### Images
 
-`public/` holds the optimized images the site serves (WebP, max 1600px wide). Full-size source photos live in `originals/`, which mirrors the `public/` paths (e.g. `originals/images/gallery/axiecon/`) and is not deployed. Keep the originals there when adding or re-optimizing photos. Never delete one: when a file in `public/` is replaced by an optimized version, move the old file into `originals/`.
+`public/` holds the optimized images the site serves (WebP, max 1600px wide). Full-size source photos live in `originals/`, which mirrors the `public/` paths (e.g. `originals/images/gallery/axiecon/`). It is ignored by git and not deployed, so it exists only on your machine: back it up separately. Keep the originals there when adding or re-optimizing photos. Never delete one: when a file in `public/` is replaced by an optimized version, move the old file into `originals/`.
 
 - **Gallery photos:** after adding photos to `public/images/gallery/<folder>/`, run `pnpm thumbs`. It writes WebP thumbnails sized for the 3:2 grid tiles into a `thumbs/` folder next to them (`--force` regenerates them). Project pages show the thumbnail and the lightbox opens the full-size photo. A photo without a thumbnail falls back to the full-size file.
 - **Logos** (`public/images/brands/`): WebP or SVG at about 2× the displayed size, so at most 400×144 for the "Teams and organizations" tiles.
