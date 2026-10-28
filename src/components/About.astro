@@ -23,13 +23,31 @@
 </section>
 
 <style>
-  .about-text p {
+  #about p {
     color: var(--color-text-secondary);
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    max-width: 80ch;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .about-text .lead {
+  #about p:first-of-type {
+    font-size: 1.05rem;
     color: var(--color-heading);
+    font-weight: 500;
   }
 
+  @media (max-width: 768px) {
+    #about p {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      padding: 0 1rem;
+    }
+
+    #about p:first-of-type {
+      font-size: 1rem;
+    }
+  }
 </style>

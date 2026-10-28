@@ -34,7 +34,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 								<img src={post.data.heroImage || '/images/og-default.jpg'} alt={post.data.title} loading="lazy" />
 							</div>
 							<div class="card-content">
-								<header class="card-header">
+								<header class="blog-card-header">
 									<div class="card-meta">
 										{post.data.pubDate && (
 											<time datetime={post.data.pubDate.toISOString()} class="card-date">
@@ -56,7 +56,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 										)}
 										<span class="card-reading-time">{readingTime(post.body)}</span>
 									</div>
-									<h2 class="card-title" lang={post.data.lang}>{post.data.title}</h2>
+									<h2 class="blog-card-title" lang={post.data.lang}>{post.data.title}</h2>
 									{post.data.award && (
 										<p class="post-badge post-badge--award mb-2">
 											<i class="fas fa-trophy me-1" aria-hidden="true"></i>{post.data.award}
@@ -64,7 +64,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 									)}
 								</header>
 								<p class="card-excerpt" lang={post.data.lang}>{post.data.description}</p>
-								<footer class="card-footer">
+								<footer class="blog-card-footer">
 									<span class="read-more">Read article →</span>
 								</footer>
 							</div>
@@ -162,7 +162,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		margin-bottom: 0.7rem;
 	}
 
-	/* Category / language / award badges live in /css/style.css. */
+	/* Category / language / award badges live in src/styles/global.css. */
 	.card-reading-time {
 		font-size: 0.8rem;
 		color: var(--color-text-muted);
@@ -222,14 +222,14 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		color: inherit;
 	}
 
-	.card-header    { margin-bottom: 1rem; }
+	.blog-card-header    { margin-bottom: 1rem; }
 
 	.card-date {
 		font-size: 0.85rem;
 		color: var(--color-text-muted);
 	}
 
-	.card-title {
+	.blog-card-title {
 		font-size: 1.4rem;
 		font-weight: 600;
 		line-height: 1.3;
@@ -238,7 +238,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		transition: color 0.2s ease;
 	}
 
-	.blog-card:hover .card-title { color: var(--color-accent); }
+	.blog-card:hover .blog-card-title { color: var(--color-accent); }
 
 	.card-excerpt {
 		font-size: 1rem;
@@ -248,7 +248,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		flex-grow: 1;
 	}
 
-	.card-footer  { margin-top: auto; }
+	.blog-card-footer  { margin-top: auto; }
 
 	.read-more {
 		display: inline-block;
@@ -269,6 +269,6 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		.blog-title       { font-size: 2rem; }
 		.blog-description { font-size: 1.1rem; }
 		.card-content     { padding: 1.5rem; }
-		.card-title       { font-size: 1.3rem; }
+		.blog-card-title       { font-size: 1.3rem; }
 	}
 </style>

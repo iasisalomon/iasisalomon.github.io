@@ -1,6 +1,7 @@
 ---
 import SEO from '../components/SEO.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import '../styles/global.css';
 
 interface Props {
   title?: string;
@@ -70,30 +71,7 @@ const {
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    {/* Custom CSS */}
-    <link rel="stylesheet" href="/css/style.css" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <style is:global>
-      /* Global spacing utility classes */
-      .py-6 {
-        padding-top: var(--space-section);
-        padding-bottom: var(--space-section);
-      }
-
-      .section-divider {
-        height: 1px;
-        width: 60px;
-        background-color: var(--color-border-strong);
-        margin: 0 auto 2rem;
-      }
-
-      @media (max-width: 768px) {
-        .py-6 {
-          padding-top: var(--space-section-sm);
-          padding-bottom: var(--space-section-sm);
-        }
-      }
-    </style>
   </head>
   <body>
     <slot />
