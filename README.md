@@ -8,6 +8,12 @@ Built with [Astro 5](https://astro.build), deployed on Cloudflare Pages.
 
 The project uses **pnpm** (`pnpm-lock.yaml` is the only lockfile). Don't add a `package-lock.json` or `yarn.lock`.
 
+Versions are pinned so Cloudflare Pages builds the same way as your machine. Without the pins, it falls back to Node 18 and pnpm 8, which can't read the lockfile.
+
+- **Node:** 22, set in `.nvmrc`.
+- **pnpm:** the `packageManager` field in `package.json` (Corepack installs that exact version). Change it with `pnpm self-update`, then run `pnpm install` so the lockfile records the new version.
+- **Build scripts:** `pnpm-workspace.yaml` (`allowBuilds`) approves the install scripts for esbuild and sharp. A new dependency with an install script needs an entry there, or the install stops.
+
 | Command        | Action                                   |
 | -------------- | ---------------------------------------- |
 | `pnpm install` | Install dependencies                     |
