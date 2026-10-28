@@ -16,24 +16,26 @@ const { repo, hasCaseStudy } = Astro.props;
       <h3 class="h6 fw-bold mb-0">
         {hasCaseStudy ? (
           <a href={`/projects/${repo.slug}/`} class="repo-card__link">
-            {repo.title.replace(/^(Challenge|Practice): /, '')}
+            {repo.title}
             <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" />
           </a>
         ) : (
-          repo.title.replace(/^(Challenge|Practice): /, '')
+          repo.title
         )}
       </h3>
       <span class="badge status-badge">{repo.status}</span>
     </div>
     <p class="small text-muted flex-grow-1">{repo.description}</p>
     <p class="small mb-3">{repo.skills.join(' · ')}</p>
-    <div>
-      {repo.links.map((link) => (
-        <a href={link.url} class="small me-3" target="_blank" rel="noopener noreferrer">
-          <Icon name={link.icon} class="me-1" aria-hidden="true" />{link.text}
-        </a>
-      ))}
-    </div>
+    {repo.links.length > 0 && (
+      <div>
+        {repo.links.map((link) => (
+          <a href={link.url} class="small me-3" target="_blank" rel="noopener noreferrer">
+            <Icon name={link.icon} class="me-1" aria-hidden="true" />{link.text}
+          </a>
+        ))}
+      </div>
+    )}
   </article>
 </div>
 

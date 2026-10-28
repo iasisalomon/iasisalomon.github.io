@@ -16,7 +16,10 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 );
 ---
 
-<MainLayout title="Blog | Iasi Salomon">
+<MainLayout
+	title="Blog | Iasi Salomon"
+	description="Articles by Iasi Salomon on technology and business, from web3 game economies to science and society."
+>
 	<Navbar variant="blog" />
 
 	<main id="main-content">
@@ -30,9 +33,9 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 			<div class="blog-grid" id="blogGrid">
 				{posts.map((post) => (
 					<article class="blog-card" data-category={post.data.category ?? 'other'}>
-						<a href={`/blog/${post.id}/`} class="card-link">
+						<div class="blog-card-inner">
 							<div class="card-image">
-								<img src={post.data.heroImage || '/images/og-default.jpg'} alt={post.data.title} loading="lazy" />
+								<img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
 							</div>
 							<div class="card-content">
 								<header class="blog-card-header">
@@ -57,7 +60,10 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 										)}
 										<span class="card-reading-time">{readingTime(post.body)}</span>
 									</div>
-									<h2 class="blog-card-title" lang={post.data.lang}>{post.data.title}</h2>
+									{/* The stretched link makes the whole card clickable while only the title is announced. */}
+									<h2 class="blog-card-title" lang={post.data.lang}>
+										<a href={`/blog/${post.id}/`} class="stretched-link">{post.data.title}</a>
+									</h2>
 									{post.data.award && (
 										<p class="post-badge post-badge--award mb-2">
 											<Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
@@ -66,10 +72,10 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 								</header>
 								<p class="card-excerpt" lang={post.data.lang}>{post.data.description}</p>
 								<footer class="blog-card-footer">
-									<span class="read-more">Read article →</span>
+									<span class="read-more" aria-hidden="true">Read article →</span>
 								</footer>
 							</div>
-						</a>
+						</div>
 					</article>
 				))}
 			</div>
@@ -180,6 +186,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 	.blog-card {
 		border-radius: 10px;
 		overflow: hidden;
+		/* Containing block for the title's stretched link. */
+		position: relative;
 		transition: all 0.3s ease;
 		box-shadow: var(--shadow-card);
 		background-color: var(--color-card);
@@ -219,7 +227,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		border-color: var(--color-border-strong);
 	}
 
-	.card-link {
+	.blog-card-inner {
 		display: block;
 		text-decoration: none;
 		color: inherit;
@@ -240,6 +248,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		color: var(--color-heading);
 		transition: color 0.2s ease;
 	}
+
+	.blog-card-title a { color: inherit; }
 
 	.blog-card:hover .blog-card-title { color: var(--color-accent); }
 

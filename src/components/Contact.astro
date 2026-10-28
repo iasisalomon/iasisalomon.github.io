@@ -8,7 +8,7 @@ import { LINKS } from '../consts';
   <div class="container-fluid position-relative">
     <div class="contact-content">
       <div class="contact-copy">
-        <h2 class="fw-bold mt-1 mb-3">Let's Talk</h2>
+        <h2 class="fw-bold mt-1 mb-3">Let's talk</h2>
         <p class="lead intro mb-0">
           I'm open to remote Technical Delivery Manager and Technical Program Manager roles with US teams. I also take on
           focused workflow-automation engagements.
@@ -137,13 +137,16 @@ import { LINKS } from '../consts';
   const btn = document.getElementById('copyEmailBtn');
   const note = document.getElementById('copyConfirmation');
   btn?.addEventListener('click', async () => {
+    let message = 'Email copied to clipboard';
     try {
       await navigator.clipboard.writeText(btn.dataset.email ?? '');
     } catch {
-      return;
+      // Clipboard access can be blocked (permissions, insecure context);
+      // say so instead of failing silently.
+      message = `Couldn't copy — the address is ${btn.dataset.email}`;
     }
     if (!note) return;
-    note.textContent = 'Email copied to clipboard';
-    setTimeout(() => (note.textContent = ''), 2000);
+    note.textContent = message;
+    setTimeout(() => (note.textContent = ''), 4000);
   });
 </script>

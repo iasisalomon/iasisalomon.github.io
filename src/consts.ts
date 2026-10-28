@@ -22,7 +22,8 @@ export const NAV_LINKS = [
 	{ label: 'Home', href: '/#home' },
 	{ label: 'Experience', href: '/#experience' },
 	{ label: 'Work', href: '/#work' },
-	{ label: 'Testimonials', href: '/#proof' },
+	{ label: 'Organizations', href: '/#organizations' },
+	{ label: 'Testimonials', href: '/#testimonials' },
 	{ label: "Let's talk", href: '/#contact' },
 ] as const;
 
@@ -35,7 +36,8 @@ export const FOOTER_LINKS = [
 	{ label: 'Engineering', href: '/#engineering' },
 	{ label: 'Blog', href: '/#blog' },
 	{ label: 'Skills', href: '/#skills' },
-	{ label: 'Testimonials', href: '/#proof' },
+	{ label: 'Organizations', href: '/#organizations' },
+	{ label: 'Testimonials', href: '/#testimonials' },
 	{ label: "Let's talk", href: '/#contact' },
 ] as const;
 
@@ -47,3 +49,12 @@ export const BLOG_CATEGORIES = [
 	{ id: 'business', label: 'Business' },
 	{ id: 'other', label: 'Other' },
 ] as const;
+
+// Headline numbers repeated across the homepage (Hero, Experience, Selected
+// work). Change them here; the Markdown case studies state them in their own words.
+export const FACTS = {
+	teamSize: '60+',
+	crewHoursInOneMonth: '4,900+',
+	broadcastsInOneMonth: '470+',
+	onboardingMinutesSaved: 30,
+} as const;

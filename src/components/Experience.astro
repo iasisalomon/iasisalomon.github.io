@@ -1,4 +1,6 @@
 ---
+import { FACTS } from '../consts';
+
 // Titles, employers and dates must match the CV and LinkedIn exactly.
 interface Role {
   title: string;
@@ -19,9 +21,9 @@ const jobs: Job[] = [
     company: 'HomeTeam Network (Hybrid, Rosario, Argentina)',
     dates: 'Jan 2026 – Present',
     bullets: [
-      'Run all operations except payments and finance, building and leading the team from zero to 60+ contractors and owning hiring, onboarding, scheduling and performance management end to end.',
+      `Run all operations except payments and finance, building and leading the team from zero to ${FACTS.teamSize} contractors and owning hiring, onboarding, scheduling and performance management end to end.`,
       'Launched the remote production operation in 6 weeks, setting up the equipment, network and operating procedures.',
-      'Owned broadcast scheduling and resource allocation for 470+ live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over 4,900+ crew hours, with peaks of 23 games in a day.',
+      `Owned broadcast scheduling and resource allocation for ${FACTS.broadcastsInOneMonth} live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over ${FACTS.crewHoursInOneMonth} crew hours, with peaks of 23 games in a day.`,
     ],
   },
   {
@@ -30,7 +32,7 @@ const jobs: Job[] = [
     dates: 'Apr 2025 – Dec 2025',
     bullets: [
       'Owned the design, delivery and maintenance of operational workflows end to end, using Rewst, n8n, Retool and Make.',
-      'Automated client onboarding end to end, eliminating an estimated 30 minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person.',
+      `Automated client onboarding end to end, eliminating an estimated ${FACTS.onboardingMinutesSaved} minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person.`,
     ],
   },
   {

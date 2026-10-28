@@ -43,6 +43,8 @@ interface Props {
   next?: LongformPagerLink;
   publishedTime?: string;
   modifiedTime?: string;
+  /** schema.org type: BlogPosting for posts (default), Article for case studies. */
+  schemaType?: 'BlogPosting' | 'Article';
   /** Language of the page body; the site chrome stays English. */
   lang?: string;
   navVariant?: 'main' | 'blog';
@@ -62,6 +64,7 @@ const {
   next,
   publishedTime,
   modifiedTime,
+  schemaType,
   lang = 'en',
   navVariant = 'main',
   activeCategory,
@@ -69,10 +72,12 @@ const {
 ---
 
 <MainLayout
-  title={`${title} — Iasi Salomon`}
+  title={`${title} | Iasi Salomon`}
   description={description}
   image={image}
+  imageAlt={imageAlt}
   type="article"
+  schemaType={schemaType}
   publishedTime={publishedTime}
   modifiedTime={modifiedTime}
   lang={lang}

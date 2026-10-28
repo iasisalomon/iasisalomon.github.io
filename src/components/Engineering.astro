@@ -5,9 +5,10 @@ import RepoCard from './RepoCard.astro';
 
 // Repos keep their real status so nothing reads as client work.
 const repos = projects.filter((p) => p.category === 'software-engineering' && p.status);
-const featuredSlugs = new Set(['challenge-toolbox', 'challenge-bravo-care']);
-const featuredRepos = repos.filter((repo) => featuredSlugs.has(repo.slug));
-const additionalRepos = repos.filter((repo) => !featuredSlugs.has(repo.slug));
+// Shown up front, in this order; the rest go in the collapsible archive.
+const featuredSlugs = ['self-hosted-deployments', 'challenge-toolbox', 'challenge-bravo-care'];
+const featuredRepos = featuredSlugs.flatMap((slug) => repos.filter((repo) => repo.slug === slug));
+const additionalRepos = repos.filter((repo) => !featuredSlugs.includes(repo.slug));
 
 // Repos with a written case study link their title to it.
 const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.id));
@@ -19,18 +20,6 @@ const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e
     <p class="text-center text-muted mb-4">Hands-on technical work alongside delivery leadership.</p>
     <div class="section-divider mb-5"></div>
     <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <article class="repo-card h-100 p-4 rounded-4">
-          <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-            <h3 class="h6 fw-bold mb-0">Self-hosted deployments</h3>
-            <span class="badge status-badge">Private deployment</span>
-          </div>
-          <p class="small text-muted mb-0">
-            Ran multiple production web apps on a single VPS, routing subdomains through Nginx Proxy Manager with
-            automated SSL (Let's Encrypt) and DNS management.
-          </p>
-        </article>
-      </div>
       {featuredRepos.map((repo) => (
         <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} />
       ))}

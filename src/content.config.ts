@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/blog' }),
+	loader: glob({ pattern: '**/*.md', base: './src/data/blog' }),
 	// Type-check frontmatter using a schema
 	schema: z.object({
 		title: z.string(),
@@ -40,7 +40,7 @@ const galleryImage = z
 // skills, links) comes from that catalog entry, while the Markdown
 // body and the fields below hold the case-study narrative.
 const caseStudies = defineCollection({
-	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/caseStudies' }),
+	loader: glob({ pattern: '**/*.md', base: './src/data/caseStudies' }),
 	schema: z.object({
 		role: z.string().optional(),
 		timeframe: z.string().optional(),

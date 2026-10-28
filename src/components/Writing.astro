@@ -23,9 +23,9 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
     <div class="row g-4 justify-content-center">
       {posts.map((post) => (
         <div class="col-md-6 col-lg-4">
-          <a href={`/blog/${post.id}/`} class="writing-card h-100 d-flex flex-column bg-white rounded-4 overflow-hidden text-reset">
+          <article class="writing-card position-relative h-100 d-flex flex-column bg-white rounded-4 overflow-hidden">
             <div class="writing-img">
-              <img src={post.data.heroImage || '/images/og-default.jpg'} alt={post.data.title} loading="lazy" />
+              <img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
             </div>
             <div class="p-4 d-flex flex-column flex-grow-1">
               <div class="d-flex flex-wrap align-items-center gap-2 mb-2 small text-muted">
@@ -42,16 +42,19 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
                 {languageName(post.data.lang) && <span class="post-badge">{languageName(post.data.lang)}</span>}
                 <span>{readingTime(post.body)}</span>
               </div>
-              <h3 class="h5 fw-bold mb-2" lang={post.data.lang}>{post.data.title}</h3>
+              <h3 class="h5 fw-bold mb-2" lang={post.data.lang}>
+                {/* The stretched link makes the whole card clickable while only the title is announced. */}
+                <a href={`/blog/${post.id}/`} class="stretched-link text-reset">{post.data.title}</a>
+              </h3>
               {post.data.award && (
                 <p class="post-badge post-badge--award align-self-start mb-2">
                   <Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
                 </p>
               )}
               <p class="text-muted small mb-3 flex-grow-1" lang={post.data.lang}>{post.data.description}</p>
-              <span class="read-cta fw-medium small">Read article <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></span>
+              <span class="read-cta fw-medium small" aria-hidden="true">Read article <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></span>
             </div>
-          </a>
+          </article>
         </div>
       ))}
     </div>

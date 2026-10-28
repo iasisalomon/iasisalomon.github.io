@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "slug": "axiecon-barcelona",
     "title": "AxieCon Barcelona",
     "description": "Hosted and produced Sky Mavis' first global conference: a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia via an official Manila watch party.",
@@ -12,10 +11,6 @@
       "Live Streaming",
       "Community",
       "Esports"
-    ],
-    "tags": [
-      "Event",
-      "Project Management"
     ],
     "links": [
       {
@@ -36,9 +31,22 @@
     ]
   },
   {
-    "id": 2,
+    "slug": "self-hosted-deployments",
+    "title": "Self-hosted deployments",
+    "description": "Ran multiple production web apps on a single VPS, routing subdomains through Nginx Proxy Manager with automated SSL (Let's Encrypt) and DNS management.",
+    "category": "software-engineering",
+    "skills": [
+      "VPS",
+      "Nginx Proxy Manager",
+      "Let's Encrypt",
+      "DNS"
+    ],
+    "links": [],
+    "status": "private deployment"
+  },
+  {
     "slug": "challenge-toolbox",
-    "title": "Challenge: Toolbox",
+    "title": "Toolbox",
     "description": "Full-stack application that processes CSV files from an external API. Built with Node.js, React, and Docker.",
     "date": "2022-09-01",
     "category": "software-engineering",
@@ -47,12 +55,6 @@
       "React",
       "Docker",
       "Redux"
-    ],
-    "tags": [
-      "Full Stack",
-      "API",
-      "Development",
-      "DevOps"
     ],
     "links": [
       {
@@ -64,7 +66,6 @@
     "status": "challenge"
   },
   {
-    "id": 3,
     "slug": "calliv",
     "title": "Calliv",
     "description": "Data science project focused on analyzing and processing scientific data.",
@@ -77,10 +78,6 @@
       "SSR",
       "CSV"
     ],
-    "tags": [
-      "Data Cleanup",
-      "Data Visualization"
-    ],
     "links": [
       {
         "text": "Repository",
@@ -91,9 +88,8 @@
     "status": "practice"
   },
   {
-    "id": 5,
     "slug": "challenge-code-care",
-    "title": "Challenge: Code Care",
+    "title": "Code Care",
     "description": "Vue.js application that reads input line by line and identifies characters appearing exactly twice. Built with Vuex for state management.",
     "date": "2021-10-01",
     "category": "software-engineering",
@@ -101,10 +97,6 @@
       "Vue.js",
       "JavaScript",
       "Vuex"
-    ],
-    "tags": [
-      "Full Stack",
-      "Development"
     ],
     "links": [
       {
@@ -116,9 +108,8 @@
     "status": "challenge"
   },
   {
-    "id": 6,
     "slug": "challenge-bravo-care",
-    "title": "Challenge: Bravo Care",
+    "title": "Bravo Care",
     "description": "Full-stack application with PostgreSQL database, Express API for data querying and transformation, and React frontend for displaying results.",
     "date": "2022-10-01",
     "category": "software-engineering",
@@ -127,10 +118,6 @@
       "Node.js",
       "PostgreSQL",
       "Docker"
-    ],
-    "tags": [
-      "Full Stack",
-      "Development"
     ],
     "links": [
       {
@@ -142,7 +129,6 @@
     "status": "challenge"
   },
   {
-    "id": 7,
     "slug": "mtg-top8-scraper",
     "title": "MTG Top8 Scraper",
     "description": "Automated web scraper built with Puppeteer to collect and analyze Magic: The Gathering tournament data from MTGTop8.",
@@ -152,10 +138,6 @@
       "Node.js",
       "Puppeteer",
       "JSON"
-    ],
-    "tags": [
-      "Automation",
-      "Web Scraping"
     ],
     "links": [
       {
@@ -167,9 +149,8 @@
     "status": "practice"
   },
   {
-    "id": 8,
     "slug": "jwt-authentication",
-    "title": "Practice: JWT Authentication",
+    "title": "JWT Authentication",
     "description": "Authentication system implementation using JSON Web Tokens (JWT) with Express.js and EJS templating.",
     "date": "2024-08-01",
     "category": "software-engineering",
@@ -178,9 +159,6 @@
       "Express",
       "JWT",
       "EJS"
-    ],
-    "tags": [
-      "Backend"
     ],
     "links": [
       {
@@ -192,7 +170,6 @@
     "status": "practice"
   },
   {
-    "id": 9,
     "slug": "interlaced-onboarding-automation",
     "title": "Client onboarding automation",
     "description": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
@@ -205,15 +182,9 @@
       "Retool",
       "Make"
     ],
-    "tags": [
-      "Automation",
-      "Operations",
-      "Client Onboarding"
-    ],
     "links": []
   },
   {
-    "id": 10,
     "slug": "muba",
     "title": "MUBA",
     "description": "Scoped and led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
@@ -226,11 +197,6 @@
       "PostgreSQL (Prisma)",
       "Zod",
       "OpenAPI"
-    ],
-    "tags": [
-      "Delivery",
-      "Healthcare",
-      "AI-assisted development"
     ],
     "links": [
       {

@@ -11,3 +11,6 @@
 /blog/markdown-style-guide*   /blog/   301
 /blog/using-mdx*              /blog/   301
 /blog/welcome-to-my-blog*     /blog/   301
+
+# Einstein post slug typo fixed (einsten -> einstein).
+/blog/einsten-2016*           /blog/einstein-2016/   301

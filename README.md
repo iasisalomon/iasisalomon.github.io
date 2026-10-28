@@ -27,12 +27,13 @@ Versions are pinned so Cloudflare Pages builds the same way as your machine. Wit
 ```
 src/
 ├── components/       # Homepage sections (Hero, About, Experience, SelectedWork,
-│                     # Engineering, Writing, Skills, Testimonials, Contact)
+│                     # Engineering, Writing, Skills, Organizations,
+│                     # Testimonials, Contact)
 │                     # plus shared Navbar, SEO, and CustomFooter
 ├── layouts/
 │   ├── MainLayout.astro     # Root HTML shell for every page
 │   ├── LongformLayout.astro # Shared reading layout for case studies and posts
-│   └── BlogPost.astro       # Article layout for blog posts
+│   └── BlogPost.astro       # Maps a post's frontmatter onto LongformLayout
 ├── styles/
 │   └── global.css         # Design tokens and the few truly global rules
 ├── pages/

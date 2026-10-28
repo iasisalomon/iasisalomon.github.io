@@ -17,17 +17,17 @@ const linkSchema = z.object({
 });
 
 const projectSchema = z.object({
-  id: z.number().int().positive(),
   slug: z.string().regex(/^[a-z0-9-]+$/, 'slug must be kebab-case'),
   title: z.string().min(1),
   description: z.string().min(1),
   // Optional: without one, case-study pages fall back to the site's default
   // social image (see SEO.astro).
   image: z.string().min(1).optional(),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be YYYY-MM-DD'),
+  // Required for projects with a case study, which use it for ordering and
+  // the "When" fact; projects/[slug].astro enforces that.
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be YYYY-MM-DD').optional(),
   category: z.enum(CATEGORY_IDS),
   skills: z.array(z.string()).default([]),
-  tags: z.array(z.string()).default([]),
   links: z.array(linkSchema).default([]),
   // Honest label for repos shown in the Engineering section.
   status: z.enum(['practice', 'challenge', 'private deployment']).optional(),

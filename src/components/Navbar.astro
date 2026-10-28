@@ -3,8 +3,7 @@ import { Icon } from 'astro-icon/components';
 // Context-aware navbar with two render-time variants:
 //  - 'main' (default): in-page section links (`/#id`). On the homepage they
 //    smooth-scroll; from any other page they navigate home and the on-load
-//    handler scrolls into place. "Blog" points at the homepage's
-//    From-the-Blog teaser.
+//    handler scrolls into place. Links come from NAV_LINKS in consts.ts.
 //  - 'blog': the blog is its own space — category links driving the archive
 //    filter plus a single "Main site" link back. No homepage section links.
 import { BLOG_CATEGORIES, NAV_LINKS } from '../consts';
@@ -44,7 +43,7 @@ const blogLinks = [
         type="button"
         class="theme-toggle"
         id="themeToggle"
-        aria-label="Switch to dark mode"
+        aria-label="Dark mode"
         aria-pressed="false"
       >
         <Icon name="fa6-solid:moon" class="toggle-icon-dark" aria-hidden="true" />
@@ -280,7 +279,6 @@ const blogLinks = [
   const syncThemeButton = () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     themeButton?.setAttribute('aria-pressed', String(isDark));
-    themeButton?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
   };
   syncThemeButton();
 

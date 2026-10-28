@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { LINKS } from '../consts';
+import { FACTS, LINKS } from '../consts';
 ---
 
 <section id="home" class="d-flex flex-column bg-dark text-white">
@@ -25,9 +25,9 @@ import { LINKS } from '../consts';
         </div>
 
         <ul class="hero-stats row g-2 list-unstyled mb-0" aria-label="Selected delivery results">
-          <li class="col-4"><strong class="d-block">60+</strong><span class="d-block">people hired, onboarded and kept unblocked</span></li>
-          <li class="col-4"><strong class="d-block">4,900+</strong><span class="d-block">crew hours scheduled in one month</span></li>
-          <li class="col-4"><strong class="d-block">~30 min</strong><span class="d-block">of manual work automated out of every onboarding</span></li>
+          <li class="col-4"><strong class="d-block">{FACTS.teamSize}</strong><span class="d-block">people hired, onboarded and kept unblocked</span></li>
+          <li class="col-4"><strong class="d-block">{FACTS.crewHoursInOneMonth}</strong><span class="d-block">crew hours scheduled in one month</span></li>
+          <li class="col-4"><strong class="d-block">~{FACTS.onboardingMinutesSaved} min</strong><span class="d-block">of manual work automated out of every onboarding</span></li>
         </ul>
       </div>
 

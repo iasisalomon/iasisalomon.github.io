@@ -25,12 +25,16 @@ if (!project) {
 			`Rename the file to a valid project slug or add the project.`,
 	);
 }
+if (!project.date) {
+	throw new Error(`Project "${project.slug}" has a case study, so it needs a "date" in projects.json.`);
+}
+const projectDate = project.date;
 const area = AREA_META[project.category];
 const { Content } = await render(entry);
 
 // Dates are stored as UTC midnight; format in UTC so they don't shift a
 // day (or a month) back in time zones west of UTC.
-const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
+const dateLabel = new Date(projectDate).toLocaleDateString('en-us', {
 	month: 'long',
 	year: 'numeric',
 	timeZone: 'UTC',
@@ -68,12 +72,17 @@ const thumbOf = (src: string) => {
 	lead={entry.data.outcome}
 	image={entry.data.heroImage ?? project.image}
 	imageAlt={entry.data.heroImageAlt}
-	badges={[{ text: area.label, class: `post-badge ${area.gradientClass}` }]}
+	badges={[
+		{ text: area.label, class: `post-badge ${area.gradientClass}` },
+		// Titles no longer carry "Challenge:" / "Practice:"; the status says it.
+		...(project.status ? [{ text: project.status, class: 'post-badge' }] : []),
+	]}
 	facts={facts}
 	back={back}
 	prev={pagerLink('Previous case study', prev)}
 	next={pagerLink('Next case study', next)}
-	publishedTime={new Date(project.date).toISOString()}
+	publishedTime={new Date(projectDate).toISOString()}
+	schemaType="Article"
 >
 	<Content />
 
@@ -111,8 +120,12 @@ const thumbOf = (src: string) => {
 						<Icon name="fa6-solid:chevron-left" aria-hidden="true" />
 					</button>
 					<figure class="cs-lightbox__figure">
-						<img class="cs-lightbox__img" src="" alt="" />
-						<figcaption class="cs-lightbox__caption"></figcaption>
+						{/* src is set when a photo opens. */}
+						<img class="cs-lightbox__img" alt="" />
+						<figcaption class="cs-lightbox__caption" aria-live="polite">
+							<span class="cs-lightbox__count"></span>
+							<span class="cs-lightbox__text"></span>
+						</figcaption>
 					</figure>
 					<button type="button" class="cs-lightbox__btn cs-lightbox__next" aria-label="Next photo">
 						<Icon name="fa6-solid:chevron-right" aria-hidden="true" />
@@ -145,13 +158,15 @@ const thumbOf = (src: string) => {
 			return { src: img.dataset.full ?? img.src, alt: img.alt, caption: fig.querySelector('figcaption')?.textContent ?? '' };
 		});
 		const img = dialog.querySelector<HTMLImageElement>('.cs-lightbox__img')!;
-		const caption = dialog.querySelector<HTMLElement>('.cs-lightbox__caption')!;
+		const count = dialog.querySelector<HTMLElement>('.cs-lightbox__count')!;
+		const caption = dialog.querySelector<HTMLElement>('.cs-lightbox__text')!;
 		let current = 0;
 
 		const show = (i: number) => {
 			current = (i + photos.length) % photos.length;
 			img.src = photos[current].src;
 			img.alt = photos[current].alt;
+			count.textContent = `${current + 1} of ${photos.length}`;
 			caption.textContent = photos[current].caption;
 		};
 
@@ -178,7 +193,9 @@ const thumbOf = (src: string) => {
 <style>
 	/* Gallery: the first photo spans the row, the rest form a grid of
 	   thumbnails that open in the viewer. The title matches .prose h2. */
-	.cs-gallery-section { margin: 1rem 0 2.5rem; }
+	/* overflow: the global `section { overflow: hidden }` would clip the
+	   thumbnails' focus outlines. */
+	.cs-gallery-section { margin: 1rem 0 2.5rem; overflow: visible; }
 	.cs-gallery-title {
 		font-size: 1.6rem;
 		font-weight: 600;
@@ -257,6 +274,11 @@ const thumbOf = (src: string) => {
 		margin-top: 0.75rem;
 		color: rgba(255, 255, 255, 0.85);
 		font-size: 0.95rem;
+	}
+	.cs-lightbox__count {
+		color: rgba(255, 255, 255, 0.6);
+		font-variant-numeric: tabular-nums;
+		margin-right: 0.75rem;
 	}
 	.cs-lightbox__btn {
 		position: absolute;

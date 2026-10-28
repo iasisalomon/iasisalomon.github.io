@@ -1,10 +1,10 @@
 /* =============================================================
-   Design tokens (Plan 03 — Phase 2: light + dark palettes).
+   Design tokens: light + dark palettes.
    Single source for color, spacing, radius and area gradients.
-   Pages opt into theming (MainLayout `themeAware`); the head script
-   sets `data-theme="dark"` on <html> from localStorage / OS
-   preference, and every token below flips. Pages that never set the
-   attribute always render the light palette.
+   The pre-paint script in MainLayout sets `data-theme="dark"` on
+   <html> from the saved choice (localStorage) or the OS preference,
+   and every token below flips. Without the attribute, the light
+   palette applies.
    ============================================================= */
 :root {
     color-scheme: light;

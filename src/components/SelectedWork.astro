@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getProjectBySlug } from '../data/portfolio';
+import { FACTS } from '../consts';
 
 const axiecon = getProjectBySlug('axiecon-barcelona')!;
 const muba = getProjectBySlug('muba')!;
@@ -52,7 +53,7 @@ const items: WorkItem[] = [
       src: '/images/work/onboarding-automation.svg',
       alt: 'Rewst at the center of an automation loop between ConnectWise, Microsoft, Google and Addigy',
     },
-    facts: { label: 'Impact', items: ['~30 min saved per onboarding', 'Automatic retries', 'Human escalation'] },
+    facts: { label: 'Impact', items: [`~${FACTS.onboardingMinutesSaved} min saved per onboarding`, 'Automatic retries', 'Human escalation'] },
     cta: { label: 'Read the case study', href: '/projects/interlaced-onboarding-automation/' },
   },
 ];
