@@ -6,12 +6,14 @@ Built with [Astro 5](https://astro.build), deployed on Cloudflare Pages.
 
 ## Commands
 
-| Command           | Action                                       |
-| ----------------- | -------------------------------------------- |
-| `npm install`     | Install dependencies                         |
-| `npm run dev`     | Start the dev server at `localhost:4321`     |
-| `npm run build`   | Build the production site to `./dist/`      |
-| `npm run preview` | Preview the production build locally         |
+The project uses **pnpm** (`pnpm-lock.yaml` is the only lockfile). Don't add a `package-lock.json` or `yarn.lock`.
+
+| Command        | Action                                   |
+| -------------- | ---------------------------------------- |
+| `pnpm install` | Install dependencies                     |
+| `pnpm dev`     | Start the dev server at `localhost:4321` |
+| `pnpm build`   | Build the production site to `./dist/`   |
+| `pnpm preview` | Preview the production build locally     |
 
 ## Structure
 
@@ -21,8 +23,11 @@ src/
 │                     # Engineering, Writing, Skills, Testimonials, Contact)
 │                     # plus shared Navbar, SEO, and CustomFooter
 ├── layouts/
-│   ├── MainLayout.astro   # Root HTML shell for every page
-│   └── BlogPost.astro     # Article layout for blog posts
+│   ├── MainLayout.astro     # Root HTML shell for every page
+│   ├── LongformLayout.astro # Shared reading layout for case studies and posts
+│   └── BlogPost.astro       # Article layout for blog posts
+├── styles/
+│   └── global.css         # Design tokens and the few truly global rules
 ├── pages/
 │   ├── index.astro        # Homepage (composed from components)
 │   ├── blog/              # Blog archive + individual posts
@@ -67,8 +72,53 @@ Contact links (email, LinkedIn, GitHub, Calendly) live in `LINKS`, and the homep
 ## Key patterns
 
 - **Context-aware Navbar** — switches between homepage section links and blog category links at render time; scroll-based active state is tracked client-side.
-- **MainLayout** — root HTML shell for all pages; loads CDN assets and inlines client-side scripts.
+- **MainLayout** — root HTML shell for all pages: SEO tags, the pre-paint theme script, Bootstrap's stylesheet and the global stylesheet.
 - **SEO** — dedicated `SEO.astro` component, sitemap via `@astrojs/sitemap`, RSS via `@astrojs/rss`, and `public/robots.txt`.
+
+## Front-end standard
+
+Everything the site loads is served from its own domain. **No CDN links**: add libraries with `pnpm add` and bundle them.
+
+### CSS
+
+- **Bootstrap** comes from npm. `MainLayout.astro` links its stylesheet by URL (`bootstrap/dist/css/bootstrap.min.css?url`) at the top of `<head>`, so all of our CSS loads after it and overrides it. Don't change it to a plain `import`: Astro would then decide the order and can place page styles before Bootstrap.
+- **`src/styles/global.css`** holds the design tokens (`:root` and `[data-theme="dark"]`), dark-mode shims for Bootstrap utilities, and rules that really are site-wide (base elements, badges, `.py-6`, `.section-divider`, the 76px navbar height and the offsets that depend on it). It is imported in `MainLayout.astro`, so Astro minifies and hashes it.
+- **Component styles stay in the component's `<style>` block**, not in `global.css`. Don't style a component's classes or IDs globally (for example `.nav-link` or `#about p`), and avoid `!important` overrides that fight a component's own rules.
+- Use colors, spacing and radii from the tokens (`var(--color-…)`, `var(--space-…)`) so both themes keep working.
+- Don't reuse Bootstrap's component class names (`.card`, `.card-title`, …) for custom markup. Prefix them instead (for example `.blog-card-title`).
+- Give `@keyframes` unique names. Keyframe names are global even in scoped styles.
+
+### Icons
+
+Icons are inline SVGs from [astro-icon](https://www.astroicon.dev) with the Iconify Font Awesome 6 sets (`@iconify-json/fa6-solid`, `fa6-regular`, `fa6-brands`). No icon fonts.
+
+```astro
+---
+import { Icon } from 'astro-icon/components';
+---
+<Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" />
+```
+
+- Names are `set:icon`, e.g. `fa6-brands:github`. Browse names at [icones.js.org](https://icones.js.org).
+- Data files use the same format: the `icon` field in `src/data/projects.json` is validated by `portfolio.ts` and fails the build on anything else.
+- Decorative icons get `aria-hidden="true"`. An icon-only button needs an `aria-label`.
+- To style icons, target `svg` (e.g. `.read-cta svg`), not `i`.
+
+### JavaScript
+
+- Use Astro `<script>` tags (bundled modules) and import only the Bootstrap plugins you need, e.g. `import Collapse from 'bootstrap/js/dist/collapse'`. There is no global `window.bootstrap`.
+- Importing a plugin also enables its `data-bs-*` attributes (the navbar toggler relies on this).
+- Load page-specific libraries lazily. Tooltip and Popper are only imported on pages that contain `[data-bs-toggle="tooltip"]`.
+- `is:inline` is only for code that must run before first paint (the theme script in `MainLayout.astro`).
+
+### Response headers
+
+`public/_headers` (Cloudflare Pages) sets cache and security headers:
+
+- `/_astro/*` is cached for a year as immutable, which is safe because those file names are content-hashed.
+- `/images/*` is cached for a week.
+- Every page gets `nosniff`, `Referrer-Policy`, `X-Frame-Options: DENY` and a `Permissions-Policy`.
+- The Content-Security-Policy runs in **report-only** mode and allows only `'self'`. If you add an external service (embed, analytics, font), add its host to the CSP. Before switching to an enforced CSP, the inline theme script and JSON-LD need hashes.
 
 ## Line endings
 
