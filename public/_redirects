@@ -1,0 +1,13 @@
+# Cloudflare Pages redirects for URLs that used to exist.
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# The standalone about page became the homepage's About section.
+/about*                       /#about  301
+
+# Placeholder posts from the original Astro blog template.
+/blog/first-post*             /blog/   301
+/blog/second-post*            /blog/   301
+/blog/third-post*             /blog/   301
+/blog/markdown-style-guide*   /blog/   301
+/blog/using-mdx*              /blog/   301
+/blog/welcome-to-my-blog*     /blog/   301

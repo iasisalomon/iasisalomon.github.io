@@ -14,6 +14,7 @@ The project uses **pnpm** (`pnpm-lock.yaml` is the only lockfile). Don't add a `
 | `pnpm dev`     | Start the dev server at `localhost:4321` |
 | `pnpm build`   | Build the production site to `./dist/`   |
 | `pnpm preview` | Preview the production build locally     |
+| `pnpm thumbs`  | Generate gallery thumbnails (see Images) |
 
 ## Structure
 
@@ -63,7 +64,12 @@ Markdown files in `src/data/caseStudies/`. Each file's name must match a project
 
 ### Images
 
-`public/` holds the optimized images the site serves (WebP, max 1600px wide). Full-size source photos live in `originals/`, which mirrors the `public/` paths (e.g. `originals/images/gallery/axiecon/`) and is not deployed. Keep the originals there when adding or re-optimizing photos.
+`public/` holds the optimized images the site serves (WebP, max 1600px wide). Full-size source photos live in `originals/`, which mirrors the `public/` paths (e.g. `originals/images/gallery/axiecon/`) and is not deployed. Keep the originals there when adding or re-optimizing photos. Never delete one: when a file in `public/` is replaced by an optimized version, move the old file into `originals/`.
+
+- **Gallery photos:** after adding photos to `public/images/gallery/<folder>/`, run `pnpm thumbs`. It writes WebP thumbnails sized for the 3:2 grid tiles into a `thumbs/` folder next to them (`--force` regenerates them). Project pages show the thumbnail and the lightbox opens the full-size photo. A photo without a thumbnail falls back to the full-size file.
+- **Logos** (`public/images/brands/`): WebP or SVG at about 2× the displayed size, so at most 400×144 for the "Teams and organizations" tiles.
+- **Portrait:** `cara.webp` (520px) is what pages display. `cara.jpg` stays only as the SEO/social image.
+- **Favicons:** `public/assets/favicon.ico` (16/32/48px) and `public/apple-touch-icon.png` (180px). The original 128px source is `originals/assets/favicon-128.png`.
 
 ### Links and navigation
 
@@ -110,6 +116,10 @@ import { Icon } from 'astro-icon/components';
 - Importing a plugin also enables its `data-bs-*` attributes (the navbar toggler relies on this).
 - Load page-specific libraries lazily. Tooltip and Popper are only imported on pages that contain `[data-bs-toggle="tooltip"]`.
 - `is:inline` is only for code that must run before first paint (the theme script in `MainLayout.astro`).
+
+### Old URLs and 404
+
+`src/pages/404.astro` is a normal site page (navbar, footer, links to home, case studies and blog) marked `noindex`. When a URL changes or a page is removed, add a 301 to `public/_redirects` so existing links and search results keep working.
 
 ### Response headers
 

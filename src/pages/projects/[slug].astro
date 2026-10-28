@@ -1,4 +1,5 @@
 ---
+import { existsSync } from 'node:fs';
 import { Icon } from 'astro-icon/components';
 import { getCollection, render } from 'astro:content';
 import LongformLayout, { type LongformFact } from '../../layouts/LongformLayout.astro';
@@ -52,6 +53,13 @@ const pagerLink = (label: string, p?: typeof project) =>
 	p && { label, title: p.title, href: `/projects/${p.slug}/` };
 
 const gallery = entry.data.gallery ?? [];
+
+// Thumbnails from `pnpm thumbs` live in a thumbs/ folder next to each photo.
+// Fall back to the full-size file for any photo that doesn't have one yet.
+const thumbOf = (src: string) => {
+	const thumb = src.replace(/\/([^/]+)\.\w+$/, '/thumbs/$1.webp');
+	return existsSync(`public${thumb}`) ? thumb : undefined;
+};
 ---
 
 <LongformLayout
@@ -74,14 +82,25 @@ const gallery = entry.data.gallery ?? [];
 			<section class="cs-gallery-section" aria-labelledby="gallery-title">
 				<h2 id="gallery-title" class="cs-gallery-title">Photos</h2>
 				<div class="cs-gallery" data-gallery>
-					{gallery.map((img, i) => (
+					{gallery.map((img, i) => {
+						const thumb = thumbOf(img.src);
+						return (
 						<figure class:list={['cs-gallery__item', { 'cs-gallery__item--wide': i === 0 }]}>
 							<button type="button" class="cs-gallery__open" data-index={i}>
-								<img src={img.src} alt={img.alt || `${project.title} photo`} loading="lazy" />
+								<img
+									src={thumb ?? img.src}
+									srcset={thumb && `${thumb} 600w, ${img.src} 1600w`}
+									sizes={i === 0 ? '(min-width: 992px) 860px, 100vw' : '(min-width: 992px) 280px, 50vw'}
+									data-full={img.src}
+									alt={img.alt || `${project.title} photo`}
+									loading="lazy"
+									decoding="async"
+								/>
 							</button>
 							{img.caption && <figcaption>{img.caption}</figcaption>}
 						</figure>
-					))}
+						);
+					})}
 				</div>
 
 				<dialog class="cs-lightbox" aria-label="Photo viewer">
@@ -123,7 +142,7 @@ const gallery = entry.data.gallery ?? [];
 	if (gallery && dialog) {
 		const photos = [...gallery.querySelectorAll('figure')].map((fig) => {
 			const img = fig.querySelector('img')!;
-			return { src: img.src, alt: img.alt, caption: fig.querySelector('figcaption')?.textContent ?? '' };
+			return { src: img.dataset.full ?? img.src, alt: img.alt, caption: fig.querySelector('figcaption')?.textContent ?? '' };
 		});
 		const img = dialog.querySelector<HTMLImageElement>('.cs-lightbox__img')!;
 		const caption = dialog.querySelector<HTMLElement>('.cs-lightbox__caption')!;
