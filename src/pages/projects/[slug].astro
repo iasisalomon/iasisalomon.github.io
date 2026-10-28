@@ -34,8 +34,9 @@ const dateLabel = new Date(project.date).toLocaleDateString('en-us', {
 	timeZone: 'UTC',
 });
 
-// Return to the homepage section that links to this case study.
-const fromWork = project.category !== 'software-engineering';
+// Return to the homepage section that links to this case study. Engineering
+// lists only repos with a status; everything else is in Selected work.
+const fromWork = project.category !== 'software-engineering' || !project.status;
 const back = fromWork
 	? { href: '/#work', label: 'Back to Selected work' }
 	: { href: '/#engineering', label: 'Back to Engineering' };

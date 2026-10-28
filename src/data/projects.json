@@ -211,5 +211,38 @@
       "Client Onboarding"
     ],
     "links": []
+  },
+  {
+    "id": 10,
+    "slug": "muba",
+    "title": "MUBA",
+    "description": "Scoped and led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+    "date": "2026-02-01",
+    "category": "software-engineering",
+    "skills": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL (Prisma)",
+      "Zod",
+      "OpenAPI"
+    ],
+    "tags": [
+      "Delivery",
+      "Healthcare",
+      "AI-assisted development"
+    ],
+    "links": [
+      {
+        "text": "Live demo",
+        "url": "https://demo.muba.lat",
+        "icon": "fas fa-arrow-up-right-from-square"
+      },
+      {
+        "text": "muba.app",
+        "url": "https://muba.app/",
+        "icon": "fas fa-globe"
+      }
+    ]
   }
 ]
