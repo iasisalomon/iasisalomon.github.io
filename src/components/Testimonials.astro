@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import proof from '../data/proof.json';
 import partnerBrands from '../data/partnerBrands.json';
 
@@ -79,7 +80,7 @@ const initials = (name: string) =>
         <div class="quotes" role="list">
           {featuredTestimonials.map((t) => (
             <figure class="quote" role="listitem">
-              <i class="fas fa-quote-left quote__mark" aria-hidden="true"></i>
+              <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
               <blockquote>{t.quote}</blockquote>
               <figcaption>
                 <span class="quote__avatar" aria-hidden="true">{initials(t.name)}</span>
@@ -97,7 +98,7 @@ const initials = (name: string) =>
             <div class="quotes quotes--more" role="list">
               {additionalTestimonials.map((t) => (
                 <figure class="quote" role="listitem">
-                  <i class="fas fa-quote-left quote__mark" aria-hidden="true"></i>
+                  <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
                   <blockquote>{t.quote}</blockquote>
                   <figcaption>
                     <span class="quote__avatar" aria-hidden="true">{initials(t.name)}</span>

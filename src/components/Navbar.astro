@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 // Context-aware navbar with two render-time variants:
 //  - 'main' (default): in-page section links (`/#id`). On the homepage they
 //    smooth-scroll; from any other page they navigate home and the on-load
@@ -46,8 +47,8 @@ const blogLinks = [
         aria-label="Switch to dark mode"
         aria-pressed="false"
       >
-        <i class="fas fa-moon toggle-icon-dark" aria-hidden="true"></i>
-        <i class="fas fa-sun toggle-icon-light" aria-hidden="true"></i>
+        <Icon name="fa6-solid:moon" class="toggle-icon-dark" aria-hidden="true" />
+        <Icon name="fa6-solid:sun" class="toggle-icon-light" aria-hidden="true" />
       </button>
       <button
         class="navbar-toggler"
@@ -85,7 +86,7 @@ const blogLinks = [
             ))}
             <li class="nav-item nav-item--return">
               <a class="nav-link" href="/">
-                <i class="fas fa-arrow-left me-1" aria-hidden="true"></i>Main site
+                <Icon name="fa6-solid:arrow-left" class="me-1" aria-hidden="true" />Main site
               </a>
             </li>
           </>
@@ -270,6 +271,9 @@ const blogLinks = [
 </style>
 
 <script>
+  // Importing the plugin also wires up the data-bs-toggle="collapse" toggler.
+  import Collapse from 'bootstrap/js/dist/collapse';
+
   // Theme toggle: flips data-theme on <html> and persists the choice.
   // The pre-paint script in MainLayout reads the same localStorage key.
   const themeButton = document.getElementById('themeToggle');
@@ -361,8 +365,8 @@ const blogLinks = [
         // Close the mobile menu via Bootstrap's API rather than simulating a
         // toggler click — a synthetic click fired mid-transition desyncs
         // Bootstrap's internal state and breaks the next tap on touch devices.
-        if (collapse.classList.contains('show') && window.bootstrap) {
-          window.bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+        if (collapse.classList.contains('show')) {
+          Collapse.getOrCreateInstance(collapse).hide();
         }
       });
     });

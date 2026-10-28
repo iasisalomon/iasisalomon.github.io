@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { LINKS } from '../consts';
 ---
 
@@ -13,13 +14,13 @@ import { LINKS } from '../consts';
 
         <div class="hero-ctas">
           <a href="#work" class="btn btn-primary btn-lg me-2 mb-2">
-            See delivery work <i class="fas fa-arrow-down ms-2" aria-hidden="true"></i>
+            See delivery work <Icon name="fa6-solid:arrow-down" class="ms-2" aria-hidden="true" />
           </a>
           <a href={LINKS.calendly} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
-            Book a 30-minute call <i class="far fa-calendar-alt ms-2" aria-hidden="true"></i>
+            Book a 30-minute call <Icon name="fa6-regular:calendar-days" class="ms-2" aria-hidden="true" />
           </a>
           <a href={LINKS.linkedin} class="hero-link" target="_blank" rel="noopener noreferrer">
-            LinkedIn profile <i class="fas fa-arrow-up-right-from-square ms-1" aria-hidden="true"></i>
+            LinkedIn profile <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />
           </a>
         </div>
 

@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 // Shared layout for long-form pages — case studies and blog posts — so both
 // read as one design: one reading column, the same header anatomy
 // (back link, badges, title, lead, facts), the same typography and the same
@@ -13,7 +14,7 @@ export interface LongformBadge {
   /** Extra classes, e.g. a category or area gradient class. */
   class?: string;
   href?: string;
-  /** Font Awesome icon classes shown before the text. */
+  /** astro-icon name shown before the text, e.g. 'fa6-solid:trophy'. */
   icon?: string;
 }
 
@@ -91,7 +92,7 @@ const {
                   const Tag = badge.href ? 'a' : 'span';
                   return (
                     <Tag href={badge.href} class:list={['longform-badge', badge.class]}>
-                      {badge.icon && <i class={`${badge.icon} me-1`} aria-hidden="true"></i>}
+                      {badge.icon && <Icon name={badge.icon} class="me-1" aria-hidden="true" />}
                       {badge.text}
                     </Tag>
                   );

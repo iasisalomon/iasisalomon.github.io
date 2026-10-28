@@ -183,6 +183,13 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
+/* astro-icon SVGs: drop slightly below the baseline like the Font
+   Awesome glyphs they replaced. */
+svg[data-icon] {
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+
 img {
     max-width: 100%;
     object-fit: cover;

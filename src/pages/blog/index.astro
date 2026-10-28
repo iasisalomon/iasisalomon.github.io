@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import CustomFooter from '../../components/CustomFooter.astro';
@@ -59,7 +60,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 									<h2 class="blog-card-title" lang={post.data.lang}>{post.data.title}</h2>
 									{post.data.award && (
 										<p class="post-badge post-badge--award mb-2">
-											<i class="fas fa-trophy me-1" aria-hidden="true"></i>{post.data.award}
+											<Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
 										</p>
 									)}
 								</header>
@@ -82,6 +83,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 </MainLayout>
 
 <script>
+  import Collapse from 'bootstrap/js/dist/collapse';
+
   const navLinks = document.querySelectorAll<HTMLAnchorElement>('#navbarNav .nav-link[data-category]');
   const cards = document.querySelectorAll<HTMLElement>('.blog-card');
   const noPostsMsg = document.getElementById('noPostsMsg')!;
@@ -122,8 +125,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
       e.preventDefault();
       applyFilter(link.dataset.category!);
       const collapse = document.getElementById('navbarNav');
-      if (collapse?.classList.contains('show') && (window as any).bootstrap) {
-        (window as any).bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+      if (collapse?.classList.contains('show')) {
+        Collapse.getOrCreateInstance(collapse).hide();
       }
     });
   });

@@ -21,17 +21,17 @@
       {
         "text": "Blog",
         "url": "https://blog.axieinfinity.com/p/axiecon",
-        "icon": "fas fa-link"
+        "icon": "fa6-solid:link"
       },
       {
         "text": "Days 1&2",
         "url": "https://www.youtube.com/watch?v=lu_N8kx-I2U",
-        "icon": "fab fa-youtube"
+        "icon": "fa6-brands:youtube"
       },
       {
         "text": "Days 3&4",
         "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY",
-        "icon": "fab fa-youtube"
+        "icon": "fa6-brands:youtube"
       }
     ]
   },
@@ -58,7 +58,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/challenge_toolbox",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "challenge"
@@ -85,7 +85,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/calliv",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "practice"
@@ -110,7 +110,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/challenge_CodeCare",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "challenge"
@@ -136,7 +136,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/challenge_Bravocare",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "challenge"
@@ -161,7 +161,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/mtgtop8_scrapper",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "practice"
@@ -186,7 +186,7 @@
       {
         "text": "Repository",
         "url": "https://github.com/iasisalomon/jwt_practice",
-        "icon": "fab fa-github"
+        "icon": "fa6-brands:github"
       }
     ],
     "status": "practice"
@@ -236,12 +236,12 @@
       {
         "text": "Live demo",
         "url": "https://demo.muba.lat",
-        "icon": "fas fa-arrow-up-right-from-square"
+        "icon": "fa6-solid:arrow-up-right-from-square"
       },
       {
         "text": "muba.app",
         "url": "https://muba.app/",
-        "icon": "fas fa-globe"
+        "icon": "fa6-solid:globe"
       }
     ]
   }

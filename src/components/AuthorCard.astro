@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 // Closing call to action for long-form pages (case studies, blog posts):
 // who wrote this, and how to reach them.
 import { LINKS } from '../consts';
@@ -21,10 +22,10 @@ const {
     <p class="author-card__message">{message}</p>
     <div class="d-flex flex-wrap gap-2">
       <a href={LINKS.calendly} class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-        <i class="far fa-calendar-alt me-2" aria-hidden="true"></i>Book a 30-minute call
+        <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />Book a 30-minute call
       </a>
       <a href={LINKS.email} class="btn btn-outline-dark btn-sm">
-        <i class="far fa-envelope me-2" aria-hidden="true"></i>Email
+        <Icon name="fa6-regular:envelope" class="me-2" aria-hidden="true" />Email
       </a>
     </div>
   </div>

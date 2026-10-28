@@ -1,6 +1,10 @@
 ---
 import SEO from '../components/SEO.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+// Bootstrap is linked by URL rather than imported: Astro orders imported CSS
+// by its own rules (page styles can land first), and every one of our styles
+// must come after Bootstrap's to override it.
+import bootstrapCss from 'bootstrap/dist/css/bootstrap.min.css?url';
 import '../styles/global.css';
 
 interface Props {
@@ -58,33 +62,21 @@ const {
       noindex={noindex}
       lang={lang}
     />
-    {/* Warm up the CDN connections before the stylesheets below block rendering */}
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-    {/* Bootstrap CSS */}
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    {/* Font Awesome */}
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href={bootstrapCss} />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
   </head>
   <body>
     <slot />
-    
-    {/* Bootstrap JS Bundle with Popper */}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" is:inline></script>
-    
-    {/* Tooltip Initialization */}
-    <script is:inline>
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle=\"tooltip\"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-      })
+
+    <script>
+      // Glossary tooltips only appear in a few case studies, so Bootstrap's
+      // Tooltip (and Popper) load only on pages that use them.
+      const tooltipTriggers = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+      if (tooltipTriggers.length) {
+        import('bootstrap/js/dist/tooltip').then(({ default: Tooltip }) => {
+          tooltipTriggers.forEach((el) => new Tooltip(el));
+        });
+      }
     </script>
   </body>
 </html> 

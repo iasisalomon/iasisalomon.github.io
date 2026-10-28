@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { getCollection, render } from 'astro:content';
 import LongformLayout, { type LongformFact } from '../../layouts/LongformLayout.astro';
 import { getProjectBySlug } from '../../data/portfolio';
@@ -85,17 +86,17 @@ const gallery = entry.data.gallery ?? [];
 
 				<dialog class="cs-lightbox" aria-label="Photo viewer">
 					<button type="button" class="cs-lightbox__btn cs-lightbox__close" aria-label="Close photo viewer">
-						<i class="fas fa-xmark" aria-hidden="true"></i>
+						<Icon name="fa6-solid:xmark" aria-hidden="true" />
 					</button>
 					<button type="button" class="cs-lightbox__btn cs-lightbox__prev" aria-label="Previous photo">
-						<i class="fas fa-chevron-left" aria-hidden="true"></i>
+						<Icon name="fa6-solid:chevron-left" aria-hidden="true" />
 					</button>
 					<figure class="cs-lightbox__figure">
 						<img class="cs-lightbox__img" src="" alt="" />
 						<figcaption class="cs-lightbox__caption"></figcaption>
 					</figure>
 					<button type="button" class="cs-lightbox__btn cs-lightbox__next" aria-label="Next photo">
-						<i class="fas fa-chevron-right" aria-hidden="true"></i>
+						<Icon name="fa6-solid:chevron-right" aria-hidden="true" />
 					</button>
 				</dialog>
 			</section>
@@ -105,7 +106,7 @@ const gallery = entry.data.gallery ?? [];
 			<div class="cs-links">
 				{project.links.map((link) => (
 					<a href={link.url} class="btn btn-outline-dark me-2 mb-2" target="_blank" rel="noopener noreferrer">
-						<i class={`${link.icon} me-2`} aria-hidden="true"></i>{link.text}
+						<Icon name={link.icon} class="me-2" aria-hidden="true" />{link.text}
 					</a>
 				))}
 			</div>

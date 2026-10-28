@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 import { BLOG_CATEGORIES } from '../consts';
 import { languageName, readingTime } from '../utils/content';
@@ -44,11 +45,11 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
               <h3 class="h5 fw-bold mb-2" lang={post.data.lang}>{post.data.title}</h3>
               {post.data.award && (
                 <p class="post-badge post-badge--award align-self-start mb-2">
-                  <i class="fas fa-trophy me-1" aria-hidden="true"></i>{post.data.award}
+                  <Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
                 </p>
               )}
               <p class="text-muted small mb-3 flex-grow-1" lang={post.data.lang}>{post.data.description}</p>
-              <span class="read-cta fw-medium small">Read article <i class="fas fa-arrow-right ms-1"></i></span>
+              <span class="read-cta fw-medium small">Read article <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></span>
             </div>
           </a>
         </div>
@@ -56,7 +57,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
     </div>
 
     <div class="text-center mt-4">
-      <a href="/blog/" class="btn btn-outline-dark">View all articles <i class="fas fa-arrow-right ms-1"></i></a>
+      <a href="/blog/" class="btn btn-outline-dark">View all articles <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></a>
     </div>
   </div>
 </section>
@@ -94,11 +95,11 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
     color: var(--color-accent, #0d6efd);
   }
 
-  .read-cta i {
+  .read-cta svg {
     transition: transform 0.2s ease;
   }
 
-  .writing-card:hover .read-cta i {
+  .writing-card:hover .read-cta svg {
     transform: translateX(4px);
   }
 

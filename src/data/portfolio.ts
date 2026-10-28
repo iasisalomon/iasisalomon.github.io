@@ -12,7 +12,8 @@ import { CATEGORY_IDS } from './areas';
 const linkSchema = z.object({
   text: z.string().min(1),
   url: z.string().url(),
-  icon: z.string().min(1),
+  /** astro-icon name, e.g. 'fa6-brands:github'. */
+  icon: z.string().regex(/^[a-z0-9-]+:[a-z0-9-]+$/),
 });
 
 const projectSchema = z.object({
