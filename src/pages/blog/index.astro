@@ -80,7 +80,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 				))}
 			</div>
 
-			<p id="noPostsMsg" class="text-center text-muted py-5" style="display:none">No posts in this category yet.</p>
+			<p id="noPostsMsg" class="text-center text-muted py-5" hidden>No posts in this category yet.</p>
 		</div>
 	</section>
 	</main>
@@ -102,7 +102,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
       card.style.display = match ? '' : 'none';
       if (match) visible++;
     });
-    noPostsMsg.style.display = visible === 0 ? '' : 'none';
+    noPostsMsg.hidden = visible !== 0;
 
     navLinks.forEach(l => {
       const active = l.dataset.category === category;
