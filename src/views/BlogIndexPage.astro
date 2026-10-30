@@ -1,37 +1,44 @@
 ---
+// The blog archive, in either language (src/pages/blog/, src/pages/es/blog/).
+// Posts not written in the page's language are listed in the one they were
+// written in, with a language badge.
 import { Icon } from 'astro-icon/components';
-import MainLayout from '../../layouts/MainLayout.astro';
-import Navbar from '../../components/Navbar.astro';
-import CustomFooter from '../../components/CustomFooter.astro';
-import { getCollection } from 'astro:content';
-import { BLOG_CATEGORIES } from '../../consts';
-import { languageName, readingTime } from '../../utils/content';
+import MainLayout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CustomFooter from '../components/CustomFooter.astro';
+import { BLOG_CATEGORIES } from '../consts';
+import { getPostList } from '../data/queries';
+import { everyLocale, formatDate, pick, useTranslations, type Locale } from '../i18n';
+import { languageName, readingTime } from '../utils/content';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-);
+interface Props {
+	lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const alternates = everyLocale('/blog/');
+
+const posts = await getPostList(lang);
 
 const categoryLabels: Record<string, string> = Object.fromEntries(
-	BLOG_CATEGORIES.map((c) => [c.id, c.label])
+	BLOG_CATEGORIES.map((c) => [c.id, t(c.label)])
 );
 ---
 
-<MainLayout
-	title="Blog | Iasi Salomon"
-	description="Articles by Iasi Salomon on technology and business, from web3 game economies to science and society."
->
-	<Navbar variant="blog" />
+<MainLayout title={t('blog.pageTitle')} description={t('blog.pageDescription')} lang={lang} alternates={alternates}>
+	<Navbar variant="blog" lang={lang} alternates={alternates} />
 
 	<main id="main-content">
 	<section class="blog-section py-5 mt-5">
 		<div class="container">
 			<header class="blog-header">
-				<h1 class="blog-title">Articles</h1>
-				<p class="blog-description">Thoughts on tech, business and the spaces between.</p>
+				<h1 class="blog-title">{t('blog.heading')}</h1>
+				<p class="blog-description">{t('blog.lead')}</p>
 			</header>
 
 			<div class="blog-grid" id="blogGrid">
-				{posts.map((post) => (
+				{posts.map(({ entry: post, lang: postLang, href }) => (
 					<article class="blog-card" data-category={post.data.category ?? 'other'}>
 						<div class="blog-card-inner">
 							<div class="card-image">
@@ -42,12 +49,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 									<div class="card-meta">
 										{post.data.pubDate && (
 											<time datetime={post.data.pubDate.toISOString()} class="card-date">
-												{post.data.pubDate.toLocaleDateString('en-us', {
-													year: 'numeric',
-													month: 'short',
-													day: 'numeric',
-													timeZone: 'UTC',
-												})}
+												{formatDate(post.data.pubDate, lang, { year: 'numeric', month: 'short', day: 'numeric' })}
 											</time>
 										)}
 										{post.data.category && (
@@ -55,24 +57,24 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 												{categoryLabels[post.data.category]}
 											</span>
 										)}
-										{languageName(post.data.lang) && (
-											<span class="post-badge">{languageName(post.data.lang)}</span>
+										{languageName(postLang, lang) && (
+											<span class="post-badge" lang={postLang}>{languageName(postLang, lang)}</span>
 										)}
-										<span class="card-reading-time">{readingTime(post.body)}</span>
+										<span class="card-reading-time">{readingTime(post.body, lang)}</span>
 									</div>
 									{/* The stretched link makes the whole card clickable while only the title is announced. */}
-									<h2 class="blog-card-title" lang={post.data.lang}>
-										<a href={`/blog/${post.id}/`} class="stretched-link">{post.data.title}</a>
+									<h2 class="blog-card-title" lang={postLang}>
+										<a href={href} hreflang={postLang} class="stretched-link">{post.data.title}</a>
 									</h2>
 									{post.data.award && (
 										<p class="post-badge post-badge--award mb-2">
-											<Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
+											<Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{pick(post.data.award, lang)}
 										</p>
 									)}
 								</header>
-								<p class="card-excerpt" lang={post.data.lang}>{post.data.description}</p>
+								<p class="card-excerpt" lang={postLang}>{post.data.description}</p>
 								<footer class="blog-card-footer">
-									<span class="read-more" aria-hidden="true">Read article →</span>
+									<span class="read-more" aria-hidden="true">{t('blog.readMore')}</span>
 								</footer>
 							</div>
 						</div>
@@ -80,12 +82,12 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 				))}
 			</div>
 
-			<p id="noPostsMsg" class="text-center text-muted py-5" hidden>No posts in this category yet.</p>
+			<p id="noPostsMsg" class="text-center text-muted py-5" hidden>{t('blog.empty')}</p>
 		</div>
 	</section>
 	</main>
 
-	<CustomFooter />
+	<CustomFooter lang={lang} />
 </MainLayout>
 
 <script>
@@ -124,7 +126,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
   const initialCategory = new URLSearchParams(window.location.search).get('category') ?? 'all';
   applyFilter(initialCategory);
 
-  // The navbar category links navigate to /blog?category=… from other pages;
+  // The navbar category links navigate to /blog/?category=… from other pages;
   // here on the archive itself, filter in place instead of reloading.
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {

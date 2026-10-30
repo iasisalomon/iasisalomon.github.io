@@ -1,6 +1,6 @@
 ---
 import SEO from '../components/SEO.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { useTranslations, type Alternates, type Locale } from '../i18n';
 // Bootstrap is linked by URL rather than imported: Astro orders imported CSS
 // by its own rules (page styles can land first), and every one of our styles
 // must come after Bootstrap's to override it.
@@ -17,12 +17,15 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   noindex?: boolean;
-  lang?: string;
+  lang?: Locale;
+  /** The page's address in each language it exists in. */
+  alternates?: Alternates;
 }
 
+const t = useTranslations(Astro.props.lang ?? 'en');
 const {
-  title = SITE_TITLE,
-  description = SITE_DESCRIPTION,
+  title = t('site.title'),
+  description = t('site.description'),
   image,
   imageAlt,
   type = 'website',
@@ -31,6 +34,7 @@ const {
   modifiedTime,
   noindex = false,
   lang = 'en',
+  alternates,
 } = Astro.props;
 ---
 
@@ -69,6 +73,7 @@ const {
       modifiedTime={modifiedTime}
       noindex={noindex}
       lang={lang}
+      alternates={alternates}
     />
     <link rel="stylesheet" href={bootstrapCss} />
     <link rel="icon" href="/assets/favicon.ico" sizes="16x16 32x32 48x48" />

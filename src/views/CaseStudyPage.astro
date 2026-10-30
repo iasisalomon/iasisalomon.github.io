@@ -1,61 +1,52 @@
 ---
+// A case study, in either language (src/pages/projects/[slug].astro,
+// src/pages/es/projects/[slug].astro; see caseStudyPaths in ./paths.ts).
 import { existsSync } from 'node:fs';
 import { Icon } from 'astro-icon/components';
-import { getCollection, render } from 'astro:content';
-import LongformLayout, { type LongformFact } from '../../layouts/LongformLayout.astro';
-import { getProject } from '../../data/queries';
-import { AREA_META } from '../../data/areas';
+import { render } from 'astro:content';
+import LongformLayout, { type LongformFact } from '../layouts/LongformLayout.astro';
+import type { CaseStudy } from '../data/queries';
+import { AREA_META } from '../data/areas';
+import { formatDate, localePath, useTranslations, type Locale, type TranslationKey } from '../i18n';
 
-export async function getStaticPaths() {
-	// Newest first by catalog date; the previous/next links walk this order.
-	const ordered = (
-		await Promise.all((await getCollection('caseStudies')).map(async (entry) => ({ entry, project: await getProject(entry.id) })))
-	)
-		.sort((a, b) => (b.project?.date ?? '').localeCompare(a.project?.date ?? ''));
-	return ordered.map(({ entry }, i) => ({
-		params: { slug: entry.id },
-		props: { entry, prev: ordered[i - 1]?.project, next: ordered[i + 1]?.project },
-	}));
+interface Props {
+	lang: Locale;
+	study: CaseStudy;
+	prev?: CaseStudy;
+	next?: CaseStudy;
 }
 
-const { entry, prev, next } = Astro.props;
-const project = await getProject(entry.id);
-if (!project) {
-	throw new Error(
-		`Case study "${entry.id}" has no matching project in projects.json. ` +
-			`Rename the file to a valid project slug or add the project.`,
-	);
-}
-if (!project.date) {
-	throw new Error(`Project "${project.slug}" has a case study, so it needs a "date" in projects.json.`);
-}
+const { lang, study, prev, next } = Astro.props;
+const t = useTranslations(lang);
+const { entry, project } = study;
 const projectDate = project.date;
 const area = AREA_META[project.category];
 const { Content } = await render(entry);
 
-// Dates are stored as UTC midnight; format in UTC so they don't shift a
-// day (or a month) back in time zones west of UTC.
-const dateLabel = new Date(projectDate).toLocaleDateString('en-us', {
-	month: 'long',
-	year: 'numeric',
-	timeZone: 'UTC',
-});
+const STATUS_LABELS: Record<NonNullable<typeof project.status>, TranslationKey> = {
+	practice: 'status.practice',
+	challenge: 'status.challenge',
+	'private deployment': 'status.privateDeployment',
+};
+
+const dateLabel = formatDate(new Date(projectDate), lang, { month: 'long', year: 'numeric' });
 
 // Return to the homepage section that links to this case study. Engineering
 // lists only repos with a status; everything else is in Selected work.
 const fromWork = project.category !== 'software-engineering' || !project.status;
+const home = localePath(lang, '/');
 const back = fromWork
-	? { href: '/#work', label: 'Back to Selected work' }
-	: { href: '/#engineering', label: 'Back to Engineering' };
+	? { href: `${home}#work`, label: t('caseStudy.backToWork') }
+	: { href: `${home}#engineering`, label: t('caseStudy.backToEngineering') };
 
 const facts: LongformFact[] = [
-	...(entry.data.role ? [{ label: 'Role', value: entry.data.role }] : []),
-	{ label: 'When', value: entry.data.timeframe ?? dateLabel },
-	...(project.skills.length > 0 ? [{ label: 'Stack', value: project.skills.join(' · ') }] : []),
+	...(entry.data.role ? [{ label: t('caseStudy.role'), value: entry.data.role }] : []),
+	{ label: t('caseStudy.when'), value: entry.data.timeframe ?? dateLabel },
+	...(project.skills.length > 0 ? [{ label: t('caseStudy.stack'), value: project.skills.join(' · ') }] : []),
 ];
 
-const pagerLink = (label: string, p?: typeof project) =>
-	p && { label, title: p.title, href: `/projects/${p.slug}/` };
+const pagerLink = (label: string, cs?: CaseStudy) =>
+	cs && { label, title: cs.project.title, href: localePath(lang, `/projects/${cs.slug}/`) };
 
 const gallery = entry.data.gallery ?? [];
 
@@ -74,23 +65,25 @@ const thumbOf = (src: string) => {
 	image={entry.data.heroImage ?? project.image}
 	imageAlt={entry.data.heroImageAlt}
 	badges={[
-		{ text: area.label, class: `post-badge ${area.gradientClass}` },
+		{ text: t(area.label), class: `post-badge ${area.gradientClass}` },
 		// Titles no longer carry "Challenge:" / "Practice:"; the status says it.
-		...(project.status ? [{ text: project.status, class: 'post-badge' }] : []),
+		...(project.status ? [{ text: t(STATUS_LABELS[project.status]), class: 'post-badge' }] : []),
 	]}
 	facts={facts}
 	back={back}
-	prev={pagerLink('Previous case study', prev)}
-	next={pagerLink('Next case study', next)}
+	prev={pagerLink(t('caseStudy.previous'), prev)}
+	next={pagerLink(t('caseStudy.next'), next)}
 	publishedTime={new Date(projectDate).toISOString()}
 	schemaType="Article"
+	lang={lang}
+	alternates={study.alternates}
 >
 	<Content />
 
 	<Fragment slot="after">
 		{gallery.length > 0 && (
 			<section class="cs-gallery-section" aria-labelledby="gallery-title">
-				<h2 id="gallery-title" class="cs-gallery-title">Photos</h2>
+				<h2 id="gallery-title" class="cs-gallery-title">{t('caseStudy.photos')}</h2>
 				<div class="cs-gallery" data-gallery>
 					{gallery.map((img, i) => {
 						const thumb = thumbOf(img.src);
@@ -102,7 +95,7 @@ const thumbOf = (src: string) => {
 									srcset={thumb && `${thumb} 600w, ${img.src} 1600w`}
 									sizes={i === 0 ? '(min-width: 992px) 860px, 100vw' : '(min-width: 992px) 280px, 50vw'}
 									data-full={img.src}
-									alt={img.alt || `${project.title} photo`}
+									alt={img.alt || t('caseStudy.photoAlt', { title: project.title })}
 									loading="lazy"
 									decoding="async"
 								/>
@@ -113,11 +106,11 @@ const thumbOf = (src: string) => {
 					})}
 				</div>
 
-				<dialog class="cs-lightbox" aria-label="Photo viewer">
-					<button type="button" class="cs-lightbox__btn cs-lightbox__close" aria-label="Close photo viewer">
+				<dialog class="cs-lightbox" aria-label={t('caseStudy.viewer')} data-count={t('caseStudy.photoCount')}>
+					<button type="button" class="cs-lightbox__btn cs-lightbox__close" aria-label={t('caseStudy.closeViewer')}>
 						<Icon name="fa6-solid:xmark" aria-hidden="true" />
 					</button>
-					<button type="button" class="cs-lightbox__btn cs-lightbox__prev" aria-label="Previous photo">
+					<button type="button" class="cs-lightbox__btn cs-lightbox__prev" aria-label={t('caseStudy.previousPhoto')}>
 						<Icon name="fa6-solid:chevron-left" aria-hidden="true" />
 					</button>
 					<figure class="cs-lightbox__figure">
@@ -128,7 +121,7 @@ const thumbOf = (src: string) => {
 							<span class="cs-lightbox__text"></span>
 						</figcaption>
 					</figure>
-					<button type="button" class="cs-lightbox__btn cs-lightbox__next" aria-label="Next photo">
+					<button type="button" class="cs-lightbox__btn cs-lightbox__next" aria-label={t('caseStudy.nextPhoto')}>
 						<Icon name="fa6-solid:chevron-right" aria-hidden="true" />
 					</button>
 				</dialog>
@@ -161,13 +154,17 @@ const thumbOf = (src: string) => {
 		const img = dialog.querySelector<HTMLImageElement>('.cs-lightbox__img')!;
 		const count = dialog.querySelector<HTMLElement>('.cs-lightbox__count')!;
 		const caption = dialog.querySelector<HTMLElement>('.cs-lightbox__text')!;
+		// "{current} of {total}", in the page's language.
+		const countTemplate = dialog.dataset.count ?? '{current} / {total}';
 		let current = 0;
 
 		const show = (i: number) => {
 			current = (i + photos.length) % photos.length;
 			img.src = photos[current].src;
 			img.alt = photos[current].alt;
-			count.textContent = `${current + 1} of ${photos.length}`;
+			count.textContent = countTemplate
+				.replace('{current}', String(current + 1))
+				.replace('{total}', String(photos.length));
 			caption.textContent = photos[current].caption;
 		};
 

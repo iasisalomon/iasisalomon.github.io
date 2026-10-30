@@ -6,32 +6,46 @@ import { Icon } from 'astro-icon/components';
 //    handler scrolls into place. Links come from NAV_LINKS in consts.ts.
 //  - 'blog': the blog is its own space — category links driving the archive
 //    filter plus a single "Main site" link back. No homepage section links.
+// Both variants link within the page's language and carry the language
+// switcher, which opens the same page in the other language.
 import { BLOG_CATEGORIES, NAV_LINKS } from '../consts';
+import { localePath, otherLocale, useTranslations, type Alternates, type Locale } from '../i18n';
 
 interface Props {
+  lang?: Locale;
+  /** The page's address in each language; without one in the other
+   *  language, the switcher goes to that language's home (or blog). */
+  alternates?: Alternates;
   variant?: 'main' | 'blog';
   /** Blog variant only: category to mark active at render time (used by
    *  post pages). The archive page manages active state client-side from
    *  the ?category URL param instead. */
   activeCategory?: string;
 }
-const { variant = 'main', activeCategory } = Astro.props;
+const { lang = 'en', alternates = {}, variant = 'main', activeCategory } = Astro.props;
+const t = useTranslations(lang);
+const home = localePath(lang, '/');
+const blog = localePath(lang, '/blog/');
 
 const blogLinks = [
-  { label: 'All', href: '/blog/', category: 'all' },
+  { label: t('nav.all'), href: blog, category: 'all' },
   ...BLOG_CATEGORIES.map((c) => ({
-    label: c.label,
-    href: `/blog/?category=${c.id}`,
+    label: t(c.label),
+    href: `${blog}?category=${c.id}`,
     category: c.id as string,
   })),
 ];
+
+const other = otherLocale(lang);
+const tOther = useTranslations(other);
+const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '/blog/' : '/');
 ---
 
-<a class="skip-link" href="#main-content">Skip to content</a>
+<a class="skip-link" href="#main-content">{t('nav.skipToContent')}</a>
 <nav
   class="navbar navbar-expand-lg navbar-dark fixed-top"
   id="mainNav"
-  aria-label={variant === 'blog' ? 'Blog navigation' : 'Main navigation'}
+  aria-label={variant === 'blog' ? t('nav.blogLabel') : t('nav.mainLabel')}
 >
   <div class="container position-relative">
     {/* No brand: the links are centred on screen. The controls live outside
@@ -39,15 +53,36 @@ const blogLinks = [
          they sit on the right, on desktop they're pinned to the right edge
          without pushing the centred links off-centre. */}
     <div class="nav-controls d-flex align-items-center gap-2 ms-auto">
+      {/* A link drawn as a switch: EN on the left, ES on the right, the knob
+           on the current language. Named in the language it switches to, so
+           each reader finds theirs. */}
+      <a
+        class="switch lang-switch"
+        id="langSwitch"
+        href={switchHref}
+        hreflang={other}
+        lang={other}
+        data-on={lang === 'es'}
+        aria-label={tOther('nav.readInLanguage')}
+        title={tOther('nav.readInLanguage')}
+      >
+        <span class="switch__label switch__label--off" aria-hidden="true">EN</span>
+        <span class="switch__track" aria-hidden="true"><span class="switch__knob"></span></span>
+        <span class="switch__label switch__label--on" aria-hidden="true">ES</span>
+      </a>
+      {/* Light on the left, dark on the right; the knob follows data-theme on
+           <html>, which MainLayout's pre-paint script sets. */}
       <button
         type="button"
-        class="theme-toggle"
+        class="switch theme-switch"
         id="themeToggle"
-        aria-label="Dark mode"
-        aria-pressed="false"
+        role="switch"
+        aria-label={t('nav.darkMode')}
+        aria-checked="false"
       >
-        <Icon name="fa6-solid:moon" class="toggle-icon-dark" aria-hidden="true" />
-        <Icon name="fa6-solid:sun" class="toggle-icon-light" aria-hidden="true" />
+        <Icon name="fa6-solid:sun" class="switch__label switch__label--off" aria-hidden="true" />
+        <span class="switch__track" aria-hidden="true"><span class="switch__knob"></span></span>
+        <Icon name="fa6-solid:moon" class="switch__label switch__label--on" aria-hidden="true" />
       </button>
       <button
         class="navbar-toggler"
@@ -56,7 +91,7 @@ const blogLinks = [
         data-bs-target="#navbarNav"
         aria-controls="navbarNav"
         aria-expanded="false"
-        aria-label="Toggle navigation"
+        aria-label={t('nav.toggle')}
       >
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -66,7 +101,7 @@ const blogLinks = [
         {variant === 'main' &&
           NAV_LINKS.map((link) => (
             <li class="nav-item">
-              <a class="nav-link" href={link.href}>{link.label}</a>
+              <a class="nav-link" href={`${home}${link.hash}`}>{t(link.label)}</a>
             </li>
           ))}
         {variant === 'blog' && (
@@ -84,8 +119,8 @@ const blogLinks = [
               </li>
             ))}
             <li class="nav-item nav-item--return">
-              <a class="nav-link" href="/">
-                <Icon name="fa6-solid:arrow-left" class="me-1" aria-hidden="true" />Main site
+              <a class="nav-link" href={home}>
+                <Icon name="fa6-solid:arrow-left" class="me-1" aria-hidden="true" />{t('nav.mainSite')}
               </a>
             </li>
           </>
@@ -171,34 +206,86 @@ const blogLinks = [
     color: rgba(255, 255, 255, 0.6);
   }
 
-  .theme-toggle {
-    background-color: rgba(255, 255, 255, 0.08);
+  /* Switches: a label on each side of a track, the knob on the active side.
+     Language: EN (off) / ES (on), from data-on, which is flipped on click so
+     the knob slides before the page changes. Theme: light (off) / dark (on),
+     from data-theme on <html>. */
+  .switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.25rem;
     border: none;
-    border-radius: 100px;
-    color: rgba(255, 255, 255, 0.85);
+    background: none;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     line-height: 1;
-    padding: 0.5rem 0.75rem;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
   }
 
-  .theme-toggle:hover {
+  .switch__label {
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.2s ease;
+  }
+
+  .theme-switch .switch__label {
+    font-size: 0.85rem;
+  }
+
+  .switch__track {
+    position: relative;
+    width: 2.25rem;
+    height: 1.25rem;
+    border-radius: 100px;
     background-color: rgba(255, 255, 255, 0.16);
+    transition: background-color 0.2s ease;
+  }
+
+  .switch:hover .switch__track {
+    background-color: rgba(255, 255, 255, 0.26);
+  }
+
+  .switch__knob {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 50%;
+    background-color: var(--color-accent-on-dark, #4d9aff);
+    transition: transform 0.2s ease;
+  }
+
+  /* Off: left label lit. */
+  .lang-switch[data-on='false'] .switch__label--off,
+  :global(html:not([data-theme='dark'])) .theme-switch .switch__label--off {
     color: #fff;
   }
 
-  /* Moon shown in light mode (action: go dark), sun in dark mode. */
-  .toggle-icon-light {
-    display: none;
+  /* On: right label lit, knob on the right. */
+  .lang-switch[data-on='true'] .switch__label--on,
+  :global([data-theme='dark']) .theme-switch .switch__label--on {
+    color: #fff;
   }
 
-  :global([data-theme='dark']) .toggle-icon-light {
-    display: inline-block;
+  .lang-switch[data-on='true'] .switch__knob,
+  :global([data-theme='dark']) .theme-switch .switch__knob {
+    transform: translateX(1rem);
   }
 
-  :global([data-theme='dark']) .toggle-icon-dark {
-    display: none;
+  .switch:focus-visible {
+    outline: 2px solid var(--color-accent-on-dark, #4d9aff);
+    outline-offset: 2px;
+    border-radius: 100px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .switch__knob,
+    .switch__label {
+      transition: none;
+    }
   }
 
   .navbar-toggler {
@@ -278,9 +365,35 @@ const blogLinks = [
   const themeButton = document.getElementById('themeToggle');
   const syncThemeButton = () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    themeButton?.setAttribute('aria-pressed', String(isDark));
+    themeButton?.setAttribute('aria-checked', String(isDark));
   };
   syncThemeButton();
+
+  // Homepage in any language: /, /es/.
+  const HOME_PATH = /^\/(es\/?)?$/;
+
+  // The language switcher keeps the reader on the same homepage section, or
+  // the same category of the blog archive.
+  const langSwitch = document.getElementById('langSwitch') as HTMLAnchorElement | null;
+  const startOn = langSwitch?.dataset.on;
+  langSwitch?.addEventListener('click', (e) => {
+    const target = new URL(langSwitch.href);
+    if (HOME_PATH.test(target.pathname)) target.hash = window.location.hash;
+    if (/^\/(es\/)?blog\/$/.test(target.pathname)) target.search = window.location.search;
+    langSwitch.href = target.href;
+
+    // Opening in a new tab or window: leave it to the browser.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    // Slide the knob first, then go.
+    e.preventDefault();
+    langSwitch.dataset.on = String(startOn !== 'true');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(() => window.location.assign(target.href), reduced ? 0 : 200);
+  });
+  // Coming back through the back/forward cache: put the knob back.
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted && langSwitch && startOn) langSwitch.dataset.on = startOn;
+  });
 
   themeButton?.addEventListener('click', () => {
     const root = document.documentElement;
@@ -299,7 +412,7 @@ const blogLinks = [
   document.addEventListener('DOMContentLoaded', function () {
     const nav = document.getElementById('mainNav');
     const collapse = document.getElementById('navbarNav');
-    const isHome = window.location.pathname === '/' || window.location.pathname === '';
+    const isHome = HOME_PATH.test(window.location.pathname) || window.location.pathname === '';
 
     const anchorLinks = Array.from(
       document.querySelectorAll('#navbarNav .nav-link')

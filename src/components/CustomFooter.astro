@@ -1,6 +1,16 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { BLOG_CATEGORIES, FOOTER_LINKS, LINKS } from '../consts';
+import { localePath, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+const home = localePath(lang, '/');
+const blog = localePath(lang, '/blog/');
 
 const currentYear = new Date().getFullYear();
 ---
@@ -8,29 +18,29 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-dark text-white">
   <div class="container">
     {/* Keeps the heading outline intact: the h3s below follow whatever h2 ends the page. */}
-    <h2 class="visually-hidden">Site footer</h2>
+    <h2 class="visually-hidden">{t('footer.heading')}</h2>
     <div class="footer-navigation py-3">
-      <nav aria-label="Blog categories">
-        <h3 class="h6 fw-semibold mb-3 text-white-75">Blog</h3>
+      <nav aria-label={t('footer.blogCategories')}>
+        <h3 class="h6 fw-semibold mb-3 text-white-75">{t('footer.blog')}</h3>
         <ul class="list-unstyled footer-nav d-flex flex-wrap gap-3 mb-0">
-          <li><a href="/blog/">All articles</a></li>
+          <li><a href={blog}>{t('footer.allArticles')}</a></li>
           {BLOG_CATEGORIES.map((c) => (
-            <li><a href={`/blog/?category=${c.id}`}>{c.label}</a></li>
+            <li><a href={`${blog}?category=${c.id}`}>{t(c.label)}</a></li>
           ))}
         </ul>
       </nav>
 
-      <nav aria-label="Site map">
-        <h3 class="h6 fw-semibold mb-3 text-white-75">Site</h3>
+      <nav aria-label={t('footer.siteMap')}>
+        <h3 class="h6 fw-semibold mb-3 text-white-75">{t('footer.site')}</h3>
         <ul class="list-unstyled footer-nav d-flex flex-wrap gap-3 mb-0">
           {FOOTER_LINKS.map((link) => (
-            <li><a href={link.href}>{link.label}</a></li>
+            <li><a href={`${home}${link.hash}`}>{t(link.label)}</a></li>
           ))}
         </ul>
       </nav>
     </div>
 
-    <nav class="footer-socials" aria-label="Social profiles">
+    <nav class="footer-socials" aria-label={t('footer.socials')}>
       <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
         <Icon name="fa6-brands:linkedin-in" aria-hidden="true" />
       </a>
@@ -52,7 +62,7 @@ const currentYear = new Date().getFullYear();
     </nav>
 
     <p class="footer-copyright small text-white-50 text-center my-2">
-      &copy; {currentYear} Iasi Salomon. All rights reserved. Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-white-50">Astro</a>
+      &copy; {currentYear} Iasi Salomon. {t('footer.rights')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-white-50">Astro</a>
     </p>
   </div>
 </footer>

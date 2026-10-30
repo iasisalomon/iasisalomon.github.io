@@ -1,5 +1,13 @@
 ---
 import { formatRange, getFeaturedExperience, type Role } from '../data/queries';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 // Roles live in src/data/experience.json. Consecutive roles at the same
 // organization are grouped under it, with each role's own dates.
@@ -12,7 +20,7 @@ interface Job {
 }
 
 const groups: Role[][] = [];
-for (const role of await getFeaturedExperience()) {
+for (const role of await getFeaturedExperience(lang)) {
   const last = groups.at(-1);
   if (last && last[0].organization === role.organization) last.push(role);
   else groups.push([role]);
@@ -23,18 +31,18 @@ const company = (r: Role) => (r.organizationNote ? `${r.organization} (${r.organ
 // Roles are newest first, so a group spans from its last role's start to its first role's end.
 const jobs: Job[] = groups.map((roles) =>
   roles.length === 1
-    ? { title: roles[0].title, company: company(roles[0]), dates: formatRange(roles[0].start, roles[0].end), bullets: roles[0].bullets }
+    ? { title: roles[0].title, company: company(roles[0]), dates: formatRange(roles[0].start, roles[0].end, lang), bullets: roles[0].bullets }
     : {
         company: company(roles[0]),
-        dates: formatRange(roles.at(-1)!.start, roles[0].end),
-        roles: roles.map((r) => ({ title: r.title, dates: formatRange(r.start, r.end), bullets: r.bullets })),
+        dates: formatRange(roles.at(-1)!.start, roles[0].end, lang),
+        roles: roles.map((r) => ({ title: r.title, dates: formatRange(r.start, r.end, lang), bullets: r.bullets })),
       },
 );
 ---
 
 <section id="experience" class="py-6 bg-light">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Experience</h2>
+    <h2 class="text-center mt-1 mb-4">{t('experience.title')}</h2>
     <div class="section-divider mb-5"></div>
     <div class="row justify-content-center">
       <div class="col-lg-8">

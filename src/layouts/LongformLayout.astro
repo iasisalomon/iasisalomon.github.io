@@ -8,6 +8,7 @@ import MainLayout from './MainLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import CustomFooter from '../components/CustomFooter.astro';
 import AuthorCard from '../components/AuthorCard.astro';
+import { useTranslations, type Alternates, type Locale } from '../i18n';
 
 export interface LongformBadge {
   text: string;
@@ -45,8 +46,10 @@ interface Props {
   modifiedTime?: string;
   /** schema.org type: BlogPosting for posts (default), Article for case studies. */
   schemaType?: 'BlogPosting' | 'Article';
-  /** Language of the page body; the site chrome stays English. */
-  lang?: string;
+  /** Language of the page: the body and the site chrome. */
+  lang?: Locale;
+  /** The page's address in each language it exists in. */
+  alternates?: Alternates;
   navVariant?: 'main' | 'blog';
   activeCategory?: string;
 }
@@ -66,9 +69,11 @@ const {
   modifiedTime,
   schemaType,
   lang = 'en',
+  alternates,
   navVariant = 'main',
   activeCategory,
 } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <MainLayout
@@ -81,18 +86,19 @@ const {
   publishedTime={publishedTime}
   modifiedTime={modifiedTime}
   lang={lang}
+  alternates={alternates}
 >
-  <Navbar variant={navVariant} activeCategory={activeCategory} />
+  <Navbar variant={navVariant} activeCategory={activeCategory} lang={lang} alternates={alternates} />
 
   <article class="longform" id="main-content">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <header class="longform-header">
-            <a href={back.href} class="longform-back" lang="en">← {back.label}</a>
+            <a href={back.href} class="longform-back">← {back.label}</a>
 
             {badges.length > 0 && (
-              <div class="longform-badges" lang="en">
+              <div class="longform-badges">
                 {badges.map((badge) => {
                   const Tag = badge.href ? 'a' : 'span';
                   return (
@@ -109,7 +115,7 @@ const {
             {lead && <p class="longform-lead">{lead}</p>}
 
             {facts.length > 0 && (
-              <dl class="longform-facts" lang="en">
+              <dl class="longform-facts">
                 {facts.map((fact) => (
                   <div>
                     <dt>{fact.label}</dt>
@@ -128,13 +134,11 @@ const {
 
           <slot name="after" />
 
-          <div lang="en">
-            <AuthorCard />
-          </div>
+          <AuthorCard lang={lang} />
 
-          <footer class="longform-footer" lang="en">
+          <footer class="longform-footer">
             {(prev || next) && (
-              <nav class="longform-pager" aria-label="More to read">
+              <nav class="longform-pager" aria-label={t('longform.moreToRead')}>
                 {prev ? (
                   <a href={prev.href} class="longform-pager__link">
                     <span class="longform-pager__label">← {prev.label}</span>
@@ -156,7 +160,7 @@ const {
     </div>
   </article>
 
-  <CustomFooter />
+  <CustomFooter lang={lang} />
 </MainLayout>
 
 <style>

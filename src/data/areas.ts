@@ -1,4 +1,5 @@
 // Single source of truth for project categories (areas of expertise).
+import type { TranslationKey } from '../i18n';
 
 export const CATEGORY_IDS = ['operations', 'software-engineering', 'events-production'] as const;
 export type CategoryId = (typeof CATEGORY_IDS)[number];
@@ -7,24 +8,25 @@ export type CategoryId = (typeof CATEGORY_IDS)[number];
 // Case-study pages theme off this one map, so the colour of a thing always
 // means its area.
 export interface AreaMeta {
-  label: string;
+  /** Translation key of the area's name. */
+  label: TranslationKey;
   color: string;
   gradientClass: string;
 }
 
 export const AREA_META: Record<CategoryId, AreaMeta> = {
   operations: {
-    label: 'Operations',
+    label: 'areas.operations',
     color: 'dark',
     gradientClass: 'gradient-black',
   },
   'software-engineering': {
-    label: 'Software Engineering',
+    label: 'areas.softwareEngineering',
     color: 'success',
     gradientClass: 'gradient-success',
   },
   'events-production': {
-    label: 'Events & Production',
+    label: 'areas.eventsProduction',
     color: 'danger',
     gradientClass: 'gradient-danger',
   },

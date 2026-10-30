@@ -1,25 +1,23 @@
 ---
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
 const groups = [
-  {
-    name: 'Delivery and leadership',
-    items:
-      'Agile and Scrum, SDLC, delivery planning, risk management, stakeholder management, hiring and onboarding, SOPs and documentation.',
-  },
-  {
-    name: 'Delivery tooling',
-    items: 'Jira (JQL, automation), Retool, n8n, Make, Rewst, Google Workspace, AI assistants.',
-  },
-  {
-    name: 'Technical',
-    items:
-      'JavaScript, TypeScript, Node.js, React, Python, SQL, REST APIs, Docker, Nginx, Git, AI-assisted development.',
-  },
+  { name: t('skills.deliveryName'), items: t('skills.deliveryItems') },
+  { name: t('skills.toolingName'), items: t('skills.toolingItems') },
+  { name: t('skills.technicalName'), items: t('skills.technicalItems') },
 ];
 ---
 
 <section id="skills" class="py-6 bg-light">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Skills</h2>
+    <h2 class="text-center mt-1 mb-4">{t('skills.title')}</h2>
     <div class="section-divider mb-5"></div>
     <div class="row justify-content-center">
       <div class="col-lg-8">

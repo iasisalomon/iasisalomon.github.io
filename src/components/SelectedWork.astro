@@ -1,6 +1,15 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getFeaturedWork } from '../data/queries';
+import { localePath } from '../i18n';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 // Every card has the same anatomy: a visual header (photo, or an area
 // gradient with an icon when there's no photo), tag, title, description,
@@ -19,7 +28,7 @@ interface WorkItem {
   link?: { label: string; href: string };
 }
 
-const items: WorkItem[] = (await getFeaturedWork()).map(({ slug, title, description, image, card }) => {
+const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, description, image, card }) => {
   const src = card.image ?? image;
   return {
     tag: card.tag,
@@ -28,7 +37,7 @@ const items: WorkItem[] = (await getFeaturedWork()).map(({ slug, title, descript
     image: src && !card.panel ? { src, alt: card.imageAlt ?? '' } : undefined,
     panel: card.panel,
     facts: card.facts,
-    cta: { label: card.ctaLabel, href: `/projects/${slug}/` },
+    cta: { label: card.ctaLabel, href: localePath(lang, `/projects/${slug}/`) },
     link: card.link,
   };
 });
@@ -36,7 +45,7 @@ const items: WorkItem[] = (await getFeaturedWork()).map(({ slug, title, descript
 
 <section id="work" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Selected work</h2>
+    <h2 class="text-center mt-1 mb-4">{t('work.title')}</h2>
     <div class="section-divider mb-5"></div>
     <div class="row g-4 justify-content-center">
       {items.map((item) => (

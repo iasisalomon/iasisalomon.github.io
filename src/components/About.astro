@@ -1,22 +1,23 @@
+---
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <section id="about" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">About</h2>
+    <h2 class="text-center mt-1 mb-4">{t('about.title')}</h2>
     <div class="section-divider mb-5"></div>
     <div class="row justify-content-center">
       <div class="col-lg-8 about-text">
-        <p class="lead">
-          Most delivery problems start at the handoffs: unclear ownership, slow decisions, and manual work that keeps
-          coming back. I make those workflows visible, owned, and easier to run.
-        </p>
-        <p>
-          At HomeTeam Network, I launched remote production in six weeks and built the operating team from zero. At
-          Interlaced, I led onboarding automation that provisions Google Workspace accounts, retries failures, and
-          escalates exceptions. At Sky Mavis, I automated request routing across Legal, Growth, Operations, and Finance.
-        </p>
-        <p class="mb-0">
-          My engineering and QA background helps me scope work and make trade-offs with developers. I use AI to triage
-          tickets, draft responses, summarize data, and accelerate product work from a clear specification.
-        </p>
+        <p class="lead">{t('about.lead')}</p>
+        <p>{t('about.body1')}</p>
+        <p class="mb-0">{t('about.body2')}</p>
       </div>
     </div>
   </div>

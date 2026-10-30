@@ -1,0 +1,81 @@
+---
+// Served by Cloudflare Pages for any unknown URL: /404.html, or /es/404.html
+// for unknown URLs under /es/ (Pages serves the nearest 404.html). Known old
+// URLs are redirected in public/_redirects instead.
+import { Icon } from 'astro-icon/components';
+import MainLayout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CustomFooter from '../components/CustomFooter.astro';
+import { localePath, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = localePath(lang, '/');
+---
+
+<MainLayout title={t('notFound.title')} description={t('notFound.description')} lang={lang} noindex>
+  <Navbar lang={lang} />
+
+  <main id="main-content" class="not-found">
+    <div class="container">
+      <p class="not-found__code">404</p>
+      <h1>{t('notFound.heading')}</h1>
+      <p class="not-found__lead">{t('notFound.lead')}</p>
+      <ul class="not-found__links list-unstyled">
+        <li>
+          <a href={home} class="btn btn-primary">
+            <Icon name="fa6-solid:house" class="me-2" aria-hidden="true" />{t('notFound.home')}
+          </a>
+        </li>
+        <li>
+          <a href={`${home}#work`} class="btn btn-outline-dark">{t('notFound.caseStudies')}</a>
+        </li>
+        <li>
+          <a href={localePath(lang, '/blog/')} class="btn btn-outline-dark">{t('notFound.blog')}</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+
+  <CustomFooter lang={lang} />
+</MainLayout>
+
+<style>
+  /* Clears the fixed navbar (76px) and keeps the footer off the fold. */
+  .not-found {
+    min-height: 100vh;
+    padding: calc(76px + 4rem) 0 5rem;
+    text-align: center;
+  }
+
+  .not-found__code {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+
+  .not-found h1 {
+    color: var(--color-heading);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+  }
+
+  .not-found__lead {
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    margin: 0 auto 2rem;
+    max-width: 46ch;
+  }
+
+  .not-found__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+</style>

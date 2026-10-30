@@ -1,31 +1,43 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { LINKS } from '../consts';
+import { useTranslations, type Locale } from '../i18n';
 
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section id="contact" class="py-6 text-white">
   <div class="container-fluid position-relative">
     <div class="contact-content">
       <div class="contact-copy">
-        <h2 class="fw-bold mt-1 mb-3">Let's talk</h2>
-        <p class="lead intro mb-0">
-          I'm open to remote Technical Delivery Manager and Technical Program Manager roles with US teams. I also take on
-          focused workflow-automation engagements.
-        </p>
+        <h2 class="fw-bold mt-1 mb-3">{t('contact.title')}</h2>
+        <p class="lead intro mb-0">{t('contact.intro')}</p>
       </div>
 
       <div class="cta p-4 p-md-5 text-center">
         <a href={LINKS.calendly} class="btn btn-light btn-lg px-5 mb-3" target="_blank" rel="noopener noreferrer">
-          <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />Book a 30-minute call
+          <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />{t('contact.call')}
         </a>
 
-        <p class="small muted mb-2">Or email me directly</p>
+        <p class="small muted mb-2">{t('contact.orEmail')}</p>
         <div class="email-row mx-auto">
           <a href={LINKS.email} class="email-row__address">
             <Icon name="fa6-regular:envelope" class="me-2" aria-hidden="true" />{LINKS.emailAddress}
           </a>
-          <button type="button" id="copyEmailBtn" title="Copy email" aria-label="Copy email address" data-email={LINKS.emailAddress}>
+          <button
+            type="button"
+            id="copyEmailBtn"
+            title={t('contact.copyTitle')}
+            aria-label={t('contact.copyLabel')}
+            data-email={LINKS.emailAddress}
+            data-copied={t('contact.copied')}
+            data-failed={t('contact.copyFailed', { email: LINKS.emailAddress })}
+          >
             <Icon name="fa6-regular:copy" aria-hidden="true" />
           </button>
         </div>
@@ -137,13 +149,14 @@ import { LINKS } from '../consts';
   const btn = document.getElementById('copyEmailBtn');
   const note = document.getElementById('copyConfirmation');
   btn?.addEventListener('click', async () => {
-    let message = 'Email copied to clipboard';
+    // Messages come from data attributes, in the page's language.
+    let message = btn.dataset.copied ?? '';
     try {
       await navigator.clipboard.writeText(btn.dataset.email ?? '');
     } catch {
       // Clipboard access can be blocked (permissions, insecure context);
       // say so instead of failing silently.
-      message = `Couldn't copy — the address is ${btn.dataset.email}`;
+      message = btn.dataset.failed ?? '';
     }
     if (!note) return;
     note.textContent = message;

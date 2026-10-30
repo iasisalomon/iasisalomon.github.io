@@ -1,10 +1,18 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getTestimonials } from '../data/queries';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 const testimonials = await getTestimonials();
-const featuredTestimonials = testimonials.filter((t) => t.featured);
-const additionalTestimonials = testimonials.filter((t) => !t.featured);
+const featuredTestimonials = testimonials.filter((q) => q.featured);
+const additionalTestimonials = testimonials.filter((q) => !q.featured);
 
 const initials = (name: string) =>
   name
@@ -17,19 +25,19 @@ const initials = (name: string) =>
 {testimonials.length > 0 && (
 <section id="testimonials" class="py-6 bg-light">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">What colleagues say</h2>
+    <h2 class="text-center mt-1 mb-4">{t('testimonials.title')}</h2>
     <div class="section-divider mb-5"></div>
 
     <div class="quotes" role="list">
-      {featuredTestimonials.map((t) => (
+      {featuredTestimonials.map((q) => (
         <figure class="quote" role="listitem">
           <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
-          <blockquote>{t.quote}</blockquote>
+          <blockquote lang="en">{q.quote}</blockquote>
           <figcaption>
-            <span class="quote__avatar" aria-hidden="true">{initials(t.name)}</span>
+            <span class="quote__avatar" aria-hidden="true">{initials(q.name)}</span>
             <span>
-              <strong>{t.name}</strong>
-              <span class="quote__role">{t.role}{t.org ? `, ${t.org}` : ''}</span>
+              <strong>{q.name}</strong>
+              <span class="quote__role" lang="en">{q.role}{q.org ? `, ${q.org}` : ''}</span>
             </span>
           </figcaption>
         </figure>
@@ -37,17 +45,17 @@ const initials = (name: string) =>
     </div>
     {additionalTestimonials.length > 0 && (
       <details class="quotes-more">
-        <summary>Read {additionalTestimonials.length} more colleague recommendations</summary>
+        <summary>{t('testimonials.more', { count: additionalTestimonials.length })}</summary>
         <div class="quotes quotes--more" role="list">
-          {additionalTestimonials.map((t) => (
+          {additionalTestimonials.map((q) => (
             <figure class="quote" role="listitem">
               <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
-              <blockquote>{t.quote}</blockquote>
+              <blockquote lang="en">{q.quote}</blockquote>
               <figcaption>
-                <span class="quote__avatar" aria-hidden="true">{initials(t.name)}</span>
+                <span class="quote__avatar" aria-hidden="true">{initials(q.name)}</span>
                 <span>
-                  <strong>{t.name}</strong>
-                  <span class="quote__role">{t.role}{t.org ? `, ${t.org}` : ''}</span>
+                  <strong>{q.name}</strong>
+                  <span class="quote__role" lang="en">{q.role}{q.org ? `, ${q.org}` : ''}</span>
                 </span>
               </figcaption>
             </figure>

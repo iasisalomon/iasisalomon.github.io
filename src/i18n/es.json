@@ -1,0 +1,165 @@
+{
+  "site": {
+    "title": "Iasi Salomon | Technical Delivery Manager",
+    "description": "Technical Delivery Manager con más de 5 años en equipos de tecnología remotos y multidisciplinarios. Operaciones de delivery, automatización e IA. Rosario, Argentina; husos horarios de EE. UU.",
+    "personDescription": "Technical Delivery Manager con más de 5 años en equipos de tecnología remotos y multidisciplinarios. Operaciones de delivery, automatización e IA.",
+    "ogImageAlt": "Iasi Salomon, Technical Delivery Manager",
+    "feedTitle": "Iasi Salomon | Blog"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "work": "Trabajos",
+    "engineering": "Ingeniería",
+    "blog": "Blog",
+    "skills": "Habilidades",
+    "organizations": "Organizaciones",
+    "testimonials": "Testimonios",
+    "contact": "Hablemos",
+    "skipToContent": "Saltar al contenido",
+    "mainLabel": "Navegación principal",
+    "blogLabel": "Navegación del blog",
+    "darkMode": "Modo oscuro",
+    "toggle": "Abrir o cerrar el menú",
+    "all": "Todos",
+    "mainSite": "Sitio principal",
+    "languageCode": "ES",
+    "readInLanguage": "Leer en español"
+  },
+  "hero": {
+    "headline": "Destrabo equipos distribuidos y automatizo lo que los frena.",
+    "role": "Technical Delivery Manager / Technical Program Manager · Rosario, Argentina · Remoto, husos horarios de EE. UU.",
+    "ctaWork": "Ver trabajos",
+    "ctaCall": "Agendá una llamada de 30 minutos",
+    "linkedin": "Perfil de LinkedIn",
+    "statsLabel": "Resultados destacados",
+    "statTeam": "personas contratadas, incorporadas y sin bloqueos",
+    "statCrewHours": "horas de equipo programadas en un solo mes",
+    "statOnboarding": "de trabajo manual automatizado en cada onboarding"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "lead": "La mayoría de los problemas de delivery empiezan en los traspasos: responsabilidades difusas, decisiones lentas y trabajo manual que vuelve una y otra vez. Hago que esos flujos sean visibles, tengan dueño y sean más fáciles de operar.",
+    "body1": "En HomeTeam Network lancé la producción remota en seis semanas y armé el equipo de operaciones desde cero. En Interlaced lideré la automatización del onboarding: crea las cuentas de Google Workspace, reintenta los fallos y escala las excepciones. En Sky Mavis automaticé el ruteo de pedidos entre Legal, Growth, Operaciones y Finanzas.",
+    "body2": "Mi experiencia en ingeniería y QA me ayuda a dimensionar el trabajo y a negociar prioridades con los desarrolladores. Uso IA para clasificar tickets, redactar respuestas, resumir datos y acelerar el desarrollo de producto a partir de una especificación clara."
+  },
+  "experience": {
+    "title": "Experiencia",
+    "present": "Actualidad"
+  },
+  "work": {
+    "title": "Trabajos destacados"
+  },
+  "engineering": {
+    "title": "Ingeniería",
+    "subtitle": "Trabajo técnico propio, en paralelo al liderazgo de delivery.",
+    "more": "Más proyectos técnicos ({count})"
+  },
+  "writing": {
+    "title": "Artículos",
+    "subtitle": "Ensayos y reflexiones de años anteriores; cada artículo muestra su fecha original.",
+    "readArticle": "Leer artículo",
+    "viewAll": "Ver todos los artículos"
+  },
+  "skills": {
+    "title": "Habilidades",
+    "deliveryName": "Delivery y liderazgo",
+    "deliveryItems": "Agile y Scrum, SDLC, planificación de delivery, gestión de riesgos, gestión de stakeholders, contratación y onboarding, SOPs y documentación.",
+    "toolingName": "Herramientas de delivery",
+    "toolingItems": "Jira (JQL, automatización), Retool, n8n, Make, Rewst, Google Workspace, asistentes de IA.",
+    "technicalName": "Técnicas",
+    "technicalItems": "JavaScript, TypeScript, Node.js, React, Python, SQL, APIs REST, Docker, Nginx, Git, desarrollo asistido por IA."
+  },
+  "organizations": {
+    "title": "Equipos y organizaciones",
+    "opensInNewTab": "{name} (se abre en una pestaña nueva)",
+    "logoAlt": "Logo de {name}"
+  },
+  "testimonials": {
+    "title": "Qué dicen mis colegas",
+    "more": "Leer {count} recomendaciones más"
+  },
+  "contact": {
+    "title": "Hablemos",
+    "intro": "Busco puestos remotos de Technical Delivery Manager y Technical Program Manager en equipos de EE. UU. También tomo proyectos acotados de automatización de procesos.",
+    "call": "Agendá una llamada de 30 minutos",
+    "orEmail": "O escribime directamente",
+    "copyTitle": "Copiar email",
+    "copyLabel": "Copiar la dirección de email",
+    "copied": "Email copiado al portapapeles",
+    "copyFailed": "No se pudo copiar: la dirección es {email}"
+  },
+  "footer": {
+    "heading": "Pie de página",
+    "blogCategories": "Categorías del blog",
+    "blog": "Blog",
+    "allArticles": "Todos los artículos",
+    "siteMap": "Mapa del sitio",
+    "site": "Sitio",
+    "socials": "Redes sociales",
+    "rights": "Todos los derechos reservados. Hecho con"
+  },
+  "author": {
+    "role": "Technical Delivery Manager · Operaciones de delivery, automatización e IA",
+    "message": "¿Buscás un Technical Delivery Manager o Technical Program Manager remoto para un equipo de EE. UU.? Agendá una llamada corta. Para un proyecto acotado de automatización, escribime.",
+    "call": "Agendá una llamada de 30 minutos",
+    "email": "Email"
+  },
+  "blog": {
+    "pageTitle": "Blog | Iasi Salomon",
+    "pageDescription": "Artículos de Iasi Salomon sobre tecnología y negocios, de las economías de los juegos web3 a la ciencia y la sociedad.",
+    "heading": "Artículos",
+    "lead": "Ideas sobre tecnología, negocios y lo que queda en el medio.",
+    "readMore": "Leer artículo →",
+    "empty": "Todavía no hay artículos en esta categoría.",
+    "back": "Volver a Artículos",
+    "newer": "Artículo más nuevo",
+    "older": "Artículo anterior",
+    "published": "Publicado",
+    "updated": "Actualizado",
+    "readingTime": "Tiempo de lectura",
+    "minRead": "{minutes} min de lectura",
+    "categoryTech": "Tecnología",
+    "categoryBusiness": "Negocios",
+    "categoryOther": "Otros"
+  },
+  "longform": {
+    "moreToRead": "Seguir leyendo"
+  },
+  "caseStudy": {
+    "backToWork": "Volver a Trabajos destacados",
+    "backToEngineering": "Volver a Ingeniería",
+    "previous": "Caso anterior",
+    "next": "Caso siguiente",
+    "role": "Rol",
+    "when": "Cuándo",
+    "stack": "Stack",
+    "photos": "Fotos",
+    "photoAlt": "Foto de {title}",
+    "viewer": "Visor de fotos",
+    "closeViewer": "Cerrar el visor de fotos",
+    "previousPhoto": "Foto anterior",
+    "nextPhoto": "Foto siguiente",
+    "photoCount": "{current} de {total}"
+  },
+  "areas": {
+    "operations": "Operaciones",
+    "softwareEngineering": "Ingeniería de software",
+    "eventsProduction": "Eventos y producción"
+  },
+  "status": {
+    "practice": "práctica",
+    "challenge": "desafío técnico",
+    "privateDeployment": "deploy privado"
+  },
+  "notFound": {
+    "title": "Página no encontrada | Iasi Salomon",
+    "description": "Esta página no existe.",
+    "heading": "Página no encontrada",
+    "lead": "Esta página no existe o cambió de lugar. Alguno de estos links te puede llevar a donde ibas:",
+    "home": "Inicio",
+    "caseStudies": "Casos de estudio",
+    "blog": "Blog"
+  }
+}

@@ -1,41 +1,37 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { readingTime } from '../../utils/content';
-
-export async function getStaticPaths() {
-	// Newest first; each post links to its newer and older neighbours.
-	const posts = (await getCollection('blog')).sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-	);
-	return posts.map((post, i) => ({
-		params: { slug: post.id },
-		props: { post, newer: posts[i - 1], older: posts[i + 1] },
-	}));
-}
+// A blog post, in the language it's written in (src/pages/blog/[...slug].astro,
+// src/pages/es/blog/[...slug].astro; see postPaths in ./paths.ts).
+import { render } from 'astro:content';
+import BlogPost from '../layouts/BlogPost.astro';
+import type { Post } from '../data/queries';
+import { pick, type Locale } from '../i18n';
+import { readingTime } from '../utils/content';
 
 interface Props {
-	post: CollectionEntry<'blog'>;
-	newer?: CollectionEntry<'blog'>;
-	older?: CollectionEntry<'blog'>;
+	lang: Locale;
+	post: Post;
+	newer?: Post;
+	older?: Post;
 }
 
-const { post, newer, older } = Astro.props;
-const { Content } = await render(post);
-const link = (p?: CollectionEntry<'blog'>) => p && { title: p.data.title, href: `/blog/${p.id}/` };
+const { lang, post, newer, older } = Astro.props;
+const { data } = post.entry;
+const { Content } = await render(post.entry);
+const link = (p?: Post) => p && { title: p.entry.data.title, href: p.href };
 ---
 
 <BlogPost
-	title={post.data.title}
-	description={post.data.description}
-	pubDate={post.data.pubDate}
-	updatedDate={post.data.updatedDate}
-	heroImage={post.data.heroImage}
-	heroImageAlt={post.data.heroImageAlt}
-	category={post.data.category}
-	lang={post.data.lang}
-	award={post.data.award}
-	readingTime={readingTime(post.body)}
+	title={data.title}
+	description={data.description}
+	pubDate={data.pubDate}
+	updatedDate={data.updatedDate}
+	heroImage={data.heroImage}
+	heroImageAlt={data.heroImageAlt}
+	category={data.category}
+	lang={lang}
+	alternates={post.alternates}
+	award={data.award && pick(data.award, lang)}
+	readingTime={readingTime(post.entry.body, lang)}
 	newer={link(newer)}
 	older={link(older)}
 >

@@ -1,6 +1,15 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { FACTS, LINKS } from '../consts';
+import { pick, useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
 ---
 
 <section id="home" class="d-flex flex-column bg-dark text-white">
@@ -9,25 +18,25 @@ import { FACTS, LINKS } from '../consts';
       {/* Text first in the DOM (and on desktop); the photo leads on phones. */}
       <div class="col-lg-8 order-2 order-lg-1">
         <p class="name mb-2">Iasi Salomon</p>
-        <h1 class="headline mb-3">I unblock distributed teams and automate what keeps them stuck.</h1>
-        <p class="role mb-4">Technical Delivery Manager / Technical Program Manager · Rosario, Argentina · Remote, US time zones</p>
+        <h1 class="headline mb-3">{t('hero.headline')}</h1>
+        <p class="role mb-4">{t('hero.role')}</p>
 
         <div class="hero-ctas">
           <a href="#work" class="btn btn-primary btn-lg me-2 mb-2">
-            See delivery work <Icon name="fa6-solid:arrow-down" class="ms-2" aria-hidden="true" />
+            {t('hero.ctaWork')} <Icon name="fa6-solid:arrow-down" class="ms-2" aria-hidden="true" />
           </a>
           <a href={LINKS.calendly} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
-            Book a 30-minute call <Icon name="fa6-regular:calendar-days" class="ms-2" aria-hidden="true" />
+            {t('hero.ctaCall')} <Icon name="fa6-regular:calendar-days" class="ms-2" aria-hidden="true" />
           </a>
           <a href={LINKS.linkedin} class="hero-link" target="_blank" rel="noopener noreferrer">
-            LinkedIn profile <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />
+            {t('hero.linkedin')} <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />
           </a>
         </div>
 
-        <ul class="hero-stats row g-2 list-unstyled mb-0" aria-label="Selected delivery results">
-          <li class="col-4"><strong class="d-block">{FACTS.teamSize}</strong><span class="d-block">people hired, onboarded and kept unblocked</span></li>
-          <li class="col-4"><strong class="d-block">{FACTS.crewHoursInOneMonth}</strong><span class="d-block">crew hours scheduled in one month</span></li>
-          <li class="col-4"><strong class="d-block">~{FACTS.onboardingMinutesSaved} min</strong><span class="d-block">of manual work automated out of every onboarding</span></li>
+        <ul class="hero-stats row g-2 list-unstyled mb-0" aria-label={t('hero.statsLabel')}>
+          <li class="col-4"><strong class="d-block">{fact('teamSize')}</strong><span class="d-block">{t('hero.statTeam')}</span></li>
+          <li class="col-4"><strong class="d-block">{fact('crewHoursInOneMonth')}</strong><span class="d-block">{t('hero.statCrewHours')}</span></li>
+          <li class="col-4"><strong class="d-block">~{fact('onboardingMinutesSaved')} min</strong><span class="d-block">{t('hero.statOnboarding')}</span></li>
         </ul>
       </div>
 

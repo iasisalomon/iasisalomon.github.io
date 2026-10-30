@@ -1,35 +1,42 @@
 ---
-import { getCollection } from 'astro:content';
-import { getRepos } from '../data/queries';
+import { getCaseStudiesIn, getRepos } from '../data/queries';
 import RepoCard from './RepoCard.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 // Repos keep their real status so nothing reads as client work.
-const repos = await getRepos();
+const repos = await getRepos(lang);
 // Featured repos are shown up front; the rest go in the collapsible archive.
 const featuredRepos = repos.filter((repo) => repo.featured);
 const additionalRepos = repos.filter((repo) => !repo.featured);
 
 // Repos with a written case study link their title to it.
-const caseStudySlugs = new Set((await getCollection('caseStudies')).map((e) => e.id));
+const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slug));
 ---
 
 <section id="engineering" class="py-6 bg-light">
   <div class="container">
-    <h2 class="text-center mt-1 mb-2">Engineering</h2>
-    <p class="text-center text-muted mb-4">Hands-on technical work alongside delivery leadership.</p>
+    <h2 class="text-center mt-1 mb-2">{t('engineering.title')}</h2>
+    <p class="text-center text-muted mb-4">{t('engineering.subtitle')}</p>
     <div class="section-divider mb-5"></div>
     <div class="row g-4">
       {featuredRepos.map((repo) => (
-        <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} />
+        <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
       ))}
     </div>
 
     {additionalRepos.length > 0 && (
       <details class="repo-archive">
-        <summary>More technical projects ({additionalRepos.length})</summary>
+        <summary>{t('engineering.more', { count: additionalRepos.length })}</summary>
         <div class="row g-4 mt-1">
           {additionalRepos.map((repo) => (
-            <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} />
+            <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
           ))}
         </div>
       </details>

@@ -1,34 +1,5 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Experience from '../components/Experience.astro';
-import SelectedWork from '../components/SelectedWork.astro';
-import Skills from '../components/Skills.astro';
-import Engineering from '../components/Engineering.astro';
-import Writing from '../components/Writing.astro';
-import Organizations from '../components/Organizations.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Contact from '../components/Contact.astro';
-import CustomFooter from '../components/CustomFooter.astro';
+import HomePage from '../views/HomePage.astro';
 ---
 
-<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<Navbar />
-	<main id="main-content">
-		{/* Delivery profile first; deeper work and supporting proof follow. */}
-		<Hero />
-		<About />
-		<Experience />
-		<SelectedWork />
-		<Engineering />
-		<Writing />
-		<Skills />
-		<Organizations />
-		<Testimonials />
-		<Contact />
-	</main>
-	<CustomFooter />
-</MainLayout>
+<HomePage lang="en" />

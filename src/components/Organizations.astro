@@ -1,5 +1,13 @@
 ---
 import { getOrganizations } from '../data/queries';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 const brands = await getOrganizations();
 const featuredBrands = brands.filter((brand) => brand.featured);
@@ -8,7 +16,7 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
 
 <section id="organizations" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">Teams and organizations</h2>
+    <h2 class="text-center mt-1 mb-4">{t('organizations.title')}</h2>
     <div class="section-divider mb-5"></div>
 
     <div class="logo-group">
@@ -21,9 +29,9 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
               target="_blank"
               rel="noopener noreferrer"
               title={brand.name}
-              aria-label={`${brand.name} (opens in a new tab)`}
+              aria-label={t('organizations.opensInNewTab', { name: brand.name })}
             >
-              <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" decoding="async" width="180" height="72" />
+              <img src={brand.logo} alt={t('organizations.logoAlt', { name: brand.name })} loading="lazy" decoding="async" width="180" height="72" />
             </a>
           </li>
         ))}
@@ -41,9 +49,9 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
                 target="_blank"
                 rel="noopener noreferrer"
                 title={brand.name}
-                aria-label={`${brand.name} (opens in a new tab)`}
+                aria-label={t('organizations.opensInNewTab', { name: brand.name })}
               >
-                <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" decoding="async" width="140" height="56" />
+                <img src={brand.logo} alt={t('organizations.logoAlt', { name: brand.name })} loading="lazy" decoding="async" width="140" height="56" />
               </a>
             </li>
           ))}

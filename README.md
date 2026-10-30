@@ -36,11 +36,17 @@ src/
 │   └── BlogPost.astro       # Maps a post's frontmatter onto LongformLayout
 ├── styles/
 │   └── global.css         # Design tokens and the few truly global rules
-├── pages/
-│   ├── index.astro        # Homepage (composed from components)
-│   ├── blog/              # Blog archive + individual posts
-│   ├── projects/          # Project case-study pages
-│   └── rss.xml.js         # RSS feed
+├── i18n/
+│   ├── index.ts           # Languages, t(), localePath(), pick(), dates
+│   ├── en.json            # Interface text in English
+│   └── es.json            # Interface text in Spanish (same keys)
+├── views/                 # Page bodies shared by both languages
+│   ├── HomePage.astro, BlogIndexPage.astro, BlogPostPage.astro,
+│   ├── CaseStudyPage.astro, NotFoundPage.astro
+│   └── paths.ts           # getStaticPaths for posts and case studies
+├── pages/                 # Thin route files that only pick the language
+│   ├── index.astro, 404.astro, rss.xml.js, blog/, projects/   # English
+│   └── es/                # The same routes in Spanish
 ├── data/
 │   ├── projects.json      # Projects (Selected work, Engineering, case studies)
 │   ├── experience.json    # Roles shown in Experience
@@ -48,23 +54,34 @@ src/
 │   ├── organizations.json # "Teams and organizations" logos
 │   ├── queries.ts         # Read access to the collections above
 │   ├── areas.ts           # Project categories and their colors/gradients
-│   ├── blog/              # Blog posts (Markdown)
-│   └── caseStudies/       # Long-form case studies (Markdown)
+│   ├── blog/{en,es}/      # Blog posts (Markdown), one folder per language
+│   └── caseStudies/{en,es}/ # Long-form case studies (Markdown)
 ├── content.config.ts      # Collection schemas (Markdown and JSON data)
-└── consts.ts              # Site title/description, LINKS, NAV_LINKS, BLOG_CATEGORIES
+└── consts.ts              # LINKS, NAV_LINKS, BLOG_CATEGORIES, FACTS
 ```
 
 ## Content
 
+### Languages
+
+The site is in English at `/` and Spanish at `/es/` (Astro's `i18n` routing in `astro.config.mjs`). Every page has the same path after the prefix in both languages, so the language switcher in the navbar only adds or removes `/es`.
+
+- **Interface text** (headings, buttons, labels) lives in `src/i18n/en.json` and `es.json`. Both files must have the same keys; the build fails otherwise. Components use `t('section.key')`.
+- **Markdown** lives in one folder per language: `src/data/blog/en/<slug>.md` and `src/data/blog/es/<slug>.md`. A translation is the file with the same name in the other folder. Each file is a complete document.
+- **JSON text** is written `{ "en": "…", "es": "…" }` where it differs by language, or as a plain string where it doesn't (names, stack items). Testimonial quotes and job titles stay in their original English.
+- **A post in only one language** (a file in just one folder) has a page only in that language. The other language's archive still lists it, with a language badge, and its switcher goes to the other language's blog.
+- **SEO:** each page lists its versions as `hreflang` alternates (`x-default` is English), the sitemap does the same, and each language has its own feed (`/rss.xml`, `/es/rss.xml`).
+- **404:** Cloudflare Pages serves the nearest `404.html`, so a build hook in `astro.config.mjs` writes the Spanish one to `dist/es/404.html`.
+
 ### Blog posts
 
-Markdown files in `src/data/blog/`, validated by the `blog` collection schema. Required frontmatter: `title`, `description`, `pubDate`. Optional: `updatedDate`, `heroImage`, `category` (`tech` | `business` | `other`), and `lang` (BCP-47 tag, defaults to `en`).
+Markdown files in `src/data/blog/<lang>/`, validated by the `blog` collection schema. Required frontmatter: `title`, `description`, `pubDate`. Optional: `updatedDate`, `heroImage`, `heroImageAlt`, `category` (`tech` | `business` | `other`), and `award`. The folder sets the language.
 
 Blog categories are defined in `src/consts.ts` (`BLOG_CATEGORIES`) and must stay in sync with the `category` enum in `src/content.config.ts`.
 
 ### Case studies
 
-Markdown files in `src/data/caseStudies/`. Each file's name must match a project slug in `src/data/projects.json` — the catalog entry supplies shared metadata (date, skills, links), while the Markdown body holds the narrative. Optional frontmatter: `role`, `timeframe`, `outcome`, `heroImage`, `gallery`.
+Markdown files in `src/data/caseStudies/<lang>/`. Each file's name must match a project slug in `src/data/projects.json` — the catalog entry supplies shared metadata (date, skills, links), while the Markdown body holds the narrative. Optional frontmatter: `role`, `timeframe`, `outcome`, `heroImage`, `gallery`.
 
 ### Data files (JSON)
 
@@ -83,6 +100,7 @@ Rules shared by every file:
 - `featured: true` puts an entry on the homepage; the rest show only in full listings.
 - The order of entries in the file is the order on the site (except experience, which is sorted by date).
 - Text can use `{fact}` placeholders (e.g. `{teamSize}`) for the headline numbers in `FACTS` (`src/consts.ts`). An unknown name fails the build.
+- Text that differs by language is `{ "en": "…", "es": "…" }` (see Languages).
 
 ### Images
 
@@ -95,7 +113,7 @@ Rules shared by every file:
 
 ### Links and navigation
 
-Contact links (email, LinkedIn, GitHub, Calendly) live in `LINKS`, and the homepage section links in `NAV_LINKS` (both in `src/consts.ts`). The navbar and footer render from `NAV_LINKS`, so its order must match the section order in `src/pages/index.astro`.
+Contact links (email, LinkedIn, GitHub, Calendly) live in `LINKS`, and the homepage section links in `NAV_LINKS` (both in `src/consts.ts`). The navbar and footer render from `NAV_LINKS`, so its order must match the section order in `src/views/HomePage.astro`.
 
 ## Key patterns
 

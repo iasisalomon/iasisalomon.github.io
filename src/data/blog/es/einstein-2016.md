@@ -4,8 +4,9 @@ description: "Concurso Einstein: primer premio categoría universitarios"
 pubDate: 2016-06-01
 heroImage: "/images/blog/albert-argentina.webp"
 category: "other"
-lang: "es"
-award: "1st prize, Concurso Einstein (university category)"
+award:
+  en: "1st prize, Concurso Einstein (university category)"
+  es: "1.er premio, Concurso Einstein (categoría universitarios)"
 ---
 
 ## Abstract

@@ -3,12 +3,24 @@
     "slug": "hometeam-head-of-operations",
     "title": "Head of Operations",
     "organization": "HomeTeam Network",
-    "organizationNote": "Hybrid, Rosario, Argentina",
+    "organizationNote": {
+      "en": "Hybrid, Rosario, Argentina",
+      "es": "Híbrido, Rosario, Argentina"
+    },
     "start": "2026-01",
     "bullets": [
-      "Run all operations except payments and finance, building and leading the team from zero to {teamSize} contractors and owning hiring, onboarding, scheduling and performance management end to end.",
-      "Launched the remote production operation in 6 weeks, setting up the equipment, network and operating procedures.",
-      "Owned broadcast scheduling and resource allocation for {broadcastsInOneMonth} live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over {crewHoursInOneMonth} crew hours, with peaks of 23 games in a day."
+      {
+        "en": "Run all operations except payments and finance, building and leading the team from zero to {teamSize} contractors and owning hiring, onboarding, scheduling and performance management end to end.",
+        "es": "Dirijo todas las operaciones salvo pagos y finanzas: armé y lidero el equipo, de cero a {teamSize} contratistas, y me ocupo de punta a punta de la contratación, el onboarding, la programación de turnos y la gestión del desempeño."
+      },
+      {
+        "en": "Launched the remote production operation in 6 weeks, setting up the equipment, network and operating procedures.",
+        "es": "Lancé la operación de producción remota en 6 semanas: equipamiento, red y procedimientos operativos."
+      },
+      {
+        "en": "Owned broadcast scheduling and resource allocation for {broadcastsInOneMonth} live baseball broadcasts in a single month across 9 North American leagues, assigning 57 operators over {crewHoursInOneMonth} crew hours, with peaks of 23 games in a day.",
+        "es": "Me ocupé de la programación de transmisiones y la asignación de recursos para {broadcastsInOneMonth} transmisiones de béisbol en vivo en un solo mes, en 9 ligas de Norteamérica: 57 operadores asignados a lo largo de {crewHoursInOneMonth} horas de equipo, con picos de 23 partidos en un día."
+      }
     ],
     "featured": true
   },
@@ -16,12 +28,21 @@
     "slug": "interlaced-automation-engineer",
     "title": "Automation Engineer",
     "organization": "Interlaced LLC",
-    "organizationNote": "contract",
+    "organizationNote": {
+      "en": "contract",
+      "es": "contrato"
+    },
     "start": "2025-04",
     "end": "2025-12",
     "bullets": [
-      "Owned the design, delivery and maintenance of operational workflows end to end, using Rewst, n8n, Retool and Make.",
-      "Automated client onboarding end to end, eliminating an estimated {onboardingMinutesSaved} minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person."
+      {
+        "en": "Owned the design, delivery and maintenance of operational workflows end to end, using Rewst, n8n, Retool and Make.",
+        "es": "Diseñé, entregué y mantuve flujos operativos de punta a punta con Rewst, n8n, Retool y Make."
+      },
+      {
+        "en": "Automated client onboarding end to end, eliminating an estimated {onboardingMinutesSaved} minutes of manual work per onboarding: each support ticket provisions the user in Google Workspace, notifies support and the client, and retries failures automatically before escalating to a person.",
+        "es": "Automaticé de punta a punta el onboarding de clientes y eliminé unos {onboardingMinutesSaved} minutos de trabajo manual por onboarding: cada ticket de soporte crea el usuario en Google Workspace, avisa a soporte y al cliente, y reintenta los fallos automáticamente antes de escalarlos a una persona."
+      }
     ],
     "featured": true
   },
@@ -29,12 +50,21 @@
     "slug": "pythas-software-engineer",
     "title": "Software Engineer",
     "organization": "Pythas LLC",
-    "organizationNote": "contract",
+    "organizationNote": {
+      "en": "contract",
+      "es": "contrato"
+    },
     "start": "2025-01",
     "end": "2025-11",
     "bullets": [
-      "Owned scope, timeline and technical delivery of a fintech proof of concept: virtual bank accounts with USD/USDC swaps, built on the Rail API.",
-      "Validated the product idea with a working proof of concept, which the founders used to decide how to build the full product."
+      {
+        "en": "Owned scope, timeline and technical delivery of a fintech proof of concept: virtual bank accounts with USD/USDC swaps, built on the Rail API.",
+        "es": "Me ocupé del alcance, los plazos y el delivery técnico de una prueba de concepto fintech: cuentas bancarias virtuales con swaps USD/USDC, construida sobre la API de Rail."
+      },
+      {
+        "en": "Validated the product idea with a working proof of concept, which the founders used to decide how to build the full product.",
+        "es": "Validé la idea de producto con una prueba de concepto funcional, que los fundadores usaron para decidir cómo construir el producto completo."
+      }
     ],
     "featured": true
   },
@@ -42,14 +72,29 @@
     "slug": "sky-mavis-operations-project-manager",
     "title": "Operations Project Manager",
     "organization": "Sky Mavis",
-    "organizationNote": "creator of Axie Infinity",
+    "organizationNote": {
+      "en": "creator of Axie Infinity",
+      "es": "creadora de Axie Infinity"
+    },
     "start": "2023-05",
     "end": "2024-11",
     "bullets": [
-      "Coordinated a 4-person team within an 8-person operations group.",
-      "Automated Jira intake and handoffs across Legal, Growth, Operations and Finance, so cross-team requests were routed and tracked without manual follow-up.",
-      "Owned the rollout of the company-wide security training program, sustaining a 95% monthly completion rate across distributed teams.",
-      "Wrote SOPs and self-service guides for recurring requests."
+      {
+        "en": "Coordinated a 4-person team within an 8-person operations group.",
+        "es": "Coordiné un equipo de 4 personas dentro de un grupo de operaciones de 8."
+      },
+      {
+        "en": "Automated Jira intake and handoffs across Legal, Growth, Operations and Finance, so cross-team requests were routed and tracked without manual follow-up.",
+        "es": "Automaticé en Jira la recepción de pedidos y los traspasos entre Legal, Growth, Operaciones y Finanzas, para que los pedidos entre equipos se rutearan y siguieran sin seguimiento manual."
+      },
+      {
+        "en": "Owned the rollout of the company-wide security training program, sustaining a 95% monthly completion rate across distributed teams.",
+        "es": "Lideré el despliegue del programa de capacitación en seguridad para toda la empresa, con un 95% de cumplimiento mensual sostenido en equipos distribuidos."
+      },
+      {
+        "en": "Wrote SOPs and self-service guides for recurring requests.",
+        "es": "Escribí SOPs y guías de autoservicio para los pedidos recurrentes."
+      }
     ],
     "featured": true
   },
@@ -57,11 +102,17 @@
     "slug": "sky-mavis-project-manager-esports",
     "title": "Project Manager, Esports",
     "organization": "Sky Mavis",
-    "organizationNote": "creator of Axie Infinity",
+    "organizationNote": {
+      "en": "creator of Axie Infinity",
+      "es": "creadora de Axie Infinity"
+    },
     "start": "2022-06",
     "end": "2023-05",
     "bullets": [
-      "Managed LATAM operations for the Esports department, coordinating event production and broadcast for Axie Infinity esports."
+      {
+        "en": "Managed LATAM operations for the Esports department, coordinating event production and broadcast for Axie Infinity esports.",
+        "es": "Gestioné las operaciones de LATAM del área de Esports, coordinando la producción de eventos y la transmisión de los esports de Axie Infinity."
+      }
     ],
     "featured": true
   },
@@ -69,11 +120,17 @@
     "slug": "sky-mavis-support-specialist",
     "title": "Support Specialist",
     "organization": "Sky Mavis",
-    "organizationNote": "creator of Axie Infinity",
+    "organizationNote": {
+      "en": "creator of Axie Infinity",
+      "es": "creadora de Axie Infinity"
+    },
     "start": "2021-10",
     "end": "2022-06",
     "bullets": [
-      "Built Node.js REST endpoints to integrate CovalentHQ and internal data sources."
+      {
+        "en": "Built Node.js REST endpoints to integrate CovalentHQ and internal data sources.",
+        "es": "Desarrollé endpoints REST en Node.js para integrar CovalentHQ con fuentes de datos internas."
+      }
     ],
     "featured": true
   },
@@ -81,11 +138,17 @@
     "slug": "scale-quality-assurance-engineer",
     "title": "Quality Assurance Engineer",
     "organization": "Scale Services Corp",
-    "organizationNote": "contract",
+    "organizationNote": {
+      "en": "contract",
+      "es": "contrato"
+    },
     "start": "2021-01",
     "end": "2021-11",
     "bullets": [
-      "API and unit testing in Node.js and Mocha, domain-driven test definitions and OpenAPI documentation."
+      {
+        "en": "API and unit testing in Node.js and Mocha, domain-driven test definitions and OpenAPI documentation.",
+        "es": "Testing de APIs y unitario en Node.js y Mocha, definición de tests orientada al dominio y documentación OpenAPI."
+      }
     ],
     "featured": true
   }

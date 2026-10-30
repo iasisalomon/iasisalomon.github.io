@@ -3,8 +3,18 @@ import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { CATEGORY_IDS } from './data/areas';
 
+// Text that is either the same in every language or written per language:
+// "Toolbox" or { "en": "Practice", "es": "Práctica" }. Pages resolve it with
+// pick() from src/i18n.
+const localized = <T extends z.ZodTypeAny>(schema: T) => z.union([schema, z.object({ en: schema, es: schema })]);
+const text = localized(z.string().min(1));
+
+// Markdown collections keep one folder per language: <collection>/en/<id>.md
+// and <collection>/es/<id>.md. The entry id is "<lang>/<id>"; a translation
+// is the file with the same name in the other folder.
+
 const blog = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/data/blog' }),
+	loader: glob({ pattern: '{en,es}/*.md', base: './src/data/blog' }),
 	// Type-check frontmatter using a schema
 	schema: z.object({
 		title: z.string(),
@@ -16,11 +26,9 @@ const blog = defineCollection({
 		// Describes the hero photo; without it the alt falls back to the title.
 		heroImageAlt: z.string().optional(),
 		category: z.enum(['tech', 'business', 'other']).optional(),
-		// BCP-47 language tag for the post body (defaults to 'en'). Used for the
-		// <html lang> attribute so search engines index the post in the right locale.
-		lang: z.string().optional().default('en'),
 		// Recognition the piece received (e.g. a contest prize), shown as a badge.
-		award: z.string().optional(),
+		// Per language, since it also shows on the other language's archive.
+		award: text.optional(),
 	}),
 });
 
@@ -37,12 +45,12 @@ const galleryImage = z
 	])
 	.transform((img) => (typeof img === 'string' ? { src: img, alt: '', caption: undefined } : img));
 
-// Long-form case studies. Each file's id (filename) must match a project slug
+// Long-form case studies. Each file's name must match a project slug
 // in src/data/projects.json (see getProject); shared metadata (date,
 // skills, links) comes from that catalog entry, while the Markdown
 // body and the fields below hold the case-study narrative.
 const caseStudies = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/data/caseStudies' }),
+	loader: glob({ pattern: '{en,es}/*.md', base: './src/data/caseStudies' }),
 	schema: z.object({
 		role: z.string().optional(),
 		timeframe: z.string().optional(),
@@ -69,7 +77,7 @@ const orderedJson = (path: string) =>
 	});
 
 const linkSchema = z.object({
-	text: z.string().min(1),
+	text,
 	url: z.string().url(),
 	/** astro-icon name, e.g. 'fa6-brands:github'. */
 	icon: z.string().regex(/^[a-z0-9-]+:[a-z0-9-]+$/),
@@ -78,18 +86,18 @@ const linkSchema = z.object({
 // How a featured project looks as a Selected work card on the homepage.
 // Text may use {fact} placeholders from FACTS in consts.ts.
 const workCardSchema = z.object({
-	tag: z.string().min(1),
+	tag: text,
 	/** Card text; defaults to the project description. */
-	description: z.string().min(1).optional(),
+	description: text.optional(),
 	/** Card photo; defaults to the project image. */
 	image: z.string().min(1).optional(),
-	imageAlt: z.string().optional(),
+	imageAlt: text.optional(),
 	/** Shown instead of a photo: background class + a brand logo or an astro-icon name. */
 	panel: z.object({ gradientClass: z.string(), icon: z.string().optional(), logo: z.string().optional() }).optional(),
-	facts: z.object({ label: z.string(), items: z.array(z.string()) }),
-	ctaLabel: z.string().min(1),
+	facts: z.object({ label: text, items: z.array(text) }),
+	ctaLabel: text,
 	/** Optional plain link shown next to the main button. */
-	link: z.object({ label: z.string(), href: z.string().url() }).optional(),
+	link: z.object({ label: text, href: z.string().url() }).optional(),
 });
 
 const projects = defineCollection({
@@ -98,8 +106,8 @@ const projects = defineCollection({
 		.object({
 			slug,
 			order: z.number(),
-			title: z.string().min(1),
-			description: z.string().min(1),
+			title: text,
+			description: text,
 			// Optional: without one, case-study pages fall back to the site's default
 			// social image (see SEO.astro).
 			image: z.string().min(1).optional(),
@@ -107,7 +115,7 @@ const projects = defineCollection({
 			// the "When" fact; projects/[slug].astro enforces that.
 			date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'date must be YYYY-MM-DD').optional(),
 			category: z.enum(CATEGORY_IDS),
-			skills: z.array(z.string()).default([]),
+			skills: z.array(text).default([]),
 			links: z.array(linkSchema).default([]),
 			// Honest label for repos shown in the Engineering section.
 			status: z.enum(['practice', 'challenge', 'private deployment']).optional(),
@@ -132,11 +140,11 @@ const experience = defineCollection({
 		title: z.string().min(1),
 		organization: z.string().min(1),
 		/** Shown in parentheses after the organization, e.g. "contract". */
-		organizationNote: z.string().optional(),
+		organizationNote: text.optional(),
 		start: yearMonth,
 		/** Omitted while the role is current. */
 		end: yearMonth.optional(),
-		bullets: z.array(z.string().min(1)).min(1),
+		bullets: z.array(text).min(1),
 		featured: z.boolean().default(false),
 	}),
 });

@@ -1,13 +1,22 @@
 ---
 import { Icon } from 'astro-icon/components';
 import type { Project } from '../data/queries';
+import { localePath, useTranslations, type Locale, type TranslationKey } from '../i18n';
 
 interface Props {
   repo: Project;
   hasCaseStudy: boolean;
+  lang: Locale;
 }
 
-const { repo, hasCaseStudy } = Astro.props;
+const { repo, hasCaseStudy, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const STATUS_LABELS: Record<NonNullable<Project['status']>, TranslationKey> = {
+  practice: 'status.practice',
+  challenge: 'status.challenge',
+  'private deployment': 'status.privateDeployment',
+};
 ---
 
 <div class="col-md-6 col-lg-4">
@@ -15,7 +24,7 @@ const { repo, hasCaseStudy } = Astro.props;
     <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
       <h3 class="h6 fw-bold mb-0">
         {hasCaseStudy ? (
-          <a href={`/projects/${repo.slug}/`} class="repo-card__link">
+          <a href={localePath(lang, `/projects/${repo.slug}/`)} class="repo-card__link">
             {repo.title}
             <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" />
           </a>
@@ -23,7 +32,7 @@ const { repo, hasCaseStudy } = Astro.props;
           repo.title
         )}
       </h3>
-      <span class="badge status-badge">{repo.status}</span>
+      {repo.status && <span class="badge status-badge">{t(STATUS_LABELS[repo.status])}</span>}
     </div>
     <p class="small text-muted flex-grow-1">{repo.description}</p>
     <p class="small mb-3">{repo.skills.join(' · ')}</p>

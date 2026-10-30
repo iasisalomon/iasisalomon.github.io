@@ -3,29 +3,31 @@ import { Icon } from 'astro-icon/components';
 // Closing call to action for long-form pages (case studies, blog posts):
 // who wrote this, and how to reach them.
 import { LINKS } from '../consts';
+import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
+  lang: Locale;
   /** Lead-in shown above the buttons. */
   message?: string;
 }
 
-const {
-  message = 'Hiring a remote Technical Delivery Manager or Technical Program Manager for a US team? Book a short call. For a focused workflow-automation project, email me.',
-} = Astro.props;
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { message = t('author.message') } = Astro.props;
 ---
 
 <aside class="author-card">
   <img src="/images/cara.webp" alt="" class="author-card__photo" width="72" height="72" loading="lazy" />
   <div>
     <p class="author-card__name">Iasi Salomon</p>
-    <p class="author-card__role">Technical Delivery Manager · Delivery operations, automation &amp; AI</p>
+    <p class="author-card__role">{t('author.role')}</p>
     <p class="author-card__message">{message}</p>
     <div class="d-flex flex-wrap gap-2">
       <a href={LINKS.calendly} class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-        <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />Book a 30-minute call
+        <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />{t('author.call')}
       </a>
       <a href={LINKS.email} class="btn btn-outline-dark btn-sm">
-        <Icon name="fa6-regular:envelope" class="me-2" aria-hidden="true" />Email
+        <Icon name="fa6-regular:envelope" class="me-2" aria-hidden="true" />{t('author.email')}
       </a>
     </div>
   </div>

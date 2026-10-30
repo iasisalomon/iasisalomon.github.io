@@ -2,14 +2,26 @@
   {
     "slug": "axiecon-barcelona",
     "title": "AxieCon Barcelona",
-    "description": "Hosted and produced Sky Mavis' first global conference: a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia via an official Manila watch party.",
+    "description": {
+      "en": "Hosted and produced Sky Mavis' first global conference: a sold-out, 1,000+ attendee event in Barcelona with a $1M esports prize pool, extended to Southeast Asia via an official Manila watch party.",
+      "es": "Fui host y lideré la producción de la primera conferencia global de Sky Mavis: un evento agotado de más de 1.000 asistentes en Barcelona, con US$1M en premios de esports, que llegó al sudeste asiático con una watch party oficial en Manila."
+    },
     "image": "/images/gallery/axiecon/sebastian-pozzo-portrait.webp",
     "date": "2022-09-01",
     "category": "events-production",
     "skills": [
-      "Event Production",
-      "Live Streaming",
-      "Community",
+      {
+        "en": "Event Production",
+        "es": "Producción de eventos"
+      },
+      {
+        "en": "Live Streaming",
+        "es": "Streaming en vivo"
+      },
+      {
+        "en": "Community",
+        "es": "Comunidad"
+      },
       "Esports"
     ],
     "links": [
@@ -19,35 +31,65 @@
         "icon": "fa6-solid:link"
       },
       {
-        "text": "Days 1&2",
+        "text": {
+          "en": "Days 1&2",
+          "es": "Días 1 y 2"
+        },
         "url": "https://www.youtube.com/watch?v=lu_N8kx-I2U",
         "icon": "fa6-brands:youtube"
       },
       {
-        "text": "Days 3&4",
+        "text": {
+          "en": "Days 3&4",
+          "es": "Días 3 y 4"
+        },
         "url": "https://www.youtube.com/watch?v=K2Xo0ovZxJY",
         "icon": "fa6-brands:youtube"
       }
     ],
     "featured": true,
     "card": {
-      "tag": "Live event · Sky Mavis",
-      "imageAlt": "Sebastián Pozzo celebrating his win on the AxieCon main stage",
+      "tag": {
+        "en": "Live event · Sky Mavis",
+        "es": "Evento en vivo · Sky Mavis"
+      },
+      "imageAlt": {
+        "en": "Sebastián Pozzo celebrating his win on the AxieCon main stage",
+        "es": "Sebastián Pozzo festejando su triunfo en el escenario principal de AxieCon"
+      },
       "facts": {
-        "label": "Scale",
+        "label": {
+          "en": "Scale",
+          "es": "Escala"
+        },
         "items": [
-          "1,000+ attendees",
-          "$1M prize pool",
+          {
+            "en": "1,000+ attendees",
+            "es": "1.000+ asistentes"
+          },
+          {
+            "en": "$1M prize pool",
+            "es": "US$1M en premios"
+          },
           "Barcelona + Manila"
         ]
       },
-      "ctaLabel": "Read the story"
+      "ctaLabel": {
+        "en": "Read the story",
+        "es": "Leer la historia"
+      }
     }
   },
   {
     "slug": "self-hosted-deployments",
-    "title": "Self-hosted deployments",
-    "description": "Ran multiple production web apps on a single VPS, routing subdomains through Nginx Proxy Manager with automated SSL (Let's Encrypt) and DNS management.",
+    "title": {
+      "en": "Self-hosted deployments",
+      "es": "Deploys autoalojados"
+    },
+    "description": {
+      "en": "Ran multiple production web apps on a single VPS, routing subdomains through Nginx Proxy Manager with automated SSL (Let's Encrypt) and DNS management.",
+      "es": "Mantuve varias aplicaciones web en producción en un solo VPS, ruteando subdominios con Nginx Proxy Manager, con SSL automático (Let's Encrypt) y gestión de DNS."
+    },
     "category": "software-engineering",
     "skills": [
       "VPS",
@@ -62,7 +104,10 @@
   {
     "slug": "challenge-toolbox",
     "title": "Toolbox",
-    "description": "Full-stack application that processes CSV files from an external API. Built with Node.js, React, and Docker.",
+    "description": {
+      "en": "Full-stack application that processes CSV files from an external API. Built with Node.js, React, and Docker.",
+      "es": "Aplicación full-stack que procesa archivos CSV de una API externa. Hecha con Node.js, React y Docker."
+    },
     "date": "2022-09-01",
     "category": "software-engineering",
     "skills": [
@@ -73,7 +118,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/challenge_toolbox",
         "icon": "fa6-brands:github"
       }
@@ -84,7 +132,10 @@
   {
     "slug": "calliv",
     "title": "Calliv",
-    "description": "Data science project focused on analyzing and processing scientific data.",
+    "description": {
+      "en": "Data science project focused on analyzing and processing scientific data.",
+      "es": "Proyecto de ciencia de datos para analizar y procesar datos científicos."
+    },
     "date": "2021-10-01",
     "category": "software-engineering",
     "skills": [
@@ -96,7 +147,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/calliv",
         "icon": "fa6-brands:github"
       }
@@ -106,7 +160,10 @@
   {
     "slug": "challenge-code-care",
     "title": "Code Care",
-    "description": "Vue.js application that reads input line by line and identifies characters appearing exactly twice. Built with Vuex for state management.",
+    "description": {
+      "en": "Vue.js application that reads input line by line and identifies characters appearing exactly twice. Built with Vuex for state management.",
+      "es": "Aplicación en Vue.js que lee una entrada línea por línea e identifica los caracteres que aparecen exactamente dos veces. Usa Vuex para el manejo de estado."
+    },
     "date": "2021-10-01",
     "category": "software-engineering",
     "skills": [
@@ -116,7 +173,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/challenge_CodeCare",
         "icon": "fa6-brands:github"
       }
@@ -126,7 +186,10 @@
   {
     "slug": "challenge-bravo-care",
     "title": "Bravo Care",
-    "description": "Full-stack application with PostgreSQL database, Express API for data querying and transformation, and React frontend for displaying results.",
+    "description": {
+      "en": "Full-stack application with PostgreSQL database, Express API for data querying and transformation, and React frontend for displaying results.",
+      "es": "Aplicación full-stack con base de datos PostgreSQL, una API en Express para consultar y transformar los datos y un frontend en React para mostrar los resultados."
+    },
     "date": "2022-10-01",
     "category": "software-engineering",
     "skills": [
@@ -137,7 +200,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/challenge_Bravocare",
         "icon": "fa6-brands:github"
       }
@@ -148,7 +214,10 @@
   {
     "slug": "mtg-top8-scraper",
     "title": "MTG Top8 Scraper",
-    "description": "Automated web scraper built with Puppeteer to collect and analyze Magic: The Gathering tournament data from MTGTop8.",
+    "description": {
+      "en": "Automated web scraper built with Puppeteer to collect and analyze Magic: The Gathering tournament data from MTGTop8.",
+      "es": "Scraper automatizado hecho con Puppeteer para recolectar y analizar datos de torneos de Magic: The Gathering de MTGTop8."
+    },
     "date": "2022-11-01",
     "category": "software-engineering",
     "skills": [
@@ -158,7 +227,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/mtgtop8_scrapper",
         "icon": "fa6-brands:github"
       }
@@ -167,8 +239,14 @@
   },
   {
     "slug": "jwt-authentication",
-    "title": "JWT Authentication",
-    "description": "Authentication system implementation using JSON Web Tokens (JWT) with Express.js and EJS templating.",
+    "title": {
+      "en": "JWT Authentication",
+      "es": "Autenticación con JWT"
+    },
+    "description": {
+      "en": "Authentication system implementation using JSON Web Tokens (JWT) with Express.js and EJS templating.",
+      "es": "Implementación de un sistema de autenticación con JSON Web Tokens (JWT), Express.js y plantillas EJS."
+    },
     "date": "2024-08-01",
     "category": "software-engineering",
     "skills": [
@@ -179,7 +257,10 @@
     ],
     "links": [
       {
-        "text": "Repository",
+        "text": {
+          "en": "Repository",
+          "es": "Repositorio"
+        },
         "url": "https://github.com/iasisalomon/jwt_practice",
         "icon": "fa6-brands:github"
       }
@@ -189,7 +270,10 @@
   {
     "slug": "muba",
     "title": "MUBA",
-    "description": "Scoped and led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+    "description": {
+      "en": "Scoped and led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+      "es": "Definí el alcance y lideré el delivery asistido por IA de una plataforma multi-tenant para geriátricos: legajos de residentes, facturación a obras sociales y registros de enfermería."
+    },
     "date": "2026-02-01",
     "category": "software-engineering",
     "skills": [
@@ -202,7 +286,10 @@
     ],
     "links": [
       {
-        "text": "Live demo",
+        "text": {
+          "en": "Live demo",
+          "es": "Demo en vivo"
+        },
         "url": "https://demo.muba.lat",
         "icon": "fa6-solid:arrow-up-right-from-square"
       },
@@ -214,8 +301,14 @@
     ],
     "featured": true,
     "card": {
-      "tag": "Startup · Building with partners",
-      "description": "Defined the scope and functional spec, then led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+      "tag": {
+        "en": "Startup · Building with partners",
+        "es": "Startup · Construida con socios"
+      },
+      "description": {
+        "en": "Defined the scope and functional spec, then led AI-assisted delivery of a multi-tenant nursing-home platform for resident records, insurer billing, and nursing logs.",
+        "es": "Definí el alcance y la especificación funcional, y después lideré el delivery asistido por IA de una plataforma multi-tenant para geriátricos: legajos de residentes, facturación a obras sociales y registros de enfermería."
+      },
       "panel": {
         "gradientClass": "work-card__panel--muba",
         "logo": "/images/brands/muba.webp"
@@ -228,17 +321,29 @@
           "PostgreSQL (Prisma)"
         ]
       },
-      "ctaLabel": "Read the case study",
+      "ctaLabel": {
+        "en": "Read the case study",
+        "es": "Leer el caso de estudio"
+      },
       "link": {
-        "label": "Live demo",
+        "label": {
+          "en": "Live demo",
+          "es": "Demo en vivo"
+        },
         "href": "https://demo.muba.lat"
       }
     }
   },
   {
     "slug": "interlaced-onboarding-automation",
-    "title": "Client onboarding automation",
-    "description": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
+    "title": {
+      "en": "Client onboarding automation",
+      "es": "Automatización del onboarding de clientes"
+    },
+    "description": {
+      "en": "Automated client onboarding from support-ticket intake through Google Workspace provisioning, notifications, retries, and human escalation — saving an estimated 30 minutes per onboarding.",
+      "es": "Automaticé el onboarding de clientes, desde el ticket de soporte hasta la creación de cuentas en Google Workspace, las notificaciones, los reintentos y la escalada a una persona: unos 30 minutos ahorrados por onboarding."
+    },
     "date": "2025-04-01",
     "category": "operations",
     "skills": [
@@ -251,19 +356,43 @@
     "links": [],
     "featured": true,
     "card": {
-      "tag": "Automation · Interlaced",
-      "description": "Automated user provisioning from support-ticket intake through Google Workspace setup, client and support notifications, automatic retries, and human escalation.",
+      "tag": {
+        "en": "Automation · Interlaced",
+        "es": "Automatización · Interlaced"
+      },
+      "description": {
+        "en": "Automated user provisioning from support-ticket intake through Google Workspace setup, client and support notifications, automatic retries, and human escalation.",
+        "es": "Automaticé la creación de usuarios, desde el ticket de soporte hasta la configuración en Google Workspace, las notificaciones al cliente y a soporte, los reintentos automáticos y la escalada a una persona."
+      },
       "image": "/images/work/onboarding-automation.svg",
-      "imageAlt": "Rewst at the center of an automation loop between ConnectWise, Microsoft, Google and Addigy",
+      "imageAlt": {
+        "en": "Rewst at the center of an automation loop between ConnectWise, Microsoft, Google and Addigy",
+        "es": "Rewst en el centro de un circuito de automatización entre ConnectWise, Microsoft, Google y Addigy"
+      },
       "facts": {
-        "label": "Impact",
+        "label": {
+          "en": "Impact",
+          "es": "Impacto"
+        },
         "items": [
-          "~{onboardingMinutesSaved} min saved per onboarding",
-          "Automatic retries",
-          "Human escalation"
+          {
+            "en": "~{onboardingMinutesSaved} min saved per onboarding",
+            "es": "~{onboardingMinutesSaved} min ahorrados por onboarding"
+          },
+          {
+            "en": "Automatic retries",
+            "es": "Reintentos automáticos"
+          },
+          {
+            "en": "Human escalation",
+            "es": "Escalada a una persona"
+          }
         ]
       },
-      "ctaLabel": "Read the case study"
+      "ctaLabel": {
+        "en": "Read the case study",
+        "es": "Leer el caso de estudio"
+      }
     }
   }
 ]

@@ -1,0 +1,165 @@
+{
+  "site": {
+    "title": "Iasi Salomon | Technical Delivery Manager",
+    "description": "Technical Delivery Manager with 5+ years in remote, cross-functional tech teams. Delivery operations, automation and AI. Rosario, Argentina; US time zones.",
+    "personDescription": "Technical Delivery Manager with 5+ years in remote, cross-functional tech teams. Delivery operations, automation and AI.",
+    "ogImageAlt": "Iasi Salomon, Technical Delivery Manager",
+    "feedTitle": "Iasi Salomon | Blog"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "work": "Work",
+    "engineering": "Engineering",
+    "blog": "Blog",
+    "skills": "Skills",
+    "organizations": "Organizations",
+    "testimonials": "Testimonials",
+    "contact": "Let's talk",
+    "skipToContent": "Skip to content",
+    "mainLabel": "Main navigation",
+    "blogLabel": "Blog navigation",
+    "darkMode": "Dark mode",
+    "toggle": "Toggle navigation",
+    "all": "All",
+    "mainSite": "Main site",
+    "languageCode": "EN",
+    "readInLanguage": "Read in English"
+  },
+  "hero": {
+    "headline": "I unblock distributed teams and automate what keeps them stuck.",
+    "role": "Technical Delivery Manager / Technical Program Manager · Rosario, Argentina · Remote, US time zones",
+    "ctaWork": "See delivery work",
+    "ctaCall": "Book a 30-minute call",
+    "linkedin": "LinkedIn profile",
+    "statsLabel": "Selected delivery results",
+    "statTeam": "people hired, onboarded and kept unblocked",
+    "statCrewHours": "crew hours scheduled in one month",
+    "statOnboarding": "of manual work automated out of every onboarding"
+  },
+  "about": {
+    "title": "About",
+    "lead": "Most delivery problems start at the handoffs: unclear ownership, slow decisions, and manual work that keeps coming back. I make those workflows visible, owned, and easier to run.",
+    "body1": "At HomeTeam Network, I launched remote production in six weeks and built the operating team from zero. At Interlaced, I led onboarding automation that provisions Google Workspace accounts, retries failures, and escalates exceptions. At Sky Mavis, I automated request routing across Legal, Growth, Operations, and Finance.",
+    "body2": "My engineering and QA background helps me scope work and make trade-offs with developers. I use AI to triage tickets, draft responses, summarize data, and accelerate product work from a clear specification."
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present"
+  },
+  "work": {
+    "title": "Selected work"
+  },
+  "engineering": {
+    "title": "Engineering",
+    "subtitle": "Hands-on technical work alongside delivery leadership.",
+    "more": "More technical projects ({count})"
+  },
+  "writing": {
+    "title": "Writing archive",
+    "subtitle": "Selected older essays and reflections; each article shows its original date.",
+    "readArticle": "Read article",
+    "viewAll": "View all articles"
+  },
+  "skills": {
+    "title": "Skills",
+    "deliveryName": "Delivery and leadership",
+    "deliveryItems": "Agile and Scrum, SDLC, delivery planning, risk management, stakeholder management, hiring and onboarding, SOPs and documentation.",
+    "toolingName": "Delivery tooling",
+    "toolingItems": "Jira (JQL, automation), Retool, n8n, Make, Rewst, Google Workspace, AI assistants.",
+    "technicalName": "Technical",
+    "technicalItems": "JavaScript, TypeScript, Node.js, React, Python, SQL, REST APIs, Docker, Nginx, Git, AI-assisted development."
+  },
+  "organizations": {
+    "title": "Teams and organizations",
+    "opensInNewTab": "{name} (opens in a new tab)",
+    "logoAlt": "{name} logo"
+  },
+  "testimonials": {
+    "title": "What colleagues say",
+    "more": "Read {count} more colleague recommendations"
+  },
+  "contact": {
+    "title": "Let's talk",
+    "intro": "I'm open to remote Technical Delivery Manager and Technical Program Manager roles with US teams. I also take on focused workflow-automation engagements.",
+    "call": "Book a 30-minute call",
+    "orEmail": "Or email me directly",
+    "copyTitle": "Copy email",
+    "copyLabel": "Copy email address",
+    "copied": "Email copied to clipboard",
+    "copyFailed": "Couldn't copy — the address is {email}"
+  },
+  "footer": {
+    "heading": "Site footer",
+    "blogCategories": "Blog categories",
+    "blog": "Blog",
+    "allArticles": "All articles",
+    "siteMap": "Site map",
+    "site": "Site",
+    "socials": "Social profiles",
+    "rights": "All rights reserved. Built with"
+  },
+  "author": {
+    "role": "Technical Delivery Manager · Delivery operations, automation & AI",
+    "message": "Hiring a remote Technical Delivery Manager or Technical Program Manager for a US team? Book a short call. For a focused workflow-automation project, email me.",
+    "call": "Book a 30-minute call",
+    "email": "Email"
+  },
+  "blog": {
+    "pageTitle": "Blog | Iasi Salomon",
+    "pageDescription": "Articles by Iasi Salomon on technology and business, from web3 game economies to science and society.",
+    "heading": "Articles",
+    "lead": "Thoughts on tech, business and the spaces between.",
+    "readMore": "Read article →",
+    "empty": "No posts in this category yet.",
+    "back": "Back to Articles",
+    "newer": "Newer article",
+    "older": "Older article",
+    "published": "Published",
+    "updated": "Updated",
+    "readingTime": "Reading time",
+    "minRead": "{minutes} min read",
+    "categoryTech": "Tech",
+    "categoryBusiness": "Business",
+    "categoryOther": "Other"
+  },
+  "longform": {
+    "moreToRead": "More to read"
+  },
+  "caseStudy": {
+    "backToWork": "Back to Selected work",
+    "backToEngineering": "Back to Engineering",
+    "previous": "Previous case study",
+    "next": "Next case study",
+    "role": "Role",
+    "when": "When",
+    "stack": "Stack",
+    "photos": "Photos",
+    "photoAlt": "{title} photo",
+    "viewer": "Photo viewer",
+    "closeViewer": "Close photo viewer",
+    "previousPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
+    "photoCount": "{current} of {total}"
+  },
+  "areas": {
+    "operations": "Operations",
+    "softwareEngineering": "Software Engineering",
+    "eventsProduction": "Events & Production"
+  },
+  "status": {
+    "practice": "practice",
+    "challenge": "challenge",
+    "privateDeployment": "private deployment"
+  },
+  "notFound": {
+    "title": "Page not found | Iasi Salomon",
+    "description": "This page doesn't exist.",
+    "heading": "Page not found",
+    "lead": "This page doesn't exist or has moved. One of these should get you where you were going:",
+    "home": "Home",
+    "caseStudies": "Case studies",
+    "blog": "Blog"
+  }
+}

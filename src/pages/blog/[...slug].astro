@@ -1,0 +1,8 @@
+---
+import BlogPostPage from '../../views/BlogPostPage.astro';
+import { postPaths } from '../../views/paths';
+
+export const getStaticPaths = () => postPaths('en');
+---
+
+<BlogPostPage lang="en" {...Astro.props} />

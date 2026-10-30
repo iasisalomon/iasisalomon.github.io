@@ -1,27 +1,34 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getCollection } from 'astro:content';
 import { BLOG_CATEGORIES } from '../consts';
+import { getPostList } from '../data/queries';
+import { formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
 import { languageName, readingTime } from '../utils/content';
 
-// Latest posts as a teaser; the full archive lives at /blog.
-const posts = (await getCollection('blog'))
-  .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
-  .slice(0, 3);
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Latest posts as a teaser; the full archive lives at /blog. Posts not
+// written in this language are listed in the one they were written in.
+const posts = (await getPostList(lang)).slice(0, 3);
 
 const categoryLabels: Record<string, string> = Object.fromEntries(
-  BLOG_CATEGORIES.map((c) => [c.id, c.label]),
+  BLOG_CATEGORIES.map((c) => [c.id, t(c.label)]),
 );
 ---
 
 <section id="blog" class="py-6">
   <div class="container">
-    <h2 class="text-center mt-1 mb-2">Writing archive</h2>
-    <p class="text-center text-muted mb-4">Selected older essays and reflections; each article shows its original date.</p>
+    <h2 class="text-center mt-1 mb-2">{t('writing.title')}</h2>
+    <p class="text-center text-muted mb-4">{t('writing.subtitle')}</p>
     <div class="section-divider mb-5"></div>
 
     <div class="row g-4 justify-content-center">
-      {posts.map((post) => (
+      {posts.map(({ entry: post, lang: postLang, href }) => (
         <div class="col-md-6 col-lg-4">
           <article class="writing-card position-relative h-100 d-flex flex-column bg-white rounded-4 overflow-hidden">
             <div class="writing-img">
@@ -31,7 +38,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
               <div class="d-flex flex-wrap align-items-center gap-2 mb-2 small text-muted">
                 {post.data.pubDate && (
                   <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })}
+                    {formatDate(post.data.pubDate, lang, { year: 'numeric', month: 'short', day: 'numeric' })}
                   </time>
                 )}
                 {post.data.category && (
@@ -39,20 +46,20 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
                     {categoryLabels[post.data.category] ?? post.data.category}
                   </span>
                 )}
-                {languageName(post.data.lang) && <span class="post-badge">{languageName(post.data.lang)}</span>}
-                <span>{readingTime(post.body)}</span>
+                {languageName(postLang, lang) && <span class="post-badge" lang={postLang}>{languageName(postLang, lang)}</span>}
+                <span>{readingTime(post.body, lang)}</span>
               </div>
-              <h3 class="h5 fw-bold mb-2" lang={post.data.lang}>
+              <h3 class="h5 fw-bold mb-2" lang={postLang}>
                 {/* The stretched link makes the whole card clickable while only the title is announced. */}
-                <a href={`/blog/${post.id}/`} class="stretched-link text-reset">{post.data.title}</a>
+                <a href={href} hreflang={postLang} class="stretched-link text-reset">{post.data.title}</a>
               </h3>
               {post.data.award && (
                 <p class="post-badge post-badge--award align-self-start mb-2">
-                  <Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{post.data.award}
+                  <Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{pick(post.data.award, lang)}
                 </p>
               )}
-              <p class="text-muted small mb-3 flex-grow-1" lang={post.data.lang}>{post.data.description}</p>
-              <span class="read-cta fw-medium small" aria-hidden="true">Read article <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></span>
+              <p class="text-muted small mb-3 flex-grow-1" lang={postLang}>{post.data.description}</p>
+              <span class="read-cta fw-medium small" aria-hidden="true">{t('writing.readArticle')} <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></span>
             </div>
           </article>
         </div>
@@ -60,7 +67,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
     </div>
 
     <div class="text-center mt-4">
-      <a href="/blog/" class="btn btn-outline-dark">View all articles <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></a>
+      <a href={localePath(lang, '/blog/')} class="btn btn-outline-dark">{t('writing.viewAll')} <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></a>
     </div>
   </div>
 </section>

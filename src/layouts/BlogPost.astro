@@ -3,7 +3,7 @@
 // layout (same design as the case studies).
 import LongformLayout, { type LongformBadge, type LongformFact } from './LongformLayout.astro';
 import { BLOG_CATEGORIES } from '../consts';
-import { languageName } from '../utils/content';
+import { formatDate, localePath, useTranslations, type Alternates, type Locale } from '../i18n';
 
 interface PostLink {
 	title: string;
@@ -18,7 +18,9 @@ interface Props {
 	heroImage?: string;
 	heroImageAlt?: string;
 	category?: string;
-	lang?: string;
+	lang: Locale;
+	/** The post's page in each language it's written in. */
+	alternates?: Alternates;
 	award?: string;
 	readingTime?: string;
 	newer?: PostLink;
@@ -33,32 +35,31 @@ const {
 	heroImage,
 	heroImageAlt,
 	category,
-	lang = 'en',
+	lang,
+	alternates,
 	award,
 	readingTime,
 	newer,
 	older,
 } = Astro.props;
+const t = useTranslations(lang);
+const blog = localePath(lang, '/blog/');
 
-// pubDate is UTC midnight; format in UTC so it doesn't shift a day back.
-const formatDate = (date: Date) =>
-	date.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const longDate = (date: Date) => formatDate(date, lang, { year: 'numeric', month: 'long', day: 'numeric' });
 
-const categoryLabel = BLOG_CATEGORIES.find((c) => c.id === category)?.label;
-const language = languageName(lang);
+const categoryKey = BLOG_CATEGORIES.find((c) => c.id === category)?.label;
 
 const badges: LongformBadge[] = [
-	...(categoryLabel
-		? [{ text: categoryLabel, class: `category-badge category-${category}`, href: `/blog/?category=${category}` }]
+	...(categoryKey
+		? [{ text: t(categoryKey), class: `category-badge category-${category}`, href: `${blog}?category=${category}` }]
 		: []),
-	...(language ? [{ text: language, class: 'post-badge' }] : []),
 	...(award ? [{ text: award, class: 'post-badge post-badge--award', icon: 'fa6-solid:trophy' }] : []),
 ];
 
 const facts: LongformFact[] = [
-	{ label: 'Published', value: formatDate(pubDate) },
-	...(updatedDate ? [{ label: 'Updated', value: formatDate(updatedDate) }] : []),
-	...(readingTime ? [{ label: 'Reading time', value: readingTime }] : []),
+	{ label: t('blog.published'), value: longDate(pubDate) },
+	...(updatedDate ? [{ label: t('blog.updated'), value: longDate(updatedDate) }] : []),
+	...(readingTime ? [{ label: t('blog.readingTime'), value: readingTime }] : []),
 ];
 ---
 
@@ -69,12 +70,13 @@ const facts: LongformFact[] = [
 	imageAlt={heroImageAlt}
 	badges={badges}
 	facts={facts}
-	back={{ href: '/blog/', label: 'Back to Articles' }}
-	prev={newer && { label: 'Newer article', ...newer }}
-	next={older && { label: 'Older article', ...older }}
+	back={{ href: blog, label: t('blog.back') }}
+	prev={newer && { label: t('blog.newer'), ...newer }}
+	next={older && { label: t('blog.older'), ...older }}
 	publishedTime={pubDate.toISOString()}
 	modifiedTime={updatedDate?.toISOString()}
 	lang={lang}
+	alternates={alternates}
 	navVariant="blog"
 	activeCategory={category}
 >
