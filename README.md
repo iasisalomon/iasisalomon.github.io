@@ -150,7 +150,8 @@ import { Icon } from 'astro-icon/components';
 - `/_astro/*` is cached for a year as immutable, which is safe because those file names are content-hashed.
 - `/images/*` is cached for a week.
 - Every page gets `nosniff`, `Referrer-Policy`, `X-Frame-Options: DENY` and a `Permissions-Policy`.
-- The Content-Security-Policy runs in **report-only** mode and allows only `'self'`. If you add an external service (embed, analytics, font), add its host to the CSP. Before switching to an enforced CSP, the inline theme script and JSON-LD need hashes.
+- The Content-Security-Policy is **enforced**. It allows `'self'`, the theme script by its `sha256-` hash, and Cloudflare Web Analytics (which Pages injects). If you add an external service (embed, analytics, font), add its host to the CSP or the browser will block it.
+- Astro is configured never to inline scripts or styles (`astro.config.mjs`), and `pnpm build` runs `scripts/check-csp.mjs`, which fails if a page has inline code the CSP would block. After editing the theme script, copy the new hash it prints into `public/_headers`.
 
 ## Line endings
 
