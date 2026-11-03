@@ -156,10 +156,18 @@
       },
       {
         "text": {
-          "en": "Live demo",
-          "es": "Demo"
+          "en": "Live demo v1",
+          "es": "Demo v1"
         },
         "url": "https://calliv-v1.iasisalomon.workers.dev/",
+        "icon": "fa6-solid:link"
+      },
+      {
+        "text": {
+          "en": "Live demo v2",
+          "es": "Demo v2"
+        },
+        "url": "https://calliv-v2.iasisalomon.workers.dev/",
         "icon": "fa6-solid:link"
       }
     ],
