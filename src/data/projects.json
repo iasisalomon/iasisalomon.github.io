@@ -133,25 +133,33 @@
     "slug": "calliv",
     "title": "Calliv",
     "description": {
-      "en": "Data science project focused on analyzing and processing scientific data.",
-      "es": "Proyecto de ciencia de datos para analizar y procesar datos científicos."
+      "en": "Web tool that turns a lab plate reading into a calibration curve fitted with TensorFlow.js. Two live versions: Vue, and Nuxt with Vuex.",
+      "es": "Herramienta web que convierte la lectura de una placa de laboratorio en una curva de calibración ajustada con TensorFlow.js. Dos versiones publicadas: Vue y Nuxt con Vuex."
     },
     "date": "2021-10-01",
     "category": "software-engineering",
     "skills": [
       "Vue",
       "Nuxt.js",
-      "TensorFlow",
-      "SSR",
-      "CSV"
+      "Vuex",
+      "TensorFlow.js",
+      "Highcharts"
     ],
     "links": [
       {
         "text": {
-          "en": "Repository",
-          "es": "Repositorio"
+          "en": "Repository v1",
+          "es": "Repositorio v1"
         },
-        "url": "https://github.com/iasisalomon/calliv",
+        "url": "https://github.com/iasisalomon/calliv-v1",
+        "icon": "fa6-brands:github"
+      },
+      {
+        "text": {
+          "en": "Repository v2",
+          "es": "Repositorio v2"
+        },
+        "url": "https://github.com/iasisalomon/calliv-v2",
         "icon": "fa6-brands:github"
       },
       {
