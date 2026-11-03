@@ -153,6 +153,14 @@
         },
         "url": "https://github.com/iasisalomon/calliv",
         "icon": "fa6-brands:github"
+      },
+      {
+        "text": {
+          "en": "Live demo",
+          "es": "Demo"
+        },
+        "url": "https://calliv-v1.iasisalomon.workers.dev/",
+        "icon": "fa6-solid:link"
       }
     ],
     "status": "practice"
