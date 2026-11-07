@@ -38,6 +38,8 @@ interface Props {
   image?: string;
   imageAlt?: string;
   badges?: LongformBadge[];
+  /** A distinction the piece won, shown under the title (not as a badge). */
+  award?: string;
   facts?: LongformFact[];
   back: { href: string; label: string };
   prev?: LongformPagerLink;
@@ -50,7 +52,7 @@ interface Props {
   lang?: Locale;
   /** The page's address in each language it exists in. */
   alternates?: Alternates;
-  navVariant?: 'main' | 'blog' | 'work';
+  navVariant?: 'main' | 'blog' | 'work' | 'engineering';
 }
 
 const {
@@ -60,6 +62,7 @@ const {
   image,
   imageAlt,
   badges = [],
+  award,
   facts = [],
   back,
   prev,
@@ -110,6 +113,12 @@ const t = useTranslations(lang);
             )}
 
             <h1 class="longform-title">{title}</h1>
+            {award && (
+              <p class="award-note award-note--lg">
+                <Icon name="fa6-solid:trophy" aria-hidden="true" />
+                <span>{award}</span>
+              </p>
+            )}
             {lead && <p class="longform-lead">{lead}</p>}
 
             {facts.length > 0 && (

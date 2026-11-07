@@ -239,11 +239,39 @@ section {
     color: var(--badge-other-text);
 }
 
-.post-badge--award {
-    background: var(--badge-award-bg);
+/* A distinction a post won: its own line with a gold trophy, not a pill,
+   so a full sentence reads naturally next to the short category tags.
+   Shared by the homepage teaser, the archive cards and the post header. */
+.award-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.4;
     color: var(--badge-award-text);
-    text-transform: none;
-    letter-spacing: 0;
+}
+
+.award-note svg {
+    flex: 0 0 auto;
+    margin-top: 0.1em;
+    color: #d4a017;
+}
+
+.award-note--lg {
+    align-items: center;
+    font-size: 0.95rem;
+    margin: -0.25rem 0 1.25rem;
+}
+
+.award-note--lg svg {
+    display: grid;
+    width: 1.9rem;
+    height: 1.9rem;
+    padding: 0.42rem;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--badge-award-bg);
 }
 
 .btn {
@@ -369,6 +397,12 @@ html:has(.home-screens) {
 
 #home.screen {
     padding: 0;
+}
+
+/* One content width for every homepage screen (and the footer): 960px,
+   so each screen's edges sit on the same two vertical lines. */
+.home-screens > .screen > .container {
+    max-width: calc(960px + var(--bs-gutter-x, 1.5rem));
 }
 
 /* Portrait tablets: a full-height screen leaves wide empty bands around

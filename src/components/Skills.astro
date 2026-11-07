@@ -15,7 +15,7 @@ const groups = [
 ];
 ---
 
-{/* Rendered inside the About screen; keeps its own anchor for old links. */}
+{/* The right column of the About screen; keeps its own anchor for old links. */}
 <div id="skills" class="skills">
   <h3 class="skills__title">{t('skills.title')}</h3>
   <dl class="mb-0">
@@ -30,9 +30,10 @@ const groups = [
 
 <style>
   .skills {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-card);
   }
 
   .skills__title {
@@ -45,12 +46,13 @@ const groups = [
   }
 
   .skill-line {
-    display: grid;
-    grid-template-columns: 12rem minmax(0, 1fr);
-    gap: 0.25rem 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.92rem;
-    line-height: 1.6;
+    margin-bottom: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .skill-line:last-child {
+    margin-bottom: 0;
   }
 
   .skill-line dt {
@@ -64,9 +66,8 @@ const groups = [
   }
 
   @media (max-width: 767.98px) {
-    .skill-line {
-      grid-template-columns: 1fr;
-      margin-bottom: 0.75rem;
+    .skills {
+      padding: 1rem 1.1rem;
     }
   }
 </style>

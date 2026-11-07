@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { BLOG_CATEGORIES } from '../consts';
 import { getPostList } from '../data/queries';
 import { formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
-import { languageName, readingTime } from '../utils/content';
+import { cardAward, languageName, readingTime } from '../utils/content';
 
 interface Props {
   lang: Locale;
@@ -21,7 +21,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 );
 ---
 
-<section id="blog" class="screen bg-light">
+<section id="blog" class="screen">
   <div class="container">
     <h2 class="text-center mt-1 mb-2">{t('writing.title')}</h2>
     <p class="text-center text-muted mb-4">{t('writing.subtitle')}</p>
@@ -29,7 +29,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 
     <div class="row g-4 justify-content-center swipe-row">
       {posts.map(({ entry: post, lang: postLang, href }) => (
-        <div class="col-md-6 col-lg-4">
+        <div class={posts.length === 2 ? 'col-md-6' : 'col-md-6 col-lg-4'}>
           <article class="writing-card position-relative h-100 d-flex flex-column bg-white rounded-4 overflow-hidden">
             <div class="writing-img">
               <img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
@@ -54,8 +54,9 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
                 <a href={href} hreflang={postLang} class="stretched-link text-reset">{post.data.title}</a>
               </h3>
               {post.data.award && (
-                <p class="post-badge post-badge--award align-self-start mb-2">
-                  <Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{pick(post.data.award, lang)}
+                <p class="award-note mb-2">
+                  <Icon name="fa6-solid:trophy" aria-hidden="true" />
+                  <span>{cardAward(pick(post.data.award, lang))}</span>
                 </p>
               )}
               <p class="text-muted small mb-3 flex-grow-1" lang={postLang}>{post.data.description}</p>

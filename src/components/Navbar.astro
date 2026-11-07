@@ -7,9 +7,9 @@ import { Icon } from 'astro-icon/components';
 //  - Elsewhere they navigate to the homepage screen (`/#id`), which the
 //    browser opens already in place.
 //  - variant 'blog' (archive and posts): the Blog link points to the archive
-//    and is marked current. variant 'work' (case studies): the Work link is
-//    marked current and still leads back to the Work screen.
-// Below 992px, where the links fold into the menu, the bar names the
+//    and is marked current. variant 'work' / 'engineering' (case studies):
+//    that screen's link is marked current and still leads back to it.
+// Below 1200px, where the links fold into the menu, the bar names the
 // current section on the left so the reader always knows where they are.
 // Links stay within the page's language; the language switcher opens the
 // same page in the other language.
@@ -21,7 +21,7 @@ interface Props {
   /** The page's address in each language; without one in the other
    *  language, the switcher goes to that language's home (or blog). */
   alternates?: Alternates;
-  variant?: 'main' | 'blog' | 'work';
+  variant?: 'main' | 'blog' | 'work' | 'engineering';
 }
 const { lang = 'en', alternates = {}, variant = 'main' } = Astro.props;
 const t = useTranslations(lang);
@@ -31,7 +31,7 @@ const blog = localePath(lang, '/blog/');
 const links = NAV_LINKS.map((link) => ({
   label: t(link.label),
   href: variant === 'blog' && link.hash === '#blog' ? blog : `${home}${link.hash}`,
-  current: (variant === 'blog' && link.hash === '#blog') || (variant === 'work' && link.hash === '#work'),
+  current: link.hash === `#${variant}`,
 }));
 const currentLabel = links.find((l) => l.current)?.label ?? t('nav.home');
 
@@ -42,12 +42,12 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
 
 <a class="skip-link" href="#main-content">{t('nav.skipToContent')}</a>
 <nav
-  class="navbar navbar-expand-lg navbar-dark fixed-top"
+  class="navbar navbar-expand-xl navbar-dark fixed-top"
   id="mainNav"
   aria-label={t('nav.mainLabel')}
 >
   <div class="container position-relative">
-    <span class="nav-current d-lg-none" id="navCurrent" aria-hidden="true">{currentLabel}</span>
+    <span class="nav-current d-xl-none" id="navCurrent" aria-hidden="true">{currentLabel}</span>
     {/* No brand: the links are centred on screen. The controls live outside
          the collapse so they stay usable without opening the menu; on phones
          they sit on the right, on desktop they're pinned to the right edge
@@ -96,7 +96,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
-    <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-xl-center" id="navbarNav">
       <ul class="navbar-nav main-nav">
         {links.map((link) => (
           <li class="nav-item">
@@ -164,7 +164,8 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     }
   }
 
-  /* Compact enough for one link per section on a single row from 992px. */
+  /* Eight links plus the switches need a single row from 1200px; below
+     that the links fold into the menu. */
   .main-nav .nav-link {
     margin: 0;
     padding: 0.5rem 0.6rem;
@@ -206,7 +207,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     transform: scaleX(1);
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: 1200px) {
     .nav-controls {
       position: absolute;
       top: 50%;
@@ -313,7 +314,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     box-shadow: none;
   }
 
-  @media (max-width: 991.98px) {
+  @media (max-width: 1199.98px) {
     #mainNav {
       padding: 0.5rem 0;
     }

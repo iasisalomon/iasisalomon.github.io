@@ -14,3 +14,9 @@ export function readingTime(body: string | undefined, lang: Locale): string {
 export function languageName(postLang: Locale, pageLang: Locale): string | undefined {
   return postLang === pageLang ? undefined : LANGUAGE_NAMES[postLang];
 }
+
+/** The award as shown on post cards: just the prize, the part before the
+ *  first comma ("1st prize"); the post page shows the full text. */
+export function cardAward(award: string): string {
+	return award.split(',')[0].trim();
+}

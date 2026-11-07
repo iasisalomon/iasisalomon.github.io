@@ -71,7 +71,7 @@ const thumbOf = (src: string) => {
 	]}
 	facts={facts}
 	back={back}
-	navVariant="work"
+	navVariant={fromWork ? 'work' : 'engineering'}
 	prev={pagerLink(t('caseStudy.previous'), prev)}
 	next={pagerLink(t('caseStudy.next'), next)}
 	publishedTime={new Date(projectDate).toISOString()}

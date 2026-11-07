@@ -40,8 +40,11 @@
   "about": {
     "title": "Sobre mí",
     "lead": "La mayoría de los problemas de delivery empiezan en los traspasos: responsabilidades difusas, decisiones lentas y trabajo manual que vuelve una y otra vez. Hago que esos flujos sean visibles, tengan dueño y sean más fáciles de operar.",
-    "body1": "En HomeTeam Network lancé la producción remota en seis semanas y armé el equipo de operaciones desde cero. En Interlaced lideré la automatización del onboarding: crea las cuentas de Google Workspace, reintenta los fallos y escala las excepciones. En Sky Mavis automaticé el ruteo de pedidos entre Legal, Growth, Operaciones y Finanzas.",
-    "body2": "Mi experiencia en ingeniería y QA me ayuda a dimensionar el trabajo y a negociar prioridades con los desarrolladores. Uso IA para clasificar tickets, redactar respuestas, resumir datos y acelerar el desarrollo de producto a partir de una especificación clara."
+    "approach": "Mapeo cómo se mueve el trabajo de verdad, le doy un responsable a cada paso y automatizo lo que se repite. Mi base en ingeniería y QA me permite dimensionar el trabajo y negociar prioridades con desarrolladores; la IA se encarga de clasificar, redactar y resumir para que el equipo se enfoque en los problemas difíciles.",
+    "proofLabel": "Lo que vas a encontrar acá",
+    "proofWork": "Tres casos de estudio con resultados: una conferencia agotada de más de 1.000 asistentes, una plataforma con IA para geriátricos y una automatización de onboarding que ahorra ~{minutes} minutos por cada ingreso.",
+    "proofEngineering": "Ingeniería práctica: deploys, desafíos técnicos y proyectos de práctica, con código que podés abrir.",
+    "proofReferences": "Recomendaciones de directores, un CEO y compañeros de los equipos donde trabajé."
   },
   "experience": {
     "title": "Experiencia",
@@ -90,15 +93,18 @@
     "copyTitle": "Copiar email",
     "copyLabel": "Copiar la dirección de email",
     "copied": "Email copiado al portapapeles",
-    "copyFailed": "No se pudo copiar: la dirección es {email}"
+    "copyFailed": "No se pudo copiar: la dirección es {email}",
+    "offerDeliveryTitle": "Liderazgo de delivery",
+    "offerDeliveryText": "Puestos de Technical Delivery Manager o Technical Program Manager: planificación, responsables claros y destrabar equipos distribuidos.",
+    "offerAutomationTitle": "Automatización de procesos",
+    "offerAutomationText": "Proyectos acotados: onboarding, alta de cuentas, ruteo de pedidos y el trabajo manual entre medio.",
+    "offerWhereTitle": "Dónde y cuándo",
+    "offerWhereText": "Rosario, Argentina. Remoto, en husos horarios de EE. UU.",
+    "offerLabel": "En qué puedo ayudar"
   },
   "footer": {
     "heading": "Pie de página",
     "blogCategories": "Categorías del blog",
-    "blog": "Blog",
-    "allArticles": "Todos los artículos",
-    "siteMap": "Mapa del sitio",
-    "site": "Sitio",
     "socials": "Redes sociales",
     "rights": "Todos los derechos reservados. Hecho con"
   },

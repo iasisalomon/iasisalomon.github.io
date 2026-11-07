@@ -22,17 +22,15 @@ export const NAV_LINKS: { label: TranslationKey; hash: string }[] = [
 	{ label: 'nav.about', hash: '#about' },
 	{ label: 'nav.experience', hash: '#experience' },
 	{ label: 'nav.work', hash: '#work' },
+	{ label: 'nav.engineering', hash: '#engineering' },
 	{ label: 'nav.blog', hash: '#blog' },
 	{ label: 'nav.proof', hash: '#proof' },
 	{ label: 'nav.contact', hash: '#contact' },
 ];
 
-// The footer mirrors the nav.
-export const FOOTER_LINKS = NAV_LINKS;
-
 // Blog categories — must stay in sync with the `category` enum in
-// content.config.ts. Used by the blog navbar, the archive filter tabs,
-// the homepage blog teaser and the footer links.
+// content.config.ts. Used by the archive filter tabs, post badges and the
+// homepage blog teaser.
 export const BLOG_CATEGORIES = [
 	{ id: 'tech', label: 'blog.categoryTech' },
 	{ id: 'business', label: 'blog.categoryBusiness' },

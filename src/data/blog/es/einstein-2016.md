@@ -1,12 +1,12 @@
 ---
 title: "Einstein: La influencia de sus ideas para mejorar el mundo"
-description: "Concurso Einstein: primer premio categoría universitarios"
+description: "La cosmovisión de Einstein, de sus conferencias de 1925 en Argentina a \"El mundo tal como yo lo veo\", releída hoy en diálogo con mi padre."
 pubDate: 2016-06-01
 heroImage: "/images/blog/albert-argentina.webp"
 category: "other"
 award:
   en: "1st prize, Concurso Einstein (university category)"
-  es: "1.er premio, Concurso Einstein (categoría universitarios)"
+  es: "1er premio, Concurso Einstein (categoría universitarios)"
 ---
 
 ## Abstract

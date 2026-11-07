@@ -9,23 +9,56 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// What the reader can come here for; the facts are the same ones the hero
+// and About state, gathered as a closing summary.
+const offers = [
+  { icon: 'fa6-solid:people-group', title: t('contact.offerDeliveryTitle'), text: t('contact.offerDeliveryText') },
+  { icon: 'fa6-solid:gears', title: t('contact.offerAutomationTitle'), text: t('contact.offerAutomationText') },
+  { icon: 'fa6-solid:earth-americas', title: t('contact.offerWhereTitle'), text: t('contact.offerWhereText') },
+];
 ---
 
 <section id="contact" class="screen text-white">
   <div class="container position-relative">
+    {/* Same header as every other screen: centred title and divider. The
+        intro is a paragraph, so it reads left-aligned with the offers. */}
+    <h2 class="text-center mt-1 mb-3">{t('contact.title')}</h2>
+    <div class="section-divider section-divider--dark mb-4"></div>
+
     <div class="contact-content">
       <div class="contact-copy">
-        <h2 class="fw-bold mt-1 mb-3">{t('contact.title')}</h2>
-        <p class="lead intro mb-0">{t('contact.intro')}</p>
+        <p class="intro">{t('contact.intro')}</p>
+
+        <h3 class="visually-hidden">{t('contact.offerLabel')}</h3>
+        <ul class="offers list-unstyled mb-0">
+          {offers.map((o) => (
+            <li class="offer">
+              <span class="offer__icon" aria-hidden="true"><Icon name={o.icon} /></span>
+              <span>
+                <strong>{o.title}</strong>
+                <span class="offer__text">{o.text}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div class="cta p-4 p-md-5 text-center">
-        <a href={LINKS.calendly} class="btn btn-light btn-lg px-5 mb-3" target="_blank" rel="noopener noreferrer">
+      <div class="cta">
+        <div class="cta__who">
+          <img src="/images/cara.webp" alt="" width="64" height="64" class="cta__photo" loading="lazy" />
+          <span>
+            <strong>Iasi Salomon</strong>
+            <span class="muted">Technical Delivery Manager</span>
+          </span>
+        </div>
+
+        <a href={LINKS.calendly} class="btn btn-light btn-lg w-100 mb-3" target="_blank" rel="noopener noreferrer">
           <Icon name="fa6-regular:calendar-days" class="me-2" aria-hidden="true" />{t('contact.call')}
         </a>
 
-        <p class="small muted mb-2">{t('contact.orEmail')}</p>
-        <div class="email-row mx-auto">
+        <p class="small muted mb-2 text-center">{t('contact.orEmail')}</p>
+        <div class="email-row">
           <a href={LINKS.email} class="email-row__address">
             <Icon name="fa6-regular:envelope" class="me-2" aria-hidden="true" />{LINKS.emailAddress}
           </a>
@@ -41,7 +74,12 @@ const t = useTranslations(lang);
             <Icon name="fa6-regular:copy" aria-hidden="true" />
           </button>
         </div>
-        <p id="copyConfirmation" class="small copy-confirmation mb-0" aria-live="polite"></p>
+        <p id="copyConfirmation" class="small copy-confirmation mb-2" aria-live="polite"></p>
+
+        <a href={LINKS.linkedin} class="cta__linkedin" target="_blank" rel="noopener noreferrer">
+          <Icon name="fa6-brands:linkedin-in" class="me-2" aria-hidden="true" />{t('hero.linkedin')}
+          <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />
+        </a>
       </div>
     </div>
   </div>
@@ -56,13 +94,19 @@ const t = useTranslations(lang);
     background: radial-gradient(ellipse at top, #2b3138 0%, #1a1d20 70%);
     min-height: calc(100vh - 76px - var(--footer-h, 0px));
     min-height: calc(100svh - 76px - var(--footer-h, 0px));
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
+  /* Offers and card as one block on the page's centre line, the same
+     width as the References quotes. */
   .contact-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: clamp(2rem, 4vw, 4.5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
     align-items: center;
+    max-width: 960px;
+    margin-inline: auto;
   }
 
   .contact-copy {
@@ -70,12 +114,96 @@ const t = useTranslations(lang);
   }
 
   .intro {
-    max-width: 52ch;
     color: rgba(255, 255, 255, 0.75);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-divider--dark {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .offers {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .offer {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+
+  .offer__icon {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.7rem;
+    background: rgba(77, 154, 255, 0.14);
+    color: var(--color-accent-on-dark, #4d9aff);
+    font-size: 1rem;
+  }
+
+  .offer strong {
+    display: block;
+    color: #fff;
+    font-size: 0.98rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .offer__text {
+    display: block;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 48ch;
+  }
+
+  .cta__who {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cta__who strong {
+    display: block;
+    font-size: 1.05rem;
+  }
+
+  .cta__photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    object-fit: cover;
+  }
+
+  .cta__linkedin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+
+  .cta__linkedin:hover {
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .cta {
-    max-width: none;
+    width: 100%;
+    justify-self: stretch;
+    padding: 1.4rem 1.5rem;
     border-radius: 1.25rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -87,7 +215,6 @@ const t = useTranslations(lang);
 
   .email-row {
     display: flex;
-    max-width: 340px;
     border-radius: 0.5rem;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -124,20 +251,14 @@ const t = useTranslations(lang);
     margin-top: 0.5rem;
   }
 
-  @media (max-width: 1199.98px) {
+  /* One column below desktop: the offers, then the card at full width. */
+  @media (max-width: 991.98px) {
     .contact-content {
       grid-template-columns: 1fr;
       gap: 2rem;
-      width: min(100%, 48rem);
+      max-width: 36rem;
     }
 
-    .contact-copy {
-      text-align: center;
-    }
-
-    .intro {
-      margin-inline: auto;
-    }
   }
 
 </style>

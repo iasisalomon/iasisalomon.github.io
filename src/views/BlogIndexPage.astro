@@ -9,7 +9,7 @@ import CustomFooter from '../components/CustomFooter.astro';
 import { BLOG_CATEGORIES } from '../consts';
 import { getPostList } from '../data/queries';
 import { everyLocale, formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
-import { languageName, readingTime } from '../utils/content';
+import { cardAward, languageName, readingTime } from '../utils/content';
 
 interface Props {
 	lang: Locale;
@@ -81,8 +81,9 @@ const filters = [
 										<a href={href} hreflang={postLang} class="stretched-link">{post.data.title}</a>
 									</h2>
 									{post.data.award && (
-										<p class="post-badge post-badge--award mb-2">
-											<Icon name="fa6-solid:trophy" class="me-1" aria-hidden="true" />{pick(post.data.award, lang)}
+										<p class="award-note mb-2">
+											<Icon name="fa6-solid:trophy" aria-hidden="true" />
+											<span>{cardAward(pick(post.data.award, lang))}</span>
 										</p>
 									)}
 								</header>

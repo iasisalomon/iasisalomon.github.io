@@ -53,7 +53,6 @@ const badges: LongformBadge[] = [
 	...(categoryKey
 		? [{ text: t(categoryKey), class: `category-badge category-${category}`, href: `${blog}?category=${category}` }]
 		: []),
-	...(award ? [{ text: award, class: 'post-badge post-badge--award', icon: 'fa6-solid:trophy' }] : []),
 ];
 
 const facts: LongformFact[] = [
@@ -78,6 +77,7 @@ const facts: LongformFact[] = [
 	lang={lang}
 	alternates={alternates}
 	navVariant="blog"
+	award={award}
 >
 	<slot />
 </LongformLayout>

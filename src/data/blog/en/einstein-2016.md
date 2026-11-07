@@ -1,6 +1,6 @@
 ---
 title: "Einstein: How His Ideas Can Help Improve the World"
-description: "Concurso Einstein: first prize, university category"
+description: "Einstein's worldview, from his 1925 lectures in Argentina to \"The World as I See It\", read against today through conversations with my father."
 pubDate: 2016-06-01
 heroImage: "/images/blog/albert-argentina.webp"
 category: "other"

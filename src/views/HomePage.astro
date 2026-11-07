@@ -6,6 +6,7 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import SelectedWork from '../components/SelectedWork.astro';
+import Engineering from '../components/Engineering.astro';
 import Writing from '../components/Writing.astro';
 import Proof from '../components/Proof.astro';
 import Contact from '../components/Contact.astro';
@@ -23,7 +24,7 @@ const alternates = everyLocale('/');
 
 <MainLayout title={t('site.title')} description={t('site.description')} lang={lang} alternates={alternates}>
 	<Navbar lang={lang} alternates={alternates} />
-	{/* Seven screens, one per nav link, each at least a viewport tall. Scroll
+	{/* Eight screens, one per nav link, each at least a viewport tall. Scroll
 	    snaps to a screen's top when you stop near it (see .home-screens in
 	    global.css); the nav's script marks the screen in view. */}
 	<main id="main-content" class="home-screens">
@@ -31,6 +32,7 @@ const alternates = everyLocale('/');
 		<About lang={lang} />
 		<Experience lang={lang} />
 		<SelectedWork lang={lang} />
+		<Engineering lang={lang} />
 		<Writing lang={lang} />
 		<Proof lang={lang} />
 		<Contact lang={lang} />
