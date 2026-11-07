@@ -10,6 +10,12 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
+
+const stats = [
+  { value: fact('teamSize'), label: t('hero.statTeam') },
+  { value: fact('crewHoursInOneMonth'), label: t('hero.statCrewHours') },
+  { value: `~${fact('onboardingMinutesSaved')} min`, label: t('hero.statOnboarding') },
+];
 ---
 
 <section id="home" class="screen bg-dark text-white">
@@ -19,25 +25,22 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
       <div class="col-lg-8 order-2 order-lg-1">
         <p class="name mb-2">Iasi Salomon</p>
         <h1 class="headline mb-3">{t('hero.headline')}</h1>
-        <p class="role mb-4">{t('hero.role')}</p>
+        <p class="role mb-1">{t('hero.title')}</p>
+        <p class="location mb-4">
+          <Icon name="fa6-solid:location-dot" class="me-2" aria-hidden="true" />{t('hero.location')}
+        </p>
 
         <div class="hero-ctas">
-          <a href="#work" class="btn btn-primary btn-lg me-2 mb-2">
+          <a href="#work" class="btn btn-primary btn-lg">
             {t('hero.ctaWork')} <Icon name="fa6-solid:arrow-down" class="ms-2" aria-hidden="true" />
           </a>
-          <a href={LINKS.calendly} class="btn btn-outline-light btn-lg me-2 mb-2" target="_blank" rel="noopener noreferrer">
+          <a href={LINKS.calendly} class="btn btn-outline-light btn-lg" target="_blank" rel="noopener noreferrer">
             {t('hero.ctaCall')} <Icon name="fa6-regular:calendar-days" class="ms-2" aria-hidden="true" />
           </a>
           <a href={LINKS.linkedin} class="hero-link" target="_blank" rel="noopener noreferrer">
-            {t('hero.linkedin')} <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />
+            <Icon name="fa6-brands:linkedin" class="me-2" aria-hidden="true" />{t('hero.linkedin')}
           </a>
         </div>
-
-        <ul class="hero-stats row g-2 list-unstyled mb-0" aria-label={t('hero.statsLabel')}>
-          <li class="col-4"><strong class="d-block">{fact('teamSize')}</strong><span class="d-block">{t('hero.statTeam')}</span></li>
-          <li class="col-4"><strong class="d-block">{fact('crewHoursInOneMonth')}</strong><span class="d-block">{t('hero.statCrewHours')}</span></li>
-          <li class="col-4"><strong class="d-block">~{fact('onboardingMinutesSaved')} min</strong><span class="d-block">{t('hero.statOnboarding')}</span></li>
-        </ul>
       </div>
 
       <div class="col-lg-4 order-1 order-lg-2">
@@ -45,7 +48,7 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
           <img
             src="/images/cara.webp"
             alt="Iasi Salomon"
-            class="rounded-circle img-fluid shadow-lg"
+            class="rounded-circle img-fluid"
             width="260"
             height="260"
             fetchpriority="high"
@@ -53,10 +56,33 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
         </div>
       </div>
     </div>
+
+    {/* The proof, given the full width: big numbers, readable labels. */}
+    <ul class="hero-stats list-unstyled mb-0" aria-label={t('hero.statsLabel')}>
+      {stats.map((s) => (
+        <li>
+          <strong>{s.value}</strong>
+          <span>{s.label}</span>
+        </li>
+      ))}
+    </ul>
   </div>
+
+  {/* Signals that the page continues, one screen at a time. */}
+  <a href="#about" class="scroll-cue" aria-label={t('nav.about')}>
+    <span aria-hidden="true">{t('nav.about')}</span>
+    <Icon name="fa6-solid:chevron-down" aria-hidden="true" />
+  </a>
 </section>
 
 <style>
+  /* The same soft light as the Let's talk screen, so the page opens and
+     closes alike; here it falls on the photo's side. */
+  #home {
+    position: relative;
+    background: radial-gradient(ellipse at 80% 20%, #2b3138 0%, #1a1d20 65%) !important;
+  }
+
   /* Overrides the global centered, 200px-capped .profile-image. */
   .profile-image {
     max-width: none;
@@ -66,14 +92,10 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
   .profile-image img {
     width: 260px;
     height: 260px;
-    border: 4px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .role {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--color-accent-on-dark, #4d9aff);
-    max-width: 52ch;
+    border: 4px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 0 0 10px rgba(77, 154, 255, 0.08),
+      0 20px 40px rgba(0, 0, 0, 0.35);
   }
 
   .name {
@@ -91,59 +113,166 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
     line-height: 1.15;
   }
 
+  .role {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-accent-on-dark, #4d9aff);
+  }
+
+  .location {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+  }
+
   .hero-link {
-    display: inline-block;
-    margin: 0.25rem 0.75rem 0.75rem 0;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .hero-link:hover {
+    color: #fff !important;
+  }
+
+  .hero-link :global(svg) {
+    font-size: 1.15rem;
   }
 
   .hero-stats {
-    max-width: 700px;
-    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .hero-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
     border-left: 2px solid var(--color-accent-on-dark, #4d9aff);
-    padding-left: 0.75rem;
+    padding-left: 1rem;
   }
 
   .hero-stats strong {
     color: #fff;
-    font-size: 1.25rem;
-    line-height: 1.1;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
   }
 
   .hero-stats span {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.78rem;
-    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scroll-cue:hover {
+    color: #fff !important;
+  }
+
+  .scroll-cue :global(svg) {
+    animation: cue 1.8s ease-in-out infinite;
+  }
+
+  @keyframes cue {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue :global(svg) {
+      animation: none;
+    }
+  }
+
+  /* Short screens: no room for the cue under the stats. */
+  @media (max-height: 760px) {
+    .scroll-cue {
+      display: none;
+    }
   }
 
   @media (max-width: 991.98px) {
     .profile-image img {
       width: 120px;
       height: 120px;
+      box-shadow: 0 0 0 6px rgba(77, 154, 255, 0.08);
     }
   }
 
-  @media (max-width: 768px) {
+  /* Phones: each stat is a row, number beside its label, so labels get
+     the full width instead of a third of it. */
+  @media (max-width: 767.98px) {
+    .profile-image img {
+      width: 92px;
+      height: 92px;
+    }
+
+    .headline {
+      font-size: 1.85rem;
+    }
+
     .role {
-      font-size: 0.95rem;
+      font-size: 1rem;
+    }
+
+    .location {
+      font-size: 0.88rem;
+    }
+
+    .hero-stats {
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+      padding-top: 1.1rem;
     }
 
     .hero-stats li {
-      padding-left: 0.5rem;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.9rem;
+      padding-left: 0.75rem;
     }
 
     .hero-stats strong {
-      font-size: 1.05rem;
+      flex: 0 0 5.6rem;
+      font-size: 1.45rem;
     }
 
     .hero-stats span {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
+    }
+
+    .scroll-cue {
+      display: none;
     }
   }
 </style>
