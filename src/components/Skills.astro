@@ -8,66 +8,72 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+// Each group's items are one comma-separated string in the dictionaries;
+// shown as tags here. Commas inside parentheses stay put, so
+// "Jira (JQL, automation)" is one tag.
+const tags = (list: string) =>
+  list
+    .replace(/\.\s*$/, '')
+    .split(/,\s*(?![^(]*\))/)
+    .filter(Boolean);
+
 const groups = [
-  { name: t('skills.deliveryName'), items: t('skills.deliveryItems') },
-  { name: t('skills.toolingName'), items: t('skills.toolingItems') },
-  { name: t('skills.technicalName'), items: t('skills.technicalItems') },
+  { name: t('skills.deliveryName'), items: tags(t('skills.deliveryItems')) },
+  { name: t('skills.toolingName'), items: tags(t('skills.toolingItems')) },
+  { name: t('skills.technicalName'), items: tags(t('skills.technicalItems')) },
 ];
 ---
 
-{/* The right column of the About screen; keeps its own anchor for old links. */}
+{/* The bottom band of the About screen; keeps its own anchor for old links. */}
 <div id="skills" class="skills">
-  <h3 class="skills__title">{t('skills.title')}</h3>
-  <dl class="mb-0">
-    {groups.map((g) => (
-      <div class="skill-line">
-        <dt>{g.name}</dt>
-        <dd>{g.items}</dd>
-      </div>
-    ))}
-  </dl>
+  <h3 class="visually-hidden">{t('skills.title')}</h3>
+  {groups.map((g) => (
+    <div class="skills__group">
+      <h4 class="skills__name">{g.name}</h4>
+      <ul class="skills__tags list-unstyled mb-0">
+        {g.items.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  ))}
 </div>
 
 <style>
   .skills {
-    padding: 1.25rem 1.4rem;
-    border: 1px solid var(--color-border);
-    border-radius: 1rem;
-    background: var(--color-card);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
   }
 
-  .skills__title {
-    font-size: 0.75rem;
+  .skills__name {
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-secondary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
 
-  .skill-line {
-    margin-bottom: 0.85rem;
-    font-size: 0.9rem;
-    line-height: 1.55;
+  .skills__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
   }
 
-  .skill-line:last-child {
-    margin-bottom: 0;
-  }
-
-  .skill-line dt {
-    color: var(--color-heading);
-    font-weight: 600;
-  }
-
-  .skill-line dd {
-    color: var(--color-text-secondary);
-    margin: 0;
+  .skills__tags li {
+    font-size: 0.76rem;
+    padding: 0.18em 0.65em;
+    border-radius: var(--radius-pill);
+    background: var(--color-hover-bg);
+    color: var(--color-text);
+    white-space: nowrap;
   }
 
   @media (max-width: 767.98px) {
     .skills {
-      padding: 1rem 1.1rem;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
     }
   }
 </style>

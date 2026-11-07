@@ -11,12 +11,13 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Read like a resume summary: the problem I solve, how I solve it, and
-// where on this page the proof is. The proof items link to their screens.
+// Read like a resume summary: the problem I solve and how (the statement),
+// where on this page the proof is (three cards that jump to their
+// screens), and the skills behind it (a band of tags).
 const proof = [
-  { icon: 'fa6-solid:briefcase', href: '#work', text: t('about.proofWork', { minutes: pick(FACTS.onboardingMinutesSaved, lang) }) },
-  { icon: 'fa6-solid:code', href: '#engineering', text: t('about.proofEngineering') },
-  { icon: 'fa6-solid:quote-left', href: '#proof', text: t('about.proofReferences') },
+  { icon: 'fa6-solid:briefcase', href: '#work', title: t('nav.work'), text: t('about.proofWork', { minutes: pick(FACTS.onboardingMinutesSaved, lang) }) },
+  { icon: 'fa6-solid:code', href: '#engineering', title: t('nav.engineering'), text: t('about.proofEngineering') },
+  { icon: 'fa6-solid:quote-left', href: '#proof', title: t('nav.proof'), text: t('about.proofReferences') },
 ];
 ---
 
@@ -24,103 +25,129 @@ const proof = [
   <div class="container">
     <h2 class="text-center mt-1 mb-3">{t('about.title')}</h2>
     <div class="section-divider mb-4"></div>
-    <div class="row gy-4 gx-lg-5 align-items-center">
-      <div class="col-lg-7">
-        <p class="about-lead">{t('about.lead')}</p>
-        <p class="about-approach">{t('about.approach')}</p>
 
-        <h3 class="about-proof__label">{t('about.proofLabel')}</h3>
-        <ul class="about-proof list-unstyled mb-0">
-          {proof.map((p) => (
-            <li>
-              <a href={p.href} class="about-proof__item">
-                <span class="about-proof__icon" aria-hidden="true"><Icon name={p.icon} /></span>
-                <span>{p.text}</span>
-                <Icon name="fa6-solid:arrow-down" class="about-proof__arrow" aria-hidden="true" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div class="col-lg-5">
-        <Skills lang={lang} />
-      </div>
+    <div class="about-statement">
+      <p class="about-lead">{t('about.lead')}</p>
+      <p class="about-approach mb-0">{t('about.approach')}</p>
     </div>
+
+    <h3 class="visually-hidden">{t('about.proofLabel')}</h3>
+    <ul class="about-proof list-unstyled">
+      {proof.map((p) => (
+        <li>
+          <a href={p.href} class="proof-card">
+            <span class="proof-card__head">
+              <span class="proof-card__icon" aria-hidden="true"><Icon name={p.icon} /></span>
+              <span class="proof-card__title">{p.title}</span>
+              <Icon name="fa6-solid:arrow-down" class="proof-card__arrow" aria-hidden="true" />
+            </span>
+            <span class="proof-card__text">{p.text}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <Skills lang={lang} />
   </div>
 </section>
 
 <style>
+  /* The statement: the problem in bold, the approach beneath, with an
+     accent rule on the left like a pull quote. */
+  .about-statement {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.25rem;
+    margin-bottom: 1.4rem;
+  }
+
   .about-lead {
-    font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+    font-size: clamp(1.15rem, 1.9vw, 1.4rem);
     font-weight: 600;
-    line-height: 1.45;
+    line-height: 1.4;
     letter-spacing: -0.01em;
     color: var(--color-heading);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
 
   .about-approach {
     color: var(--color-text-secondary);
     font-size: 0.95rem;
     line-height: 1.65;
-    margin-bottom: 1.1rem;
-  }
-
-  .about-proof__label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin-bottom: 0.6rem;
   }
 
   .about-proof {
     display: grid;
-    gap: 0.25rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.4rem;
   }
 
-  /* Each proof line jumps to the screen that holds it. */
-  .about-proof__item {
+  /* Each card jumps to the screen that holds that proof. */
+  .proof-card {
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.45rem 0.6rem;
-    margin-inline: -0.6rem;
-    border-radius: 0.6rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.9rem 1.1rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-card);
     color: var(--color-text);
-    font-size: 0.9rem;
-    line-height: 1.5;
+    transition: border-color 0.2s ease;
   }
 
-  .about-proof__item:hover {
-    background: var(--color-hover-bg);
+  .proof-card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .proof-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .proof-card__icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.55rem;
+    background: rgba(var(--color-accent-rgb), 0.1);
+    color: var(--color-accent);
+    font-size: 0.85rem;
+  }
+
+  .proof-card__title {
+    font-weight: 700;
     color: var(--color-heading);
   }
 
-  .about-proof__icon {
-    flex: 0 0 auto;
-    display: grid;
-    place-items: center;
-    width: 1.9rem;
-    height: 1.9rem;
-    border-radius: 0.5rem;
-    background: rgba(var(--color-accent-rgb), 0.1);
-    color: var(--color-accent);
-    font-size: 0.8rem;
-  }
-
-  .about-proof__item :global(.about-proof__arrow) {
-    flex: 0 0 auto;
+  .proof-card :global(.proof-card__arrow) {
     margin-left: auto;
-    margin-top: 0.3rem;
     font-size: 0.75rem;
     color: var(--color-text-muted);
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
   }
 
-  .about-proof__item:hover :global(.about-proof__arrow) {
-    opacity: 1;
+  .proof-card:hover :global(.proof-card__arrow) {
+    color: var(--color-accent);
+    transform: translateY(2px);
+  }
+
+  .proof-card__text {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 767.98px) {
+    .about-statement {
+      padding-left: 1rem;
+    }
+
+    .about-proof {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
   }
 </style>
