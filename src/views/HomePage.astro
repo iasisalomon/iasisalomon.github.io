@@ -6,11 +6,8 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import SelectedWork from '../components/SelectedWork.astro';
-import Skills from '../components/Skills.astro';
-import Engineering from '../components/Engineering.astro';
 import Writing from '../components/Writing.astro';
-import Organizations from '../components/Organizations.astro';
-import Testimonials from '../components/Testimonials.astro';
+import Proof from '../components/Proof.astro';
 import Contact from '../components/Contact.astro';
 import CustomFooter from '../components/CustomFooter.astro';
 import { everyLocale, useTranslations, type Locale } from '../i18n';
@@ -26,18 +23,53 @@ const alternates = everyLocale('/');
 
 <MainLayout title={t('site.title')} description={t('site.description')} lang={lang} alternates={alternates}>
 	<Navbar lang={lang} alternates={alternates} />
-	<main id="main-content">
-		{/* Delivery profile first; deeper work and supporting proof follow. */}
+	{/* Seven screens, one per nav link, each at least a viewport tall. Scroll
+	    snaps to a screen's top when you stop near it (see .home-screens in
+	    global.css); the nav's script marks the screen in view. */}
+	<main id="main-content" class="home-screens">
 		<Hero lang={lang} />
 		<About lang={lang} />
 		<Experience lang={lang} />
 		<SelectedWork lang={lang} />
-		<Engineering lang={lang} />
 		<Writing lang={lang} />
-		<Skills lang={lang} />
-		<Organizations lang={lang} />
-		<Testimonials lang={lang} />
+		<Proof lang={lang} />
 		<Contact lang={lang} />
 	</main>
 	<CustomFooter lang={lang} />
 </MainLayout>
+
+<script>
+	// The footer shares the last screen with "Let's talk"; the contact
+	// section subtracts its height (see Contact.astro).
+	const footer = document.querySelector<HTMLElement>('body > footer');
+	if (footer && 'ResizeObserver' in window) {
+		new ResizeObserver(() => {
+			document.documentElement.style.setProperty('--footer-h', `${footer.offsetHeight}px`);
+		}).observe(footer);
+	}
+
+	// Screens rise in the first time they come into view. Skipped for readers
+	// who ask for less motion, and without JavaScript nothing is hidden (the
+	// hidden state only applies under .reveal-ready).
+	const main = document.querySelector<HTMLElement>('.home-screens');
+	const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	if (main && !reduced && 'IntersectionObserver' in window) {
+		const reveal = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (!entry.isIntersecting) return;
+					entry.target.classList.add('is-revealed');
+					reveal.unobserve(entry.target);
+				});
+			},
+			{ rootMargin: '0px 0px -15% 0px' },
+		);
+		main.querySelectorAll('.screen').forEach((screen) => {
+			// Screens already on screen at load (e.g. arriving on #contact) show at once.
+			const r = screen.getBoundingClientRect();
+			if (r.top < window.innerHeight && r.bottom > 0) screen.classList.add('is-revealed');
+			else reveal.observe(screen);
+		});
+		main.classList.add('reveal-ready');
+	}
+</script>

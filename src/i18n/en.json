@@ -15,15 +15,14 @@
     "blog": "Blog",
     "skills": "Skills",
     "organizations": "Organizations",
+    "proof": "References",
     "testimonials": "Testimonials",
     "contact": "Let's talk",
     "skipToContent": "Skip to content",
     "mainLabel": "Main navigation",
-    "blogLabel": "Blog navigation",
     "darkMode": "Dark mode",
     "toggle": "Toggle navigation",
     "all": "All",
-    "mainSite": "Main site",
     "languageCode": "EN",
     "readInLanguage": "Read in English"
   },
@@ -75,6 +74,9 @@
     "title": "Teams and organizations",
     "opensInNewTab": "{name} (opens in a new tab)",
     "logoAlt": "{name} logo"
+  },
+  "proof": {
+    "title": "Who I've worked with"
   },
   "testimonials": {
     "title": "What colleagues say",

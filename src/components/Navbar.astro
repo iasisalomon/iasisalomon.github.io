@@ -1,14 +1,16 @@
 ---
 import { Icon } from 'astro-icon/components';
-// Context-aware navbar with two render-time variants:
-//  - 'main' (default): in-page section links (`/#id`). On the homepage they
-//    smooth-scroll; from any other page they navigate home and the on-load
-//    handler scrolls into place. Links come from NAV_LINKS in consts.ts.
-//  - 'blog': the blog is its own space — category links driving the archive
-//    filter plus a single "Main site" link back. No homepage section links.
-// Both variants link within the page's language and carry the language
-// switcher, which opens the same page in the other language.
-import { BLOG_CATEGORIES, NAV_LINKS } from '../consts';
+// One navbar for the whole site: a link per homepage screen (NAV_LINKS in
+// consts.ts), so moving between the homepage, the blog and case studies
+// never changes the menu under the reader.
+//  - On the homepage the links smooth-scroll to their screen.
+//  - Elsewhere they navigate to the homepage screen (`/#id`), which the
+//    browser opens already in place.
+//  - variant 'blog' (archive and posts): the Blog link points to the archive
+//    and is marked as the current page.
+// Links stay within the page's language; the language switcher opens the
+// same page in the other language.
+import { NAV_LINKS } from '../consts';
 import { localePath, otherLocale, useTranslations, type Alternates, type Locale } from '../i18n';
 
 interface Props {
@@ -17,24 +19,17 @@ interface Props {
    *  language, the switcher goes to that language's home (or blog). */
   alternates?: Alternates;
   variant?: 'main' | 'blog';
-  /** Blog variant only: category to mark active at render time (used by
-   *  post pages). The archive page manages active state client-side from
-   *  the ?category URL param instead. */
-  activeCategory?: string;
 }
-const { lang = 'en', alternates = {}, variant = 'main', activeCategory } = Astro.props;
+const { lang = 'en', alternates = {}, variant = 'main' } = Astro.props;
 const t = useTranslations(lang);
 const home = localePath(lang, '/');
 const blog = localePath(lang, '/blog/');
 
-const blogLinks = [
-  { label: t('nav.all'), href: blog, category: 'all' },
-  ...BLOG_CATEGORIES.map((c) => ({
-    label: t(c.label),
-    href: `${blog}?category=${c.id}`,
-    category: c.id as string,
-  })),
-];
+const links = NAV_LINKS.map((link) =>
+  variant === 'blog' && link.hash === '#blog'
+    ? { label: t(link.label), href: blog, current: true }
+    : { label: t(link.label), href: `${home}${link.hash}`, current: false },
+);
 
 const other = otherLocale(lang);
 const tOther = useTranslations(other);
@@ -45,7 +40,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
 <nav
   class="navbar navbar-expand-lg navbar-dark fixed-top"
   id="mainNav"
-  aria-label={variant === 'blog' ? t('nav.blogLabel') : t('nav.mainLabel')}
+  aria-label={t('nav.mainLabel')}
 >
   <div class="container position-relative">
     {/* No brand: the links are centred on screen. The controls live outside
@@ -98,33 +93,17 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     </div>
     <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
       <ul class="navbar-nav main-nav">
-        {variant === 'main' &&
-          NAV_LINKS.map((link) => (
-            <li class="nav-item">
-              <a class="nav-link" href={`${home}${link.hash}`}>{t(link.label)}</a>
-            </li>
-          ))}
-        {variant === 'blog' && (
-          <>
-            {blogLinks.map((link) => (
-              <li class="nav-item">
-                <a
-                  class:list={['nav-link', { active: link.category === activeCategory }]}
-                  href={link.href}
-                  data-category={link.category}
-                  aria-current={link.category === activeCategory ? 'page' : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-            <li class="nav-item nav-item--return">
-              <a class="nav-link" href={home}>
-                <Icon name="fa6-solid:arrow-left" class="me-1" aria-hidden="true" />{t('nav.mainSite')}
-              </a>
-            </li>
-          </>
-        )}
+        {links.map((link) => (
+          <li class="nav-item">
+            <a
+              class:list={['nav-link', { active: link.current }]}
+              href={link.href}
+              aria-current={link.current ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   </div>
@@ -192,18 +171,6 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
       right: calc(var(--bs-gutter-x) * 0.5);
       transform: translateY(-50%);
     }
-  }
-
-  /* Blog variant: separate the "Main site" return link from the
-     category links. */
-  .nav-item--return {
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
-    margin-left: 0.5rem;
-    padding-left: 0.5rem;
-  }
-
-  .nav-item--return .nav-link {
-    color: rgba(255, 255, 255, 0.6);
   }
 
   /* Switches: a label on each side of a track, the knob on the active side.
@@ -345,14 +312,6 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     .main-nav .nav-link.active {
       background-color: rgba(255, 255, 255, 0.15);
     }
-
-    /* Collapsed menu: the return link's side divider becomes a top rule. */
-    .nav-item--return {
-      border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      margin: 0.4rem 0 0;
-      padding: 0.4rem 0 0;
-    }
   }
 </style>
 
@@ -410,7 +369,6 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    const nav = document.getElementById('mainNav');
     const collapse = document.getElementById('navbarNav');
     const isHome = HOME_PATH.test(window.location.pathname) || window.location.pathname === '';
 
@@ -424,29 +382,55 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
       return i >= 0 ? href.slice(i) : null; // e.g. '#about'
     }
 
-    // While a click-initiated smooth scroll is in flight the scroll-spy is
-    // suppressed, otherwise it re-marks every section passing by and the
-    // marker ping-pongs. 200ms without a scroll event = settled (also
-    // covers the user interrupting the animation with the wheel).
-    let autoScrolling = false;
-    let settleTimer = null;
+    // While a click-initiated smooth scroll is in flight the scroll-spy
+    // leaves the marker on the clicked target instead of re-marking every
+    // screen passing by. Cleared once scrolling settles (scrollend, with a
+    // timer for browsers without it) or the reader takes over.
+    let lockedHash = null;
+    let lockTimer = null;
 
-    function suppressSpy() {
-      autoScrolling = true;
-      clearTimeout(settleTimer);
-      settleTimer = setTimeout(function () {
-        autoScrolling = false;
-      }, 200);
+    function unlock() {
+      if (!lockedHash) return;
+      lockedHash = null;
+      clearTimeout(lockTimer);
+      markCurrent();
     }
+
+    const screens = Array.from(document.querySelectorAll('main > section[id]'));
+    const SPY_LINE = 0.4; // fraction of the viewport height
+
+    // The screen under the spy line, for when the observer can't say (after
+    // a locked scroll, on arrival).
+    function markCurrent() {
+      const y = window.innerHeight * SPY_LINE;
+      const current = screens.find((sec) => {
+        const r = sec.getBoundingClientRect();
+        return r.top <= y && r.bottom > y;
+      });
+      if (current) setActive('#' + current.id);
+    }
+    // A scrollend left over from an earlier scroll can fire after the click,
+    // so only release once the target has actually arrived.
+    window.addEventListener('scrollend', () => {
+      const target = lockedHash && document.querySelector(lockedHash);
+      if (!target) return;
+      const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      if (Math.abs(target.getBoundingClientRect().top - margin) < 8) unlock();
+    });
+    ['wheel', 'touchstart', 'keydown'].forEach((type) =>
+      window.addEventListener(type, unlock, { passive: true })
+    );
 
     function scrollToSection(hash) {
       const section = document.querySelector(hash);
       if (!section) return false;
-      suppressSpy();
-      // Flush under the navbar: the same offset as the CSS scroll-margin-top
-      // used by native hash jumps, so every section lands in the same spot.
-      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-      window.scrollTo({ top: section.offsetTop - nav.offsetHeight, behavior });
+      lockedHash = hash;
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(unlock, 2000);
+      // The target's scroll-margin-top keeps it flush under the navbar, the
+      // same spot a native hash jump or a snap lands on.
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      section.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'start' });
       return true;
     }
 
@@ -482,56 +466,37 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
       });
     });
 
-    // Scroll-spy: highlight the section currently in view.
-    let ticking = false;
-    window.addEventListener('scroll', function () {
-      if (autoScrolling) {
-        // Still in flight — keep extending the settle window and leave
-        // the marker on the clicked target.
-        suppressSpy();
-        return;
-      }
-      if (ticking) return;
-      ticking = true;
-      setTimeout(function () {
-        if (autoScrolling) {
-          // A click landed while this callback was queued.
-          ticking = false;
-          return;
-        }
-        const scrollPos = window.scrollY + nav.offsetHeight + 20;
-        let current = null;
-        document.querySelectorAll('section[id]').forEach(function (sec) {
-          if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
-            current = '#' + sec.id;
-          }
+    // Scroll-spy: the screen crossing a thin line 40% down the viewport is
+    // the one in view. Exactly one screen crosses it at any time, so the
+    // marker moves once per screen with no timers or position maths.
+    const spy = new IntersectionObserver(
+      (entries) => {
+        if (lockedHash) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive('#' + entry.target.id);
         });
-        if (
-          !current &&
-          window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 5
-        ) {
-          const last = anchorLinks[anchorLinks.length - 1];
-          if (last) current = hashOf(last);
-        }
-        if (current) setActive(current);
-        ticking = false;
-      }, 100);
-    });
+      },
+      { rootMargin: `-${SPY_LINE * 100}% 0px -${99 - SPY_LINE * 100}% 0px` }
+    );
+    screens.forEach((sec) => spy.observe(sec));
 
     window.addEventListener('popstate', function () {
       const hash = window.location.hash || '#home';
       setActive(hash);
-      if (hash === '#home' && !window.location.hash) window.scrollTo({ top: 0, behavior: 'auto' });
+      if (hash === '#home' && !window.location.hash) window.scrollTo({ top: 0, behavior: 'instant' });
       else scrollToSection(hash);
     });
 
-    // Arriving with a hash (e.g. from another page): scroll into place.
+    // Arriving with a hash (e.g. from the blog): open on that screen
+    // directly, like turning to a page, rather than showing the hero and
+    // then scrolling down. The browser's own hash jump usually does this
+    // already; this re-aligns it once in case layout shifted, and marks the
+    // screen that holds the target (it may be a block inside one).
     if (window.location.hash) {
-      const hash = window.location.hash;
-      setTimeout(function () {
-        scrollToSection(hash);
-        setActive(hash);
-      }, 300);
+      const target = document.querySelector(window.location.hash);
+      const screen = target?.closest('main > section[id]');
+      target?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (screen) setActive('#' + screen.id);
     }
   });
 </script>

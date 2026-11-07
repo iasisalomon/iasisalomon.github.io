@@ -15,29 +15,58 @@ const groups = [
 ];
 ---
 
-<section id="skills" class="py-6 bg-light">
-  <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('skills.title')}</h2>
-    <div class="section-divider mb-5"></div>
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        {groups.map((g) => (
-          <p class="skill-line">
-            <strong>{g.name}:</strong> {g.items}
-          </p>
-        ))}
+{/* Rendered inside the About screen; keeps its own anchor for old links. */}
+<div id="skills" class="skills">
+  <h3 class="skills__title">{t('skills.title')}</h3>
+  <dl class="mb-0">
+    {groups.map((g) => (
+      <div class="skill-line">
+        <dt>{g.name}</dt>
+        <dd>{g.items}</dd>
       </div>
-    </div>
-  </div>
-</section>
+    ))}
+  </dl>
+</div>
 
 <style>
-  .skill-line {
-    color: var(--color-text-secondary);
-    line-height: 1.8;
+  .skills {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
   }
 
-  .skill-line strong {
+  .skills__title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-line {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .skill-line dt {
     color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  .skill-line dd {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 767.98px) {
+    .skill-line {
+      grid-template-columns: 1fr;
+      margin-bottom: 0.75rem;
+    }
   }
 </style>

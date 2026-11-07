@@ -40,36 +40,40 @@ const jobs: Job[] = groups.map((roles) =>
 );
 ---
 
-<section id="experience" class="py-6 bg-light">
+{/* One screen: every role is a row; the three newest are open and the rest expand
+     on demand, so the whole history fits without a long scroll. */}
+<section id="experience" class="screen bg-light">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('experience.title')}</h2>
-    <div class="section-divider mb-5"></div>
+    <h2 class="text-center mt-1 mb-3">{t('experience.title')}</h2>
+    <div class="section-divider mb-4"></div>
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        {jobs.map((job) => (
-          <article class="job">
-            <div class="job-head">
-              <h3 class="h5 mb-1">
+        {jobs.map((job, i) => (
+          <details class="job" open={i < 3}>
+            <summary class="job-head">
+              <h3 class="h6 mb-0">
                 {job.title ? <>{job.title}, <span class="company">{job.company}</span></> : job.company}
               </h3>
               <span class="dates">{job.dates}</span>
-            </div>
-            {job.bullets && (
-              <ul>
-                {job.bullets.map((b) => <li>{b}</li>)}
-              </ul>
-            )}
-            {job.roles?.map((role) => (
-              <div class="sub-role">
-                <h4 class="h6 mb-1">
-                  {role.title} <span class="dates">({role.dates})</span>
-                </h4>
+            </summary>
+            <div class="job-body">
+              {job.bullets && (
                 <ul>
-                  {role.bullets.map((b) => <li>{b}</li>)}
+                  {job.bullets.map((b) => <li>{b}</li>)}
                 </ul>
-              </div>
-            ))}
-          </article>
+              )}
+              {job.roles?.map((role) => (
+                <div class="sub-role">
+                  <h4 class="h6 mb-1">
+                    {role.title} <span class="dates">({role.dates})</span>
+                  </h4>
+                  <ul>
+                    {role.bullets.map((b) => <li>{b}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </details>
         ))}
       </div>
     </div>
@@ -78,8 +82,6 @@ const jobs: Job[] = groups.map((roles) =>
 
 <style>
   .job {
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
   }
 
@@ -90,9 +92,48 @@ const jobs: Job[] = groups.map((roles) =>
   .job-head {
     display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
     justify-content: space-between;
     gap: 0.25rem 1rem;
-    margin-bottom: 0.5rem;
+    padding: 0.9rem 0 0.9rem 1.5rem;
+    position: relative;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .job-head::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Chevron: points right when closed, down when open. */
+  .job-head::before {
+    content: '';
+    position: absolute;
+    left: 0.2rem;
+    top: 1.3rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-right: 2px solid var(--color-text-secondary);
+    border-bottom: 2px solid var(--color-text-secondary);
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .job[open] > .job-head::before {
+    transform: rotate(45deg);
+  }
+
+  .job-head:hover h3 {
+    color: var(--color-accent);
+  }
+
+  .job-head h3 {
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .job-body {
+    padding: 0 0 1.1rem 1.5rem;
   }
 
   .company {

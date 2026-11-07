@@ -51,7 +51,6 @@ interface Props {
   /** The page's address in each language it exists in. */
   alternates?: Alternates;
   navVariant?: 'main' | 'blog';
-  activeCategory?: string;
 }
 
 const {
@@ -71,7 +70,6 @@ const {
   lang = 'en',
   alternates,
   navVariant = 'main',
-  activeCategory,
 } = Astro.props;
 const t = useTranslations(lang);
 ---
@@ -88,7 +86,7 @@ const t = useTranslations(lang);
   lang={lang}
   alternates={alternates}
 >
-  <Navbar variant={navVariant} activeCategory={activeCategory} lang={lang} alternates={alternates} />
+  <Navbar variant={navVariant} lang={lang} alternates={alternates} />
 
   <article class="longform" id="main-content">
     <div class="container">

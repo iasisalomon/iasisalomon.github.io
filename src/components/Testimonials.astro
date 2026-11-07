@@ -22,11 +22,10 @@ const initials = (name: string) =>
     .join('');
 ---
 
+{/* Rendered inside the References screen; keeps its own anchor for old links. */}
 {testimonials.length > 0 && (
-<section id="testimonials" class="py-6 bg-light">
-  <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('testimonials.title')}</h2>
-    <div class="section-divider mb-5"></div>
+<div id="testimonials" class="testimonials">
+  <h3 class="visually-hidden">{t('testimonials.title')}</h3>
 
     <div class="quotes" role="list">
       {featuredTestimonials.map((q) => (
@@ -63,20 +62,21 @@ const initials = (name: string) =>
         </div>
       </details>
     )}
-  </div>
-</section>
+</div>
 )}
 
 <style>
   .quotes {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
+    gap: 1rem;
+    max-width: 960px;
+    margin-inline: auto;
   }
 
   .quote {
     margin: 0;
-    padding: 1.5rem;
+    padding: 1.25rem 1.4rem;
     border-radius: 1rem;
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
     background: var(--color-card, #fff);
@@ -86,12 +86,12 @@ const initials = (name: string) =>
     color: var(--color-accent, #0d6efd);
     opacity: 0.5;
     font-size: 1.1rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
   }
 
   .quote blockquote {
-    font-size: 0.98rem;
-    line-height: 1.65;
+    font-size: 0.94rem;
+    line-height: 1.6;
     color: var(--color-text-secondary);
     margin-bottom: 1rem;
   }
@@ -126,7 +126,8 @@ const initials = (name: string) =>
   }
 
   .quotes-more {
-    margin-top: 1.25rem;
+    margin-top: 1rem;
+    text-align: center;
   }
 
   .quotes-more summary {
@@ -139,11 +140,31 @@ const initials = (name: string) =>
 
   .quotes-more[open] .quotes {
     margin-top: 1rem;
+    text-align: left;
   }
 
   @media (max-width: 767.98px) {
     .quotes {
       grid-template-columns: 1fr;
+    }
+
+    /* Phones: the featured quotes swipe sideways (like the Work cards)
+       so the References screen doesn't stack four quotes tall. */
+    .quotes:not(.quotes--more) {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: 0.75rem;
+    }
+
+    .quotes:not(.quotes--more)::-webkit-scrollbar {
+      display: none;
+    }
+
+    .quotes:not(.quotes--more) > .quote {
+      flex: 0 0 85%;
+      scroll-snap-align: center;
     }
   }
 </style>

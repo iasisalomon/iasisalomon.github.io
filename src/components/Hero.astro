@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
 ---
 
-<section id="home" class="d-flex flex-column bg-dark text-white">
+<section id="home" class="screen bg-dark text-white">
   <div class="container py-5">
     <div class="row align-items-center gy-4">
       {/* Text first in the DOM (and on desktop); the photo leads on phones. */}
@@ -57,14 +57,6 @@ const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
 </section>
 
 <style>
-  /* Fills the screen below the fixed navbar; the global #home rule already
-     offsets it with margin-top. svh keeps mobile browser bars out of it. */
-  #home {
-    min-height: calc(100vh - 76px);
-    min-height: calc(100svh - 76px);
-    justify-content: center;
-  }
-
   /* Overrides the global centered, 200px-capped .profile-image. */
   .profile-image {
     max-width: none;

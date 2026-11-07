@@ -15,30 +15,20 @@ export const LINKS = {
 	calendly: 'https://calendly.com/iasisalomon',
 };
 
-// Keep the header focused on the sections most useful to hiring teams.
+// One link per homepage screen, in page order, so no screen can be missed.
 // Each link is a homepage section, in the page's own language.
 export const NAV_LINKS: { label: TranslationKey; hash: string }[] = [
-	{ label: 'nav.home', hash: '#home' },
-	{ label: 'nav.experience', hash: '#experience' },
-	{ label: 'nav.work', hash: '#work' },
-	{ label: 'nav.organizations', hash: '#organizations' },
-	{ label: 'nav.testimonials', hash: '#testimonials' },
-	{ label: 'nav.contact', hash: '#contact' },
-];
-
-// The footer keeps links to every homepage section, including secondary content.
-export const FOOTER_LINKS: { label: TranslationKey; hash: string }[] = [
 	{ label: 'nav.home', hash: '#home' },
 	{ label: 'nav.about', hash: '#about' },
 	{ label: 'nav.experience', hash: '#experience' },
 	{ label: 'nav.work', hash: '#work' },
-	{ label: 'nav.engineering', hash: '#engineering' },
 	{ label: 'nav.blog', hash: '#blog' },
-	{ label: 'nav.skills', hash: '#skills' },
-	{ label: 'nav.organizations', hash: '#organizations' },
-	{ label: 'nav.testimonials', hash: '#testimonials' },
+	{ label: 'nav.proof', hash: '#proof' },
 	{ label: 'nav.contact', hash: '#contact' },
 ];
+
+// The footer mirrors the nav.
+export const FOOTER_LINKS = NAV_LINKS;
 
 // Blog categories — must stay in sync with the `category` enum in
 // content.config.ts. Used by the blog navbar, the archive filter tabs,

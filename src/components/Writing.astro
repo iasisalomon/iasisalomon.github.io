@@ -21,20 +21,20 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 );
 ---
 
-<section id="blog" class="py-6">
+<section id="blog" class="screen bg-light">
   <div class="container">
     <h2 class="text-center mt-1 mb-2">{t('writing.title')}</h2>
     <p class="text-center text-muted mb-4">{t('writing.subtitle')}</p>
-    <div class="section-divider mb-5"></div>
+    <div class="section-divider mb-4"></div>
 
-    <div class="row g-4 justify-content-center">
+    <div class="row g-4 justify-content-center swipe-row">
       {posts.map(({ entry: post, lang: postLang, href }) => (
         <div class="col-md-6 col-lg-4">
           <article class="writing-card position-relative h-100 d-flex flex-column bg-white rounded-4 overflow-hidden">
             <div class="writing-img">
               <img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
             </div>
-            <div class="p-4 d-flex flex-column flex-grow-1">
+            <div class="px-4 py-3 d-flex flex-column flex-grow-1">
               <div class="d-flex flex-wrap align-items-center gap-2 mb-2 small text-muted">
                 {post.data.pubDate && (
                   <time datetime={post.data.pubDate.toISOString()}>
@@ -73,20 +73,20 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 </section>
 
 <style>
+  /* Same anatomy as the Work cards: a bordered card, no floating shadow;
+     hover only sharpens the border and nudges the image. */
   .writing-card {
     text-decoration: none;
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
-    box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.05);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.2s ease;
   }
 
   .writing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12);
+    border-color: var(--color-border-strong);
   }
 
   .writing-img {
-    height: 170px;
+    height: 125px;
     overflow: hidden;
   }
 
@@ -98,7 +98,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
   }
 
   .writing-card:hover .writing-img img {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
   .read-cta {
@@ -114,7 +114,6 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .writing-card:hover { transform: none; }
     .writing-card:hover .writing-img img { transform: none; }
   }
 </style>

@@ -1,6 +1,6 @@
 ---
 import { getCaseStudiesIn, getRepos } from '../data/queries';
-import RepoCard from './RepoCard.astro';
+import RepoRow from './RepoRow.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -10,9 +10,10 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+// Rendered inside the Work screen as a compact list under the case studies.
 // Repos keep their real status so nothing reads as client work.
 const repos = await getRepos(lang);
-// Featured repos are shown up front; the rest go in the collapsible archive.
+// Featured repos are listed up front; the rest go in the collapsible archive.
 const featuredRepos = repos.filter((repo) => repo.featured);
 const additionalRepos = repos.filter((repo) => !repo.featured);
 
@@ -20,33 +21,65 @@ const additionalRepos = repos.filter((repo) => !repo.featured);
 const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slug));
 ---
 
-<section id="engineering" class="py-6 bg-light">
-  <div class="container">
-    <h2 class="text-center mt-1 mb-2">{t('engineering.title')}</h2>
-    <p class="text-center text-muted mb-4">{t('engineering.subtitle')}</p>
-    <div class="section-divider mb-5"></div>
-    <div class="row g-4">
-      {featuredRepos.map((repo) => (
-        <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
-      ))}
-    </div>
-
-    {additionalRepos.length > 0 && (
-      <details class="repo-archive">
-        <summary>{t('engineering.more', { count: additionalRepos.length })}</summary>
-        <div class="row g-4 mt-1">
-          {additionalRepos.map((repo) => (
-            <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
-          ))}
-        </div>
-      </details>
-    )}
+{/* Keeps its own anchor so case-study "back" links land here. */}
+<div id="engineering" class="engineering">
+  <div class="engineering__head">
+    <h3 class="engineering__title">{t('engineering.title')}</h3>
+    <p class="engineering__subtitle mb-0">{t('engineering.subtitle')}</p>
   </div>
-</section>
+
+  <ul class="repo-list list-unstyled mb-0">
+    {featuredRepos.map((repo) => <RepoRow repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />)}
+  </ul>
+
+  {additionalRepos.length > 0 && (
+    <details class="repo-archive">
+      <summary>{t('engineering.more', { count: additionalRepos.length })}</summary>
+      <ul class="repo-list list-unstyled mb-0">
+        {additionalRepos.map((repo) => <RepoRow repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />)}
+      </ul>
+    </details>
+  )}
+</div>
 
 <style>
-  .repo-archive {
+  .engineering {
     margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: 96px;
+  }
+
+  .engineering__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .engineering__title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-heading);
+    margin: 0;
+  }
+
+  .engineering__subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  .repo-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .repo-archive {
+    margin-top: 0.75rem;
   }
 
   .repo-archive summary {
@@ -57,4 +90,19 @@ const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slu
     padding: 0.35rem 0;
   }
 
+  .repo-archive[open] .repo-list {
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 991.98px) {
+    .repo-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .repo-list {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

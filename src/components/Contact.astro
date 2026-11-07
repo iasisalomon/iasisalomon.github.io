@@ -11,8 +11,8 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="contact" class="py-6 text-white">
-  <div class="container-fluid position-relative">
+<section id="contact" class="screen text-white">
+  <div class="container position-relative">
     <div class="contact-content">
       <div class="contact-copy">
         <h2 class="fw-bold mt-1 mb-3">{t('contact.title')}</h2>
@@ -48,9 +48,14 @@ const t = useTranslations(lang);
 </section>
 
 <style>
+  /* The last screen is this section plus the footer below it: together
+     they fill exactly one viewport, so "Let's talk" lands on a full screen
+     with no empty band before the footer. --footer-h is set by the
+     homepage script; without it the section alone fills the screen. */
   #contact {
     background: radial-gradient(ellipse at top, #2b3138 0%, #1a1d20 70%);
-    padding-bottom: 2.5rem;
+    min-height: calc(100vh - 76px - var(--footer-h, 0px));
+    min-height: calc(100svh - 76px - var(--footer-h, 0px));
   }
 
   .contact-content {
@@ -58,8 +63,7 @@ const t = useTranslations(lang);
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: clamp(2rem, 4vw, 4.5rem);
     align-items: center;
-    width: 66.666%;
-    max-width: 100%;
+    max-width: 960px;
     margin-inline: auto;
   }
 
@@ -138,11 +142,6 @@ const t = useTranslations(lang);
     }
   }
 
-  @media (max-width: 767.98px) {
-    #contact {
-      padding-bottom: 2rem;
-    }
-  }
 </style>
 
 <script>

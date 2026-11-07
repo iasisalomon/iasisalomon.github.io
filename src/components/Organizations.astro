@@ -9,80 +9,39 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+// One even grid of same-size tiles, featured organizations first.
 const brands = await getOrganizations();
-const featuredBrands = brands.filter((brand) => brand.featured);
-const additionalBrands = brands.filter((brand) => !brand.featured);
+const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b.featured)];
 ---
 
-<section id="organizations" class="py-6">
-  <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('organizations.title')}</h2>
-    <div class="section-divider mb-5"></div>
-
-    <div class="logo-group">
-      <ul class="logo-grid logo-grid--featured list-unstyled">
-        {featuredBrands.map((brand) => (
-          <li>
-            <a
-              class:list={['logo-tile', 'logo-tile--featured', { 'logo-tile--dark': brand.darkTile }]}
-              href={brand.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={brand.name}
-              aria-label={t('organizations.opensInNewTab', { name: brand.name })}
-            >
-              <img src={brand.logo} alt={t('organizations.logoAlt', { name: brand.name })} loading="lazy" decoding="async" width="180" height="72" />
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    {additionalBrands.length > 0 && (
-      <div class="logo-group logo-group--additional">
-        <ul class="logo-grid logo-grid--additional list-unstyled">
-          {additionalBrands.map((brand) => (
-            <li>
-              <a
-                class:list={['logo-tile', 'logo-tile--additional', { 'logo-tile--dark': brand.darkTile }]}
-                href={brand.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={brand.name}
-                aria-label={t('organizations.opensInNewTab', { name: brand.name })}
-              >
-                <img src={brand.logo} alt={t('organizations.logoAlt', { name: brand.name })} loading="lazy" decoding="async" width="140" height="56" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-  </div>
-</section>
+{/* Rendered inside the References screen; keeps its own anchor for old links. */}
+<div id="organizations" class="organizations">
+  <h3 class="visually-hidden">{t('organizations.title')}</h3>
+  <ul class="logo-grid list-unstyled">
+    {ordered.map((brand) => (
+      <li>
+        <a
+          class:list={['logo-tile', { 'logo-tile--dark': brand.darkTile }]}
+          href={brand.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={brand.name}
+          aria-label={t('organizations.opensInNewTab', { name: brand.name })}
+        >
+          <img src={brand.logo} alt={t('organizations.logoAlt', { name: brand.name })} loading="lazy" decoding="async" width="160" height="64" />
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
 
 <style>
-  .logo-group {
-    max-width: 900px;
-    margin: 0 auto 1.75rem;
-  }
-
-  .logo-grid--featured {
+  .logo-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-  }
-
-  .logo-grid--additional {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: 0;
-  }
-
-  .logo-grid--additional > li {
-    flex: 0 0 7rem;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.75rem;
+    max-width: 960px;
+    margin: 0 auto 2.25rem;
   }
 
   /* Every tile is the same size and shape; the dark variant exists only for
@@ -91,9 +50,9 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 9.5rem;
-    height: 4.5rem;
-    padding: 0.8rem 1rem;
+    width: 100%;
+    height: 3.75rem;
+    padding: 0.6rem 0.9rem;
     border-radius: 0.75rem;
     background: #fff;
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
@@ -104,19 +63,13 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
     border-color: rgba(255, 255, 255, 0.1);
   }
 
-  .logo-tile--featured {
-    width: 100%;
-    height: 5.5rem;
-    padding: 1rem 1.5rem;
+  /* Dark theme: the white tiles are toned down so they don't glare
+     against the page; full brightness on hover. */
+  :global([data-theme='dark']) .logo-tile:not(.logo-tile--dark) {
+    background: #e9ecef;
   }
 
-  .logo-tile--additional {
-    width: 100%;
-    height: 3.5rem;
-    padding: 0.45rem 0.75rem;
-  }
-
-  /* Muted by default so the row reads as one set; full colour on hover. */
+  /* Muted by default so the grid reads as one set; full colour on hover. */
   .logo-tile img {
     width: 100%;
     height: 100%;
@@ -137,24 +90,21 @@ const additionalBrands = brands.filter((brand) => !brand.featured);
     outline-offset: 3px;
   }
 
-  @media (max-width: 767.98px) {
-    .logo-grid--featured {
+  @media (max-width: 991.98px) {
+    .logo-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .logo-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.5rem;
     }
 
-    .logo-tile--featured {
-      height: 4.25rem;
-      padding: 0.5rem;
-    }
-
-    .logo-tile--additional {
-      width: 100%;
+    .logo-tile {
       height: 3rem;
-      padding: 0.35rem 0.5rem;
-    }
-
-    .logo-grid--additional > li {
-      flex-basis: 5.75rem;
+      padding: 0.4rem 0.5rem;
     }
   }
 

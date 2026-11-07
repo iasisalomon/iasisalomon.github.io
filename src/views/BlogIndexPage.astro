@@ -8,7 +8,7 @@ import Navbar from '../components/Navbar.astro';
 import CustomFooter from '../components/CustomFooter.astro';
 import { BLOG_CATEGORIES } from '../consts';
 import { getPostList } from '../data/queries';
-import { everyLocale, formatDate, pick, useTranslations, type Locale } from '../i18n';
+import { everyLocale, formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
 import { languageName, readingTime } from '../utils/content';
 
 interface Props {
@@ -24,6 +24,14 @@ const posts = await getPostList(lang);
 const categoryLabels: Record<string, string> = Object.fromEntries(
 	BLOG_CATEGORIES.map((c) => [c.id, t(c.label)])
 );
+
+// Filter tabs: real links (/blog/?category=…) so they work without
+// JavaScript; the script below filters in place instead of reloading.
+const blog = localePath(lang, '/blog/');
+const filters = [
+	{ id: 'all', label: t('nav.all'), href: blog },
+	...BLOG_CATEGORIES.map((c) => ({ id: c.id as string, label: t(c.label), href: `${blog}?category=${c.id}` })),
+];
 ---
 
 <MainLayout title={t('blog.pageTitle')} description={t('blog.pageDescription')} lang={lang} alternates={alternates}>
@@ -36,6 +44,12 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 				<h1 class="blog-title">{t('blog.heading')}</h1>
 				<p class="blog-description">{t('blog.lead')}</p>
 			</header>
+
+			<nav class="blog-filters" aria-label={t('footer.blogCategories')}>
+				{filters.map((f) => (
+					<a class="blog-filter" href={f.href} data-category={f.id}>{f.label}</a>
+				))}
+			</nav>
 
 			<div class="blog-grid" id="blogGrid">
 				{posts.map(({ entry: post, lang: postLang, href }) => (
@@ -91,9 +105,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 </MainLayout>
 
 <script>
-  import Collapse from 'bootstrap/js/dist/collapse';
 
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('#navbarNav .nav-link[data-category]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.blog-filter[data-category]');
   const cards = document.querySelectorAll<HTMLElement>('.blog-card');
   const noPostsMsg = document.getElementById('noPostsMsg')!;
 
@@ -126,16 +139,11 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
   const initialCategory = new URLSearchParams(window.location.search).get('category') ?? 'all';
   applyFilter(initialCategory);
 
-  // The navbar category links navigate to /blog/?category=… from other pages;
-  // here on the archive itself, filter in place instead of reloading.
+  // Filter in place instead of reloading.
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       applyFilter(link.dataset.category!);
-      const collapse = document.getElementById('navbarNav');
-      if (collapse?.classList.contains('show')) {
-        Collapse.getOrCreateInstance(collapse).hide();
-      }
     });
   });
 </script>
@@ -146,7 +154,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 	}
 
 	.blog-header {
-		margin-bottom: 3rem;
+		margin-bottom: 1.5rem;
 		text-align: center;
 	}
 
@@ -163,6 +171,33 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 		color: var(--color-text-muted);
 		max-width: 600px;
 		margin: 0 auto;
+	}
+
+	.blog-filters {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.blog-filter {
+		padding: 0.35rem 1rem;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--color-border-strong);
+		color: var(--color-text);
+		font-size: 0.85rem;
+		font-weight: 500;
+	}
+
+	.blog-filter:hover {
+		background-color: var(--color-hover-bg);
+	}
+
+	.blog-filter[aria-current='page'] {
+		background-color: var(--color-accent);
+		border-color: var(--color-accent);
+		color: #fff;
 	}
 
 	.card-meta {

@@ -1,0 +1,81 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Project } from '../data/queries';
+import { localePath, useTranslations, type Locale, type TranslationKey } from '../i18n';
+
+// One engineering repo as a compact tile in the Work screen's list.
+interface Props {
+  repo: Project;
+  hasCaseStudy: boolean;
+  lang: Locale;
+}
+
+const { repo, hasCaseStudy, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const STATUS_LABELS: Record<NonNullable<Project['status']>, TranslationKey> = {
+  practice: 'status.practice',
+  challenge: 'status.challenge',
+  'private deployment': 'status.privateDeployment',
+};
+
+// The title links to the case study when there is one, else to the repo's
+// first public link.
+const href = hasCaseStudy ? localePath(lang, `/projects/${repo.slug}/`) : repo.links[0]?.url;
+---
+
+<li class="repo-row">
+  {href ? (
+    <a href={href} class="repo-row__title" {...(!hasCaseStudy && { target: '_blank', rel: 'noopener noreferrer' })}>
+      {repo.title}
+      <Icon name={hasCaseStudy ? 'fa6-solid:arrow-right' : 'fa6-solid:arrow-up-right-from-square'} class="ms-1" aria-hidden="true" />
+    </a>
+  ) : (
+    <span class="repo-row__title">{repo.title}</span>
+  )}
+  {repo.status && <span class="repo-row__status">{t(STATUS_LABELS[repo.status])}</span>}
+  <span class="repo-row__skills">{repo.skills.slice(0, 4).join(' · ')}</span>
+</li>
+
+<style>
+  .repo-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-card);
+  }
+
+  .repo-row__title {
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  a.repo-row__title:hover {
+    color: var(--color-accent);
+  }
+
+  .repo-row__title :global(svg) {
+    font-size: 0.75em;
+    color: var(--color-accent);
+  }
+
+  .repo-row__status {
+    align-self: flex-start;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    border-radius: var(--radius-pill);
+    background: var(--color-hover-bg-strong);
+    color: var(--color-heading);
+  }
+
+  .repo-row__skills {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import Organizations from './Organizations.astro';
+import Testimonials from './Testimonials.astro';
+import { useTranslations, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{/* One screen of outside proof: the teams (logos), then what colleagues there say. */}
+<section id="proof" class="screen">
+  <div class="container">
+    <h2 class="text-center mt-1 mb-3">{t('proof.title')}</h2>
+    <div class="section-divider mb-4"></div>
+    <Organizations lang={lang} />
+    <Testimonials lang={lang} />
+  </div>
+</section>

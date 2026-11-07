@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getFeaturedWork } from '../data/queries';
+import Engineering from './Engineering.astro';
 import { localePath } from '../i18n';
 import { useTranslations, type Locale } from '../i18n';
 
@@ -43,11 +44,11 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
 });
 ---
 
-<section id="work" class="py-6">
+<section id="work" class="screen">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('work.title')}</h2>
-    <div class="section-divider mb-5"></div>
-    <div class="row g-4 justify-content-center">
+    <h2 class="text-center mt-1 mb-3">{t('work.title')}</h2>
+    <div class="section-divider mb-4"></div>
+    <div class="row g-4 justify-content-center swipe-row">
       {items.map((item) => (
         <div class="col-md-6 col-lg-4">
           <article class="work-card h-100 rounded-4 overflow-hidden d-flex flex-column">
@@ -64,11 +65,11 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
                 </div>
               )
             )}
-            <div class="p-4 p-lg-5 d-flex flex-column flex-grow-1">
+            <div class="px-4 py-3 d-flex flex-column flex-grow-1">
               <p class="work-card__tag mb-2">{item.tag}</p>
-              <h3 class="h4 mb-3">{item.title}</h3>
+              <h3 class="h5 mb-2">{item.title}</h3>
               <p class="work-text flex-grow-1">{item.description}</p>
-              <div class="work-card__facts mb-4">
+              <div class="work-card__facts mb-3">
                 <span class="work-card__facts-label">{item.facts.label}</span>
                 <ul class="list-unstyled d-flex flex-wrap gap-2 mb-0">
                   {item.facts.items.map((fact) => <li class="work-card__chip">{fact}</li>)}
@@ -94,6 +95,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
         </div>
       ))}
     </div>
+    <Engineering lang={lang} />
   </div>
 </section>
 
@@ -104,7 +106,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
 
   .work-card__media {
     width: 100%;
-    height: 220px;
+    height: 125px;
     object-fit: cover;
   }
 
@@ -122,7 +124,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
   }
 
   .work-card__logo {
-    height: 180px;
+    height: 105px;
     width: auto;
   }
 
@@ -141,7 +143,8 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
 
   .work-text {
     color: var(--color-text-secondary);
-    line-height: 1.8;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   .work-card__facts {

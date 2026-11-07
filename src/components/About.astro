@@ -1,4 +1,5 @@
 ---
+import Skills from './Skills.astro';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -9,15 +10,16 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="about" class="py-6">
+<section id="about" class="screen">
   <div class="container">
-    <h2 class="text-center mt-1 mb-4">{t('about.title')}</h2>
-    <div class="section-divider mb-5"></div>
+    <h2 class="text-center mt-1 mb-3">{t('about.title')}</h2>
+    <div class="section-divider mb-4"></div>
     <div class="row justify-content-center">
       <div class="col-lg-8 about-text">
         <p class="lead">{t('about.lead')}</p>
         <p>{t('about.body1')}</p>
         <p class="mb-0">{t('about.body2')}</p>
+        <Skills lang={lang} />
       </div>
     </div>
   </div>
@@ -34,7 +36,7 @@ const t = useTranslations(lang);
     margin-right: auto;
   }
 
-  #about p:first-of-type {
+  #about .lead {
     font-size: 1.05rem;
     color: var(--color-heading);
     font-weight: 500;
@@ -44,10 +46,9 @@ const t = useTranslations(lang);
     #about p {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
-      padding: 0 1rem;
     }
 
-    #about p:first-of-type {
+    #about .lead {
       font-size: 1rem;
     }
   }

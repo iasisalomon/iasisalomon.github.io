@@ -341,6 +341,75 @@ section {
     margin-top: 76px;
 }
 
+/* -------------------------------------------------------------
+   Homepage screens. Each section is one screen: at least the
+   viewport below the fixed navbar, content centred, so moving to
+   the next one reads like turning a page. Taller content (phones)
+   just grows the screen. Snapping is "proximity": it settles on a
+   screen's top when you stop near it, but never traps you inside
+   a tall one.
+   ------------------------------------------------------------- */
+html:has(.home-screens) {
+    scroll-snap-type: y proximity;
+}
+
+/* Snapping and hash jumps land under the navbar through each section's
+   scroll-margin-top (the global section rule above). */
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 76px);
+    min-height: calc(100svh - 76px);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    scroll-snap-align: start;
+}
+
+#home.screen {
+    padding: 0;
+}
+
+/* Phones: a screen's row of cards swipes sideways instead of stacking
+   three screens tall. The next card peeks in so the row reads as more. */
+@media (max-width: 767.98px) {
+    .swipe-row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 0.25rem;
+        justify-content: flex-start !important;
+    }
+
+    .swipe-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .swipe-row > * {
+        flex: 0 0 85%;
+        max-width: 85%;
+        scroll-snap-align: center;
+    }
+}
+
+/* Each screen's content rises in as it arrives. The hidden state only
+   applies once the nav script has marked the page (.reveal-ready), so
+   without JavaScript everything is simply visible. */
+.reveal-ready .screen:where(:not(#home)) > .container,
+.reveal-ready .screen:where(:not(#home)) > .container-fluid {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-ready .screen.is-revealed > .container,
+.reveal-ready .screen.is-revealed > .container-fluid {
+    opacity: 1;
+    transform: none;
+}
+
 .btn-outline-light,
 .btn-outline-dark,
 .btn-outline-danger,
@@ -377,6 +446,11 @@ section {
     
     section {
         padding: 0 0 2rem;
+    }
+
+    .screen {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
     }
 
     .py-6 {
