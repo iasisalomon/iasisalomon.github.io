@@ -47,7 +47,7 @@
         "icon": "fa6-brands:youtube"
       }
     ],
-    "featured": true,
+    "featured": false,
     "card": {
       "tag": {
         "en": "Live event · Sky Mavis",
@@ -290,6 +290,52 @@
       }
     ],
     "status": "practice"
+  },
+  {
+    "slug": "anviz-cloud-sync",
+    "title": "Anviz Cloud Sync",
+    "description": {
+      "en": "Took a LAN-only access-control clock to the cloud at zero monthly cost: a from-scratch implementation of its binary protocol, a Python sync agent, Supabase and a Vue dashboard with an auditable edit history.",
+      "es": "Llevé a la nube un reloj de control de accesos que solo hablaba por red local, con costo mensual cero: protocolo binario implementado desde cero, un agente de sincronización en Python, Supabase y un panel en Vue con historial de cambios auditable."
+    },
+    "image": "/images/gallery/anviz-cloud-sync/records-history.webp",
+    "date": "2026-11-01",
+    "category": "software-engineering",
+    "skills": [
+      "Python",
+      "Supabase",
+      "PostgreSQL",
+      "Vue 3",
+      "Tailwind CSS",
+      {
+        "en": "Binary protocols",
+        "es": "Protocolos binarios"
+      }
+    ],
+    "links": [],
+    "featured": true,
+    "card": {
+      "tag": {
+        "en": "Hardware integration · Access control",
+        "es": "Integración de hardware · Control de accesos"
+      },
+      "imageAlt": {
+        "en": "Dashboard records table with the edit history of one record open below its row",
+        "es": "Tabla de registros del panel con el historial de un registro editado abierto debajo de su fila"
+      },
+      "facts": {
+        "label": "Stack",
+        "items": [
+          "Python",
+          "Supabase",
+          "Vue 3"
+        ]
+      },
+      "ctaLabel": {
+        "en": "Read the case study",
+        "es": "Leer el caso de estudio"
+      }
+    }
   },
   {
     "slug": "muba",
