@@ -75,7 +75,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
                   {item.facts.items.map((fact) => <li class="work-card__chip">{fact}</li>)}
                 </ul>
               </div>
-              <div class="d-flex flex-wrap align-items-center gap-3">
+              <div class="work-card__actions">
                 <a
                   href={item.cta.href}
                   class="btn btn-primary"
@@ -128,9 +128,24 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
     width: auto;
   }
 
+  /* Button and optional extra link share a line when the card is wide
+     enough; in narrower cards the link drops below instead of clipping. */
+  .work-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    white-space: nowrap;
+  }
+
+  .work-card__actions .btn {
+    padding-inline: 1rem;
+  }
+
   .work-card__link {
     color: var(--color-text);
     font-weight: 500;
+    font-size: 0.9rem;
   }
 
   .work-card__tag {

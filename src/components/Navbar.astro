@@ -7,7 +7,10 @@ import { Icon } from 'astro-icon/components';
 //  - Elsewhere they navigate to the homepage screen (`/#id`), which the
 //    browser opens already in place.
 //  - variant 'blog' (archive and posts): the Blog link points to the archive
-//    and is marked as the current page.
+//    and is marked current. variant 'work' (case studies): the Work link is
+//    marked current and still leads back to the Work screen.
+// Below 992px, where the links fold into the menu, the bar names the
+// current section on the left so the reader always knows where they are.
 // Links stay within the page's language; the language switcher opens the
 // same page in the other language.
 import { NAV_LINKS } from '../consts';
@@ -18,18 +21,19 @@ interface Props {
   /** The page's address in each language; without one in the other
    *  language, the switcher goes to that language's home (or blog). */
   alternates?: Alternates;
-  variant?: 'main' | 'blog';
+  variant?: 'main' | 'blog' | 'work';
 }
 const { lang = 'en', alternates = {}, variant = 'main' } = Astro.props;
 const t = useTranslations(lang);
 const home = localePath(lang, '/');
 const blog = localePath(lang, '/blog/');
 
-const links = NAV_LINKS.map((link) =>
-  variant === 'blog' && link.hash === '#blog'
-    ? { label: t(link.label), href: blog, current: true }
-    : { label: t(link.label), href: `${home}${link.hash}`, current: false },
-);
+const links = NAV_LINKS.map((link) => ({
+  label: t(link.label),
+  href: variant === 'blog' && link.hash === '#blog' ? blog : `${home}${link.hash}`,
+  current: (variant === 'blog' && link.hash === '#blog') || (variant === 'work' && link.hash === '#work'),
+}));
+const currentLabel = links.find((l) => l.current)?.label ?? t('nav.home');
 
 const other = otherLocale(lang);
 const tOther = useTranslations(other);
@@ -43,6 +47,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
   aria-label={t('nav.mainLabel')}
 >
   <div class="container position-relative">
+    <span class="nav-current d-lg-none" id="navCurrent" aria-hidden="true">{currentLabel}</span>
     {/* No brand: the links are centred on screen. The controls live outside
          the collapse so they stay usable without opening the menu; on phones
          they sit on the right, on desktop they're pinned to the right edge
@@ -111,7 +116,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
 
 <style>
   #mainNav {
-    background-color: rgba(28, 31, 35, 0.98);
+    background-color: #1c1f23;
     padding: 0.6rem 0;
     transition: all 0.3s ease;
     z-index: 1030;
@@ -120,6 +125,43 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
 
   .main-nav .nav-item {
     margin: 0 0.1rem;
+  }
+
+  /* Collapsed bar only: the current section's name. */
+  .nav-current {
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-left: 2px solid var(--color-accent-on-dark, #4d9aff);
+    padding: 0.1rem 0 0.1rem 0.6rem;
+    /* Takes the room the controls leave and truncates rather than pushing
+       them onto a second row on narrow phones. */
+    flex: 1 1 0;
+    min-width: 0;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-controls {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 399.98px) {
+    .nav-current {
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  /* Too narrow to read a truncated name: the open menu still marks it. */
+  @media (max-width: 349.98px) {
+    .nav-current {
+      visibility: hidden;
+    }
   }
 
   /* Compact enough for one link per section on a single row from 992px. */
@@ -280,7 +322,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
        the navbar's painted background — give the collapse its own solid
        panel or the links float transparently over page content. */
     .navbar-collapse {
-      background-color: rgba(28, 31, 35, 0.98);
+      background-color: #1c1f23;
       border-radius: 0 0 10px 10px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
       margin-top: 0.5rem;
@@ -434,12 +476,15 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
       return true;
     }
 
+    const navCurrent = document.getElementById('navCurrent');
+
     function setActive(hash) {
       anchorLinks.forEach((l) => {
         const active = hashOf(l) === hash;
         l.classList.toggle('active', active);
         if (active) l.setAttribute('aria-current', 'location');
         else l.removeAttribute('aria-current');
+        if (active && navCurrent) navCurrent.textContent = l.textContent?.trim() ?? '';
       });
     }
 

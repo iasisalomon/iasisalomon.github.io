@@ -56,7 +56,7 @@
     "more": "More technical projects ({count})"
   },
   "writing": {
-    "title": "Writing archive",
+    "title": "Blog",
     "subtitle": "Selected older essays and reflections; each article shows its original date.",
     "readArticle": "Read article",
     "viewAll": "View all articles"
@@ -111,11 +111,11 @@
   "blog": {
     "pageTitle": "Blog | Iasi Salomon",
     "pageDescription": "Articles by Iasi Salomon on technology and business, from web3 game economies to science and society.",
-    "heading": "Articles",
+    "heading": "Blog",
     "lead": "Thoughts on tech, business and the spaces between.",
     "readMore": "Read article →",
     "empty": "No posts in this category yet.",
-    "back": "Back to Articles",
+    "back": "Back to the blog",
     "newer": "Newer article",
     "older": "Older article",
     "published": "Published",

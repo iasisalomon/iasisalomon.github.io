@@ -56,7 +56,7 @@
     "more": "Más proyectos técnicos ({count})"
   },
   "writing": {
-    "title": "Artículos",
+    "title": "Blog",
     "subtitle": "Ensayos y reflexiones de años anteriores; cada artículo muestra su fecha original.",
     "readArticle": "Leer artículo",
     "viewAll": "Ver todos los artículos"
@@ -111,11 +111,11 @@
   "blog": {
     "pageTitle": "Blog | Iasi Salomon",
     "pageDescription": "Artículos de Iasi Salomon sobre tecnología y negocios, de las economías de los juegos web3 a la ciencia y la sociedad.",
-    "heading": "Artículos",
+    "heading": "Blog",
     "lead": "Ideas sobre tecnología, negocios y lo que queda en el medio.",
     "readMore": "Leer artículo →",
     "empty": "Todavía no hay artículos en esta categoría.",
-    "back": "Volver a Artículos",
+    "back": "Volver al blog",
     "newer": "Artículo más nuevo",
     "older": "Artículo anterior",
     "published": "Publicado",

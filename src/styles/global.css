@@ -371,9 +371,18 @@ html:has(.home-screens) {
     padding: 0;
 }
 
-/* Phones: a screen's row of cards swipes sideways instead of stacking
-   three screens tall. The next card peeks in so the row reads as more. */
-@media (max-width: 767.98px) {
+/* Portrait tablets: a full-height screen leaves wide empty bands around
+   short content, so screens take their natural height there. */
+@media (orientation: portrait) and (min-width: 576px) {
+    .screen:not(#home) {
+        min-height: 0;
+    }
+}
+
+/* Below desktop: a screen's row of cards swipes sideways instead of
+   wrapping (an orphan card on tablets) or stacking three screens tall
+   (phones). The next card peeks in so the row reads as more. */
+@media (max-width: 991.98px) {
     .swipe-row {
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -388,9 +397,9 @@ html:has(.home-screens) {
     }
 
     .swipe-row > * {
-        flex: 0 0 85%;
-        max-width: 85%;
-        scroll-snap-align: center;
+        flex: 0 0 min(85%, 21rem);
+        max-width: min(85%, 21rem);
+        scroll-snap-align: start;
     }
 }
 

@@ -44,8 +44,8 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
     margin: 0 auto 2.25rem;
   }
 
-  /* Every tile is the same size and shape; the dark variant exists only for
-     white logos that would disappear on a light tile. */
+  /* Every tile is the same: size, shape and a light background in both
+     themes, so the grid reads as one even logo wall. */
   .logo-tile {
     display: flex;
     align-items: center;
@@ -58,15 +58,10 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
     border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
   }
 
-  .logo-tile--dark {
-    background: #212529;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Dark theme: the white tiles are toned down so they don't glare
-     against the page; full brightness on hover. */
-  :global([data-theme='dark']) .logo-tile:not(.logo-tile--dark) {
+  /* Dark theme: a softer light so the tiles don't glare. */
+  :global([data-theme='dark']) .logo-tile {
     background: #e9ecef;
+    border-color: transparent;
   }
 
   /* Muted by default so the grid reads as one set; full colour on hover. */
@@ -83,6 +78,14 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
   .logo-tile:focus-visible img {
     filter: none;
     opacity: 1;
+  }
+
+  /* White logos (darkTile in organizations.json) are drawn dark so they
+     sit on the same light tile as the rest, hover included. */
+  .logo-tile--dark img,
+  .logo-tile--dark:hover img,
+  .logo-tile--dark:focus-visible img {
+    filter: brightness(0);
   }
 
   .logo-tile:focus-visible {
