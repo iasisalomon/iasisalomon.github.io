@@ -45,10 +45,10 @@ const home = localePath(lang, '/');
 </MainLayout>
 
 <style>
-  /* Clears the fixed navbar (76px) and keeps the footer off the fold. */
+  /* Clears the fixed navbar and keeps the footer off the fold. */
   .not-found {
     min-height: 100vh;
-    padding: calc(76px + 4rem) 0 5rem;
+    padding: calc(var(--navbar-height) + 4rem) 0 5rem;
     text-align: center;
   }
 

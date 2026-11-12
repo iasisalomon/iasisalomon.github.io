@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { FACTS, LINKS } from '../consts';
+import { AUTHOR_NAME, FACTS, LINKS, type FactName } from '../consts';
 import { pick, useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const fact = (name: keyof typeof FACTS) => pick(FACTS[name], lang);
+const fact = (name: FactName) => pick<string | number>(FACTS[name], lang);
 
 const stats = [
   { value: fact('teamSize'), label: t('hero.statTeam') },
@@ -23,7 +23,7 @@ const stats = [
     <div class="row align-items-center gy-4">
       {/* Text first in the DOM (and on desktop); the photo leads on phones. */}
       <div class="col-lg-8 order-2 order-lg-1">
-        <p class="name mb-2">Iasi Salomon</p>
+        <p class="name mb-2">{AUTHOR_NAME}</p>
         <h1 class="headline mb-3">{t('hero.headline')}</h1>
         <p class="role mb-1">{t('hero.title')}</p>
         <p class="location mb-4">
@@ -47,7 +47,7 @@ const stats = [
         <div class="profile-image d-flex justify-content-lg-end">
           <img
             src="/images/cara.webp"
-            alt="Iasi Salomon"
+            alt={AUTHOR_NAME}
             class="rounded-circle img-fluid"
             width="260"
             height="260"
@@ -116,7 +116,7 @@ const stats = [
   .role {
     font-size: 1.15rem;
     font-weight: 600;
-    color: var(--color-accent-on-dark, #4d9aff);
+    color: var(--color-accent-on-dark);
   }
 
   .location {
@@ -160,7 +160,7 @@ const stats = [
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    border-left: 2px solid var(--color-accent-on-dark, #4d9aff);
+    border-left: 2px solid var(--color-accent-on-dark);
     padding-left: 1rem;
   }
 

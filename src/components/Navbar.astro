@@ -17,13 +17,13 @@ import { NAV_LINKS } from '../consts';
 import { localePath, otherLocale, useTranslations, type Alternates, type Locale } from '../i18n';
 
 interface Props {
-  lang?: Locale;
+  lang: Locale;
   /** The page's address in each language; without one in the other
    *  language, the switcher goes to that language's home (or blog). */
   alternates?: Alternates;
   variant?: 'main' | 'blog' | 'work' | 'engineering';
 }
-const { lang = 'en', alternates = {}, variant = 'main' } = Astro.props;
+const { lang, alternates = {}, variant = 'main' } = Astro.props;
 const t = useTranslations(lang);
 const home = localePath(lang, '/');
 const blog = localePath(lang, '/blog/');
@@ -134,7 +134,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    border-left: 2px solid var(--color-accent-on-dark, #4d9aff);
+    border-left: 2px solid var(--color-accent-on-dark);
     padding: 0.1rem 0 0.1rem 0.6rem;
     /* Takes the room the controls leave and truncates rather than pushing
        them onto a second row on narrow phones. */
@@ -188,7 +188,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     left: 10%;
     width: 80%;
     height: 2px;
-    background-color: var(--color-accent-on-dark, #4d9aff);
+    background-color: var(--color-accent-on-dark);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.3s ease;
@@ -264,7 +264,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     width: 0.95rem;
     height: 0.95rem;
     border-radius: 50%;
-    background-color: var(--color-accent-on-dark, #4d9aff);
+    background-color: var(--color-accent-on-dark);
     transition: transform 0.2s ease;
   }
 
@@ -286,7 +286,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
   }
 
   .switch:focus-visible {
-    outline: 2px solid var(--color-accent-on-dark, #4d9aff);
+    outline: 2px solid var(--color-accent-on-dark);
     outline-offset: 2px;
     border-radius: 100px;
   }
@@ -416,10 +416,10 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     const isHome = HOME_PATH.test(window.location.pathname) || window.location.pathname === '';
 
     const anchorLinks = Array.from(
-      document.querySelectorAll('#navbarNav .nav-link')
+      document.querySelectorAll<HTMLAnchorElement>('#navbarNav .nav-link')
     ).filter((l) => (l.getAttribute('href') || '').includes('#'));
 
-    function hashOf(link) {
+    function hashOf(link: HTMLAnchorElement) {
       const href = link.getAttribute('href') || '';
       const i = href.indexOf('#');
       return i >= 0 ? href.slice(i) : null; // e.g. '#about'
@@ -429,8 +429,8 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
     // leaves the marker on the clicked target instead of re-marking every
     // screen passing by. Cleared once scrolling settles (scrollend, with a
     // timer for browsers without it) or the reader takes over.
-    let lockedHash = null;
-    let lockTimer = null;
+    let lockedHash: string | null = null;
+    let lockTimer: ReturnType<typeof setTimeout> | undefined;
 
     function unlock() {
       if (!lockedHash) return;
@@ -464,7 +464,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
       window.addEventListener(type, unlock, { passive: true })
     );
 
-    function scrollToSection(hash) {
+    function scrollToSection(hash: string) {
       const section = document.querySelector(hash);
       if (!section) return false;
       lockedHash = hash;
@@ -479,7 +479,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
 
     const navCurrent = document.getElementById('navCurrent');
 
-    function setActive(hash) {
+    function setActive(hash: string) {
       anchorLinks.forEach((l) => {
         const active = hashOf(l) === hash;
         l.classList.toggle('active', active);
@@ -506,7 +506,7 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
         // Close the mobile menu via Bootstrap's API rather than simulating a
         // toggler click — a synthetic click fired mid-transition desyncs
         // Bootstrap's internal state and breaks the next tap on touch devices.
-        if (collapse.classList.contains('show')) {
+        if (collapse?.classList.contains('show')) {
           Collapse.getOrCreateInstance(collapse).hide();
         }
       });

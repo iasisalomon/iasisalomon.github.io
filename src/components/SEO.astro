@@ -1,7 +1,7 @@
 ---
 // Centralized SEO head: canonical URL, robots, Open Graph, Twitter cards,
 // and JSON-LD structured data. Rendered once inside <head> by MainLayout.
-import { LINKS } from '../consts';
+import { AUTHOR_NAME, DEFAULT_IMAGE, LINKS } from '../consts';
 import { LOCALES, localePath, useTranslations, type Alternates, type Locale } from '../i18n';
 
 interface Props {
@@ -22,13 +22,10 @@ interface Props {
   /** Set true to keep a page out of the index (e.g. thin/utility pages). */
   noindex?: boolean;
   /** Language of the page. */
-  lang?: Locale;
+  lang: Locale;
   /** The page's address in each language it exists in (hreflang alternates). */
   alternates?: Alternates;
 }
-
-// 1200x630 card used when a page has no image of its own.
-const DEFAULT_IMAGE = '/images/og-default.jpg';
 
 // Open Graph locale per page language.
 const OG_LOCALES: Record<Locale, string> = {
@@ -46,14 +43,19 @@ const {
   publishedTime,
   modifiedTime,
   noindex = false,
-  lang = 'en',
+  lang,
   alternates = {},
 } = Astro.props;
 
 const t = useTranslations(lang);
+// The default card (1200x630) has its own description; a page's own image
+// has one only if the page gave it.
+const isDefaultImage = image === DEFAULT_IMAGE;
+const socialImageAlt = isDefaultImage ? t('site.ogImageAlt') : imageAlt;
 const ogLocale = OG_LOCALES[lang];
 
-const site = Astro.site ?? new URL('https://iasisalomon.pages.dev');
+// `site` is set in astro.config.mjs.
+const site = Astro.site!;
 const canonicalURL = new URL(Astro.url.pathname, site);
 const imageURL = new URL(image, site);
 
@@ -63,7 +65,7 @@ const languageVersions = LOCALES.flatMap((l) => (alternates[l] ? [{ lang: l, hre
 const hasTranslations = languageVersions.length > 1;
 const xDefault = alternates.en && new URL(alternates.en, site).href;
 
-// Social profiles that establish the "Iasi Salomon" entity across the web.
+// Social profiles that establish the author as one entity across the web.
 const sameAs = [
   LINKS.github,
   LINKS.linkedin,
@@ -76,7 +78,7 @@ const sameAs = [
 const person = {
   '@type': 'Person',
   '@id': `${site.origin}/#person`,
-  name: 'Iasi Salomon',
+  name: AUTHOR_NAME,
   url: site.origin,
   image: new URL('/images/cara.jpg', site).href,
   jobTitle: 'Technical Delivery Manager',
@@ -134,7 +136,7 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
   name="robots"
   content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}
 />
-<meta name="author" content="Iasi Salomon" />
+<meta name="author" content={AUTHOR_NAME} />
 
 {/* The same page in other languages */}
 {hasTranslations && languageVersions.map((v) => <link rel="alternate" hreflang={v.lang} href={v.href} />)}
@@ -142,19 +144,18 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 
 {/* Open Graph */}
 <meta property="og:type" content={type} />
-<meta property="og:site_name" content="Iasi Salomon" />
+<meta property="og:site_name" content={AUTHOR_NAME} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:image" content={imageURL} />
-{image === DEFAULT_IMAGE && (
+{isDefaultImage && (
   <>
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={t('site.ogImageAlt')} />
   </>
 )}
-{image !== DEFAULT_IMAGE && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+{socialImageAlt && <meta property="og:image:alt" content={socialImageAlt} />}
 <meta property="og:locale" content={ogLocale} />
 {languageVersions.filter((v) => v.lang !== lang).map((v) => <meta property="og:locale:alternate" content={OG_LOCALES[v.lang]} />)}
 {type === 'article' && publishedTime && (
@@ -163,14 +164,14 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 {type === 'article' && modifiedTime && (
   <meta property="article:modified_time" content={modifiedTime} />
 )}
-{type === 'article' && <meta property="article:author" content="Iasi Salomon" />}
+{type === 'article' && <meta property="article:author" content={AUTHOR_NAME} />}
 
 {/* Twitter */}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageURL} />
-{imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
+{socialImageAlt && <meta name="twitter:image:alt" content={socialImageAlt} />}
 <meta name="twitter:creator" content="@glunisok" />
 
 {/* Feed autodiscovery */}

@@ -7,7 +7,17 @@
 
 import { getCollection, getEntry, type CollectionEntry, type CollectionKey } from 'astro:content';
 import { FACTS } from '../consts';
-import { LOCALES, isLocale, localePath, pick, useTranslations, type Alternates, type Locale } from '../i18n';
+import {
+  formatDate,
+  isLocale,
+  isPerLocale,
+  localePath,
+  pick,
+  useTranslations,
+  type Alternates,
+  type Locale,
+  type Localizable,
+} from '../i18n';
 
 /** A data shape with every { en, es } value replaced by the text in one language. */
 type Resolved<T> = T extends Record<Locale, infer U>
@@ -18,14 +28,11 @@ type Resolved<T> = T extends Record<Locale, infer U>
       ? { [K in keyof T]: Resolved<T[K]> }
       : T;
 
-const isPerLocale = (value: object): value is Record<Locale, unknown> =>
-  !Array.isArray(value) && LOCALES.every((l) => l in value);
-
 /** Resolve every { en, es } value in `data` to its `lang` version. */
 function resolve<T>(data: T, lang: Locale): Resolved<T> {
   if (Array.isArray(data)) return data.map((item) => resolve(item, lang)) as Resolved<T>;
   if (data && typeof data === 'object' && !(data instanceof Date)) {
-    if (isPerLocale(data)) return resolve(data[lang], lang) as Resolved<T>;
+    if (isPerLocale<unknown>(data)) return resolve(data[lang], lang) as Resolved<T>;
     return Object.fromEntries(Object.entries(data).map(([k, v]) => [k, resolve(v, lang)])) as Resolved<T>;
   }
   return data as Resolved<T>;
@@ -38,13 +45,20 @@ export type Role = Resolved<CollectionEntry<'experience'>['data']>;
 
 /** Replace {fact} placeholders with values from FACTS; unknown names fail the build. */
 export function fillFacts(text: string, lang: Locale): string {
+  const facts: Record<string, Localizable<string | number>> = FACTS;
   return text.replace(/\{(\w+)\}/g, (_, name: string) => {
-    if (!(name in FACTS)) throw new Error(`[data] Unknown fact "{${name}}" in: ${text}`);
-    return String(pick(FACTS[name], lang));
+    if (!(name in facts)) throw new Error(`[data] Unknown fact "{${name}}" in: ${text}`);
+    return String(pick(facts[name], lang));
   });
 }
 
 const byOrder = (a: { order: number }, b: { order: number }) => a.order - b.order;
+
+/** Featured entries first; each group keeps its own order. */
+export const featuredFirst = <T extends { featured: boolean }>(items: T[]): T[] => [
+  ...items.filter((i) => i.featured),
+  ...items.filter((i) => !i.featured),
+];
 
 // ---------------------------------------------------------------- Projects
 
@@ -86,14 +100,9 @@ export async function getFeaturedExperience(lang: Locale): Promise<Role[]> {
   return (await getExperience(lang)).filter((r) => r.featured);
 }
 
-/** "Jan 2026 – Present" from YYYY-MM dates. Formatted in UTC so months don't shift. */
+/** "Jan 2026 – Present" from YYYY-MM dates. */
 export function formatRange(start: string, end: string | undefined, lang: Locale): string {
-  const month = (ym: string) =>
-    new Date(`${ym}-01`).toLocaleDateString(lang === 'es' ? 'es-AR' : 'en-US', {
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'UTC',
-    });
+  const month = (ym: string) => formatDate(new Date(`${ym}-01`), lang, { month: 'short', year: 'numeric' });
   return `${month(start)} – ${end ? month(end) : useTranslations(lang)('experience.present')}`;
 }
 
@@ -120,42 +129,31 @@ function splitId(id: string): { lang: Locale; slug: string } {
   return { lang, slug };
 }
 
-/** A Markdown entry with its language and its slug (the file name). */
+/** A Markdown entry with its language, its slug (the file name), its page and
+ *  that page in each language the entry is written in. */
 export type Localized<C extends MarkdownCollection> = {
   entry: CollectionEntry<C>;
   lang: Locale;
   slug: string;
+  href: string;
+  alternates: Alternates;
 };
 
-async function getLocalized<C extends MarkdownCollection>(collection: C): Promise<Localized<C>[]> {
-  return (await getCollection(collection)).map((entry) => ({ entry: entry as CollectionEntry<C>, ...splitId(entry.id) }));
-}
-
-/** The languages each slug is written in. */
-async function languagesBySlug(collection: MarkdownCollection): Promise<Map<string, Locale[]>> {
-  const map = new Map<string, Locale[]>();
-  for (const { lang, slug } of await getLocalized(collection)) map.set(slug, [...(map.get(slug) ?? []), lang]);
-  return map;
+/** Every entry of a collection; `pathOf(slug)` is its page, written as the English path. */
+async function getLocalized<C extends MarkdownCollection>(collection: C, pathOf: (slug: string) => string): Promise<Localized<C>[]> {
+  const entries = (await getCollection(collection)).map((entry) => ({ entry: entry as CollectionEntry<C>, ...splitId(entry.id) }));
+  const alternates = new Map<string, Alternates>();
+  for (const { lang, slug } of entries) alternates.set(slug, { ...alternates.get(slug), [lang]: localePath(lang, pathOf(slug)) });
+  return entries.map((e) => ({ ...e, href: localePath(e.lang, pathOf(e.slug)), alternates: alternates.get(e.slug)! }));
 }
 
 // -------------------------------------------------------------------- Blog
 
-export type Post = Localized<'blog'> & {
-  href: string;
-  /** Pages of this post in each language it's written in. */
-  alternates: Alternates;
-};
+export type Post = Localized<'blog'>;
 
 const newestFirst = (a: Post, b: Post) => b.entry.data.pubDate.valueOf() - a.entry.data.pubDate.valueOf();
 
-async function getAllPosts(): Promise<Post[]> {
-  const languages = await languagesBySlug('blog');
-  return (await getLocalized('blog')).map((post) => ({
-    ...post,
-    href: localePath(post.lang, `/blog/${post.slug}/`),
-    alternates: Object.fromEntries(languages.get(post.slug)!.map((l) => [l, localePath(l, `/blog/${post.slug}/`)])),
-  }));
-}
+const getAllPosts = () => getLocalized('blog', (slug) => `/blog/${slug}/`);
 
 /** Posts written in `lang`, newest first: the pages under that language's /blog/. */
 export async function getPostsIn(lang: Locale): Promise<Post[]> {
@@ -165,25 +163,22 @@ export async function getPostsIn(lang: Locale): Promise<Post[]> {
 /** Posts to list on a `lang` page, newest first: each post in `lang`, or in
  *  the language it was written in when it has no `lang` version. */
 export async function getPostList(lang: Locale): Promise<Post[]> {
-  const posts = await getAllPosts();
-  return posts
-    .filter((p) => p.lang === lang || !p.alternates[lang])
-    .sort(newestFirst);
+  return (await getAllPosts()).filter((p) => p.lang === lang || !p.alternates[lang]).sort(newestFirst);
 }
 
 // ------------------------------------------------------------- Case studies
 
 export type CaseStudy = Localized<'caseStudies'> & {
   project: Project & { date: string };
-  alternates: Alternates;
 };
 
-/** Case studies written in `lang`, newest first by catalog date. Each file
- *  name must be a project slug, and that project needs a date. */
+/** Case studies written in `lang`, newest first by catalog date; projects
+ *  with the same date keep their projects.json order, so every language
+ *  lists them alike. Each file name must be a project slug, and that project
+ *  needs a date. */
 export async function getCaseStudiesIn(lang: Locale): Promise<CaseStudy[]> {
-  const languages = await languagesBySlug('caseStudies');
   const studies = await Promise.all(
-    (await getLocalized('caseStudies'))
+    (await getLocalized('caseStudies', (slug) => `/projects/${slug}/`))
       .filter((cs) => cs.lang === lang)
       .map(async (cs) => {
         const project = await getProject(cs.slug, lang);
@@ -194,12 +189,8 @@ export async function getCaseStudiesIn(lang: Locale): Promise<CaseStudy[]> {
           );
         }
         if (!project.date) throw new Error(`Project "${project.slug}" has a case study, so it needs a "date" in projects.json.`);
-        return {
-          ...cs,
-          project: { ...project, date: project.date },
-          alternates: Object.fromEntries(languages.get(cs.slug)!.map((l) => [l, localePath(l, `/projects/${cs.slug}/`)])),
-        };
+        return { ...cs, project: { ...project, date: project.date } };
       }),
   );
-  return studies.sort((a, b) => b.project.date.localeCompare(a.project.date));
+  return studies.sort((a, b) => b.project.date.localeCompare(a.project.date) || byOrder(a.project, b.project));
 }

@@ -8,6 +8,7 @@ import MainLayout from './MainLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import CustomFooter from '../components/CustomFooter.astro';
 import AuthorCard from '../components/AuthorCard.astro';
+import { AUTHOR_NAME } from '../consts';
 import { useTranslations, type Alternates, type Locale } from '../i18n';
 
 export interface LongformBadge {
@@ -49,7 +50,7 @@ interface Props {
   /** schema.org type: BlogPosting for posts (default), Article for case studies. */
   schemaType?: 'BlogPosting' | 'Article';
   /** Language of the page: the body and the site chrome. */
-  lang?: Locale;
+  lang: Locale;
   /** The page's address in each language it exists in. */
   alternates?: Alternates;
   navVariant?: 'main' | 'blog' | 'work' | 'engineering';
@@ -70,7 +71,7 @@ const {
   publishedTime,
   modifiedTime,
   schemaType,
-  lang = 'en',
+  lang,
   alternates,
   navVariant = 'main',
 } = Astro.props;
@@ -78,7 +79,7 @@ const t = useTranslations(lang);
 ---
 
 <MainLayout
-  title={`${title} | Iasi Salomon`}
+  title={`${title} | ${AUTHOR_NAME}`}
   description={description}
   image={image}
   imageAlt={imageAlt}
@@ -171,9 +172,9 @@ const t = useTranslations(lang);
 </MainLayout>
 
 <style>
-  /* Clears the fixed navbar (76px) and leaves room before the site footer. */
+  /* Clears the fixed navbar and leaves room before the site footer. */
   .longform {
-    padding: calc(76px + 3rem) 0 5rem;
+    padding: calc(var(--navbar-height) + 3rem) 0 5rem;
   }
 
   .longform-header {
@@ -263,7 +264,7 @@ const t = useTranslations(lang);
     max-height: 460px;
     object-fit: cover;
     margin-bottom: 2.5rem;
-    border-radius: var(--radius-card, 1rem);
+    border-radius: var(--radius-card);
     box-shadow: var(--shadow-image);
   }
 
@@ -333,7 +334,7 @@ const t = useTranslations(lang);
 
   @media (max-width: 768px) {
     .longform {
-      padding: calc(76px + 2rem) 0 4rem;
+      padding: calc(var(--navbar-height) + 2rem) 0 4rem;
     }
 
     .longform-title {
@@ -412,7 +413,7 @@ const t = useTranslations(lang);
     max-width: 100%;
     height: auto;
     margin: 2.5rem 0;
-    border-radius: var(--radius-card, 1rem);
+    border-radius: var(--radius-card);
     box-shadow: var(--shadow-image);
   }
 
@@ -455,7 +456,7 @@ const t = useTranslations(lang);
   }
 
   .prose [data-bs-toggle='tooltip'] {
-    border-bottom: 1px dotted var(--color-text-muted, #6c757d);
+    border-bottom: 1px dotted var(--color-text-muted);
     cursor: help;
   }
 
@@ -465,7 +466,7 @@ const t = useTranslations(lang);
     width: 100%;
     margin: 2rem 0;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-card, 1rem);
+    border-radius: var(--radius-card);
     border-collapse: collapse;
     font-size: 0.95rem;
   }

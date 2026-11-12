@@ -6,8 +6,8 @@ import { Icon } from 'astro-icon/components';
 import { render } from 'astro:content';
 import LongformLayout, { type LongformFact } from '../layouts/LongformLayout.astro';
 import type { CaseStudy } from '../data/queries';
-import { AREA_META } from '../data/areas';
-import { formatDate, localePath, useTranslations, type Locale, type TranslationKey } from '../i18n';
+import { AREA_META, STATUS_LABELS } from '../data/areas';
+import { formatDate, localePath, useTranslations, type Locale } from '../i18n';
 
 interface Props {
 	lang: Locale;
@@ -19,17 +19,11 @@ interface Props {
 const { lang, study, prev, next } = Astro.props;
 const t = useTranslations(lang);
 const { entry, project } = study;
-const projectDate = project.date;
+const projectDate = new Date(project.date);
 const area = AREA_META[project.category];
 const { Content } = await render(entry);
 
-const STATUS_LABELS: Record<NonNullable<typeof project.status>, TranslationKey> = {
-	practice: 'status.practice',
-	challenge: 'status.challenge',
-	'private deployment': 'status.privateDeployment',
-};
-
-const dateLabel = formatDate(new Date(projectDate), lang, { month: 'long', year: 'numeric' });
+const dateLabel = formatDate(projectDate, lang, { month: 'long', year: 'numeric' });
 
 // Return to the homepage section that links to this case study. Engineering
 // lists only repos with a status; everything else is in Selected work.
@@ -46,7 +40,7 @@ const facts: LongformFact[] = [
 ];
 
 const pagerLink = (label: string, cs?: CaseStudy) =>
-	cs && { label, title: cs.project.title, href: localePath(lang, `/projects/${cs.slug}/`) };
+	cs && { label, title: cs.project.title, href: cs.href };
 
 const gallery = entry.data.gallery ?? [];
 
@@ -74,7 +68,7 @@ const thumbOf = (src: string) => {
 	navVariant={fromWork ? 'work' : 'engineering'}
 	prev={pagerLink(t('caseStudy.previous'), prev)}
 	next={pagerLink(t('caseStudy.next'), next)}
-	publishedTime={new Date(projectDate).toISOString()}
+	publishedTime={projectDate.toISOString()}
 	schemaType="Article"
 	lang={lang}
 	alternates={study.alternates}
@@ -215,7 +209,7 @@ const thumbOf = (src: string) => {
 		padding: 0;
 		border: none;
 		background: none;
-		border-radius: var(--radius-card, 1rem);
+		border-radius: var(--radius-card);
 		overflow: hidden;
 		cursor: zoom-in;
 		box-shadow: var(--shadow-image);
@@ -229,7 +223,7 @@ const thumbOf = (src: string) => {
 	}
 	.cs-gallery__open:hover img { transform: scale(1.03); }
 	.cs-gallery__open:focus-visible {
-		outline: 2px solid var(--color-accent, #4d9aff);
+		outline: 2px solid var(--color-accent);
 		outline-offset: 3px;
 	}
 	.cs-gallery figcaption {

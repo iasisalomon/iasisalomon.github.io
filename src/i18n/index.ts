@@ -58,7 +58,8 @@ export function localePath(lang: Locale, path: string): string {
 /** A JSON value that is either the same in every language or given per language. */
 export type Localizable<T = string> = T | Record<Locale, T>;
 
-const isPerLocale = <T>(value: Localizable<T>): value is Record<Locale, T> =>
+/** True for a per-language value: an object with exactly one entry per locale key. */
+export const isPerLocale = <T>(value: Localizable<T>): value is Record<Locale, T> =>
   typeof value === 'object' && value !== null && !Array.isArray(value) && LOCALES.every((l) => l in value);
 
 /** The `lang` version of a Localizable value. */

@@ -1,5 +1,5 @@
 ---
-import { getOrganizations } from '../data/queries';
+import { featuredFirst, getOrganizations } from '../data/queries';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -10,8 +10,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // One even grid of same-size tiles, featured organizations first.
-const brands = await getOrganizations();
-const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b.featured)];
+const ordered = featuredFirst(await getOrganizations());
 ---
 
 {/* Rendered inside the References screen; keeps its own anchor for old links. */}
@@ -40,7 +39,7 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 0.75rem;
-    max-width: 960px;
+    max-width: var(--content-width);
     margin: 0 auto 2.25rem;
   }
 
@@ -55,7 +54,7 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
     padding: 0.6rem 0.9rem;
     border-radius: 0.75rem;
     background: #fff;
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    border: 1px solid var(--color-border);
   }
 
   /* Dark theme: a softer light so the tiles don't glare. */
@@ -89,7 +88,7 @@ const ordered = [...brands.filter((b) => b.featured), ...brands.filter((b) => !b
   }
 
   .logo-tile:focus-visible {
-    outline: 2px solid var(--color-accent, #4d9aff);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
   }
 

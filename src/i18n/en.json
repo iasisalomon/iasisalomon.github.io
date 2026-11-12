@@ -13,17 +13,13 @@
     "work": "Work",
     "engineering": "Engineering",
     "blog": "Blog",
-    "skills": "Skills",
-    "organizations": "Organizations",
     "proof": "References",
-    "testimonials": "Testimonials",
     "contact": "Let's talk",
     "skipToContent": "Skip to content",
     "mainLabel": "Main navigation",
     "darkMode": "Dark mode",
     "toggle": "Toggle navigation",
     "all": "All",
-    "languageCode": "EN",
     "readInLanguage": "Read in English"
   },
   "hero": {

@@ -1,41 +1,21 @@
 ---
+import type { ComponentProps } from 'astro/types';
 import SEO from '../components/SEO.astro';
-import { useTranslations, type Alternates, type Locale } from '../i18n';
+import { useTranslations } from '../i18n';
 // Bootstrap is linked by URL rather than imported: Astro orders imported CSS
 // by its own rules (page styles can land first), and every one of our styles
 // must come after Bootstrap's to override it.
 import bootstrapCss from 'bootstrap/dist/css/bootstrap.min.css?url';
 import '../styles/global.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  imageAlt?: string;
-  type?: 'website' | 'article';
-  schemaType?: 'BlogPosting' | 'Article';
-  publishedTime?: string;
-  modifiedTime?: string;
-  noindex?: boolean;
-  lang?: Locale;
-  /** The page's address in each language it exists in. */
-  alternates?: Alternates;
-}
+// The page's SEO head (see SEO.astro for each prop); title and description
+// default to the site's own.
+type SEOProps = ComponentProps<typeof SEO>;
+type Props = Omit<SEOProps, 'title' | 'description'> & Partial<Pick<SEOProps, 'title' | 'description'>>;
 
-const t = useTranslations(Astro.props.lang ?? 'en');
-const {
-  title = t('site.title'),
-  description = t('site.description'),
-  image,
-  imageAlt,
-  type = 'website',
-  schemaType,
-  publishedTime,
-  modifiedTime,
-  noindex = false,
-  lang = 'en',
-  alternates,
-} = Astro.props;
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { title = t('site.title'), description = t('site.description'), ...seo } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -62,19 +42,7 @@ const {
         } catch (e) {}
       })();
     </script>
-    <SEO
-      title={title}
-      description={description}
-      image={image}
-      imageAlt={imageAlt}
-      type={type}
-      schemaType={schemaType}
-      publishedTime={publishedTime}
-      modifiedTime={modifiedTime}
-      noindex={noindex}
-      lang={lang}
-      alternates={alternates}
-    />
+    <SEO title={title} description={description} {...seo} />
     <link rel="stylesheet" href={bootstrapCss} />
     <link rel="icon" href="/assets/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

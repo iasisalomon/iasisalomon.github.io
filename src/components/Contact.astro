@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { LINKS } from '../consts';
+import { AUTHOR_NAME, LINKS } from '../consts';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -48,7 +48,7 @@ const offers = [
         <div class="cta__who">
           <img src="/images/cara.webp" alt="" width="64" height="64" class="cta__photo" loading="lazy" />
           <span>
-            <strong>Iasi Salomon</strong>
+            <strong>{AUTHOR_NAME}</strong>
             <span class="muted">Technical Delivery Manager</span>
           </span>
         </div>
@@ -92,8 +92,8 @@ const offers = [
      homepage script; without it the section alone fills the screen. */
   #contact {
     background: radial-gradient(ellipse at top, #2b3138 0%, #1a1d20 70%);
-    min-height: calc(100vh - 76px - var(--footer-h, 0px));
-    min-height: calc(100svh - 76px - var(--footer-h, 0px));
+    min-height: calc(100vh - var(--navbar-height) - var(--footer-h, 0px));
+    min-height: calc(100svh - var(--navbar-height) - var(--footer-h, 0px));
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
@@ -105,7 +105,7 @@ const offers = [
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(2rem, 4vw, 3.5rem);
     align-items: center;
-    max-width: 960px;
+    max-width: var(--content-width);
     margin-inline: auto;
   }
 
@@ -143,7 +143,7 @@ const offers = [
     height: 2.4rem;
     border-radius: 0.7rem;
     background: rgba(77, 154, 255, 0.14);
-    color: var(--color-accent-on-dark, #4d9aff);
+    color: var(--color-accent-on-dark);
     font-size: 1rem;
   }
 
@@ -237,7 +237,7 @@ const offers = [
     border: none;
     border-left: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(77, 154, 255, 0.15);
-    color: var(--color-accent-on-dark, #4d9aff);
+    color: var(--color-accent-on-dark);
     cursor: pointer;
   }
 
@@ -258,9 +258,7 @@ const offers = [
       gap: 2rem;
       max-width: 36rem;
     }
-
   }
-
 </style>
 
 <script>

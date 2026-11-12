@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import TestimonialCard from './TestimonialCard.astro';
 import { getTestimonials } from '../data/queries';
 import { useTranslations, type Locale } from '../i18n';
 
@@ -13,13 +13,6 @@ const t = useTranslations(lang);
 const testimonials = await getTestimonials();
 const featuredTestimonials = testimonials.filter((q) => q.featured);
 const additionalTestimonials = testimonials.filter((q) => !q.featured);
-
-const initials = (name: string) =>
-  name
-    .split(' ')
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('');
 ---
 
 {/* Rendered inside the References screen; keeps its own anchor for old links. */}
@@ -29,17 +22,7 @@ const initials = (name: string) =>
 
     <div class="quotes" role="list">
       {featuredTestimonials.map((q) => (
-        <figure class="quote" role="listitem">
-          <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
-          <blockquote lang="en">{q.quote}</blockquote>
-          <figcaption>
-            <span class="quote__avatar" aria-hidden="true">{initials(q.name)}</span>
-            <span>
-              <strong>{q.name}</strong>
-              <span class="quote__role" lang="en">{q.role}{q.org ? `, ${q.org}` : ''}</span>
-            </span>
-          </figcaption>
-        </figure>
+        <TestimonialCard testimonial={q} />
       ))}
     </div>
     {additionalTestimonials.length > 0 && (
@@ -47,17 +30,7 @@ const initials = (name: string) =>
         <summary>{t('testimonials.more', { count: additionalTestimonials.length })}</summary>
         <div class="quotes quotes--more" role="list">
           {additionalTestimonials.map((q) => (
-            <figure class="quote" role="listitem">
-              <Icon name="fa6-solid:quote-left" class="quote__mark" aria-hidden="true" />
-              <blockquote lang="en">{q.quote}</blockquote>
-              <figcaption>
-                <span class="quote__avatar" aria-hidden="true">{initials(q.name)}</span>
-                <span>
-                  <strong>{q.name}</strong>
-                  <span class="quote__role" lang="en">{q.role}{q.org ? `, ${q.org}` : ''}</span>
-                </span>
-              </figcaption>
-            </figure>
+            <TestimonialCard testimonial={q} />
           ))}
         </div>
       </details>
@@ -70,59 +43,8 @@ const initials = (name: string) =>
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
-    max-width: 960px;
+    max-width: var(--content-width);
     margin-inline: auto;
-  }
-
-  .quote {
-    margin: 0;
-    padding: 1.25rem 1.4rem;
-    border-radius: 1rem;
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
-    background: var(--color-card, #fff);
-  }
-
-  .quote__mark {
-    color: var(--color-accent, #0d6efd);
-    opacity: 0.5;
-    font-size: 1.1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .quote blockquote {
-    font-size: 0.94rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  .quote figcaption {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.85rem;
-  }
-
-  .quote figcaption strong {
-    display: block;
-    color: var(--color-heading);
-  }
-
-  .quote__role {
-    color: var(--color-text-secondary);
-  }
-
-  .quote__avatar {
-    flex: 0 0 auto;
-    display: grid;
-    place-items: center;
-    width: 2.4rem;
-    height: 2.4rem;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 0.8rem;
-    color: #fff;
-    background: var(--color-accent, #0d6efd);
   }
 
   .quotes-more {
@@ -132,7 +54,7 @@ const initials = (name: string) =>
 
   .quotes-more summary {
     display: inline-block;
-    color: var(--color-accent, #0d6efd);
+    color: var(--color-accent);
     cursor: pointer;
     font-weight: 600;
     padding: 0.35rem 0;
@@ -162,7 +84,7 @@ const initials = (name: string) =>
       display: none;
     }
 
-    .quotes:not(.quotes--more) > .quote {
+    .quotes:not(.quotes--more) > :global(.quote) {
       flex: 0 0 85%;
       scroll-snap-align: center;
     }

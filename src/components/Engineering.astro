@@ -1,5 +1,5 @@
 ---
-import { getCaseStudiesIn, getRepos } from '../data/queries';
+import { featuredFirst, getCaseStudiesIn, getRepos } from '../data/queries';
 import RepoCard from './RepoCard.astro';
 import { useTranslations, type Locale } from '../i18n';
 
@@ -18,12 +18,12 @@ const repos = await getRepos(lang);
 // Two full rows of three: featured repos first, then the rest in data
 // order; anything past six goes in the collapsible archive.
 const VISIBLE = 6;
-const ordered = [...repos.filter((repo) => repo.featured), ...repos.filter((repo) => !repo.featured)];
+const ordered = featuredFirst(repos);
 const featuredRepos = ordered.slice(0, VISIBLE);
 const additionalRepos = ordered.slice(VISIBLE);
 
 // Repos with a written case study link their title to it.
-const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slug));
+const caseStudyHrefs = new Map((await getCaseStudiesIn(lang)).map((cs) => [cs.slug, cs.href]));
 ---
 
 <section id="engineering" class="screen bg-light">
@@ -34,7 +34,7 @@ const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slu
 
     <div class="row g-4 justify-content-center swipe-row">
       {featuredRepos.map((repo) => (
-        <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
+        <RepoCard repo={repo} caseStudyHref={caseStudyHrefs.get(repo.slug)} lang={lang} />
       ))}
     </div>
 
@@ -43,7 +43,7 @@ const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slu
         <summary>{t('engineering.more', { count: additionalRepos.length })}</summary>
         <div class="row g-4 mt-1">
           {additionalRepos.map((repo) => (
-            <RepoCard repo={repo} hasCaseStudy={caseStudySlugs.has(repo.slug)} lang={lang} />
+            <RepoCard repo={repo} caseStudyHref={caseStudyHrefs.get(repo.slug)} lang={lang} />
           ))}
         </div>
       </details>
@@ -59,7 +59,7 @@ const caseStudySlugs = new Set((await getCaseStudiesIn(lang)).map((cs) => cs.slu
 
   .repo-archive summary {
     display: inline-block;
-    color: var(--color-accent, #0d6efd);
+    color: var(--color-accent);
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;

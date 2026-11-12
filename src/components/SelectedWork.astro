@@ -1,7 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getFeaturedWork } from '../data/queries';
-import { localePath } from '../i18n';
+import { getCaseStudiesIn, getFeaturedWork } from '../data/queries';
 import { useTranslations, type Locale } from '../i18n';
 
 interface Props {
@@ -28,7 +27,12 @@ interface WorkItem {
   link?: { label: string; href: string };
 }
 
+// Every card opens its case study, so a featured card needs one in this language.
+const caseStudyHrefs = new Map((await getCaseStudiesIn(lang)).map((cs) => [cs.slug, cs.href]));
+
 const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, description, image, card }) => {
+  const href = caseStudyHrefs.get(slug);
+  if (!href) throw new Error(`[data] Featured project "${slug}" has a card but no case study in "${lang}".`);
   const src = card.image ?? image;
   return {
     tag: card.tag,
@@ -37,7 +41,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
     image: src && !card.panel ? { src, alt: card.imageAlt ?? '' } : undefined,
     panel: card.panel,
     facts: card.facts,
-    cta: { label: card.ctaLabel, href: localePath(lang, `/projects/${slug}/`) },
+    cta: { label: card.ctaLabel, href },
     link: card.link,
   };
 });
@@ -94,7 +98,7 @@ const items: WorkItem[] = (await getFeaturedWork(lang)).map(({ slug, title, desc
   /* A calm card: picture, tag, title, three lines of text, one line of
      facts and a text link. The whole card opens the case study. */
   .work-card {
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    border: 1px solid var(--color-border);
     background: var(--color-card);
     transition: border-color 0.2s ease;
   }

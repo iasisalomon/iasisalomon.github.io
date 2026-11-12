@@ -32,8 +32,7 @@ src/
 │                     # plus shared Navbar, SEO, and CustomFooter
 ├── layouts/
 │   ├── MainLayout.astro     # Root HTML shell for every page
-│   ├── LongformLayout.astro # Shared reading layout for case studies and posts
-│   └── BlogPost.astro       # Maps a post's frontmatter onto LongformLayout
+│   └── LongformLayout.astro # Shared reading layout for case studies and posts
 ├── styles/
 │   └── global.css         # Design tokens and the few truly global rules
 ├── i18n/
@@ -45,7 +44,7 @@ src/
 │   ├── CaseStudyPage.astro, NotFoundPage.astro
 │   └── paths.ts           # getStaticPaths for posts and case studies
 ├── pages/                 # Thin route files that only pick the language
-│   ├── index.astro, 404.astro, rss.xml.js, blog/, projects/   # English
+│   ├── index.astro, 404.astro, rss.xml.ts, blog/, projects/   # English
 │   └── es/                # The same routes in Spanish
 ├── data/
 │   ├── projects.json      # Projects (Selected work, Engineering, case studies)

@@ -6,10 +6,10 @@ import { Icon } from 'astro-icon/components';
 import MainLayout from '../layouts/MainLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import CustomFooter from '../components/CustomFooter.astro';
-import { BLOG_CATEGORIES } from '../consts';
+import { BLOG_CATEGORIES, DEFAULT_IMAGE } from '../consts';
 import { getPostList } from '../data/queries';
-import { everyLocale, formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
-import { cardAward, languageName, readingTime } from '../utils/content';
+import { everyLocale, localePath, pick, useTranslations, type Locale } from '../i18n';
+import { cardAward, categoryLabels, languageName, readingTime, shortDate } from '../utils/content';
 
 interface Props {
 	lang: Locale;
@@ -21,16 +21,14 @@ const alternates = everyLocale('/blog/');
 
 const posts = await getPostList(lang);
 
-const categoryLabels: Record<string, string> = Object.fromEntries(
-	BLOG_CATEGORIES.map((c) => [c.id, t(c.label)])
-);
+const labels = categoryLabels(lang);
 
 // Filter tabs: real links (/blog/?category=…) so they work without
 // JavaScript; the script below filters in place instead of reloading.
 const blog = localePath(lang, '/blog/');
 const filters = [
 	{ id: 'all', label: t('nav.all'), href: blog },
-	...BLOG_CATEGORIES.map((c) => ({ id: c.id as string, label: t(c.label), href: `${blog}?category=${c.id}` })),
+	...BLOG_CATEGORIES.map((c) => ({ id: c.id as string, label: labels[c.id], href: `${blog}?category=${c.id}` })),
 ];
 ---
 
@@ -56,19 +54,15 @@ const filters = [
 					<article class="blog-card" data-category={post.data.category ?? 'other'}>
 						<div class="blog-card-inner">
 							<div class="card-image">
-								<img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
+								<img src={post.data.heroImage ?? DEFAULT_IMAGE} alt="" loading="lazy" />
 							</div>
 							<div class="card-content">
 								<header class="blog-card-header">
 									<div class="card-meta">
-										{post.data.pubDate && (
-											<time datetime={post.data.pubDate.toISOString()} class="card-date">
-												{formatDate(post.data.pubDate, lang, { year: 'numeric', month: 'short', day: 'numeric' })}
-											</time>
-										)}
+										<time datetime={post.data.pubDate.toISOString()} class="card-date">{shortDate(post.data.pubDate, lang)}</time>
 										{post.data.category && (
 											<span class={`category-badge category-${post.data.category}`}>
-												{categoryLabels[post.data.category]}
+												{labels[post.data.category]}
 											</span>
 										)}
 										{languageName(postLang, lang) && (
@@ -106,12 +100,13 @@ const filters = [
 </MainLayout>
 
 <script>
-
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.blog-filter[data-category]');
+  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('.blog-filter[data-category]')];
   const cards = document.querySelectorAll<HTMLElement>('.blog-card');
   const noPostsMsg = document.getElementById('noPostsMsg')!;
 
-  function applyFilter(category: string) {
+  function applyFilter(requested: string) {
+    // An unknown category (a mistyped or outdated link) shows everything.
+    const category = navLinks.some((l) => l.dataset.category === requested) ? requested : 'all';
     let visible = 0;
     cards.forEach(card => {
       const match = category === 'all' || card.dataset.category === category;
@@ -122,7 +117,6 @@ const filters = [
 
     navLinks.forEach(l => {
       const active = l.dataset.category === category;
-      l.classList.toggle('active', active);
       if (active) l.setAttribute('aria-current', 'page');
       else l.removeAttribute('aria-current');
     });

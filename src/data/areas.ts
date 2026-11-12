@@ -1,4 +1,5 @@
-// Single source of truth for project categories (areas of expertise).
+// Single source of truth for project categories (areas of expertise) and
+// the status labels of engineering repos.
 import type { TranslationKey } from '../i18n';
 
 export const CATEGORY_IDS = ['operations', 'software-engineering', 'events-production'] as const;
@@ -30,4 +31,14 @@ export const AREA_META: Record<CategoryId, AreaMeta> = {
     color: 'danger',
     gradientClass: 'gradient-danger',
   },
+};
+
+// Honest label for repos shown in the Engineering section.
+export const STATUS_IDS = ['practice', 'challenge', 'private deployment'] as const;
+export type StatusId = (typeof STATUS_IDS)[number];
+
+export const STATUS_LABELS: Record<StatusId, TranslationKey> = {
+  practice: 'status.practice',
+  challenge: 'status.challenge',
+  'private deployment': 'status.privateDeployment',
 };

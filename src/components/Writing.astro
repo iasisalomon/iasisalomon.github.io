@@ -1,9 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { BLOG_CATEGORIES } from '../consts';
+import { DEFAULT_IMAGE } from '../consts';
 import { getPostList } from '../data/queries';
-import { formatDate, localePath, pick, useTranslations, type Locale } from '../i18n';
-import { cardAward, languageName, readingTime } from '../utils/content';
+import { localePath, pick, useTranslations, type Locale } from '../i18n';
+import { cardAward, categoryLabels, languageName, readingTime, shortDate } from '../utils/content';
 
 interface Props {
   lang: Locale;
@@ -16,9 +16,7 @@ const t = useTranslations(lang);
 // written in this language are listed in the one they were written in.
 const posts = (await getPostList(lang)).slice(0, 3);
 
-const categoryLabels: Record<string, string> = Object.fromEntries(
-  BLOG_CATEGORIES.map((c) => [c.id, t(c.label)]),
-);
+const labels = categoryLabels(lang);
 ---
 
 <section id="blog" class="screen">
@@ -32,18 +30,14 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
         <div class={posts.length === 2 ? 'col-md-6' : 'col-md-6 col-lg-4'}>
           <article class="writing-card position-relative h-100 d-flex flex-column bg-white rounded-4 overflow-hidden">
             <div class="writing-img">
-              <img src={post.data.heroImage || '/images/og-default.jpg'} alt="" loading="lazy" />
+              <img src={post.data.heroImage ?? DEFAULT_IMAGE} alt="" loading="lazy" />
             </div>
             <div class="px-4 py-3 d-flex flex-column flex-grow-1">
               <div class="d-flex flex-wrap align-items-center gap-2 mb-2 small text-muted">
-                {post.data.pubDate && (
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {formatDate(post.data.pubDate, lang, { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </time>
-                )}
+                <time datetime={post.data.pubDate.toISOString()}>{shortDate(post.data.pubDate, lang)}</time>
                 {post.data.category && (
                   <span class={`category-badge category-${post.data.category}`}>
-                    {categoryLabels[post.data.category] ?? post.data.category}
+                    {labels[post.data.category]}
                   </span>
                 )}
                 {languageName(postLang, lang) && <span class="post-badge" lang={postLang}>{languageName(postLang, lang)}</span>}
@@ -78,7 +72,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
      hover only sharpens the border and nudges the image. */
   .writing-card {
     text-decoration: none;
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    border: 1px solid var(--color-border);
     transition: border-color 0.2s ease;
   }
 
@@ -103,14 +97,16 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
   }
 
   .read-cta {
-    color: var(--color-accent, #0d6efd);
+    color: var(--color-accent);
   }
 
-  .read-cta svg {
+  /* :global because the icon is rendered by astro-icon, outside this
+     component's style scope. */
+  .read-cta :global(svg) {
     transition: transform 0.2s ease;
   }
 
-  .writing-card:hover .read-cta svg {
+  .writing-card:hover .read-cta :global(svg) {
     transform: translateX(4px);
   }
 

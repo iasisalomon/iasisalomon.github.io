@@ -1,7 +1,8 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { CATEGORY_IDS } from './data/areas';
+import { BLOG_CATEGORIES, type BlogCategoryId } from './consts';
+import { CATEGORY_IDS, STATUS_IDS } from './data/areas';
 
 // Text that is either the same in every language or written per language:
 // "Toolbox" or { "en": "Practice", "es": "Práctica" }. Pages resolve it with
@@ -25,7 +26,7 @@ const blog = defineCollection({
 		heroImage: z.string().optional(),
 		// Describes the hero photo; without it the alt falls back to the title.
 		heroImageAlt: z.string().optional(),
-		category: z.enum(['tech', 'business', 'other']).optional(),
+		category: z.enum(BLOG_CATEGORIES.map((c) => c.id) as [BlogCategoryId, ...BlogCategoryId[]]).optional(),
 		// Recognition the piece received (e.g. a contest prize), shown as a badge.
 		// Per language, since it also shows on the other language's archive.
 		award: text.optional(),
@@ -118,7 +119,7 @@ const projects = defineCollection({
 			skills: z.array(text).default([]),
 			links: z.array(linkSchema).default([]),
 			// Honest label for repos shown in the Engineering section.
-			status: z.enum(['practice', 'challenge', 'private deployment']).optional(),
+			status: z.enum(STATUS_IDS).optional(),
 			// Featured repos (with a status) lead the Engineering section; other
 			// featured projects are the Selected work cards and need a `card`.
 			featured: z.boolean().default(false),

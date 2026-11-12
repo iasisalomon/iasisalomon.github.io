@@ -6,6 +6,7 @@ import { rename, rm } from "node:fs/promises";
 
 // Cloudflare Pages answers an unknown URL with the nearest 404.html, so
 // /es/… needs dist/es/404.html; Astro only writes the root one that way.
+/** @type {import('astro').AstroIntegration} */
 const localized404 = {
     name: "localized-404",
     hooks: {

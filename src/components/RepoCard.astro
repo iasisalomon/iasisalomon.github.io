@@ -1,33 +1,29 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { STATUS_LABELS } from '../data/areas';
 import type { Project } from '../data/queries';
-import { localePath, useTranslations, type Locale, type TranslationKey } from '../i18n';
+import { useTranslations, type Locale } from '../i18n';
 
 // One engineering project on the Engineering screen: what it is, its honest
 // status, what it's built with, and where to see it. Same card language as
 // the Work cards (bordered, no shadow).
 interface Props {
   repo: Project;
-  hasCaseStudy: boolean;
+  /** The repo's written case study, when it has one: the title links to it. */
+  caseStudyHref?: string;
   lang: Locale;
 }
 
-const { repo, hasCaseStudy, lang } = Astro.props;
+const { repo, caseStudyHref, lang } = Astro.props;
 const t = useTranslations(lang);
-
-const STATUS_LABELS: Record<NonNullable<Project['status']>, TranslationKey> = {
-  practice: 'status.practice',
-  challenge: 'status.challenge',
-  'private deployment': 'status.privateDeployment',
-};
 ---
 
 <div class="col-md-6 col-lg-4">
   <article class="repo-card h-100 rounded-4 d-flex flex-column">
     <div class="repo-card__head">
       <h3 class="repo-card__title">
-        {hasCaseStudy ? (
-          <a href={localePath(lang, `/projects/${repo.slug}/`)}>
+        {caseStudyHref ? (
+          <a href={caseStudyHref}>
             {repo.title}
             <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" />
           </a>

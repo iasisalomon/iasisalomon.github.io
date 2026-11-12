@@ -1,39 +1,61 @@
 ---
 // A blog post, in the language it's written in (src/pages/blog/[...slug].astro,
-// src/pages/es/blog/[...slug].astro; see postPaths in ./paths.ts).
+// src/pages/es/blog/[...slug].astro; see postPaths in ./paths.ts). Maps the
+// post onto the shared long-form layout, the same design as the case studies.
 import { render } from 'astro:content';
-import BlogPost from '../layouts/BlogPost.astro';
+import LongformLayout, { type LongformBadge, type LongformFact } from '../layouts/LongformLayout.astro';
 import type { Post } from '../data/queries';
-import { pick, type Locale } from '../i18n';
-import { readingTime } from '../utils/content';
+import { localePath, pick, useTranslations, type Locale } from '../i18n';
+import { categoryLabels, longDate, readingTime } from '../utils/content';
 
 interface Props {
-	lang: Locale;
-	post: Post;
-	newer?: Post;
-	older?: Post;
+  lang: Locale;
+  post: Post;
+  newer?: Post;
+  older?: Post;
 }
 
 const { lang, post, newer, older } = Astro.props;
+const t = useTranslations(lang);
 const { data } = post.entry;
 const { Content } = await render(post.entry);
-const link = (p?: Post) => p && { title: p.entry.data.title, href: p.href };
+const blog = localePath(lang, '/blog/');
+
+const badges: LongformBadge[] = data.category
+  ? [
+      {
+        text: categoryLabels(lang)[data.category],
+        class: `category-badge category-${data.category}`,
+        href: `${blog}?category=${data.category}`,
+      },
+    ]
+  : [];
+
+const facts: LongformFact[] = [
+  { label: t('blog.published'), value: longDate(data.pubDate, lang) },
+  ...(data.updatedDate ? [{ label: t('blog.updated'), value: longDate(data.updatedDate, lang) }] : []),
+  { label: t('blog.readingTime'), value: readingTime(post.entry.body, lang) },
+];
+
+const pagerLink = (label: string, p?: Post) => p && { label, title: p.entry.data.title, href: p.href };
 ---
 
-<BlogPost
-	title={data.title}
-	description={data.description}
-	pubDate={data.pubDate}
-	updatedDate={data.updatedDate}
-	heroImage={data.heroImage}
-	heroImageAlt={data.heroImageAlt}
-	category={data.category}
-	lang={lang}
-	alternates={post.alternates}
-	award={data.award && pick(data.award, lang)}
-	readingTime={readingTime(post.entry.body, lang)}
-	newer={link(newer)}
-	older={link(older)}
+<LongformLayout
+  title={data.title}
+  description={data.description}
+  image={data.heroImage}
+  imageAlt={data.heroImageAlt}
+  badges={badges}
+  award={data.award && pick(data.award, lang)}
+  facts={facts}
+  back={{ href: blog, label: t('blog.back') }}
+  prev={pagerLink(t('blog.newer'), newer)}
+  next={pagerLink(t('blog.older'), older)}
+  publishedTime={data.pubDate.toISOString()}
+  modifiedTime={data.updatedDate?.toISOString()}
+  lang={lang}
+  alternates={post.alternates}
+  navVariant="blog"
 >
-	<Content />
-</BlogPost>
+  <Content />
+</LongformLayout>

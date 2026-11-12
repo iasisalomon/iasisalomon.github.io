@@ -1,6 +1,7 @@
 // Small presentation helpers shared by the blog archive, the homepage
-// teaser and article pages.
-import { LANGUAGE_NAMES, useTranslations, type Locale } from '../i18n';
+// teaser, article pages and the feeds.
+import { BLOG_CATEGORIES, type BlogCategoryId } from '../consts';
+import { LANGUAGE_NAMES, formatDate, useTranslations, type Locale } from '../i18n';
 
 const WORDS_PER_MINUTE = 220;
 
@@ -18,5 +19,17 @@ export function languageName(postLang: Locale, pageLang: Locale): string | undef
 /** The award as shown on post cards: just the prize, the part before the
  *  first comma ("1st prize"); the post page shows the full text. */
 export function cardAward(award: string): string {
-	return award.split(',')[0].trim();
+  return award.split(',')[0].trim();
 }
+
+/** Each blog category's name in `lang`. */
+export function categoryLabels(lang: Locale): Record<BlogCategoryId, string> {
+  const t = useTranslations(lang);
+  return Object.fromEntries(BLOG_CATEGORIES.map((c) => [c.id, t(c.label)])) as Record<BlogCategoryId, string>;
+}
+
+/** "Mar 5, 2024": the date on post cards. */
+export const shortDate = (date: Date, lang: Locale) => formatDate(date, lang, { year: 'numeric', month: 'short', day: 'numeric' });
+
+/** "March 5, 2024": the date on a post's own page. */
+export const longDate = (date: Date, lang: Locale) => formatDate(date, lang, { year: 'numeric', month: 'long', day: 'numeric' });
