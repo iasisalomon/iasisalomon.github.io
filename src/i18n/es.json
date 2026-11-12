@@ -39,7 +39,7 @@
     "lead": "La mayoría de los problemas de delivery empiezan en los traspasos: responsabilidades difusas, decisiones lentas y trabajo manual que vuelve una y otra vez. Hago que esos flujos sean visibles, tengan dueño y sean más fáciles de operar.",
     "approach": "Mapeo cómo se mueve el trabajo de verdad, le doy un responsable a cada paso y automatizo lo que se repite. Mi base en ingeniería y QA me permite dimensionar el trabajo y negociar prioridades con desarrolladores; la IA se encarga de clasificar, redactar y resumir para que el equipo se enfoque en los problemas difíciles.",
     "proofLabel": "Lo que vas a encontrar acá",
-    "proofWork": "Tres casos de estudio con resultados: una conferencia agotada de más de 1.000 asistentes, una plataforma con IA para geriátricos y una automatización de onboarding que ahorra ~{minutes} minutos por cada ingreso.",
+    "proofWork": "Tres casos de estudio con resultados: un reloj de control de accesos llevado a la nube con costo mensual cero, una plataforma con IA para geriátricos y una automatización de onboarding que ahorra ~{minutes} minutos por cada ingreso.",
     "proofEngineering": "Ingeniería práctica: deploys, desafíos técnicos y proyectos de práctica, con código que podés abrir.",
     "proofReferences": "Recomendaciones de directores, un CEO y compañeros de los equipos donde trabajé."
   },
