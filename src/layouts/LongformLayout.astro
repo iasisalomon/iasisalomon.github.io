@@ -489,6 +489,9 @@ const t = useTranslations(lang);
     border-bottom: 1px solid var(--color-border);
     vertical-align: top;
     line-height: 1.5;
+    /* Keeps columns readable on phones: the table scrolls sideways there
+       instead of squeezing each column to a few words per line. */
+    min-width: 8.5rem;
   }
 
   .prose tbody tr:last-child td {
@@ -499,10 +502,11 @@ const t = useTranslations(lang);
     background-color: var(--color-hover-bg);
   }
 
+  /* The row's label. It wraps like any other cell: kept on one line, a long
+     label takes the width the other columns need. */
   .prose tbody td:first-child {
     font-weight: 600;
     color: var(--color-heading);
-    white-space: nowrap;
   }
 
   @media (max-width: 768px) {

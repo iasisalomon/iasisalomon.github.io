@@ -15,7 +15,7 @@ gallery:
     caption: "Changes: records and people in one log, with reason, status and author"
 ---
 
-*Names, codes, reasons and device details in the screenshots have been replaced with fictitious ones. The dashboard is in Spanish.*
+*Names, codes, reasons and device details in the screenshots have been replaced with fictitious ones. The dashboard itself is in Spanish, so its screenshots are too.*
 
 ## The problem
 
@@ -30,7 +30,7 @@ The clock's data could only be seen from a PC on the same network. An Anviz GC15
 
 A Python agent bridges the local network and the cloud without opening any inbound port. The clock listens on the LAN, the agent connects to it and pushes the data over HTTPS to Supabase. The web dashboard only talks to Supabase, never to the clock.
 
-![Architecture: the clock and the agent on the local network, Supabase in the cloud and the dashboard in the browser (diagram labels in Spanish)](/images/work/anviz-cloud-sync-architecture.webp)
+![Architecture: the clock and the agent on the local network, Supabase in the cloud and the dashboard in the browser](/images/work/anviz-cloud-sync-architecture-en.webp)
 
 Changes going the other way go through a queue: the dashboard writes a request, and the agent applies it to the clock on its next run and records the result.
 
