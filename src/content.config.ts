@@ -47,7 +47,7 @@ const galleryImage = z
 	.transform((img) => (typeof img === 'string' ? { src: img, alt: '', caption: undefined } : img));
 
 // Long-form case studies. Each file's name must match a project slug
-// in src/data/projects.json (see getProject); shared metadata (date,
+// in src/data/projects.json (see getCaseStudiesIn); shared metadata (date,
 // skills, links) comes from that catalog entry, while the Markdown
 // body and the fields below hold the case-study narrative.
 const caseStudies = defineCollection({

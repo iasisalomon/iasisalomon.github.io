@@ -1,7 +1,9 @@
 ---
-import { featuredFirst, getCaseStudiesIn, getRepos } from '../data/queries';
-import RepoCard from './RepoCard.astro';
-import { useTranslations, type Locale } from '../i18n';
+import { Icon } from 'astro-icon/components';
+import ProjectCard from './ProjectCard.astro';
+import { featuredFirst, getRepos } from '../data/queries';
+import { localePath, useTranslations, type Locale } from '../i18n';
+import { projectCard } from '../utils/projects';
 
 interface Props {
   lang: Locale;
@@ -14,16 +16,10 @@ const t = useTranslations(lang);
 // the delivery work, with enough on each card (what, status, stack, links)
 // to count as evidence. Repos keep their real status so nothing reads as
 // client work.
-const repos = await getRepos(lang);
 // Two full rows of three: featured repos first, then the rest in data
-// order; anything past six goes in the collapsible archive.
+// order; the others are in the /projects/ archive.
 const VISIBLE = 6;
-const ordered = featuredFirst(repos);
-const featuredRepos = ordered.slice(0, VISIBLE);
-const additionalRepos = ordered.slice(VISIBLE);
-
-// Repos with a written case study link their title to it.
-const caseStudyHrefs = new Map((await getCaseStudiesIn(lang)).map((cs) => [cs.slug, cs.href]));
+const repos = featuredFirst(await getRepos(lang)).slice(0, VISIBLE);
 ---
 
 <section id="engineering" class="screen bg-light">
@@ -33,40 +29,15 @@ const caseStudyHrefs = new Map((await getCaseStudiesIn(lang)).map((cs) => [cs.sl
     <div class="section-divider mb-4"></div>
 
     <div class="row g-4 justify-content-center swipe-row">
-      {featuredRepos.map((repo) => (
-        <RepoCard repo={repo} caseStudyHref={caseStudyHrefs.get(repo.slug)} lang={lang} />
+      {repos.map((repo) => (
+        <div class="col-md-6 col-lg-4">
+          <ProjectCard {...projectCard(repo, lang, { media: false })} />
+        </div>
       ))}
     </div>
 
-    {additionalRepos.length > 0 && (
-      <details class="repo-archive">
-        <summary>{t('engineering.more', { count: additionalRepos.length })}</summary>
-        <div class="row g-4 mt-1">
-          {additionalRepos.map((repo) => (
-            <RepoCard repo={repo} caseStudyHref={caseStudyHrefs.get(repo.slug)} lang={lang} />
-          ))}
-        </div>
-      </details>
-    )}
+    <div class="text-center mt-4">
+      <a href={`${localePath(lang, '/projects/')}?area=software-engineering`} class="btn btn-outline-dark">{t('engineering.viewAll')} <Icon name="fa6-solid:arrow-right" class="ms-1" aria-hidden="true" /></a>
+    </div>
   </div>
 </section>
-
-<style>
-  .repo-archive {
-    margin-top: 1.25rem;
-    text-align: center;
-  }
-
-  .repo-archive summary {
-    display: inline-block;
-    color: var(--color-accent);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.35rem 0;
-  }
-
-  .repo-archive[open] .row {
-    text-align: left;
-  }
-</style>

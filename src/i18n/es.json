@@ -48,12 +48,22 @@
     "present": "Actualidad"
   },
   "work": {
-    "title": "Trabajos destacados"
+    "title": "Trabajos destacados",
+    "viewAll": "Ver todos los trabajos",
+    "readCaseStudy": "Leer el caso de estudio"
+  },
+  "projects": {
+    "pageTitle": "Trabajos | Iasi Salomon",
+    "pageDescription": "Proyectos de Iasi Salomon: casos de estudio de operaciones de delivery, automatización y eventos, y trabajo práctico de ingeniería con su código.",
+    "heading": "Trabajos",
+    "lead": "Casos de estudio y proyectos prácticos, por área.",
+    "filterLabel": "Áreas",
+    "empty": "Todavía no hay proyectos en esta área."
   },
   "engineering": {
     "title": "Ingeniería",
     "subtitle": "Trabajo técnico propio, en paralelo al liderazgo de delivery.",
-    "more": "Más proyectos técnicos ({count})"
+    "viewAll": "Ver todos los proyectos de ingeniería"
   },
   "writing": {
     "title": "Blog",
@@ -133,8 +143,6 @@
     "moreToRead": "Seguir leyendo"
   },
   "caseStudy": {
-    "backToWork": "Volver a Trabajos destacados",
-    "backToEngineering": "Volver a Ingeniería",
     "previous": "Caso anterior",
     "next": "Caso siguiente",
     "role": "Rol",
@@ -146,7 +154,8 @@
     "closeViewer": "Cerrar el visor de fotos",
     "previousPhoto": "Foto anterior",
     "nextPhoto": "Foto siguiente",
-    "photoCount": "{current} de {total}"
+    "photoCount": "{current} de {total}",
+    "backToProjects": "Volver a todos los trabajos"
   },
   "areas": {
     "operations": "Operaciones",

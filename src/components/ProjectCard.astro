@@ -1,0 +1,229 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { ProjectCardProps } from '../utils/projects';
+
+// One project, the same card everywhere: Selected work and Engineering on
+// the homepage and the /projects/ archive (see projectCard in
+// utils/projects.ts). A bordered card, no shadow: an optional visual header,
+// tag and status, title, text, one line of stack or facts, and its links.
+// With a case study the whole card opens it.
+type Props = ProjectCardProps;
+
+const { title, description, href, tag, status, meta, ctaLabel, links = [], media } = Astro.props;
+---
+
+<article class:list={['project-card position-relative h-100 rounded-4 overflow-hidden d-flex flex-column', { 'project-card--compact': !media }]}>
+  {media && 'image' in media && (
+    <img src={media.image.src} alt={media.image.alt} loading="lazy" class="project-card__media" />
+  )}
+  {media && 'panel' in media && (
+    <div class={`project-card__media project-card__panel ${media.panel.gradientClass}`} aria-hidden="true">
+      {media.panel.logo ? (
+        <img src={media.panel.logo} alt="" class="project-card__logo" />
+      ) : (
+        media.panel.icon && <Icon name={media.panel.icon} />
+      )}
+    </div>
+  )}
+  <div class="project-card__body">
+    {/* With a tag: tag and status on one row, the title below. Without: the
+        title and the status share the row. */}
+    <div class:list={['project-card__head', { 'project-card__head--tagged': tag }]}>
+      {tag && <p class="project-card__tag">{tag}</p>}
+      <h3 class="project-card__title">
+        {/* The stretched link makes the whole card clickable while only the title is announced. */}
+        {href ? <a href={href} class="stretched-link">{title}</a> : title}
+      </h3>
+      {status && <span class="project-card__status">{status}</span>}
+    </div>
+    <p class="project-card__text">{description}</p>
+    {meta && <p class="project-card__meta">{meta}</p>}
+    {(href || links.length > 0) && (
+      <div class="project-card__actions">
+        {href && (
+          <span class="project-card__cta" aria-hidden="true">
+            {ctaLabel} <Icon name="fa6-solid:arrow-right" class="ms-1" />
+          </span>
+        )}
+        {links.map((link) => (
+          <a href={link.href} class="project-card__link" target="_blank" rel="noopener noreferrer">
+            {link.icon && <Icon name={link.icon} class="me-1" aria-hidden="true" />}
+            {link.label}
+            {!link.icon && <Icon name="fa6-solid:arrow-up-right-from-square" class="ms-1" aria-hidden="true" />}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    transition: border-color 0.2s ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .project-card__media {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+  }
+
+  .project-card__panel {
+    display: grid;
+    place-items: center;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: none;
+  }
+
+  /* MUBA brand: black with a soft mint glow, as on muba.app. */
+  .work-card__panel--muba {
+    background: radial-gradient(circle at 50% 45%, rgba(8, 213, 158, 0.28), transparent 60%), #000;
+  }
+
+  .project-card__logo {
+    height: 140px;
+    width: auto;
+  }
+
+  .project-card__body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1.35rem 1.5rem 1.5rem;
+  }
+
+  .project-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-card__tag {
+    flex: 1 1 0;
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .project-card__title {
+    flex: 1 1 0;
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--color-heading);
+  }
+
+  /* Below the tag and the status, across the card. */
+  .project-card__head--tagged .project-card__title {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  .project-card__title a {
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+
+  .project-card:hover .project-card__title a {
+    color: var(--color-accent);
+  }
+
+  .project-card__status {
+    flex: 0 0 auto;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2em 0.65em;
+    border-radius: var(--radius-pill);
+    background: var(--color-hover-bg-strong);
+    color: var(--color-heading);
+    white-space: nowrap;
+  }
+
+  /* Up to five lines here; the case study or the repo has the rest. */
+  .project-card__text {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .project-card__meta {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+    flex-grow: 1;
+  }
+
+  .project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .project-card__cta {
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .project-card__cta :global(svg) {
+    transition: transform 0.2s ease;
+  }
+
+  .project-card:hover .project-card__cta :global(svg) {
+    transform: translateX(3px);
+  }
+
+  /* Sits above the stretched link so it opens its own page. */
+  .project-card__link {
+    position: relative;
+    z-index: 2;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .project-card__link:hover {
+    color: var(--color-heading);
+  }
+
+  /* No visual header (the Engineering screen): a tighter card, three lines
+     of text, so two rows of three fit one screen. */
+  .project-card--compact .project-card__body {
+    padding: 1.25rem 1.4rem;
+  }
+
+  .project-card--compact .project-card__title {
+    font-size: 1.02rem;
+  }
+
+  .project-card--compact .project-card__text {
+    font-size: 0.88rem;
+    margin-bottom: 0.6rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .project-card--compact .project-card__meta {
+    margin-bottom: 0.75rem;
+  }
+</style>

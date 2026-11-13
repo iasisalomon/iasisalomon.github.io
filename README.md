@@ -29,7 +29,7 @@ src/
 ├── components/       # Homepage sections (Hero, About, Experience, SelectedWork,
 │                     # Engineering, Writing, Skills, Organizations,
 │                     # Testimonials, Contact)
-│                     # plus shared Navbar, SEO, and CustomFooter
+│                     # plus shared Navbar, SEO, CustomFooter and ProjectCard
 ├── layouts/
 │   ├── MainLayout.astro     # Root HTML shell for every page
 │   └── LongformLayout.astro # Shared reading layout for case studies and posts
@@ -41,13 +41,13 @@ src/
 │   └── es.json            # Interface text in Spanish (same keys)
 ├── views/                 # Page bodies shared by both languages
 │   ├── HomePage.astro, BlogIndexPage.astro, BlogPostPage.astro,
-│   ├── CaseStudyPage.astro, NotFoundPage.astro
+│   ├── ProjectsIndexPage.astro, CaseStudyPage.astro, NotFoundPage.astro
 │   └── paths.ts           # getStaticPaths for posts and case studies
 ├── pages/                 # Thin route files that only pick the language
 │   ├── index.astro, 404.astro, rss.xml.ts, blog/, projects/   # English
 │   └── es/                # The same routes in Spanish
 ├── data/
-│   ├── projects.json      # Projects (Selected work, Engineering, case studies)
+│   ├── projects.json      # Projects (Selected work, Engineering, /projects/, case studies)
 │   ├── experience.json    # Roles shown in Experience
 │   ├── testimonials.json  # Testimonials
 │   ├── organizations.json # "Teams and organizations" logos
@@ -88,7 +88,7 @@ The JSON files in `src/data/` work as the site's database. Each one is a content
 
 | File | What it holds |
 | ---- | ------------- |
-| `projects.json` | Every project. Featured projects with a `status` lead Engineering; other featured projects are the Selected work cards and describe the card in `card`. |
+| `projects.json` | Every project; all of them are listed in the `/projects/` archive, filtered by area. Featured projects with a `status` lead Engineering; other featured projects are the Selected work cards and describe the card in `card`. |
 | `experience.json` | One entry per role. Titles, employers and dates must match the CV and LinkedIn. Consecutive roles at the same organization are grouped. |
 | `testimonials.json` | Testimonials. |
 | `organizations.json` | "Teams and organizations" logos. |

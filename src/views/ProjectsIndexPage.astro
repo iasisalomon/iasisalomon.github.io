@@ -1,0 +1,73 @@
+---
+// The work archive, in either language (src/pages/projects/index.astro,
+// src/pages/es/projects/index.astro): every project in projects.json, the
+// ones with a case study first. The homepage shows a selection (Selected work,
+// Engineering) and links here.
+import MainLayout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import CustomFooter from '../components/CustomFooter.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { AREA_META, CATEGORY_IDS } from '../data/areas';
+import { getWorkArchive } from '../data/queries';
+import { everyLocale, localePath, useTranslations, type Locale } from '../i18n';
+import { projectCard } from '../utils/projects';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const alternates = everyLocale('/projects/');
+
+const projects = await getWorkArchive(lang);
+
+// Filter tabs, one per area that has projects: real links
+// (/projects/?area=…) so they work without JavaScript.
+const archive = localePath(lang, '/projects/');
+const filters = [
+  { id: 'all', label: t('nav.all'), href: archive },
+  ...CATEGORY_IDS.filter((id) => projects.some((p) => p.category === id)).map((id) => ({
+    id: id as string,
+    label: t(AREA_META[id].label),
+    href: `${archive}?area=${id}`,
+  })),
+];
+---
+
+<MainLayout title={t('projects.pageTitle')} description={t('projects.pageDescription')} lang={lang} alternates={alternates}>
+  <Navbar variant="work" lang={lang} alternates={alternates} />
+
+  <main id="main-content" class="archive">
+    <div class="container">
+      <header class="archive-header">
+        <h1 class="archive-title">{t('projects.heading')}</h1>
+        <p class="archive-lead">{t('projects.lead')}</p>
+      </header>
+
+      <nav class="filter-tabs" aria-label={t('projects.filterLabel')} data-filter-param="area">
+        {filters.map((f) => (
+          <a class="filter-tab" href={f.href} data-filter={f.id}>{f.label}</a>
+        ))}
+      </nav>
+
+      <div class="row g-4">
+        {projects.map((project) => (
+          <div class="col-md-6 col-lg-4" data-filter-value={project.category}>
+            <ProjectCard {...projectCard(project, lang, { media: true })} />
+          </div>
+        ))}
+      </div>
+
+      <p class="text-center text-muted py-5" data-filter-empty hidden>{t('projects.empty')}</p>
+    </div>
+  </main>
+
+  <CustomFooter lang={lang} />
+</MainLayout>
+
+<script>
+  import { initArchiveFilter } from '../utils/archiveFilter';
+
+  initArchiveFilter();
+</script>

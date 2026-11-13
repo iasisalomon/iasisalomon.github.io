@@ -5,7 +5,7 @@ import type { TranslationKey } from '../i18n';
 export const CATEGORY_IDS = ['operations', 'software-engineering', 'events-production'] as const;
 export type CategoryId = (typeof CATEGORY_IDS)[number];
 
-// Per-area presentation: label, Bootstrap context color and gradient.
+// Per-area presentation: label, Bootstrap context color, gradient and icon.
 // Case-study pages theme off this one map, so the colour of a thing always
 // means its area.
 export interface AreaMeta {
@@ -13,6 +13,8 @@ export interface AreaMeta {
   label: TranslationKey;
   color: string;
   gradientClass: string;
+  /** astro-icon name, shown on the gradient of a project card without a photo. */
+  icon: string;
 }
 
 export const AREA_META: Record<CategoryId, AreaMeta> = {
@@ -20,16 +22,19 @@ export const AREA_META: Record<CategoryId, AreaMeta> = {
     label: 'areas.operations',
     color: 'dark',
     gradientClass: 'gradient-black',
+    icon: 'fa6-solid:gears',
   },
   'software-engineering': {
     label: 'areas.softwareEngineering',
     color: 'success',
     gradientClass: 'gradient-success',
+    icon: 'fa6-solid:code',
   },
   'events-production': {
     label: 'areas.eventsProduction',
     color: 'danger',
     gradientClass: 'gradient-danger',
+    icon: 'fa6-solid:microphone-lines',
   },
 };
 

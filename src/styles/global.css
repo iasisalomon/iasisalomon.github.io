@@ -476,3 +476,69 @@ html:has(.home-screens) {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* -------------------------------------------------------------
+   Archive pages (the blog, the projects): a centred heading and
+   lead, then filter tabs over a grid of cards. The tabs are links
+   filtered in place by utils/archiveFilter.ts.
+   ------------------------------------------------------------- */
+.archive {
+    padding: calc(var(--navbar-height) + 3.5rem) 0 6rem;
+}
+
+.archive-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.archive-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+}
+
+.archive-lead {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.filter-tab {
+    padding: 0.35rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.filter-tab:hover {
+    background-color: var(--color-hover-bg);
+}
+
+.filter-tab[aria-current='page'] {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .archive-title {
+        font-size: 2rem;
+    }
+
+    .archive-lead {
+        font-size: 1.1rem;
+    }
+}

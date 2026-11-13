@@ -35,23 +35,22 @@ const filters = [
 <MainLayout title={t('blog.pageTitle')} description={t('blog.pageDescription')} lang={lang} alternates={alternates}>
 	<Navbar variant="blog" lang={lang} alternates={alternates} />
 
-	<main id="main-content">
-	<section class="blog-section py-5 mt-5">
+	<main id="main-content" class="archive">
 		<div class="container">
-			<header class="blog-header">
-				<h1 class="blog-title">{t('blog.heading')}</h1>
-				<p class="blog-description">{t('blog.lead')}</p>
+			<header class="archive-header">
+				<h1 class="archive-title">{t('blog.heading')}</h1>
+				<p class="archive-lead">{t('blog.lead')}</p>
 			</header>
 
-			<nav class="blog-filters" aria-label={t('footer.blogCategories')}>
+			<nav class="filter-tabs" aria-label={t('footer.blogCategories')} data-filter-param="category">
 				{filters.map((f) => (
-					<a class="blog-filter" href={f.href} data-category={f.id}>{f.label}</a>
+					<a class="filter-tab" href={f.href} data-filter={f.id}>{f.label}</a>
 				))}
 			</nav>
 
 			<div class="blog-grid" id="blogGrid">
 				{posts.map(({ entry: post, lang: postLang, href }) => (
-					<article class="blog-card" data-category={post.data.category ?? 'other'}>
+					<article class="blog-card" data-filter-value={post.data.category ?? 'other'}>
 						<div class="blog-card-inner">
 							<div class="card-image">
 								<img src={post.data.heroImage ?? DEFAULT_IMAGE} alt="" loading="lazy" />
@@ -91,110 +90,20 @@ const filters = [
 				))}
 			</div>
 
-			<p id="noPostsMsg" class="text-center text-muted py-5" hidden>{t('blog.empty')}</p>
+			<p class="text-center text-muted py-5" data-filter-empty hidden>{t('blog.empty')}</p>
 		</div>
-	</section>
 	</main>
 
 	<CustomFooter lang={lang} />
 </MainLayout>
 
 <script>
-  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('.blog-filter[data-category]')];
-  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
-  const noPostsMsg = document.getElementById('noPostsMsg')!;
+  import { initArchiveFilter } from '../utils/archiveFilter';
 
-  function applyFilter(requested: string) {
-    // An unknown category (a mistyped or outdated link) shows everything.
-    const category = navLinks.some((l) => l.dataset.category === requested) ? requested : 'all';
-    let visible = 0;
-    cards.forEach(card => {
-      const match = category === 'all' || card.dataset.category === category;
-      card.style.display = match ? '' : 'none';
-      if (match) visible++;
-    });
-    noPostsMsg.hidden = visible !== 0;
-
-    navLinks.forEach(l => {
-      const active = l.dataset.category === category;
-      if (active) l.setAttribute('aria-current', 'page');
-      else l.removeAttribute('aria-current');
-    });
-
-    const url = new URL(window.location.href);
-    if (category === 'all') {
-      url.searchParams.delete('category');
-    } else {
-      url.searchParams.set('category', category);
-    }
-    history.replaceState(null, '', url.toString());
-  }
-
-  // Init from URL on load
-  const initialCategory = new URLSearchParams(window.location.search).get('category') ?? 'all';
-  applyFilter(initialCategory);
-
-  // Filter in place instead of reloading.
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      applyFilter(link.dataset.category!);
-    });
-  });
+  initArchiveFilter();
 </script>
 
 <style>
-	.blog-section {
-		margin: 2rem auto 6rem;
-	}
-
-	.blog-header {
-		margin-bottom: 1.5rem;
-		text-align: center;
-	}
-
-	.blog-title {
-		font-size: 2.5rem;
-		font-weight: 700;
-		margin-bottom: 0.5rem;
-		letter-spacing: -0.02em;
-		color: var(--color-heading);
-	}
-
-	.blog-description {
-		font-size: 1.2rem;
-		color: var(--color-text-muted);
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.blog-filters {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.5rem;
-		margin-bottom: 2.5rem;
-	}
-
-	.blog-filter {
-		padding: 0.35rem 1rem;
-		border-radius: var(--radius-pill);
-		border: 1px solid var(--color-border-strong);
-		color: var(--color-text);
-		font-size: 0.85rem;
-		font-weight: 500;
-	}
-
-	.blog-filter:hover {
-		background-color: var(--color-hover-bg);
-	}
-
-	.blog-filter[aria-current='page'] {
-		background-color: var(--color-accent);
-		border-color: var(--color-accent);
-		color: #fff;
-	}
-
 	.card-meta {
 		display: flex;
 		align-items: center;
@@ -312,8 +221,6 @@ const filters = [
 
 	@media (max-width: 768px) {
 		.blog-grid        { grid-template-columns: 1fr; gap: 1.5rem; }
-		.blog-title       { font-size: 2rem; }
-		.blog-description { font-size: 1.1rem; }
 		.card-content     { padding: 1.5rem; }
 		.blog-card-title       { font-size: 1.3rem; }
 	}

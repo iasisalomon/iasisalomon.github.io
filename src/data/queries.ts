@@ -5,7 +5,7 @@
 // the {fact} placeholders and the choice of language are handled in one place.
 // Every function takes the page's language and returns plain text in it.
 
-import { getCollection, getEntry, type CollectionEntry, type CollectionKey } from 'astro:content';
+import { getCollection, type CollectionEntry, type CollectionKey } from 'astro:content';
 import { FACTS } from '../consts';
 import {
   formatDate,
@@ -38,7 +38,10 @@ function resolve<T>(data: T, lang: Locale): Resolved<T> {
   return data as Resolved<T>;
 }
 
-export type Project = Resolved<CollectionEntry<'projects'>['data']>;
+export type Project = Resolved<CollectionEntry<'projects'>['data']> & {
+  /** The project's case study in the page's language, when one is written. */
+  caseStudyHref?: string;
+};
 export type Testimonial = CollectionEntry<'testimonials'>['data'];
 export type Organization = CollectionEntry<'organizations'>['data'];
 export type Role = Resolved<CollectionEntry<'experience'>['data']>;
@@ -62,23 +65,41 @@ export const featuredFirst = <T extends { featured: boolean }>(items: T[]): T[] 
 
 // ---------------------------------------------------------------- Projects
 
-/** All projects, in projects.json order. */
+/** All projects, in projects.json order, with the {fact} placeholders of
+ *  their cards filled and a link to each one's case study in `lang`. */
 export async function getProjects(lang: Locale): Promise<Project[]> {
-  return (await getCollection('projects')).map((e) => resolve(e.data, lang)).sort(byOrder);
-}
-
-export async function getProject(slug: string, lang: Locale): Promise<Project | undefined> {
-  const entry = await getEntry('projects', slug);
-  return entry && resolve(entry.data, lang);
-}
-
-/** Selected work cards: featured projects that have a card, with placeholders filled. */
-export async function getFeaturedWork(lang: Locale): Promise<(Project & { card: NonNullable<Project['card']> })[]> {
-  return (await getProjects(lang)).flatMap((p) =>
-    p.featured && p.card
-      ? [{ ...p, card: { ...p.card, facts: { ...p.card.facts, items: p.card.facts.items.map((f) => fillFacts(f, lang)) } } }]
-      : [],
+  const caseStudies = new Map(
+    (await getLocalizedCaseStudies()).filter((cs) => cs.lang === lang).map((cs) => [cs.slug, cs.href]),
   );
+  return (await getCollection('projects'))
+    .map((e) => resolve(e.data, lang))
+    .map((p) => ({
+      ...p,
+      card: p.card && { ...p.card, facts: { ...p.card.facts, items: p.card.facts.items.map((f) => fillFacts(f, lang)) } },
+      caseStudyHref: caseStudies.get(p.slug),
+    }))
+    .sort(byOrder);
+}
+
+/** Selected work cards: featured projects that have a card. Every card opens
+ *  its case study, so each needs one in `lang`. */
+export async function getFeaturedWork(lang: Locale): Promise<Project[]> {
+  const work = (await getProjects(lang)).filter((p) => p.featured && p.card);
+  for (const p of work) {
+    if (!p.caseStudyHref) throw new Error(`[data] Featured project "${p.slug}" has a card but no case study in "${lang}".`);
+  }
+  return work;
+}
+
+/** Everything for the /projects/ archive: projects with a case study first,
+ *  newest first, then the rest, featured ones leading. */
+export async function getWorkArchive(lang: Locale): Promise<Project[]> {
+  const projects = await getProjects(lang);
+  const newestFirst = (a: Project, b: Project) => (b.date ?? '').localeCompare(a.date ?? '') || byOrder(a, b);
+  return [
+    ...projects.filter((p) => p.caseStudyHref).sort(newestFirst),
+    ...featuredFirst(projects.filter((p) => !p.caseStudyHref)),
+  ];
 }
 
 /** Engineering repos: software projects with an honest status label. */
@@ -168,6 +189,8 @@ export async function getPostList(lang: Locale): Promise<Post[]> {
 
 // ------------------------------------------------------------- Case studies
 
+const getLocalizedCaseStudies = () => getLocalized('caseStudies', (slug) => `/projects/${slug}/`);
+
 export type CaseStudy = Localized<'caseStudies'> & {
   project: Project & { date: string };
 };
@@ -177,11 +200,11 @@ export type CaseStudy = Localized<'caseStudies'> & {
  *  lists them alike. Each file name must be a project slug, and that project
  *  needs a date. */
 export async function getCaseStudiesIn(lang: Locale): Promise<CaseStudy[]> {
-  const studies = await Promise.all(
-    (await getLocalized('caseStudies', (slug) => `/projects/${slug}/`))
+  const projects = new Map((await getProjects(lang)).map((p) => [p.slug, p]));
+  const studies = (await getLocalizedCaseStudies())
       .filter((cs) => cs.lang === lang)
-      .map(async (cs) => {
-        const project = await getProject(cs.slug, lang);
+      .map((cs) => {
+        const project = projects.get(cs.slug);
         if (!project) {
           throw new Error(
             `Case study "${cs.entry.id}" has no matching project in projects.json. ` +
@@ -190,7 +213,6 @@ export async function getCaseStudiesIn(lang: Locale): Promise<CaseStudy[]> {
         }
         if (!project.date) throw new Error(`Project "${project.slug}" has a case study, so it needs a "date" in projects.json.`);
         return { ...cs, project: { ...project, date: project.date } };
-      }),
-  );
+      });
   return studies.sort((a, b) => b.project.date.localeCompare(a.project.date) || byOrder(a.project, b.project));
 }

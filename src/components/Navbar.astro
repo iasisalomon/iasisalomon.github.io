@@ -6,9 +6,11 @@ import { Icon } from 'astro-icon/components';
 //  - On the homepage the links smooth-scroll to their screen.
 //  - Elsewhere they navigate to the homepage screen (`/#id`), which the
 //    browser opens already in place.
-//  - variant 'blog' (archive and posts): the Blog link points to the archive
-//    and is marked current. variant 'work' / 'engineering' (case studies):
-//    that screen's link is marked current and still leads back to it.
+//  - Inside an archive the reader is one click from its list: the current
+//    section's link is marked and leads to that archive, not to the
+//    homepage. variant 'blog' (the blog and its posts): Blog opens /blog/.
+//    variant 'work' / 'engineering' (the projects archive and case studies):
+//    that link opens /projects/, on the engineering area for 'engineering'.
 // Below 1200px, where the links fold into the menu, the bar names the
 // current section on the left so the reader always knows where they are.
 // Links stay within the page's language; the language switcher opens the
@@ -19,25 +21,37 @@ import { localePath, otherLocale, useTranslations, type Alternates, type Locale 
 interface Props {
   lang: Locale;
   /** The page's address in each language; without one in the other
-   *  language, the switcher goes to that language's home (or blog). */
+   *  language, the switcher goes to that language's archive (or home). */
   alternates?: Alternates;
   variant?: 'main' | 'blog' | 'work' | 'engineering';
 }
 const { lang, alternates = {}, variant = 'main' } = Astro.props;
 const t = useTranslations(lang);
 const home = localePath(lang, '/');
-const blog = localePath(lang, '/blog/');
 
-const links = NAV_LINKS.map((link) => ({
-  label: t(link.label),
-  href: variant === 'blog' && link.hash === '#blog' ? blog : `${home}${link.hash}`,
-  current: link.hash === `#${variant}`,
-}));
+// Where the current section's link leads, per variant: its archive, written
+// as the English path. On the homepage ('main') every link is a screen.
+const ARCHIVES = {
+  main: undefined,
+  blog: '/blog/',
+  work: '/projects/',
+  engineering: '/projects/?area=software-engineering',
+} as const;
+const archive = ARCHIVES[variant];
+
+const links = NAV_LINKS.map((link) => {
+  const current = link.hash === `#${variant}`;
+  return {
+    label: t(link.label),
+    href: current && archive ? localePath(lang, archive) : `${home}${link.hash}`,
+    current,
+  };
+});
 const currentLabel = links.find((l) => l.current)?.label ?? t('nav.home');
 
 const other = otherLocale(lang);
 const tOther = useTranslations(other);
-const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '/blog/' : '/');
+const switchHref = alternates[other] ?? localePath(other, archive ?? '/');
 ---
 
 <a class="skip-link" href="#main-content">{t('nav.skipToContent')}</a>
@@ -375,13 +389,13 @@ const switchHref = alternates[other] ?? localePath(other, variant === 'blog' ? '
   const HOME_PATH = /^\/(es\/?)?$/;
 
   // The language switcher keeps the reader on the same homepage section, or
-  // the same category of the blog archive.
+  // the same filter of the blog or projects archive.
   const langSwitch = document.getElementById('langSwitch') as HTMLAnchorElement | null;
   const startOn = langSwitch?.dataset.on;
   langSwitch?.addEventListener('click', (e) => {
     const target = new URL(langSwitch.href);
     if (HOME_PATH.test(target.pathname)) target.hash = window.location.hash;
-    if (/^\/(es\/)?blog\/$/.test(target.pathname)) target.search = window.location.search;
+    if (/^\/(es\/)?(blog|projects)\/$/.test(target.pathname) && window.location.search) target.search = window.location.search;
     langSwitch.href = target.href;
 
     // Opening in a new tab or window: leave it to the browser.

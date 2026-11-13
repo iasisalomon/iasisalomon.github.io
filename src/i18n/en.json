@@ -48,12 +48,22 @@
     "present": "Present"
   },
   "work": {
-    "title": "Selected work"
+    "title": "Selected work",
+    "viewAll": "View all work",
+    "readCaseStudy": "Read the case study"
+  },
+  "projects": {
+    "pageTitle": "Work | Iasi Salomon",
+    "pageDescription": "Projects by Iasi Salomon: case studies in delivery operations, automation and events, and hands-on engineering work with its code.",
+    "heading": "Work",
+    "lead": "Case studies and hands-on projects, by area.",
+    "filterLabel": "Areas",
+    "empty": "No projects in this area yet."
   },
   "engineering": {
     "title": "Engineering",
     "subtitle": "Hands-on technical work alongside delivery leadership.",
-    "more": "More technical projects ({count})"
+    "viewAll": "View all engineering projects"
   },
   "writing": {
     "title": "Blog",
@@ -133,8 +143,6 @@
     "moreToRead": "More to read"
   },
   "caseStudy": {
-    "backToWork": "Back to Selected work",
-    "backToEngineering": "Back to Engineering",
     "previous": "Previous case study",
     "next": "Next case study",
     "role": "Role",
@@ -146,7 +154,8 @@
     "closeViewer": "Close photo viewer",
     "previousPhoto": "Previous photo",
     "nextPhoto": "Next photo",
-    "photoCount": "{current} of {total}"
+    "photoCount": "{current} of {total}",
+    "backToProjects": "Back to all work"
   },
   "areas": {
     "operations": "Operations",

@@ -25,13 +25,14 @@ const { Content } = await render(entry);
 
 const dateLabel = formatDate(projectDate, lang, { month: 'long', year: 'numeric' });
 
-// Return to the homepage section that links to this case study. Engineering
-// lists only repos with a status; everything else is in Selected work.
+// Back to the archive, on this project's area. The navbar marks the homepage
+// screen the project belongs to: Engineering lists only repos with a status;
+// everything else is Selected work.
 const fromWork = project.category !== 'software-engineering' || !project.status;
-const home = localePath(lang, '/');
-const back = fromWork
-	? { href: `${home}#work`, label: t('caseStudy.backToWork') }
-	: { href: `${home}#engineering`, label: t('caseStudy.backToEngineering') };
+const back = {
+  href: `${localePath(lang, '/projects/')}?area=${project.category}`,
+  label: t('caseStudy.backToProjects'),
+};
 
 const facts: LongformFact[] = [
 	...(entry.data.role ? [{ label: t('caseStudy.role'), value: entry.data.role }] : []),
