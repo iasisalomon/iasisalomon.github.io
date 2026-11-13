@@ -460,14 +460,17 @@ const t = useTranslations(lang);
     cursor: help;
   }
 
+  /* A real table that fills the column. Separate borders (no collapse) let the
+     rounded corners clip the header and rows; the earlier display:block version
+     left the rows narrower than the border. */
   .prose table {
-    display: block;
-    overflow-x: auto;
     width: 100%;
     margin: 2rem 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
     font-size: 0.95rem;
   }
 
@@ -489,8 +492,7 @@ const t = useTranslations(lang);
     border-bottom: 1px solid var(--color-border);
     vertical-align: top;
     line-height: 1.5;
-    /* Keeps columns readable on phones: the table scrolls sideways there
-       instead of squeezing each column to a few words per line. */
+    /* Stops a column from squeezing to a few words per line. */
     min-width: 8.5rem;
   }
 
@@ -532,6 +534,7 @@ const t = useTranslations(lang);
      card per row, each value under its column name, so nothing is cut off. */
   @media (max-width: 640px) {
     .prose table.table-stack {
+      display: block;
       overflow: visible;
       border: none;
       border-radius: 0;
