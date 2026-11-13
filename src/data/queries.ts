@@ -91,15 +91,11 @@ export async function getFeaturedWork(lang: Locale): Promise<Project[]> {
   return work;
 }
 
-/** Everything for the /projects/ archive: projects with a case study first,
- *  newest first, then the rest, featured ones leading. */
+/** Everything for the /projects/ archive, newest first by catalog date.
+ *  Projects with the same date keep their projects.json order; the ones
+ *  without a date come last. */
 export async function getWorkArchive(lang: Locale): Promise<Project[]> {
-  const projects = await getProjects(lang);
-  const newestFirst = (a: Project, b: Project) => (b.date ?? '').localeCompare(a.date ?? '') || byOrder(a, b);
-  return [
-    ...projects.filter((p) => p.caseStudyHref).sort(newestFirst),
-    ...featuredFirst(projects.filter((p) => !p.caseStudyHref)),
-  ];
+  return (await getProjects(lang)).sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || byOrder(a, b));
 }
 
 /** Engineering repos: software projects with an honest status label. */
