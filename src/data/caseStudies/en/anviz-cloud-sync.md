@@ -1,12 +1,15 @@
 ---
 role: "Developer (end to end)"
 timeframe: "2026"
-outcome: "An access-control clock that only spoke over the local network now syncs to the cloud at zero monthly cost. Records can be checked from anywhere, and every correction is kept in an auditable history."
+outcome: "An access-control clock that only spoke over the local network now syncs to the cloud at zero monthly cost. Records can be checked from anywhere, hours are worked out per person, and every correction is kept in an auditable history."
 heroImageAlt: "Dashboard records table with the edit history of one record open below its row"
 gallery:
   - src: "/images/gallery/anviz-cloud-sync/records-history.webp"
     alt: "Records screen with the edit history of one record open below its row"
     caption: "Records: the history opens below the row and ends at the device's original time"
+  - src: "/images/gallery/anviz-cloud-sync/shifts.webp"
+    alt: "Shifts screen with hours per person and one person's shifts expanded"
+    caption: "Shifts: hours per person, with each shift's entry, exit and status one click away"
   - src: "/images/gallery/anviz-cloud-sync/people.webp"
     alt: "People screen listing everyone enrolled on the clock"
     caption: "People: what's on the clock, with fingerprints, PIN, card and group"
@@ -15,7 +18,7 @@ gallery:
     caption: "Changes: records and people in one log, with reason, status and author"
 ---
 
-*Names, codes, reasons and device details in the screenshots have been replaced with fictitious ones. The dashboard itself is in Spanish, so its screenshots are too.*
+*Names, ID numbers, emails, the device serial and file paths in the screenshots have been replaced with fictitious ones. The dashboard itself is in Spanish, so its screenshots are too.*
 
 ## The problem
 
@@ -53,12 +56,48 @@ A trigger writes the history, so it can't be forged from the browser: the author
 
 ## The product
 
-The dashboard has three screens, dark theme by default and light theme one click away.
+The dashboard has four screens, dark theme by default and light theme one click away. All of them share a status bar: when the last sync ran, how far the clock's time drifts (in seconds), how many people and records are on the device out of its 102,400 capacity, how many records were entered manually, how many are still waiting to upload, and the command to refresh from the clock, ready to copy.
 
-- **Records:** quick ranges, per-column filters, a summary row and CSV export that matches what's on screen. Manual entry, editing, deletion and restore, each with a required reason. Clicking a row opens its history.
-- **People:** add, edit and remove people on the clock from the web, with the PIN encrypted in the browser.
-- **Changes:** one board with everything that was modified, who did it and what is still waiting to be applied on the clock.
-- **Device status:** last sync, records not yet uploaded, memory usage and the command ready to copy.
+### Records
+
+The clock's punches, filtered and summarized.
+
+- **Ranges and filters:** quick ranges (today, 7 days, this month, last month) or a month or custom dates, plus per-column filters for person, type (entry or exit) and verification (fingerprint or manual).
+- **Summary tiles:** days with records, records, people, entries, exits, and how many records are manual or edited, as a count and a share of the total. It shows at a glance how much of the data was touched by hand.
+- **Corrections:** add a record, edit it, delete it or restore it, each with a required reason. Deleted records stay hidden unless asked for.
+- **History:** clicking a row opens its timeline, newest first: who changed it, why, and the before and after, ending at the device's original record.
+- **Export:** CSV that matches what's on screen.
+
+![The new record form open over the records table: person, date, time, type and a required reason](/images/gallery/anviz-cloud-sync/new-record.webp)
+
+Adding a record by hand. The form says it only saves to the dashboard, never to the clock, and records who did it and why.
+
+### Shifts
+
+Punches paired into worked hours, so nobody has to add them up by hand.
+
+- **Totals per person:** hours, completed shifts, average length, and how many shifts were under 6 hours, between 6 and 8, and over 8. Tiles on top add up hours, completed shifts, shifts in progress and shifts that need review.
+- **Detail on demand:** expanding a person lists each shift with its entry, exit, hours and status (complete or in progress). A shift that ends after midnight is marked "+1 day".
+- **Review list:** shifts that need attention are listed below the table, so a missing punch doesn't quietly distort the hours.
+- **Same controls as Records:** quick ranges, month or custom dates, a person filter and CSV export.
+
+### People
+
+The people enrolled on the clock, managed from the web.
+
+- **Add, edit and remove** people on the device. Fingerprints are enrolled on the clock itself.
+- **PIN:** set from the web, encrypted in the browser before it leaves.
+- **What the device holds:** the clock keeps names to 10 characters, so the screen shows the full name next to the one on the device, along with fingerprint count, PIN, card and group.
+- **Search** by name or ID, with an admin badge, and anyone no longer on the clock kept in a separate collapsed list.
+
+### Changes
+
+One board with everything that was modified.
+
+- **Counters:** pending, failed, today and total.
+- **Filters:** people only, records only or both; by status (pending, applied, failed, cancelled); by author; plus free-text search over name, reason and detail.
+- **Each row:** when, what it was about (record or person), the action, the detail (before and after, and the reason), its status and who did it.
+- **Pending requests** are the ones the agent hasn't applied to the clock yet.
 
 ## Stack and results
 

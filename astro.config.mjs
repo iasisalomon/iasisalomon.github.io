@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import { rename, rm } from "node:fs/promises";
+import rehypeTableLabels from "./src/utils/rehype-table-labels.mjs";
 
 // Cloudflare Pages answers an unknown URL with the nearest 404.html, so
 // /es/… needs dist/es/404.html; Astro only writes the root one that way.
@@ -36,6 +37,8 @@ export default defineConfig({
         icon(),
         localized404,
     ],
+    // Tables with 3+ columns stack into cards on phones (see LongformLayout).
+    markdown: { rehypePlugins: [rehypeTableLabels] },
     // Fetch internal pages on hover so navigation feels instant.
     prefetch: { prefetchAll: true },
     // Never inline scripts or styles: the CSP in public/_headers only allows

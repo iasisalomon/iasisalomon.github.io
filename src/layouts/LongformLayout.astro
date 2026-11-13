@@ -527,4 +527,62 @@ const t = useTranslations(lang);
       padding: 0.65rem 0.85rem;
     }
   }
+
+  /* Phones: a table with 3+ columns (marked by rehype-table-labels) becomes one
+     card per row, each value under its column name, so nothing is cut off. */
+  @media (max-width: 640px) {
+    .prose table.table-stack {
+      overflow: visible;
+      border: none;
+      border-radius: 0;
+      margin: 1.5rem 0;
+    }
+
+    /* The column names move into each cell (data-label); the header row stays
+       in the page for screen readers. */
+    .prose table.table-stack thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .prose table.table-stack tbody,
+    .prose table.table-stack tr,
+    .prose table.table-stack td {
+      display: block;
+    }
+
+    .prose table.table-stack tr {
+      margin-bottom: 0.9rem;
+      padding: 0.4rem 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      background-color: var(--color-surface);
+    }
+
+    .prose table.table-stack tbody td {
+      min-width: 0;
+      padding: 0.45rem 1rem;
+      border-bottom: none;
+    }
+
+    .prose table.table-stack tbody td:first-child {
+      font-size: 1rem;
+      padding-top: 0.7rem;
+    }
+
+    .prose table.table-stack tbody td:not(:first-child)::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 0.15rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+  }
 </style>

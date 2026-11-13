@@ -1,21 +1,24 @@
 ---
 role: "Desarrollador (de punta a punta)"
 timeframe: "2026"
-outcome: "Un reloj de control de accesos que solo hablaba por red local ahora sincroniza con la nube a costo mensual cero, con registros consultables desde cualquier lugar y cada corrección guardada en un historial auditable."
+outcome: "Un reloj de control de accesos que solo hablaba por red local ahora sincroniza con la nube a costo mensual cero, con registros consultables desde cualquier lugar, horas calculadas por persona y cada corrección guardada en un historial auditable."
 heroImageAlt: "Tabla de registros del panel con el historial de un registro editado abierto debajo de su fila"
 gallery:
   - src: "/images/gallery/anviz-cloud-sync/records-history.webp"
     alt: "Pantalla Registros con el historial de un registro editado abierto debajo de su fila"
     caption: "Registros: el historial se abre debajo de la fila y termina en la hora original del equipo"
+  - src: "/images/gallery/anviz-cloud-sync/shifts.webp"
+    alt: "Pantalla Turnos con las horas por persona y los turnos de una de ellas desplegados"
+    caption: "Turnos: las horas por persona, con el ingreso, el egreso y el estado de cada turno a un clic"
   - src: "/images/gallery/anviz-cloud-sync/people.webp"
-    alt: "Pantalla Prestadores de servicios con la lista de personas cargadas en el reloj"
+    alt: "Pantalla Prestadores con la lista de personas cargadas en el reloj"
     caption: "Prestadores: lo que hay en el reloj, con huellas, clave, tarjeta y grupo"
   - src: "/images/gallery/anviz-cloud-sync/changes.webp"
     alt: "Pantalla Cambios con el registro unificado de modificaciones"
     caption: "Cambios: registros y prestadores en un solo log, con motivo, estado y autor"
 ---
 
-*En las capturas, los nombres, códigos, motivos y datos del equipo se reemplazaron por otros ficticios.*
+*En las capturas, los nombres, los números de documento, los correos, el número de serie del equipo y las rutas de archivos se reemplazaron por otros ficticios.*
 
 ## El problema
 
@@ -53,12 +56,48 @@ El historial lo escribe un trigger, así que no se puede falsificar desde el nav
 
 ## El producto
 
-El panel tiene tres pantallas, con tema oscuro por defecto y tema claro a un clic.
+El panel tiene cuatro pantallas, con tema oscuro por defecto y tema claro a un clic. Todas comparten una barra de estado: cuándo corrió la última sincronización, cuánto se desvía la hora del reloj (en segundos), cuántas personas y registros hay en el equipo sobre su capacidad de 102.400, cuántos registros se cargaron a mano, cuántos faltan subir y el comando para actualizar desde el reloj, listo para copiar.
 
-- **Registros:** rangos rápidos, filtros por columna, fila de resumen y exportación a CSV que replica lo que se ve. Alta manual, edición, baja y restauración, con motivo obligatorio. Un clic en la fila abre su historial.
-- **Prestadores:** alta, edición y baja de personas en el reloj desde la web, con la clave cifrada en el navegador.
-- **Cambios:** un solo tablero con todo lo que se modificó, quién lo hizo y qué sigue pendiente de aplicar en el reloj.
-- **Estado del equipo:** última sincronización, registros sin subir, uso de memoria y el comando listo para copiar.
+### Registros
+
+Las marcas del reloj, filtradas y resumidas.
+
+- **Rangos y filtros:** rangos rápidos (hoy, 7 días, este mes, mes anterior), o un mes o fechas a elección, y filtros por columna para persona, tipo (ingreso o egreso) y verificación (huella o manual).
+- **Resumen:** días con registros, registros, personas, ingresos, egresos, y cuántos registros son manuales o editados, en cantidad y como porcentaje del total. Muestra de un vistazo cuánto de los datos se tocó a mano.
+- **Correcciones:** alta de un registro, edición, baja y restauración, cada una con motivo obligatorio. Los eliminados quedan ocultos salvo que se pidan.
+- **Historial:** un clic en la fila abre su línea de tiempo, de lo más nuevo a lo más viejo: quién lo cambió, por qué, y el antes y el después, hasta llegar al registro original del equipo.
+- **Exportación:** CSV que replica lo que se ve en pantalla.
+
+![El formulario de nuevo registro abierto sobre la tabla de registros: persona, fecha, hora, tipo y un motivo obligatorio](/images/gallery/anviz-cloud-sync/new-record.webp)
+
+Carga de un registro a mano. El formulario aclara que se guarda solo en el panel, nunca en el reloj, y deja asentado quién lo hizo y por qué.
+
+### Turnos
+
+Las marcas emparejadas en horas trabajadas, para que nadie tenga que sumarlas a mano.
+
+- **Totales por persona:** horas, turnos completos, duración promedio, y cuántos turnos fueron de menos de 6 horas, de 6 a 8 y de más de 8. Arriba, mosaicos con el total de horas, los turnos completos, los que están en curso y los que hay que revisar.
+- **Detalle a pedido:** al desplegar a una persona se ve cada turno con su ingreso, egreso, horas y estado (completo o en curso). Un turno que termina después de medianoche aparece marcado con "+1 día".
+- **Lista de revisión:** los turnos que necesitan atención se listan debajo de la tabla, para que una marca faltante no distorsione las horas sin que nadie se entere.
+- **Mismos controles que Registros:** rangos rápidos, mes o fechas a elección, filtro por persona y exportación a CSV.
+
+### Prestadores
+
+Las personas cargadas en el reloj, administradas desde la web.
+
+- **Alta, edición y baja** de personas en el equipo. Las huellas se enrolan en el propio reloj.
+- **Clave:** se define desde la web y se cifra en el navegador antes de salir.
+- **Lo que guarda el equipo:** el reloj admite nombres de hasta 10 caracteres, así que la pantalla muestra el nombre completo junto al que figura en el equipo, y además la cantidad de huellas, la clave, la tarjeta y el grupo.
+- **Búsqueda** por nombre o DNI, con una etiqueta de administrador, y quienes ya no están en el reloj quedan en una lista aparte, plegada.
+
+### Cambios
+
+Un solo tablero con todo lo que se modificó.
+
+- **Contadores:** pendientes, fallidos, de hoy y total.
+- **Filtros:** solo prestadores, solo registros o ambos; por estado (pendiente, aplicado, falló, cancelado); por autor; y búsqueda libre por nombre, motivo y detalle.
+- **Cada fila:** cuándo, sobre qué fue (registro o prestador), la acción, el detalle (antes y después, y el motivo), su estado y quién lo hizo.
+- **Los pedidos pendientes** son los que el agente todavía no aplicó en el reloj.
 
 ## Stack y resultados
 
